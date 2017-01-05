@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of the Jimlab module made for Scilab
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Gael Senée
+ * 
+ * This file must be used under the terms of the CeCILL.
+ * This source file is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution.  The terms
+ * are also available at    
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ *
+ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
+		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+		xml:lang="en" xml:id="jimdisp">
+    <refnamediv>
+        <refname>jimdisp</refname>
+        <refpurpose>Display an image from a pre-loaded matrix, a path or a url.</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Calling Sequence</title>
+        <synopsis>
+            jimdisp(data)
+            jimdisp(data,'withbox')
+			jimdisp(data,properties)
+			jimdisp(data,'withbox',properties)
+        </synopsis>
+    </refsynopsisdiv>
+    <refsection>
+        <title>Arguments</title>
+        <variablelist>
+            <varlistentry>
+                <term>data</term>
+                <listitem>
+                    <para>
+                        The matrix or hypermatrix of the image (pre-loaded with jimread) or a string of characters (path or URL of the image file).
+                    </para>					
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>properties</term>
+                <listitem>
+                    <para>
+			Typed list containing the following properties of the image : title, width, height, type.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>withbox</term>
+                <listitem>
+                    <para>
+			Enabling the display of a box around the image.
+                    </para>					
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Description</title>
+        <para>
+            This fonction can display an image from its path, a url or a matrix pre-loaded with the help of jimread.
+        </para>
+        <para>
+            The typed list properties contains : title (string), width, height, type (string).
+	    When calling a file from a path or a URL, enter the variable properties by default in order to display the image's properties.
+            A box is displayed when 'withbox' is written as a second argument.
+        </para>
+    </refsection>
+    <refsection>
+        <title>Examples</title>
+        <programlisting role="example"><![CDATA[ 
+// From a pre-loaded image file
+global jimlabPath
+path = jimlabPath + '/help/images/logoEnsim.png';
+[image, imageProp] = jimread(path);
+jimdisp(image,'withbox',imageProp);
+
+// From a path or a URL
+jimdisp(path,'withbox',properties)
+ ]]></programlisting>
+	</refsection>
+    <refsection role="see also">
+        <title>See Also</title>
+        <simplelist type="inline">
+            <member>
+                <link linkend="jimread">jimread</link>
+            </member>
+            <member>
+                <link linkend="jimwrite">jimwrite</link>
+            </member>
+        </simplelist>
+    </refsection>
+    <refsection>
+        <title>History</title>
+        <revhistory>
+            <revision>
+                <revnumber>2017-05</revnumber>
+                <revremark>First publication of Jimlab</revremark>
+            </revision>
+        </revhistory>
+    </refsection>
+</refentry>

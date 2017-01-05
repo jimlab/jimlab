@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of the Jimlab module made for Scilab
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+ * 
+ * This file must be used under the terms of the CeCILL.
+ * This source file is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution.  The terms
+ * are also available at    
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ *
+ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
+		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+		xml:lang="en" xml:id="jimread">
+    <refnamediv>
+        <refname>jimread</refname>
+        <refpurpose>Lit une image à partir d'un fichier ou d'une URL</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Syntaxes</title>
+        <synopsis>
+            image = jimread(imagePath)
+			[image, imageProperties] = jimread(imagePath)
+        </synopsis>
+    </refsynopsisdiv>
+    <refsection>
+        <title>Arguments</title>
+        <variablelist>
+            <varlistentry>
+                <term>imagePath</term>
+                <listitem>
+                    <para>
+						Une chaîne de caractère contenant le chemin complet du fichier image ou une URL			
+					</para>					
+                </listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>image</term> 
+                <listitem>
+                    <para>
+						Une matrice 2D ou 3D 
+					</para>
+                </listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>imageProperties</term>
+				<listitem>
+                    <para>
+						Une liste typée	regroupant le titre, la largeur, la hauteur et le type de l'image lue		
+					</para>					
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Description</title>
+        <para>
+            Cette fonction lit une image à partir de son chemin ou d'une URL.
+			Elle retourne une matrice contenant les données de l'image en niveaux de gris ou une hypermatrice contenant les données RGB de l'image en fonction du type de l'image en entrée.
+		</para>
+		<para>
+			La liste imageProperties rassemble : le titre de l'image sous forme d'une chaîne de caractères, sa largeur, sa longueur, son type sous forme d'une chaîne de caracères.
+			Le type 'Gray' correspond à une matrice 2D pour les images en niveaux de gris. 
+			Le type 'RGB' correspond à une hypermatrice à trois couches. 
+			Le type 'RGBA' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
+        </para>
+    </refsection>
+    <refsection>
+        <title>Exemples</title>
+        <programlisting role="example"><![CDATA[ 
+//A partir d'un fichier
+global jimlabPath
+path = jimlabPath + '/help/images/logoEnsim.png';
+[im, imProp] = jimread(path);
+
+//A partir d'une URL
+path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
+[image, imProperties] = jimread(path);
+ ]]></programlisting>
+	</refsection>
+    <refsection role="see also">
+        <title>Voir Aussi</title>
+        <simplelist type="inline">
+            <member>
+                <link linkend="jimdisp">jimdisp</link>
+            </member>
+            <member>
+                <link linkend="jimwrite">jimwrite</link>
+            </member>
+        </simplelist>
+    </refsection>
+    <refsection>
+        <title>Historique</title>
+        <revhistory>
+            <revision>
+                <revnumber>2017-05</revnumber>
+                <revremark>Publication initiale du module Jimlab</revremark>
+            </revision>
+        </revhistory>
+    </refsection>
+</refentry>

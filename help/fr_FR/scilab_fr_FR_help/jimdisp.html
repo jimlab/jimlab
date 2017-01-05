@@ -1,0 +1,91 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>jimdisp</title>
+    <style type="text/css" media="all">
+      @import url("scilab_code.css");
+      @import url("xml_code.css");
+      @import url("c_code.css");
+      @import url("style.css");
+    </style>
+  </head>
+  <body>
+    <div class="manualnavbar">
+    <table width="100%"><tr>
+      <td width="30%">
+    	<span class="previous"><a href="section_fd5d1806fde850d95394bbb5a706b1ca.html">&lt;&lt; jimlab</a></span>
+
+      </td>
+      <td width="40%" class="center">
+      	<span class="top"><a href="section_fd5d1806fde850d95394bbb5a706b1ca.html">jimlab</a></span>
+
+      </td>
+      <td width="30%" class="next">
+      	<span class="next"><a href="jimread.html">jimread &gt;&gt;</a></span>
+
+      </td>
+    </tr></table>
+      <hr />
+    </div>
+
+
+
+    <span class="path"><a href="index.html">jimlab</a> &gt;&gt; <a href="section_fd5d1806fde850d95394bbb5a706b1ca.html">jimlab</a> &gt; jimdisp</span>
+
+    <br /><br />
+    <div class="refnamediv"><h1 class="refname">jimdisp</h1>
+        <p class="refpurpose">Affiche une image à partir d&#0039;une matrice d&#0039;image, d&#0039;un chemin de fichier ou d&#0039;un URL.</p></div>
+    <div class="refsynopsisdiv"><h3 class="title">Syntaxes</h3>
+        <div class="synopsis"><pre><span class="functionid">jimdisp</span><span class="default">(</span><span class="default">data</span><span class="default">)</span>
+<span class="functionid">jimdisp</span><span class="default">(</span><span class="default">data</span><span class="default">,</span>&#0039;<span class="default">withbox</span>&#0039;<span class="default">)</span>
+<span class="functionid">jimdisp</span><span class="default">(</span><span class="default">data</span><span class="default">,</span><span class="default">properties</span><span class="default">)</span>
+<span class="functionid">jimdisp</span><span class="default">(</span><span class="default">data</span><span class="default">,</span>&#0039;<span class="default">withbox</span>&#0039;<span class="default">,</span><span class="default">properties</span><span class="default">)</span></pre></div></div>
+    <div class="refsection"><h3 class="title">Paramètres</h3>
+        <dl><dt><span class="term">data</span>
+                <dd><p class="para">Matrice ou hypermatrice de l&#0039;image, ou chaîne de caractère donnant l&#0039;emplacement du fichier image (chemin ou URL).</p></dd></dt>
+            <dt><span class="term">properties</span>
+                <dd><p class="para">Liste typée regroupant le titre, la largeur, la hauteur et le type de l&#0039;image pré-importée.</p></dd></dt>
+            <dt><span class="term">withbox</span>
+                <dd><p class="para">Paramètre autorisant ou non l&#0039;affichage d&#0039;un cadre.</p></dd></dt></dl></div>
+    <div class="refsection"><h3 class="title">Description</h3>
+        <p class="para">Cette fonction permet d&#0039;afficher une image à partir de son chemin, d&#0039;un URL, ou d&#0039;une matrice déjà existante (créée par la fonction jimread).</p>
+        <p class="para">La liste properties rassemble : le titre de l&#0039;image sous forme d&#0039;une chaîne de caractères, sa largeur, sa longueur, son type sous forme d&#0039;une chaîne de caractères.
+            Lors de l&#0039;appel depuis un chemin ou un URL, il faut renseigner par défaut properties en tant que variable d&#0039;entrée pour le troisième argument.
+			Un cadre apparaît si la chaîne de caractère &#0039;withbox&#0039; est présente en deuxième argument.</p></div>
+    <div class="refsection"><h3 class="title">Exemples</h3>
+        <div class="programlisting"><table border="0" width="100%"><tr><td width="98%"><pre class="scilabcode"><span class="scilabcomment">// A partir d</span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">une image pré-chargée</span>
+<a class="scilabcommand" href="scilab://global">global</a> <span class="scilabstring">jimlabPath</span>
+<span class="scilabid">path</span> <span class="scilaboperator">=</span> <span class="scilabid">jimlabPath</span> <span class="scilaboperator">+</span> <span class="scilabstring">&#0039;</span><span class="scilabstring">/help/images/logoEnsim.png</span><span class="scilabstring">&#0039;</span><span class="scilabdefault">;</span>
+<span class="scilabopenclose">[</span><span class="scilabid">image</span><span class="scilabdefault">,</span> <span class="scilabid">imageProp</span><span class="scilabopenclose">]</span> <span class="scilaboperator">=</span> <span class="scilabid">jimread</span><span class="scilabopenclose">(</span><span class="scilabid">path</span><span class="scilabopenclose">)</span><span class="scilabdefault">;</span>
+<span class="scilabid">jimdisp</span><span class="scilabopenclose">(</span><span class="scilabid">image</span><span class="scilabdefault">,</span><span class="scilabstring">&#0039;</span><span class="scilabstring">withbox</span><span class="scilabstring">&#0039;</span><span class="scilabdefault">,</span><span class="scilabid">imageProp</span><span class="scilabopenclose">)</span><span class="scilabdefault">;</span>
+
+<span class="scilabcomment">// A partir d</span><span class="scilabcomment">&#0039;</span><span class="scilabcomment">un chemin</span>
+<span class="scilabid">jimdisp</span><span class="scilabopenclose">(</span><span class="scilabid">path</span><span class="scilabdefault">,</span><span class="scilabstring">&#0039;</span><span class="scilabstring">withbox</span><span class="scilabstring">&#0039;</span><span class="scilabdefault">,</span><span class="scilabid">properties</span><span class="scilabopenclose">)</span></pre></td><td valign="top"><a href="scilab://scilab.execexample/"><img src="ScilabExecute.png" border="0"/></a></td><td valign="top"><a href="scilab://scilab.editexample/"><img src="ScilabEdit.png" border="0"/></a></td><td></td></tr></table></div></div>
+    <div class="refsection"><h3 class="title">Voir Aussi</h3>
+        <ul class="itemizedlist"><li class="member"><a href="jimread.html" class="link">jimread</a> &#8212; Lit une image à partir d&#0039;un fichier ou d&#0039;une URL</li>
+            <li class="member"><a href="scilab://jimwrite" class="link">jimwrite</a></li></ul></div>
+    <div class="refsection"><h3 class="title">Historique</h3>
+        <table class="revhistory"><tr class="title"><td>Version</td><td>Description</td></tr><tr><td class="revnumber">2017-05</td>
+                <td class="revremark">Publication initiale du module Jimlab</td></tr></table></div>
+    <br />
+
+    <div class="manualnavbar">
+    <table width="100%">
+    <tr><td colspan="3" class="next"><a href="http://bugzilla.scilab.org/enter_bug.cgi?product=Scilab%20software&component=Documentation%20pages" class="ulink">Report an issue</a></td></tr>
+<tr>
+      <td width="30%">
+    	<span class="previous"><a href="section_fd5d1806fde850d95394bbb5a706b1ca.html">&lt;&lt; jimlab</a></span>
+
+      </td>
+      <td width="40%" class="center">
+      	<span class="top"><a href="section_fd5d1806fde850d95394bbb5a706b1ca.html">jimlab</a></span>
+
+      </td>
+      <td width="30%" class="next">
+      	<span class="next"><a href="jimread.html">jimread &gt;&gt;</a></span>
+
+      </td>
+    </tr></table>
+      <hr />
+    </div>
+  </body>
+</html>

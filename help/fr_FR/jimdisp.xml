@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of the Jimlab module made for Scilab
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Gael Senée
+ * 
+ * This file must be used under the terms of the CeCILL.
+ * This source file is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution.  The terms
+ * are also available at    
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ *
+ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
+		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+		xml:lang="fr" xml:id="jimdisp">
+    <refnamediv>
+        <refname>jimdisp</refname>
+        <refpurpose>Affiche une image à partir d'une matrice d'image, d'un chemin de fichier ou d'un URL.</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Syntaxes</title>
+        <synopsis>
+            jimdisp(data)
+			jimdisp(data,'withbox')
+			jimdisp(data,properties)
+	    	jimdisp(data,'withbox',properties)
+        </synopsis>
+    </refsynopsisdiv>
+    <refsection>
+        <title>Paramètres</title>
+        <variablelist>
+            <varlistentry>
+                <term>data</term>
+                <listitem>
+                    <para>
+                        Matrice ou hypermatrice de l'image, ou chaîne de caractère donnant l'emplacement du fichier image (chemin ou URL).
+                    </para>					
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>properties</term>
+                <listitem>
+                    <para>
+						Liste typée regroupant le titre, la largeur, la hauteur et le type de l'image pré-importée.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>withbox</term>
+                <listitem>
+                    <para>
+						Paramètre autorisant ou non l'affichage d'un cadre.
+                    </para>					
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Description</title>
+        <para>
+            Cette fonction permet d'afficher une image à partir de son chemin, d'un URL, ou d'une matrice déjà existante (créée par la fonction jimread).
+        </para>
+        <para>
+            La liste properties rassemble : le titre de l'image sous forme d'une chaîne de caractères, sa largeur, sa longueur, son type sous forme d'une chaîne de caractères.
+            Lors de l'appel depuis un chemin ou un URL, il faut renseigner par défaut properties en tant que variable d'entrée pour le troisième argument.
+			Un cadre apparaît si la chaîne de caractère 'withbox' est présente en deuxième argument.
+        </para>
+    </refsection>
+    <refsection>
+        <title>Exemples</title>
+        <programlisting role="example"><![CDATA[ 
+// A partir d'une image pré-chargée
+global jimlabPath
+path = jimlabPath + '/help/images/logoEnsim.png';
+[image, imageProp] = jimread(path);
+jimdisp(image,'withbox',imageProp);
+
+// A partir d'un chemin
+jimdisp(path,'withbox',properties)
+
+ ]]></programlisting>
+	</refsection>
+    <refsection role="see also">
+        <title>Voir Aussi</title>
+        <simplelist type="inline">
+            <member>
+                <link linkend="jimread">jimread</link>
+            </member>
+            <member>
+                <link linkend="jimwrite">jimwrite</link>
+            </member>
+        </simplelist>
+    </refsection>
+    <refsection>
+        <title>Historique</title>
+        <revhistory>
+            <revision>
+                <revnumber>2017-05</revnumber>
+                <revremark>Publication initiale du module Jimlab</revremark>
+            </revision>
+        </revhistory>
+    </refsection>
+</refentry>

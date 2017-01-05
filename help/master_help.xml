@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book [
+<!--Begin Entities-->
+<!ENTITY a6e729d6deedd386deaf1f87baaac41c1 SYSTEM "file:///H:/PROJETS/4A/jimlab/module/help/_template_void.xml">
+<!ENTITY a85d2e1df9f556a9a396866a4e0e1dd44 SYSTEM "file:///H:/PROJETS/4A/jimlab/module/help/en_US/jimRead.xml">
+<!--End Entities-->
+]>
+<book version="5.0-subset Scilab" xml:lang="fr_FR"
+      xmlns="http://docbook.org/ns/docbook"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:svg="http://www.w3.org/2000/svg"
+      xmlns:mml="http://www.w3.org/1998/Math/MathML"
+      xmlns:html="http://www.w3.org/1999/xhtml"
+      xmlns:db="http://docbook.org/ns/docbook">
+  <info xml:id='chapitre_d_aide_1_manual'>
+    <title>Chapitre d'aide 1</title>
+  </info>
+
+<part xml:id='section_de45edc7eab979f0c8c74ddb9e1ca216'>
+<title>Chapitre d'aide 1</title>
+&a6e729d6deedd386deaf1f87baaac41c1;
+<chapter xml:id='section_9dcd76abe758f3d370e7391dd9aec13a'>
+<title>en_US</title>
+&a85d2e1df9f556a9a396866a4e0e1dd44;
+</chapter>
+</part>
+</book>

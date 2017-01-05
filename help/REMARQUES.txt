@@ -1,0 +1,45 @@
+* le nom d'un fichier d'aide source .xml 
+  - doit être exactement le même dans toutes les langues
+  - doit être l'identifiant xml de son contenu (xml:id="..") + ".xml"
+
+* Le sommaire de l'aide est dressé par ordre alphabétique des noms de fichiers xml.
+  Ainsi, si par exemple on rédige une page de présentation du module, on lui affectera
+  un xml:id et donc un nom de fichier faisant apparaître celui-ci en haut de liste.
+  Pour forcer l'ordre, on peut utiliser certains caractères en préfixe (essayer avec "_"
+  et avec des chiffres, etc)
+
+* Si dans une langue donnée une page particulière n'a pas encore été traduite
+  -- c'est à dire que le fichier xml correspondant est absent du dossier de la langue -- :
+  lors de la compilation de l'aide pour la langue, la page de référence sera puisée
+  dans le dossier en_US et compilée. La version "traduite" de l'aide du module comportera
+  donc -- à défaut de traduction complète -- des pages issues du dossier en_US. 
+  Le contraire n'est pas vrai : si une page existe en fr_FR mais pas en en_US,
+  une erreur se produit.
+  DONC : si vous souhaitez rédiger les pages d'abord en français, leurs fichiers
+  devront obligatoirement figurer dans le dossier en_US.
+  On les transfèrera dans le dossier fr_FR seulement lorsqu'une version en_US
+  sera réellement disponible.
+  [REMARQUE ESSENTIELLE] : quelle que soit la version linguistique de référence que
+  vous choisissez -- anglais ou français --, il est fortement déconseillé de traduire
+  la page (fr => en, ou en => fr) tant que celle-ci n'est pas mûre et stabilisée.
+  En effet, mettre à jour la version traduite d'une page à partir des modifications
+  de la version de référence peut être BEAUCOUP plus chronophage que de traduire
+  entièrement la version de référence stabilisée.
+  
+* Lorsqu'une page inclut une ou plusieurs images non générées par Scilab, 
+  la même image est utilisée dans toutes les versions linguistiques. 
+  C'est pourquoi ces images seront déposées et stockées dans le sous-dossier
+  commun ~\help\images\
+  
+* Lorsque le nombre de fichiers d'aide devient important, on peut constituer des 
+  sous-sections. Par exemple, pour Jimlab, si un lot de fonctions spécifiques
+  au traitement vidéo est défini, on pourra constituer un sous-chapitre "Video"
+  
+REDACTION DES PAGES XML
+-----------------------
+* Indenter correctement les balises de structures (peu importe pour les balises de formats)
+
+* paragraphes texte : éviter d'introduire des retours-à-la_ligne manuels. 
+  Notepad++ s'en charge automatiquement en respectant l'indentation des balises
+ (Menu Affichage => Retour automatique à la ligne).
+ Ainsi, si vous modifiez ultérieurement le texte, vous n'aurez pas à vous soucier de son indentation.
