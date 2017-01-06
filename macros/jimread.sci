@@ -1,4 +1,3 @@
-
  //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  //This file must be used under the terms of the CeCILL.
  //This source file is licensed as described in the file COPYING, which
@@ -22,11 +21,12 @@
         f = jnewInstance(File, imPath);
         try
         bufferedIm = jinvoke(ImageIO, "read", f);
+        imType = jgetfield(bufferedIm,"type");
         catch
         msg = _("%s: Unexpected image type.\n");
         error(msprintf(msg,"jimread"));
         end
-        imType = jgetfield(bufferedIm,"type");
+        
         jremove File ImageIO f;
         
         //The image JAVA type conditions the choice of the extracting method 
@@ -96,12 +96,14 @@ function [im, imProperties] = jimread_intrgb(bufferedIm, imPath)
     im = permute(im,[2 1 3]);                 //formatting the image data 
     im = uint8(im);                           //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to increase it).\n");
+    msg = _("%s: stack size exceeded (Use stacksize function to ..
+                                                increase it).\n");
     error(msprintf(msg,"jimread"));
     end
     
     //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height','Type'], basename(imPath), double(height), double(width), 'RGB');
+    imProperties = tlist(['ImageProperties','Title','Width','Height',..
+    'Type'], basename(imPath), double(height), double(width), 'RGB');
     
 endfunction
 
@@ -136,12 +138,14 @@ function [im, imProperties] = jimread_intargb(bufferedIm, imPath)
     im = permute(im,[2 1 3]);                 //formatting the image data 
     im = uint8(im);                           //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to increase it).\n");
+    msg = _("%s: stack size exceeded (Use stacksize function to ..
+                                                increase it).\n");
     error(msprintf(msg,"jimread"));
     end
     
     //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height','Type'], basename(imPath), double(height), double(width), 'RGBA');
+    imProperties = tlist(['ImageProperties','Title','Width','Height',..
+    'Type'], basename(imPath), double(height), double(width), 'RGBA');
     
 endfunction
 
@@ -157,7 +161,8 @@ function [im, imProperties] = jimread_intargbpre(bufferedIm, imPath)
     
     //gets the integer value of the color in the RGB color space for each pixels
     m = zeros(1,height*width);
-    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),int(height-1),m,0,int(width));
+    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),..
+                                int(height-1),m,0,int(width));
     
     //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,4) = floor(unprocessedData./uint32(16^6));
@@ -174,12 +179,14 @@ function [im, imProperties] = jimread_intargbpre(bufferedIm, imPath)
     im = permute(im,[2 1 3]);        //formatting the image data 
     im = uint8(im);                  //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to increase it).\n");
+    msg = _("%s: stack size exceeded (Use stacksize function to ..
+                                                increase it).\n");
     error(msprintf(msg,"jimread"));
     end
     
     //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height','Type'], basename(imPath), double(height), double(width), 'RGBA');
+    imProperties = tlist(['ImageProperties','Title','Width','Height',..
+    'Type'], basename(imPath), double(height), double(width), 'RGBA');
     
 endfunction
 
@@ -212,12 +219,14 @@ function [im, imProperties] = jimread_intbgr(bufferedIm, imPath)
     im = permute(im,[2 1 3]);                 //formatting the image data 
     im = uint8(im);                           //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to increase it).\n");
+    msg = _("%s: stack size exceeded (Use stacksize function to ..
+                                                increase it).\n");
     error(msprintf(msg,"jimread"));
     end
     
     //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height','Type'], basename(imPath), double(height), double(width), 'RGB');
+    imProperties = tlist(['ImageProperties','Title','Width','Height',..
+    'Type'], basename(imPath), double(height), double(width), 'RGB');
     
 endfunction
 
@@ -244,14 +253,16 @@ function [im, imProperties] = jimread_3bytebgr(bufferedIm, imPath)
     im = matrix(im',dim);             //transpose matrix of the image
     im = permute(im,[2 1 3]);         //formatting the image data 
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to increase it).\n");
+    msg = _("%s: stack size exceeded (Use stacksize function to ..
+                                                increase it).\n");
     error(msprintf(msg,"jimread"));
     end
     
     jremove unprocessedData
     
     //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height','Type'], basename(imPath), double(height), double(width), 'RGB');
+    imProperties = tlist(['ImageProperties','Title','Width','Height',..
+    'Type'], basename(imPath), double(height), double(width), 'RGB');
     
 endfunction
 
@@ -277,14 +288,16 @@ function [im, imProperties] = jimread_4byteabgr(bufferedIm, imPath)
     im = matrix(im',dim);             //transpose matrix of the image
     im = permute(im,[2 1 3]);         //formatting the image data 
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to increase it).\n");
+    msg = _("%s: stack size exceeded (Use stacksize function to ..
+                                                increase it).\n");
     error(msprintf(msg,"jimread"));
     end
     
     jremove unprocessedData
     
     //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height','Type'], basename(imPath), double(height), double(width), 'RGBA');
+    imProperties = tlist(['ImageProperties','Title','Width','Height',..
+    'Type'], basename(imPath), double(height), double(width), 'RGBA');
     
 endfunction
 
@@ -300,7 +313,8 @@ function [im, imProperties] = jimread_4byteabgrpre(bufferedIm, imPath)
     
     //gets the integer value of the color in the RGB color space for each pixels
     m = zeros(1,height*width);
-    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),int(height-1),m,0,int(width));
+    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),..
+                                int(height-1),m,0,int(width));
     
     //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,4) = floor(unprocessedData./uint32(16^6));
@@ -317,12 +331,14 @@ function [im, imProperties] = jimread_4byteabgrpre(bufferedIm, imPath)
     im = permute(im,[2 1 3]);        //formatting the image data 
     im = uint8(im);                  //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to increase it).\n");
+    msg = _("%s: stack size exceeded (Use stacksize function to ..
+                                                increase it).\n");
     error(msprintf(msg,"jimread"));
     end
     
     //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height','Type'], basename(imPath), double(height), double(width), 'RGBA');
+    imProperties = tlist(['ImageProperties','Title','Width','Height',..
+    'Type'], basename(imPath), double(height), double(width), 'RGBA');
     
 endfunction
 
@@ -338,7 +354,8 @@ function [im, imProperties] = jimread_ushort565rgb(bufferedIm, imPath)
     
     //gets the integer value of the color in the RGB color space for each pixels
     m = zeros(1,height*width);
-    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),int(height-1),m,0,int(width));
+    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),..
+                                int(height-1),m,0,int(width));
     
     //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,1) = floor(unprocessedData./uint32(16^4));
@@ -353,12 +370,14 @@ function [im, imProperties] = jimread_ushort565rgb(bufferedIm, imPath)
     im = permute(im,[2 1 3]);        //formatting the image data 
     im = uint8(im);                  //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to increase it).\n");
+    msg = _("%s: stack size exceeded (Use stacksize function to ..
+                                                increase it).\n");
     error(msprintf(msg,"jimread"));
     end
     
     //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height','Type'], basename(imPath), double(height), double(width), 'RGB');
+    imProperties = tlist(['ImageProperties','Title','Width','Height',..
+    'Type'], basename(imPath), double(height), double(width), 'RGB');
     
 endfunction
 
@@ -374,7 +393,8 @@ function [im, imProperties] = jimread_ushort555rgb(bufferedIm, imPath)
     
     //gets the integer value of the color in the RGB color space for each pixels
     m = zeros(1,height*width);
-    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),int(height-1),m,0,int(width));
+    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),..
+                                int(height-1),m,0,int(width));
     
     //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,1) = floor(unprocessedData./uint32(16^4));
@@ -389,12 +409,14 @@ function [im, imProperties] = jimread_ushort555rgb(bufferedIm, imPath)
     im = permute(im,[2 1 3]);        //formatting the image data 
     im = uint8(im);                  //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to increase it).\n");
+    msg = _("%s: stack size exceeded (Use stacksize function to ..
+                                                increase it).\n");
     error(msprintf(msg,"jimread"));
     end
     
     //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height','Type'], basename(imPath), double(height), double(width), 'RGB');
+    imProperties = tlist(['ImageProperties','Title','Width','Height',
+    'Type'], basename(imPath), double(height), double(width), 'RGB');
     
 endfunction
 
@@ -419,14 +441,16 @@ function [im, imProperties] = jimread_byteGray(bufferedIm, imPath)
     im = permute(im,[2 1 3]);         //formatting the image data 
     im = uint8(im);                   //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to increase it).\n");
+    msg = _("%s: stack size exceeded (Use stacksize function to ..
+                                                increase it).\n");
     error(msprintf(msg,"jimread"));
     end
     
     jremove unprocessedData
     
     //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height','Type'], basename(imPath), double(height), double(width), 'Gray');
+    imProperties = tlist(['ImageProperties','Title','Width','Height',..
+    'Type'], basename(imPath), double(height), double(width), 'Gray');
     
 endfunction
 
@@ -442,7 +466,8 @@ function [im, imProperties] = jimread_ushortGray(bufferedIm, imPath)
     
     //gets the integer value of the color in the RGB color space for each pixels
     m = zeros(1,height*width);
-    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),int(height-1),m,0,int(width));
+    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),..
+                                int(height-1),m,0,int(width));
     
     //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,1) = floor(unprocessedData./uint32(16^4));
@@ -457,12 +482,14 @@ function [im, imProperties] = jimread_ushortGray(bufferedIm, imPath)
     im = permute(im,[2 1 3]);        //formatting the image data 
     im = uint8(im);                  //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to increase it).\n");
+    msg = _("%s: stack size exceeded (Use stacksize function to ..
+                                                increase it).\n");
     error(msprintf(msg,"jimread"));
     end
     
     //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height','Type'], basename(imPath), double(height), double(width), 'RGB');
+    imProperties = tlist(['ImageProperties','Title','Width','Height',..
+    'Type'], basename(imPath), double(height), double(width), 'RGB');
     
 endfunction
 
@@ -478,7 +505,8 @@ function [im, imProperties] = jimread_byteIndexed(bufferedIm, imPath)
     
     //gets the integer value of the color in the RGB color space for each pixels
     m = zeros(1,height*width);
-    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),int(height-1),m,0,int(width));
+    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),..
+                            int(height-1),m,0,int(width));
     
     //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,4) = floor(unprocessedData./uint32(16^6));
@@ -495,12 +523,14 @@ function [im, imProperties] = jimread_byteIndexed(bufferedIm, imPath)
     im = permute(im,[2 1 3]);        //formatting the image data 
     im = uint8(im);                  //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to increase it).\n");
+    msg = _("%s: stack size exceeded (Use stacksize function to ..
+                                                increase it).\n");
     error(msprintf(msg,"jimread"));
     end
     
     //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height','Type'], basename(imPath), double(height), double(width), 'RGBA');
+    imProperties = tlist(['ImageProperties','Title','Width','Height',..
+    'Type'], basename(imPath), double(height), double(width), 'RGBA');
     
 endfunction
 
