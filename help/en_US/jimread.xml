@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
+ * This file is part of the Jimlab module made for Scilab 
  * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  * 
  * This file must be used under the terms of the CeCILL.
@@ -16,10 +16,10 @@
 		xml:lang="en" xml:id="jimread">
     <refnamediv>
         <refname>jimread</refname>
-        <refpurpose>Lit une image à partir d'un fichier ou d'une URL</refpurpose>
+        <refpurpose>Reads an image from a file or an URL</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
-        <title>Syntaxes</title>
+        <title>Syntax</title>
         <synopsis>
             image = jimread(imagePath)
 			[image, imageProperties] = jimread(imagePath)
@@ -30,25 +30,21 @@
         <variablelist>
             <varlistentry>
                 <term>imagePath</term>
-                <listitem>
+                	<listitem>
                     <para>
-						Une chaîne de caractère contenant le chemin complet du fichier image ou une URL			
+					A string containing the	complete image file's path or an URL
 					</para>					
-                </listitem>
-			</varlistentry>
-			<varlistentry>
+                	</listitem>
 				<term>image</term> 
-                <listitem>
+                	<listitem>
                     <para>
-						Une matrice 2D ou 3D 
+					A 2D or 3D matrix
 					</para>
-                </listitem>
-			</varlistentry>
-			<varlistentry>
+                	</listitem>
 				<term>imageProperties</term>
-				<listitem>
+				    <listitem>
                     <para>
-						Une liste typée	regroupant le titre, la largeur, la hauteur et le type de l'image lue		
+					A tlist which clusters the title, the width, the height and the type of the image	
 					</para>					
                 </listitem>
             </varlistentry>
@@ -56,32 +52,29 @@
     </refsection>
     <refsection>
         <title>Description</title>
-        <para>
-            Cette fonction lit une image à partir de son chemin ou d'une URL.
-			Elle retourne une matrice contenant les données de l'image en niveaux de gris ou une hypermatrice contenant les données RGB de l'image en fonction du type de l'image en entrée.
-		</para>
-		<para>
-			La liste imageProperties rassemble : le titre de l'image sous forme d'une chaîne de caractères, sa largeur, sa longueur, son type sous forme d'une chaîne de caracères.
-			Le type 'Gray' correspond à une matrice 2D pour les images en niveaux de gris. 
-			Le type 'RGB' correspond à une hypermatrice à trois couches. 
-			Le type 'RGBA' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
-        </para>
+        	<para>
+            This function reads an image from a file or an URL. It returns a matrix made of the image data in gray levels or an hypermatrix made of the RGB data of the image depending on the type of the input image.
+		    </para>
+		    <para>
+			The list imageProperties gathers : a string made of the image title, its width , its height and a string with its type. 
+			The 'Gray' type indicates a 2D matrix of gray levels data.
+			The 'RGB' type indicates an hypermatrix with one layer for each color (Red, green and blue). 
+			The 'RGBA' type indicates an hypermatrix with 4 layers.The last one is for the alpha channel.
+        	</para>
     </refsection>
     <refsection>
-        <title>Exemples</title>
+        <title>Examples</title>
         <programlisting role="example"><![CDATA[ 
-//A partir d'un fichier
-global jimlabPath
-path = jimlabPath + '/help/images/logoEnsim.png';
-[im, imProp] = jimread(path);
-
-//A partir d'une URL
+//From a file
+path = SCI + '/contrib/jimlab/images/logoEnsim.png';
+[image, imProperties] = jimread(path);
+//From an URL
 path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
 [image, imProperties] = jimread(path);
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
-        <title>Voir Aussi</title>
+        <title>See Also</title>
         <simplelist type="inline">
             <member>
                 <link linkend="jimdisp">jimdisp</link>
@@ -92,11 +85,11 @@ path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_20
         </simplelist>
     </refsection>
     <refsection>
-        <title>Historique</title>
+        <title>History</title>
         <revhistory>
             <revision>
                 <revnumber>2017-05</revnumber>
-                <revremark>Publication initiale du module Jimlab</revremark>
+                <revremark>Initial publication of Jimlab module</revremark>
             </revision>
         </revhistory>
     </refsection>
