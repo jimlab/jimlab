@@ -7,7 +7,7 @@
 
 function  jimwrite(imageMat,imagePath,imageProperties,Format,Name,Type)
  
-if(type(imagePath) == 10)   
+if(type(imagePath) == 10) //Verify if imagePath is a string  
 jimport java.io.File;
 jimport javax.imageio.ImageIO; 
 jimport java.awt.image.BufferedImage;
@@ -18,35 +18,35 @@ else
 end
 
 
-if((type(imageMat) ~= 17)&(type(imageMat) ~= 1))
+if((type(imageMat) ~= 17)&(type(imageMat) ~= 1)) // Verify if imageMat is a 2D,3D or 4D matrix 
     error('Argument imageMat is not a matrix')
 end
 
-if(type(imageProperties) == 16)
-    width = imageProperties(3);
+if(type(imageProperties) == 16) // If imageProperties have been definded, the informations are saved in the 
+    width = imageProperties(3); // function variables
     height = imageProperties(4);
     Type = imageProperties(5);
     Name = imageProperties(2);
     
 else
-    width = size(imageMat,1);
-    height = size(imageMat,2);
+    width = size(imageMat,1);  // If imageProperties have not been definded, sizes of the image are
+    height = size(imageMat,2);//  definded with imageMat
     
 end
 
-if((type(Format) ~= 10)|(Format == '')) 
+if((type(Format) ~= 10)|(Format == '')) // If Format isn't definded or inappropriate, the default value is 'jpg'
     Format = 'jpg';
 end
 
-if((type(Type) ~= 10)|(Type == ''))
+if((type(Type) ~= 10)|(Type == '')) // If Type isn't definded or inappropriate, the default value is 'RGB'
     Type = 'RGB';
 end
 
-if((type(Name) ~= 10)|(Name == ''))
+if((type(Name) ~= 10)|(Name == ''))// If Name isn't definded or inappropriate, the default value is 'No Name'
 Name = 'No name';
 end
-//imageMat = permute(imageMat,[2 1 3]);
-imagePath = strcat([imagePath,"/",Name,".",Format]);
+
+imagePath = strcat([imagePath,"/",Name,".",Format]); // This code create the final path used by Java methode 'write'
 
 f = jnewInstance(File,imagePath);
 
@@ -70,6 +70,10 @@ end
 endfunction
 
 function Sa =  jimwrite_RGB(imageMat,f,width,height)
+// This sub-function saved an image definded by a 3D rgb matrix using java methode "write", from BufferedImage class. 
+// It is called by the function jimwrite.
+// imageMat : The wxhx3 3D matrix, f : a java object corresponding to imagePath,
+// width : the width of the matrix, height : the height of the matrix.
 
 im = jnewInstance(BufferedImage,width,height, BufferedImage.TYPE_INT_RGB );
 for (x = 1:width)
@@ -91,6 +95,11 @@ jremove f im A Form;
 endfunction
 
 function Sa = jimwrite_RGBA(imageMat,f,width,height)
+// This sub-function saved an image definded by a 4D rgba matrix using java methode "write", from BufferedImage class. 
+// It is called by the function jimwrite.
+// imageMat : The wxhx4 4D matrix, f : a java object corresponding to imagePath,
+// width : the width of the matrix, height : the height of the matrix.
+
     
     im = jnewInstance(BufferedImage,width,height, BufferedImage.TYPE_INT_ARGB );
     for (x = 1:width)
@@ -114,6 +123,11 @@ jremove f im A Form;
 endfunction
 
 function Sa =  jimwrite_gray(imageMat,f,width,height)
+// This sub-function saved an image in gray scale definded by a 2D matrix using java methode "write", from BufferedImage class. 
+// It is called by the function jimwrite.
+// imageMat : The wxh 2D matrix, f : a java object corresponding to imagePath,
+// width : the width of the matrix, height : the height of the matrix.
+
  
      im = jnewInstance(BufferedImage,width,height, BufferedImage.TYPE_BYTE_GRAY );
 for (x = 1:width)
