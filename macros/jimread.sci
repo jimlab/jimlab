@@ -1,4 +1,4 @@
- //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+  //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  //This file must be used under the terms of the CeCILL.
  //This source file is licensed as described in the file COPYING, which
  //you should have received as part of this distribution.  The terms
@@ -7,7 +7,7 @@
 
  
 
- function [im, imProperties] = jimread(imPath)
+ function [jimage] = jimread(imPath)
     if(type(imPath) == 10)
         jimport java.io.File;
         jimport javax.imageio.ImageIO;
@@ -32,29 +32,29 @@
         //The image JAVA type conditions the choice of the extracting method 
         select imType,
         case 1 then
-            [im, imProperties] = jimread_intrgb(bufferedIm, imPath);
+            [jimage] = jimread_intrgb(bufferedIm, imPath);
         case 2 then
-            [im, imProperties] = jimread_intargb(bufferedIm, imPath);
+            [jimage] = jimread_intargb(bufferedIm, imPath);
         case 3 then
-            [im, imProperties] = jimread_intargbpre(bufferedIm, imPath);
+            [jimage] = jimread_intargbpre(bufferedIm, imPath);
         case 4 then
-            [im, imProperties] = jimread_intbgr(bufferedIm, imPath);
+            [jimage] = jimread_intbgr(bufferedIm, imPath);
         case 5 then
-            [im, imProperties] = jimread_3bytebgr(bufferedIm, imPath);
+            [jimage] = jimread_3bytebgr(bufferedIm, imPath);
         case 6 then
-            [im, imProperties] = jimread_4byteabgr(bufferedIm, imPath);
+            [jimage] = jimread_4byteabgr(bufferedIm, imPath);
         case 7 then
-            [im, imProperties] = jimread_4byteabgrpre(bufferedIm, imPath);
+            [jimage] = jimread_4byteabgrpre(bufferedIm, imPath);
         case 8 then
-            [im, imProperties] = jimread_ushort565rgb(bufferedIm, imPath);
+            [jimage] = jimread_ushort565rgb(bufferedIm, imPath);
         case 9 then 
-            [im, imProperties] = jimread_ushort555rgb(bufferedIm, imPath);
+            [jimage] = jimread_ushort555rgb(bufferedIm, imPath);
         case 10 then 
-            [im, imProperties] = jimread_byteGray(bufferedIm, imPath);
+            [jimage] = jimread_byteGray(bufferedIm, imPath);
         case 11 then
-            [im, imProperties] = jimread_ushortGray(bufferedIm, imPath);
+            [jimage] = jimread_ushortGray(bufferedIm, imPath);
         case 13 then
-            [im, imProperties] = jimread_byteIndexed(bufferedIm, imPath);
+            [jimage] = jimread_byteIndexed(bufferedIm, imPath);
         else
             msg = _("%s: Unexpected image type.\n");
             error(msprintf(msg,"jimread"));
@@ -66,9 +66,9 @@
     end
 endfunction
 
-function [im, imProperties] = jimread_intrgb(bufferedIm, imPath)
+function [jimage] = jimread_intrgb(bufferedIm, imPath)
 //This sub-function reads an image from a TYPE_INT_RGB BufferedImage. It is called by the function jimread().
-//im : a WxHx3 matrix, imProperties : a tlist.
+//jimage : a mlist. The fist field 'im' is a WxHx3 matrix, the second field 'encoding' is a string, the third field 'title' is a string. 
 //bufferedIm : a Java object from BufferedImage class with type TYPE_INT_RGB, imPath : the complete image file's path.
 //More informations about the BufferedImage Class : "https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html"
     
@@ -81,7 +81,7 @@ function [im, imProperties] = jimread_intrgb(bufferedIm, imPath)
     
     jremove bufferedIm bufferedImData dataBuffer 
     
-    //decomposes the hexadecimal value of the color into the three 8-bits color components for each pixels
+    //decomposes the integer value of the color into the three 8-bits color components for each pixels
     im(:,:,1) = floor(unprocessedData./uint32(16^4));
     g = modulo(unprocessedData,uint32(16^4));
     im(:,:,2) = floor(g./uint32(16^2));
@@ -90,7 +90,7 @@ function [im, imProperties] = jimread_intrgb(bufferedIm, imPath)
     jremove unprocessedData
     
     
-    dim = [double(width) double(height) 4];
+    dim = [double(width) double(height) 3];
     try
     im = matrix(im,dim);                      //transpose matrix of the image
     im = permute(im,[2 1 3]);                 //formatting the image data 
@@ -101,15 +101,15 @@ function [im, imProperties] = jimread_intrgb(bufferedIm, imPath)
     error(msprintf(msg,"jimread"));
     end
     
-    //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height',..
-    'Type'], basename(imPath), double(height), double(width), 'RGB');
+    //creates a mlist with the image data and some properties
+    jimage = mlist(['jimage','image','encoding','title','format'], im,..
+    'rgb', basename(imPath), fileext(imPath));
     
 endfunction
 
-function [im, imProperties] = jimread_intargb(bufferedIm, imPath)
+function [jimage] = jimread_intargb(bufferedIm, imPath)
 //This sub-function reads an image from a TYPE_INT_ARGB BufferedImage. It is called by the function jimread().
-//im : a WxHx4 matrix, imProperties : a tlist.
+//jimage : a mlist. The fist field 'im' is a WxHx4 matrix, the second field 'encoding' is a string, the third field 'title' is a string.
 //bufferedIm : a Java object from BufferedImage class with type TYPE_INT_ARGB, imPath : the complete image file's path.
 //More informations about the BufferedImage Class : "https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html"
     
@@ -122,7 +122,7 @@ function [im, imProperties] = jimread_intargb(bufferedIm, imPath)
     
     jremove bufferedIm bufferedImData dataBuffer 
     
-    //decomposes the hexadecimal value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
+    //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,4) = floor(unprocessedData./uint32(16^6));
     r = modulo(unprocessedData,uint32(16^6));
     im(:,:,1) = floor(r./uint32(16^4));
@@ -143,15 +143,15 @@ function [im, imProperties] = jimread_intargb(bufferedIm, imPath)
     error(msprintf(msg,"jimread"));
     end
     
-    //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height',..
-    'Type'], basename(imPath), double(height), double(width), 'RGBA');
+    //creates a mlist with the image data and some properties
+    jimage = mlist(['jimage','image','encoding','title','format'], im,..
+    'rgba', basename(imPath), fileext(imPath));
     
 endfunction
 
-function [im, imProperties] = jimread_intargbpre(bufferedIm, imPath)
+function [jimage] = jimread_intargbpre(bufferedIm, imPath)
 //This sub-function reads an image from a TYPE_INT_ARGB_PRE BufferedImage. It is called by the function jimread().
-//im : a WxHx4 matrix, imProperties : a tlist.
+//jimage : a mlist. The fist field 'im' is a WxHx4 matrix, the second field 'encoding' is a string, the third field 'title' is a string.
 //bufferedIm : a Java object from BufferedImage class with type TYPE_INT_ARGB_PRE, imPath : the complete image file's path.
 //More informations about the BufferedImage Class : "https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html"
     
@@ -184,15 +184,15 @@ function [im, imProperties] = jimread_intargbpre(bufferedIm, imPath)
     error(msprintf(msg,"jimread"));
     end
     
-    //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height',..
-    'Type'], basename(imPath), double(height), double(width), 'RGBA');
+    //creates a mlist with the image data and some properties
+    jimage = mlist(['jimage','image','encoding','title','format'], im,..
+    'rgba', basename(imPath), fileext(imPath));
     
 endfunction
 
-function [im, imProperties] = jimread_intbgr(bufferedIm, imPath)
+function [jimage] = jimread_intbgr(bufferedIm, imPath)
 //This sub-function reads an image from a TYPE_INT_BGR BufferedImage. It is called by the function jimread().
-//im : a WxHx3 matrix, imProperties : a tlist.
+//jimage : a mlist. The fist field 'im' is a WxHx3 matrix, the second field 'encoding' is a string, the third field 'title' is a string.
 //bufferedIm : a Java object from BufferedImage class with type TYPE_INT_BGR, imPath : the complete image file's path.
 //More informations about the BufferedImage Class : "https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html"
     
@@ -205,7 +205,7 @@ function [im, imProperties] = jimread_intbgr(bufferedIm, imPath)
     
     jremove bufferedIm bufferedImData dataBuffer 
     
-    //decomposes the hexadecimal value of the color into the three 8-bits color components for each pixels
+    //decomposes the integer value of the color into the three 8-bits color components for each pixels
     im(:,:,3) = floor(r./uint32(16^4));
     g = modulo(unprocessedData,uint32(16^4));
     im(:,:,2) = floor(g./uint32(16^2));
@@ -224,15 +224,15 @@ function [im, imProperties] = jimread_intbgr(bufferedIm, imPath)
     error(msprintf(msg,"jimread"));
     end
     
-    //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height',..
-    'Type'], basename(imPath), double(height), double(width), 'RGB');
+    //creates a mlist with the image data and some properties
+    jimage = mlist(['jimage','image','encoding','title','format'], im,..
+    'rgb', basename(imPath), fileext(imPath));
     
 endfunction
 
-function [im, imProperties] = jimread_3bytebgr(bufferedIm, imPath)
+function [jimage] = jimread_3bytebgr(bufferedIm, imPath)
 //This sub-function reads an image from a TYPE_3BYTE_BGR BufferedImage. It is called by the function jimread().
-//im : a WxHx3 matrix, imProperties : a tlist.
+//jimage : a mlist. The fist field 'im' is a WxHx3 matrix, the second field 'encoding' is a string, the third field 'title' is a string.
 //bufferedIm : a Java object from BufferedImage class with type TYPE_3BYTE_BGR, imPath : the complete image file's path.
 //More informations about the BufferedImage Class : "https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html"
     
@@ -260,15 +260,15 @@ function [im, imProperties] = jimread_3bytebgr(bufferedIm, imPath)
     
     jremove unprocessedData
     
-    //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height',..
-    'Type'], basename(imPath), double(height), double(width), 'RGB');
+    //creates a mlist with the image data and some properties
+    jimage = mlist(['jimage','image','encoding','title','format'], im,..
+    'rgb', basename(imPath), fileext(imPath));
     
 endfunction
 
-function [im, imProperties] = jimread_4byteabgr(bufferedIm, imPath)             
+function [jimage] = jimread_4byteabgr(bufferedIm, imPath)             
 //This sub-function reads an image from a TYPE_4BYTE_ABGR BufferedImage. It is called by the function jimread().
-//im : a WxHx4 matrix, imProperties : a tlist.
+//jimage : a mlist. The fist field 'im' is a WxHx4 matrix, the second field 'encoding' is a string, the third field 'title' is a string.
 //bufferedIm : a Java object from BufferedImage class with type TYPE_4BYTE_ABGR, imPath : the complete image file's path.
 //More informations about the BufferedImage Class : "https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html"
 
@@ -295,15 +295,15 @@ function [im, imProperties] = jimread_4byteabgr(bufferedIm, imPath)
     
     jremove unprocessedData
     
-    //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height',..
-    'Type'], basename(imPath), double(height), double(width), 'RGBA');
+    //creates a mlist with the image data and some properties
+    jimage = mlist(['jimage','image','encoding','title','format'], im,..
+    'rgba', basename(imPath), fileext(imPath));
     
 endfunction
 
-function [im, imProperties] = jimread_4byteabgrpre(bufferedIm, imPath)
+function [jimage] = jimread_4byteabgrpre(bufferedIm, imPath)
 //This sub-function reads an image from a TYPE_4BYTE_ABGR_PRE BufferedImage. It is called by the function jimread().
-//im : a WxHx4 matrix, imProperties : a tlist.
+//jimage : a mlist. The fist field 'im' is a WxHx4 matrix, the second field 'encoding' is a string, the third field 'title' is a string.
 //bufferedIm : a Java object from BufferedImage class with type TYPE_4BYTE_ABGR_PRE, imPath : the complete image file's path.
 //More informations about the BufferedImage Class : "https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html"
     
@@ -336,15 +336,15 @@ function [im, imProperties] = jimread_4byteabgrpre(bufferedIm, imPath)
     error(msprintf(msg,"jimread"));
     end
     
-    //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height',..
-    'Type'], basename(imPath), double(height), double(width), 'RGBA');
+    //creates a mlist with the image data and some properties
+    jimage = mlist(['jimage','image','encoding','title','format'], im,..
+    'rgba', basename(imPath), fileext(imPath));
     
 endfunction
 
-function [im, imProperties] = jimread_ushort565rgb(bufferedIm, imPath)
+function [jimage] = jimread_ushort565rgb(bufferedIm, imPath)
 //This sub-function reads an image from a TYPE_USHORT_565_RGB BufferedImage. It is called by the function jimread().
-//im : a WxHx3 matrix, imProperties : a tlist.
+//jimage : a mlist. The fist field 'im' is a WxHx3 matrix, the second field 'encoding' is a string, the third field 'title' is a string.
 //bufferedIm : a Java object from BufferedImage class with type TYPE_USHORT_565_RGB, imPath : the complete image file's path.
 //More informations about the BufferedImage Class : "https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html"
     
@@ -375,15 +375,15 @@ function [im, imProperties] = jimread_ushort565rgb(bufferedIm, imPath)
     error(msprintf(msg,"jimread"));
     end
     
-    //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height',..
-    'Type'], basename(imPath), double(height), double(width), 'RGB');
+    //creates a mlist with the image data and some properties
+    jimage = mlist(['jimage','image','encoding','title','format'], im,..
+    'rgb', basename(imPath), fileext(imPath));
     
 endfunction
 
-function [im, imProperties] = jimread_ushort555rgb(bufferedIm, imPath)
+function [jimage] = jimread_ushort555rgb(bufferedIm, imPath)
 //This sub-function reads an image from a TYPE_USHORT_555_RGB BufferedImage. It is called by the function jimread().
-//im : a WxHx3 matrix, imProperties : a tlist.
+//jimage : a mlist. The fist field 'im' is a WxHx3 matrix, the second field 'encoding' is a string, the third field 'title' is a string.
 //bufferedIm : a Java object from BufferedImage class with type TYPE_USHORT_555_RGB, imPath : the complete image file's path.
 //More informations about the BufferedImage Class : "https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html"
     
@@ -414,15 +414,15 @@ function [im, imProperties] = jimread_ushort555rgb(bufferedIm, imPath)
     error(msprintf(msg,"jimread"));
     end
     
-    //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height',
-    'Type'], basename(imPath), double(height), double(width), 'RGB');
+    //creates a mlist with the image data and some properties
+    jimage = mlist(['jimage','image','encoding','title','format'], im,..
+    'rgb', basename(imPath), fileext(imPath));
     
 endfunction
 
-function [im, imProperties] = jimread_byteGray(bufferedIm, imPath)
+function [jimage] = jimread_byteGray(bufferedIm, imPath)
 //This sub-function reads an image from a TYPE_BYTE_GRAY BufferedImage. It is called by the function jimread().
-//im : a WxH matrix, imProperties : a tlist.
+//jimage : a mlist. The fist field 'im' is a WxH matrix, the second field 'encoding' is a string, the third field 'title' is a string.
 //bufferedIm : a Java object from BufferedImage class with type TYPE_BYTE_GRAY, imPath : the complete image file's path.
 //More informations about the BufferedImage Class : "https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html"
 
@@ -448,15 +448,15 @@ function [im, imProperties] = jimread_byteGray(bufferedIm, imPath)
     
     jremove unprocessedData
     
-    //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height',..
-    'Type'], basename(imPath), double(height), double(width), 'Gray');
+    //creates a mlist with the image data and some properties
+    jimage = mlist(['jimage','image','encoding','title','format'], im,..
+    'gray', basename(imPath), fileext(imPath));
     
 endfunction
 
-function [im, imProperties] = jimread_ushortGray(bufferedIm, imPath)
+function [jimage] = jimread_ushortGray(bufferedIm, imPath)
 //This sub-function reads an image from a TYPE_USHORT_GRAY BufferedImage. It is called by the function jimread().
-//im : a WxHx3 matrix, imProperties : a tlist.
+//jimage : a mlist. The fist field 'im' is a WxHx3 matrix, the second field 'encoding' is a string, the third field 'title' is a string.
 //bufferedIm : a Java object from BufferedImage class with type TYPE_USHORT_GRAY, imPath : the complete image file's path.
 //More informations about the BufferedImage Class : "https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html"
     
@@ -487,15 +487,15 @@ function [im, imProperties] = jimread_ushortGray(bufferedIm, imPath)
     error(msprintf(msg,"jimread"));
     end
     
-    //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height',..
-    'Type'], basename(imPath), double(height), double(width), 'RGB');
+    //creates a mlist with the image data and some properties
+    jimage = mlist(['jimage','image','encoding','title','format'], im,..
+    'rgb', basename(imPath), fileext(imPath));
     
 endfunction
 
-function [im, imProperties] = jimread_byteIndexed(bufferedIm, imPath)
+function [jimage] = jimread_byteIndexed(bufferedIm, imPath)
 //This sub-function reads an image from a TYPE_BYTE_INDEXED BufferedImage. It is called by the function jimread().
-//im : a WxHx4 matrix, imProperties : a tlist.
+//jimage : a mlist. The fist field 'im' is a WxHx4 matrix, the second field 'encoding' is a string, the third field 'title' is a string.
 //bufferedIm : a Java object from BufferedImage class with type TYPE_BYTE_INDEXED, imPath : the complete image file's path.
 //More informations about the BufferedImage Class : "https://docs.oracle.com/javase/7/docs/api/java/awt/image/BufferedImage.html"
     
@@ -528,10 +528,8 @@ function [im, imProperties] = jimread_byteIndexed(bufferedIm, imPath)
     error(msprintf(msg,"jimread"));
     end
     
-    //defines the image properties
-    imProperties = tlist(['ImageProperties','Title','Width','Height',..
-    'Type'], basename(imPath), double(height), double(width), 'RGBA');
+    //creates a mlist with the image data and some properties
+    jimage = mlist(['jimage','image','encoding','title','format'], im,..
+    'rgba', basename(imPath), fileext(imPath));
     
 endfunction
-
-
