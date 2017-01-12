@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
  * This file is part of the Jimlab module made for Scilab
- * Copyright (C) 2017 - ENSIM, Université du Maine - Gael Senée
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Gaël Senée
  * 
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
@@ -21,36 +21,36 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            jimdisp(data)
-			jimdisp(data,'withbox')
-			jimdisp(data,properties)
-	    	jimdisp(data,'withbox',properties)
+            jimdisp(image)
+			jimdisp(image,'box')
+			jimdisp(image,'box','info')
+			jimdisp(image,,'info')
         </synopsis>
     </refsynopsisdiv>
     <refsection>
         <title>Paramètres</title>
         <variablelist>
             <varlistentry>
-                <term>data</term>
+                <term>image</term>
                 <listitem>
                     <para>
-                        Matrice ou hypermatrice de l'image, ou chaîne de caractère donnant l'emplacement du fichier image (chemin ou URL).
+                        Matrice ou hypermatrice de l'image, ou chaîne de caractères donnant l'emplacement du fichier image (chemin ou URL).
                     </para>					
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term>properties</term>
+                <term>'box'</term>
                 <listitem>
                     <para>
-						Liste typée regroupant le titre, la largeur, la hauteur et le type de l'image pré-importée.
+						Entoure l'image d'un cadre si le paramètre est renseigné. S'il ne l'est pas, laisser un champ vide entre les virgules.
                     </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term>withbox</term>
+                <term>'info'</term>
                 <listitem>
                     <para>
-						Paramètre autorisant ou non l'affichage d'un cadre.
+						Affiche certaines propriétés de l'image si le paramètre est renseigné.
                     </para>					
                 </listitem>
             </varlistentry>
@@ -59,12 +59,11 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet d'afficher une image à partir de son chemin, d'un URL, ou d'une matrice déjà existante (créée par la fonction jimread).
+            Cette fonction permet d'afficher une image à partir de son chemin, d'un URL, ou d'une matrice déjà existante (créée par la fonction <link linkend="jimread">jimread</link>).
         </para>
         <para>
-            La liste properties rassemble : le titre de l'image sous forme d'une chaîne de caractères, sa largeur, sa longueur, son type sous forme d'une chaîne de caractères.
-            Lors de l'appel depuis un chemin ou un URL, il faut renseigner par défaut properties en tant que variable d'entrée pour le troisième argument.
-			Un cadre apparaît si la chaîne de caractère 'withbox' est présente en deuxième argument.
+            L'affichage des propriétés par la présence de l'argument 'info' comprend : le titre, le format, la taille et le type d'encodage de l'image.
+			La plupart de ces informations sont incluses dans l'objet <link linkend="jimage">jimage</link>.
         </para>
     </refsection>
     <refsection>
@@ -86,6 +85,9 @@ jimdisp(path,'withbox',properties)
         <simplelist type="inline">
             <member>
                 <link linkend="jimread">jimread</link>
+            </member>
+            <member>
+                <link linkend="jimage">jimage</link>
             </member>
             <member>
                 <link linkend="jimwrite">jimwrite</link>
