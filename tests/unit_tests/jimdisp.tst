@@ -4,29 +4,29 @@
 //you should have received as part of this distribution.  The terms
 //are also available at    
 //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
- 
- 
+
+
 // From an image file pre-loaded with jimread
 global jimlabPath
-imagePath = jimlabPath +'\help\images';
+imagePath = jimlabPath +'\help\images\logoEnsim.png';
 
-[img,imageProperties] = jimread(imagePath);
+jimage1 = jimread(imagePath);
 
-jimdisp(img);
-jimdisp(img,'withbox');
-jimdisp(img,imageProperties);
-jimdisp(img,'withbox',imageProperties);
+jimdisp(jimage1);
+jimdisp(jimage1,'box');
+jimdisp(jimage1,,'info');
+jimdisp(jimage1,'box','info');
 
 // From a path
 jimdisp(imagePath);
-jimdisp(imagePath,'withbox');
-jimdisp(imagePath,properties);
-jimdisp(imagePath,'withbox',properties);
+jimdisp(imagePath,'box');
+jimdisp(imagePath,,'info');
+jimdisp(imagePath,'box','info');
 
 // From a URL
 imageURL = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif'
 
 jimdisp(imageURL);
-jimdisp(imageURL,'withbox');
-jimdisp(imageURL,properties);
-jimdisp(imageURL,'withbox',properties);
+jimdisp(imageURL,'box');
+jimdisp(imageURL,,'info');
+jimdisp(imageURL,'box','info');
