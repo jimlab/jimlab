@@ -72,11 +72,11 @@
 // A partir d'une image pré-chargée
 global jimlabPath
 path = jimlabPath + '/help/images/logoEnsim.png';
-[image, imageProp] = jimread(path);
-jimdisp(image,'withbox',imageProp);
+image = jimread(path);
+jimdisp(image,'box','info');
 
-// A partir d'un chemin
-jimdisp(path,'withbox',properties)
+// A partir d'un chemin ou d'un URL
+jimdisp(path,'','info')
 
  ]]></programlisting>
 	</refsection>
