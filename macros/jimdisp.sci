@@ -37,7 +37,7 @@ function jimdisp(image,box,info)
         end
     end
 
-    if box == 'withbox' then
+    if box == 'box' then
         withbox()
     end
 
