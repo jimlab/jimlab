@@ -35,12 +35,16 @@
 					A string containing the	complete image file's path or an URL
 					</para>					
                 	</listitem>
+			</varlistentry>
+			<varlistentry>
 				<term>image</term> 
                 	<listitem>
                     <para>
 					A 2D or 3D matrix
 					</para>
                 	</listitem>
+			</varlistentry>
+			<varlistentry>
 				<term>imageProperties</term>
 				    <listitem>
                     <para>
