@@ -8,16 +8,20 @@
 //
 //  <-- BENCH NB RUN : 10 -->
 
-if ~atomsIsLoaded(IPD) then
-    if ~atomsIsInstalled(IPD) then
-        atomsInstall(IPD)
+try
+    if ~atomsIsLoaded('IPD') then
+            if ~atomsIsInstalled('IPD') then
+            atomsInstall('IPD')
+        end
+        atomsLoad('IPD')
     end
-    atomsLoad(IPD)
-end
+catch
+    msg = _("%s: This benchmark can not run with this OS.\n");
+    error(msprintf(msg,"bench_jimread"));
 global jimlabPath;
 path = jimlabPath + '/tests/images/logoEnsim.png';
 [image, properties] = ReadImage(path);
 
 // <-- BENCH START -->
-[image, properties] = ReadImage(path);
+image = ReadImage(path);
 // <-- BENCH END -->
