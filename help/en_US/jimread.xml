@@ -21,8 +21,7 @@
     <refsynopsisdiv>
         <title>Syntax</title>
         <synopsis>
-            image = jimread(imagePath)
-			[image, imageProperties] = jimread(imagePath)
+            jimage = jimread(imagePath)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -37,21 +36,13 @@
                 	</listitem>
 			</varlistentry>
 			<varlistentry>
-				<term>image</term> 
+				<term>jimage</term> 
                 	<listitem>
                     <para>
-					A 2D or 3D matrix
+					A mlist with type jimage
 					</para>
                 	</listitem>
 			</varlistentry>
-			<varlistentry>
-				<term>imageProperties</term>
-				    <listitem>
-                    <para>
-					A tlist which clusters the title, the width, the height and the type of the image	
-					</para>					
-                </listitem>
-            </varlistentry>
         </variablelist>
     </refsection>
     <refsection>
@@ -60,10 +51,10 @@
             This function reads an image from a file or an URL. It returns a matrix made of the image data in gray levels or an hypermatrix made of the RGB data of the image depending on the type of the input image.
 		    </para>
 		    <para>
-			The list imageProperties gathers : a string made of the image title, its width , its height and a string with its type. 
-			The 'Gray' type indicates a 2D matrix of gray levels data.
-			The 'RGB' type indicates an hypermatrix with one layer for each color (Red, green and blue). 
-			The 'RGBA' type indicates an hypermatrix with 4 layers.The last one is for the alpha channel.
+			The mlist jimage gathers : the image data in the 'image' field, the type of encoding in the 'encoding' field, the title of the image in the 'title' field and the extension of the file in the 'format' field.
+			The 'gray' type indicates a 2D matrix of gray levels data.
+			The 'rgb' type indicates an hypermatrix with one layer for each color (Red, green and blue). 
+			The 'rgba' type indicates an hypermatrix with 4 layers.The last one is for the alpha channel.
         	</para>
     </refsection>
     <refsection>
@@ -71,10 +62,10 @@
         <programlisting role="example"><![CDATA[ 
 //From a file
 path = SCI + '/contrib/jimlab/images/logoEnsim.png';
-[image, imProperties] = jimread(path);
+jimage = jimread(path);
 //From an URL
 path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
-[image, imProperties] = jimread(path);
+jimage = jimread(path);
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
@@ -85,6 +76,9 @@ path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_20
             </member>
             <member>
                 <link linkend="jimwrite">jimwrite</link>
+            </member>
+			<member>
+                <link linkend="jimage_properties">jimage_properties</link>
             </member>
         </simplelist>
     </refsection>
