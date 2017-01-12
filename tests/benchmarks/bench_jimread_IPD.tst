@@ -20,8 +20,15 @@ catch
     error(msprintf(msg,"bench_jimread"));
 global jimlabPath;
 path = jimlabPath + '/tests/images/logoEnsim.png';
-[image, properties] = ReadImage(path);
+image = ReadImage(path);
 
 // <-- BENCH START -->
 image = ReadImage(path);
 // <-- BENCH END -->
+
+if ~loaded then
+    atomsQuit('IPD')
+    if ~installed then
+        atomsRemove('IPD')
+    end
+end

@@ -9,11 +9,13 @@
 //  <-- BENCH NB RUN : 10 -->
 
 try
-    if ~atomsIsLoaded('SIVP') then
-            if ~atomsIsInstalled('SIVP') then
-            atomsInstall('SIVP')
+    if ~atomsIsLoaded('SIP') then
+            loaded=1;
+            if ~atomsIsInstalled('SIP') then
+            installed=1;
+            atomsInstall('SIP')
         end
-        atomsLoad('SIVP')
+        atomsLoad('SIP')
     end
 catch
     msg = _("%s: This benchmark can not run with this OS.\n");
@@ -27,8 +29,9 @@ image = imread(path);
 // <-- BENCH END -->
 
 if ~loaded then
-    atomsQuit('SIVP')
+    atomsQuit('SIP')
     if ~installed then
-        atomsRemove('SIVP')
+        atomsRemove('SIP')
     end
 end
+
