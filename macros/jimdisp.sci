@@ -1,121 +1,67 @@
- //Copyright (C) 2017 - ENSIM, Université du Maine - Gael SENEE
- //This file must be used under the terms of the CeCILL.
- //This source file is licensed as described in the file COPYING, which
- //you should have received as part of this distribution.  The terms
- //are also available at    
- //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+//Copyright (C) 2017 - ENSIM, Université du Maine - Gael SENEE
+//This file must be used under the terms of the CeCILL.
+//This source file is licensed as described in the file COPYING, which
+//you should have received as part of this distribution.  The terms
+//are also available at    
+//http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-//global properties
+function jimdisp(image,box,info)
 
-function jimdisp(varargin)
-
-    //Checking whether the number of arguments is valid
-    if argn(2) > 3 then
-        error('Too many arguments');
+    // Initializing default parameters
+    if exists('info') == 0 then
+    info='no';
     end
 
-    if argn(2) == 0 then
-        error('Enter a path, a URL or a matrix');
+    if exists('box') == 0 then
+    box='no';
     end
 
-    if argn(2) == 1 then
-        jimdisp_reset();
+    // Case where an image path or URL is given : the image is first
+    // loaded with jimread.
+    if type(image) == 10 then
+        jimage1=jimread(image);
+        jimreset(jimage1);
+        jimdisp_mat(jimage1)
         
-        Mat_or_path = varargin(1);
+        if info == 'info' then
+            withinfo(jimage1)
+        end
+
+    // Case where a 2D or 3D matrix is given
+    else
+        jimreset(image);
+        jimdisp_mat(image)
         
-        select type(Mat_or_path)
-        case 8 then
-            jimdisp_mat(Mat_or_path)
-        case 17 then
-            jimdisp_mat(Mat_or_path)
-        case 10 then
-            [Mat, properties] = jimread(Mat_or_path);
-            jimdisp_mat(Mat)
-        else
-        error('Wrong type of argument : please enter a path, a url or a matrix')
+        if info == 'info' then
+            withinfo(image)
         end
     end
 
-    if argn(2) == 2 then
-        
-        jimdisp_reset()
-        
-        Mat_or_path = varargin(1);
-               
-        tmp = varargin(2);
-        select type(varargin(2))
-        case 16 then            
-            properties = varargin(2);
-
-            select type(Mat_or_path)
-            case 8 then
-                jimdisp_mat(Mat_or_path)
-                jimdisp_prop(Mat_or_path,properties)
-            case 17 then
-                jimdisp_mat(Mat_or_path)
-                jimdisp_prop(Mat_or_path,properties)
-            case 10 then
-                [Mat, properties] = jimread(Mat_or_path);
-                jimdisp_mat(Mat)
-                jimdisp_prop(Mat,properties)
-            end
-        case 10 then
-            withbox = varargin(2)
-            
-            select type(Mat_or_path)
-            case 8 then
-                jimdisp_mat(Mat_or_path)
-            case 17 then
-                jimdisp_mat(Mat_or_path)
-            case 10 then
-                [Mat, properties] = jimread(Mat_or_path);
-                jimdisp_mat(Mat)
-            end
-            jimdisp_box(withbox);
-        end
-    end
-
-    if argn(2) == 3 then
-        
-        jimdisp_reset()
-        
-        Mat_or_path = varargin(1);
-        withbox = varargin(2);
-        properties = varargin(3);
-
-        select type(Mat_or_path)
-        case 8 then
-            jimdisp_mat(Mat_or_path)
-            jimdisp_prop(Mat_or_path,properties);
-        case 17 then
-            jimdisp_mat(Mat_or_path)
-            jimdisp_prop(Mat_or_path,properties);
-        case 10 then
-            [Mat, properties] = jimread(Mat_or_path);
-            jimdisp_mat(Mat)
-            jimdisp_prop(Mat,properties);
-        end
-        jimdisp_box(withbox);
+    if box == 'withbox' then
+        withbox()
     end
 
 endfunction
 
-function jimdisp_mat(Mat)
+function jimdisp_mat(image)
+    // This subfonction changes some parameters of the graphic
+    // environment in order to display the image properly.
 
     //Opening of the current parameters of the graphic environment
     ax = gca();
     fig = gcf();
 
     //Size of the matrix
-    height = size(Mat,1);
-    width = size(Mat,2);
+    [height,width] = jimagesize(image);
 
     //Setting of the display
-    Matplot(Mat)
+    Matplot(image.image)
+    ax.box="off";
     ax.axes_visible = ["off","off","off"];
     ax.isoview = "on"; // Squared pixels
     ax.auto_scale = "on";
     ax.tight_limits = "on"; 
+    fig.figure_name = image.title+image.format;
     
     // Centering of the displayed image (depends on the size)
     if height > 100 then
@@ -126,35 +72,51 @@ function jimdisp_mat(Mat)
 
 endfunction
 
-function jimdisp_box(withbox)
+function withbox()
+    // This subfonction changes a parameter of the graphic
+    // environment in order to display a box around the image.
 
-    // Opening of the current parameters of the graphic environment
     ax = gca();
-    fig = gcf();
-
-    if withbox == 'withbox' then
-        ax.box = "on";
-    else
-        ax.box = "off";
-    end
+    ax.box = "on";
 
 endfunction
 
-function jimdisp_prop(Mat,properties)
-
+function withinfo(image)
+    // This subfonction changes some parameters of the graphic
+    // environment in order to display some properties included in
+    // the jimage object fields.
+    
     // Opening of the current parameters of the graphic environment
     ax = gca();
-    fig = gcf();
 
     // Size of the matrix
-    height = size(Mat,1);
-    width = size(Mat,2);
-    ax.title.text = properties.Title+"  -  "+"Size : "+string(width)+" x " +string(height)+"  -  "+"Type : "+properties.Type;
-    fig.figure_name = properties.Title;
+    [height,width] = jimagesize(image);
+    
+    ax.title.text = image.title+image.format+"  -  "+"Type : "..
+    +image.encoding+"  -  "+"Size : "+string(height)+" x "+string(width);
 
 endfunction
 
-function jimdisp_reset()
-    fig = gcf()
-    clf(fig,'clear') // Reset of the paramaters of the graphic environment
+function [height,width] = jimagesize(jimage)
+    // This subfonction returns the size of the matrix which is
+    // in the first field of the jimage object. It is the
+    // size of the image you want to display.
+    
+    height = size(jimage.image,1);
+    width = size(jimage.image,2);
+endfunction
+
+function jimreset(image)
+    // This subfonction clears the figure by resetting some
+    // parameters of the graphic environment and plotting a white
+    // box the size of the image.
+    
+    [height,width] = jimagesize(image);
+    Matplot(8*ones(height+10,width+10));
+
+    // Opening of the current parameters of the graphic environment
+    ax = gca();
+    fig = gcf();
+    
+    ax.title.text = ''
 endfunction
