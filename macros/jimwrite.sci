@@ -141,7 +141,7 @@ endfunction
         for (x = 1:width)
             for(y =1:height) 
 
-            A = jnewInstance(Color, double(imageMat(x,y)),1);
+            A = jnewInstance(Color, double(imageMat(x,y)),1,1,1);
             R = jinvoke(A,"getRGB");
             jinvoke(im,"setRGB", int(y-1), int(x-1), int(R));
            end
