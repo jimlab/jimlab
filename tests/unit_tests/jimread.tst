@@ -5,18 +5,32 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  
-//From an URL
+//From a URL
 url = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
 im = jimread(url);
 
-//From a file
+//From a file, no error
 global jimlabPath
-root = 
-path = jimlabPath + '/tests/images/logoEnsim.png';
-RGBA = jimread(path);
+root = jimlabPath + '\tests\images\noError';
+fileList = dir(root)
+nameList = fileList.name
+fileNumber = size(nameList)
+fileNumber = fileNumber(1)
 
-path = jimlabPath + '/tests/images/logoEnsim_rgb.png';
-RGB = jimread(path);
+for i = 1:fileNumber
+    path = root + '\' + nameList(i);
+    im = jimread(path);
+end
 
-path = jimlabPath + '/tests/images/logoEnsim_gray.png';
-gray = jimread(path);
+//From a file, error
+root = jimlabPath + '\tests\images\error';
+fileList = dir(root);
+nameList = fileList.name;
+fileNumber = size(nameList);
+fileNumber = fileNumber(1);
+msg = 'jimread: Unexpected image type.'
+
+for j = 1:fileNumber
+    path = root + '\' + nameList(i);
+    assert_checkerror(im = jimread(path),msg);
+end
