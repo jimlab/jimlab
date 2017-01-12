@@ -116,7 +116,6 @@ function jimreset(image)
 
     // Opening of the current parameters of the graphic environment
     ax = gca();
-    fig = gcf();
     
     ax.title.text = ''
 endfunction
