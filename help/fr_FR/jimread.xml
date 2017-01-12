@@ -21,8 +21,7 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            image = jimread(imagePath)
-			[image, imageProperties] = jimread(imagePath)
+            jimage = jimread(imagePath)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -37,21 +36,13 @@
                 </listitem>
 			</varlistentry>
 			<varlistentry>
-				<term>image</term> 
+				<term>jimage</term> 
                 <listitem>
                     <para>
-						Une matrice 2D ou 3D 
+						Une mlist de type jimage 
 					</para>
                 </listitem>
 			</varlistentry>
-			<varlistentry>
-				<term>imageProperties</term>
-				<listitem>
-                    <para>
-						Une liste typée	regroupant le titre, la largeur, la hauteur et le type de l'image lue		
-					</para>					
-                </listitem>
-            </varlistentry>
         </variablelist>
     </refsection>
     <refsection>
@@ -61,10 +52,10 @@
 			Elle retourne une matrice contenant les données de l'image en niveaux de gris ou une hypermatrice contenant les données RGB de l'image en fonction du type de l'image en entrée.
 		</para>
 		<para>
-			La liste imageProperties rassemble : le titre de l'image sous forme d'une chaîne de caractères, sa largeur, sa longueur, son type sous forme d'une chaîne de caracères.
-			Le type 'Gray' correspond à une matrice 2D pour les images en niveaux de gris. 
-			Le type 'RGB' correspond à une hypermatrice à trois couches. 
-			Le type 'RGBA' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
+			La mlist jimage rassemble : les données de l'image dans le champ 'image', le type d'encodage dans le champ 'encoding', le titre de l'image dans le champ 'title' et le format de l'image dans le champ 'format'. 
+			Le type 'gray' correspond à une matrice 2D pour les images en niveaux de gris. 
+			Le type 'rgb' correspond à une hypermatrice à trois couches. 
+			Le type 'rgba' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
         </para>
     </refsection>
     <refsection>
@@ -73,11 +64,11 @@
 //A partir d'un fichier
 global jimlabPath
 path = jimlabPath + '/help/images/logoEnsim.png';
-[im, imProp] = jimread(path);
+jimage = jimread(path);
 
 //A partir d'une URL
 path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
-[image, imProperties] = jimread(path);
+jimage = jimread(path);
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
@@ -88,6 +79,9 @@ path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_20
             </member>
             <member>
                 <link linkend="jimwrite">jimwrite</link>
+            </member>
+			<member>
+                <link linkend="jimage_properties">jimage_properties</link>
             </member>
         </simplelist>
     </refsection>
