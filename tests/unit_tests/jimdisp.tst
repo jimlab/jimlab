@@ -25,7 +25,7 @@ jimdisp(imagePath,,'info');
 jimdisp(imagePath,'box','info');
 
 // From a URL
-imageURL = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif'
+imageURL = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
 
 jimdisp(imageURL);
 jimdisp(imageURL,'box');
