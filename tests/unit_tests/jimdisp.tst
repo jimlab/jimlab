@@ -5,6 +5,7 @@
 //are also available at    
 //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
+// <-- NO CHECK REF -->
 
 // From an image file pre-loaded with jimread
 global jimlabPath
