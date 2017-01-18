@@ -16,7 +16,7 @@
 		xml:lang="fr" xml:id="jimdisp">
     <refnamediv>
         <refname>jimdisp</refname>
-        <refpurpose>Affiche une image à partir d'une matrice d'image, d'un chemin de fichier ou d'un URL.</refpurpose>
+        <refpurpose>Affiche une image à partir d'un objet <link linkend="jimage">jimage</link>, d'un chemin de fichier ou d'un URL.</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
@@ -34,7 +34,7 @@
                 <term>image</term>
                 <listitem>
                     <para>
-                        Matrice ou hypermatrice de l'image, ou chaîne de caractères donnant l'emplacement du fichier image (chemin ou URL).
+                        Objet <link linkend="jimage">jimage</link>, ou chaîne de caractères donnant l'emplacement du fichier image (chemin ou URL).
                     </para>					
                 </listitem>
             </varlistentry>
@@ -42,7 +42,7 @@
                 <term>'box'</term>
                 <listitem>
                     <para>
-						Entoure l'image d'un cadre si le paramètre est renseigné. S'il ne l'est pas, laisser un champ vide entre les virgules.
+						Entoure l'image d'un cadre si le paramètre est renseigné.
                     </para>
                 </listitem>
             </varlistentry>
@@ -59,11 +59,11 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet d'afficher une image à partir de son chemin, d'un URL, ou d'une matrice déjà existante (créée par la fonction <link linkend="jimread">jimread</link>).
+            Cette fonction permet d'afficher une image à partir de son chemin, d'un URL, ou d'un objet <link linkend="jimage">jimage</link> préalablement créé par la fonction <link linkend="jimread">jimread</link>.
         </para>
         <para>
             L'affichage des propriétés par la présence de l'argument 'info' comprend : le titre, le format, la taille et le type d'encodage de l'image.
-			La plupart de ces informations sont incluses dans l'objet <link linkend="jimage">jimage</link>.
+			Ces informations, à l'exception de la taille, sont stockées dans les champs de l'objet <link linkend="jimage">jimage</link>.
         </para>
     </refsection>
     <refsection>
