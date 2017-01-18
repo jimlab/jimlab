@@ -12,7 +12,7 @@ function jimwrite(jimage,imagePath,Format,Name)
     
      
      if((ndims(imageMat) ~= 4)&(ndims(imageMat) ~= 3)&(ndims(imageMat) ~= 2)) // Verify if imageMat is a 2D,3D or 4D matrix 
-            error('Argument imageMat is not a matrix')
+            error('Argument image exctracted from jimage argument is not a matrix')
      end
     
     
