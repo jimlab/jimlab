@@ -1,1 +1,71 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of the Jimlab module made for Scilab
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+ * 
+ * This file must be used under the terms of the CeCILL.
+ * This source file is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution.  The terms
+ * are also available at    
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ *
+ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
+		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+		xml:lang="fr" xml:id="jimage">
+    <refnamediv>
+        <refname>jimage</refname>
+        <refpurpose>Objet de type mlist spécifique au module <emphasis role="bold">jimlab</emphasis></refpurpose>
+    </refnamediv>
+    <refsection>
+        <title>Description</title>
+        <para>
+            Cet objet est une liste typée décrivant une image. Ces champs sont : 
+            <variablelist>
+                <varlistentry>
+                    <term>image</term>
+                    <listitem>
+                        La matrice ou l'hypermatrice des valeurs des pixels.
+                    
+        </para>
+		<para>
+			La mlist jimage rassemble : les données de l'image dans le champ 'image', le type d'encodage dans le champ 'encoding', le titre de l'image dans le champ 'title' et le format de l'image dans le champ 'format'. 
+			Le type 'gray' correspond à une matrice 2D pour les images en niveaux de gris. 
+			Le type 'rgb' correspond à une hypermatrice à trois couches. 
+			Le type 'rgba' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
+        </para>
+    </refsection>
+    <refsection>
+        <title>Exemples</title>
+        <programlisting role="example"><![CDATA[ 
+//A partir d'un fichier
+global jimlabPath
+path = jimlabPath + '/help/images/logoEnsim.png';
+jimage = jimread(path);
+//A partir d'une URL
+path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
+jimage = jimread(path);
+ ]]></programlisting>
+	</refsection>
+    <refsection role="see also">
+        <title>Voir Aussi</title>
+        <simplelist type="inline">
+            <member>
+                <link linkend="jimread">jimread</link>
+            </member>
+            <member>
+                <link linkend="jimwrite">jimwrite</link>
+            </member>
+        </simplelist>
+    </refsection>
+    <refsection>
+        <title>Historique</title>
+        <revhistory>
+            <revision>
+                <revnumber>2017-05</revnumber>
+                <revremark>Publication initiale du module Jimlab</revremark>
+            </revision>
+        </revhistory>
+    </refsection>
+</refentry>
