@@ -27,14 +27,36 @@
                     <term>image</term>
                     <listitem>
                         La matrice ou l'hypermatrice des valeurs des pixels.
-                    
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+                    <term>encoding</term>
+                    <listitem>
+                        Le type d'encodage de l'image.
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+                    <term>title</term>
+                    <listitem>
+                        Le titre de l'image.
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+                    <term>format</term>
+                    <listitem>
+                        L'extension du fichier image.
+					</listitem>
+				</varlistentry>
+            </variablelist>        
         </para>
 		<para>
-			La mlist jimage rassemble : les données de l'image dans le champ 'image', le type d'encodage dans le champ 'encoding', le titre de l'image dans le champ 'title' et le format de l'image dans le champ 'format'. 
-			Le type 'gray' correspond à une matrice 2D pour les images en niveaux de gris. 
-			Le type 'rgb' correspond à une hypermatrice à trois couches. 
-			Le type 'rgba' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
+			Le type d'encodage 'gray' correspond à une matrice 2D pour les images en niveaux de gris. 
+			Le type d'encodage'rgb' correspond à une hypermatrice à trois couches. 
+			Le type d'encodage 'rgba' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
         </para>
+		<para>
+			Le fonction <function>size</function>()	est utilisable avec l'objet <code>jimage</code>. Elle renvoie la hauteur et la largeur de l'image.
+		</para>
     </refsection>
     <refsection>
         <title>Exemples</title>
@@ -43,9 +65,8 @@
 global jimlabPath
 path = jimlabPath + '/help/images/logoEnsim.png';
 jimage = jimread(path);
-//A partir d'une URL
-path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
-jimage = jimread(path);
+jimage
+dim = size(jimage)
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
