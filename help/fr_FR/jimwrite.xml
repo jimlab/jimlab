@@ -36,26 +36,26 @@
 			<para>
 		<listitem>
 
-     <term>imagePath</term>
-     <listitem>
-     <para>
-				Une chaîne de caractère contenant le chemin du répertoir où l'image doit être enregistrer. Si ce paramètre n'est pas 					précisé, l'image sera enregistée dans le répertoire courant.			
-			</para>					
+   		<term>imagePath</term>
+    		<listitem>
+   		<para>
+			Une chaîne de caractère contenant le chemin du répertoir où l'image doit être enregistrer. Si ce paramètre n'est pas 					précisé, l'image sera enregistée dans le répertoire courant.			
+		</para>					
                 </listitem>
 				
 		<term>Format<term>
 		<listitem>
-			<para>
-				Une chaine de caractère donnant le format dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif', 'bmp' 					et 'wbmp' sont disponibles. Si le format n'est pas précisé, l'image sera enregistrée au format JPEG (jpg). 
-			<para>
-		<listitem>
+		<para>
+			Une chaine de caractère donnant le format dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif', 'bmp' 					et 'wbmp' sont disponibles. Si le format n'est pas précisé, l'image sera enregistrée au format JPEG (jpg). 
+		</para>
+		</listitem>
 
 		<term>Name<term>
 		<listitem>
 			<para>
-				Une chaine de caractère dommant le noms sous lequel l'image sera enregistrée. Si aucun nom n'est précisé, l'image sera 					enregistrée sous le nom "No_name".
-			<para>
-		<listitem>
+			Une chaine de caractère dommant le noms sous lequel l'image sera enregistrée. Si aucun nom n'est précisé, l'image sera 					enregistrée sous le nom "No_name".
+			</para>
+		</listitem>
 
 		
             </varlistentry>
