@@ -22,9 +22,9 @@
         <title>Syntaxes</title>
         <synopsis>
            jimwrite(image,imagePath)
-			jimwrite(image,imagePath,Format)
-			jimwrite(image,imagePath,,Name)
-	        jimwrite(image,imagePath,Format,Name)
+	   jimwrite(image,imagePath,Format)
+	   jimwrite(image,imagePath,,Name)
+	   jimwrite(image,imagePath,Format,Name)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
