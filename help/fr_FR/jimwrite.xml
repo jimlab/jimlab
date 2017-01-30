@@ -22,7 +22,9 @@
         <title>Syntaxes</title>
         <synopsis>
            jimwrite(image,imagePath)
-	         jimwrite(image,imagePath,Format,Name)
+			jimwrite(image,imagePath,Format)
+			jimwrite(image,imagePath,,Name)
+	        jimwrite(image,imagePath,Format,Name)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -32,28 +34,32 @@
 		<term>image</term>
 		<listitem>
 			<para>
-			Une mliste contenant l'image, son nom, son encodage et son format 
+			Une mliste jimage contenant l'image, son nom, son encodage et son format. Cet objet est crée par le fonction jimread
 			</para>
 		</listitem>
 
    		<term>imagePath</term>
     		<listitem>
    		<para>
-			Une chaîne de caractère contenant le chemin du répertoir où l'image doit être enregistrer. Si ce paramètre n'est pas 					précisé, l'image sera enregistée dans le répertoire courant.			
+			Une chaîne de caractère contenant le chemin du répertoir où l'image doit être enregistrer. Si ce paramètre n'est pas 
+			précisé, l'image sera enregistée dans le répertoire courant. Attention, le chemin ne doit pas contenir le noms du fichier image 
+			à crée. Le noms de l'image sera précisé avec "Name"
 		</para>					
                 </listitem>
 				
 		<term>Format</term>
 		<listitem>
 		<para>
-			Une chaine de caractère donnant le format dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif', 'bmp' 					et 'wbmp' sont disponibles. Si le format n'est pas précisé, l'image sera enregistrée au format JPEG (jpg). 
+			Une chaine de caractère donnant le format dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif', 'bmp' 					
+			et 'wbmp' sont disponibles. Si le format n'est pas précisé, l'image sera enregistrée au format JPEG (jpg). 
 		</para>
 		</listitem>
 
 		<term>Name</term>
 		<listitem>
 			<para>
-			Une chaine de caractère dommant le noms sous lequel l'image sera enregistrée. Si aucun nom n'est précisé, l'image sera 					enregistrée sous le nom "No_name".
+			Une chaine de caractère dommant le noms sous lequel l'image sera enregistrée. Si aucun nom n'est précisé, l'image sera 					
+			enregistrée sous le nom "No_name".
 			</para>
 		</listitem>
 
@@ -65,10 +71,12 @@
     <refsection>
         <title>Description</title>
         	<para>
-            		Cette fonction créé et enregistre une image à partir d'une mliste jimage. Il est possible d'enregistrer des images RGB, RGBA et en 				nuance de gris.
+            	Cette fonction créé et enregistre une image à partir d'une mliste jimage. Il est possible d'enregistrer des images RGB, RGBA et en 				
+				nuance de gris.
 		</para>
 		<para>
-			La liste jimage rassemble : l'hypermatrice représentant l'image, le titre de l'image sous forme d'une chaîne de caractères, son 			format d'origine, et son type d'encodage				sous forme d'une chaîne de caracères.
+			La liste jimage rassemble : l'hypermatrice représentant l'image, le titre de l'image sous forme d'une chaîne de caractères, son 			
+			format d'origine, et son type d'encodage sous forme d'une chaîne de caracères.
 			L'encodage 'Gray' correspond à une matrice 2D pour les images en niveaux de gris. 
 			L'encodage 'RGB' correspond à une hypermatrice à trois couches. 
 			L'encodage 'RGBA' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
@@ -82,15 +90,15 @@
 			path = jimlabPath + '/help/images/logoEnsim.png';
 			jimage_original = jimread(path);// On charge l'image original
 			path = jimlabPath + '/help/images'; // Redéfinition du chemin
-			jimdisp(jimage_original,,info);// Affichage de l'image original
+			jimdisp(jimage_original,,'info');// Affichage de l'image original
 			
 			jimwrite(jimage_original,path,'gif','logoEnsim_Copie'); // Enregistrement de la copie au format GIF
 			jimwrite(jimage_original,path,,'logoEnsim_Copie'); // Eregistrement sans chagement du format			
 			// Affichage des images copiées
 			path1 = jimlabPath + '/help/images/logoEnsim_Copie.gif'; 
 			path2 = jimlabPath + '/help/images/logoEnsim_Copie.png';
-			jimdisp(path1,,info);
-			jimdisp(path2,,info);
+			jimdisp(path1,,'info');
+			jimdisp(path2,,'info');
 	 ]]></programlisting>
 	</refsection>
     <refsection role="see also">
