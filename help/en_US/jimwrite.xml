@@ -21,7 +21,10 @@
     <refsynopsisdiv>
         <title>Syntax</title>
         <synopsis>
-          
+          jimwrite(image,imagePath)
+	   jimwrite(image,imagePath,Format)
+	   jimwrite(image,imagePath,,Name)
+	   jimwrite(image,imagePath,Format,Name)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -38,14 +41,16 @@
                 <term>imagePath</term>
                 <listitem>
                    	<para>
-				A character string containing the path of the directory where the image might be saved. If unpresent, the default path is 					the current directory's path.
+				A character string containing the path of the directory where the image might be saved. If unpresent, the default path is 					
+				the current directory's path.
 			</para>					
                 </listitem>
 				
 		<term>Format</term>
 		<listitem>
 			<para>
-				A character string containing the image's format. Only 'jpg', 'png', 'gif', 'bmp' and 'wbmp' are supported. If the format 					isn't declared, the default format is the current format. 
+				A character string containing the image's format. Only 'jpg', 'png', 'gif', 'bmp' and 'wbmp' are supported. If the format 					
+				isn't declared, the current format will be used. 
 			</para>
 		</listitem>
 
@@ -79,15 +84,15 @@
 			path = jimlabPath + '/help/images/logoEnsim.png';
 			jimage_original = jimread(path);// Charging of the original image file
 			path = jimlabPath + '/help/images'; // New path definition
-			jimdisp(jimage_original,,info);// Display of the original image
+			jimdisp(jimage_original,,'info');// Display of the original image
 			
 			jimwrite(jimage_original,path,'gif','logoEnsim_Copie'); // Save the copy under GIF format
 			jimwrite(jimage_original,path,,'logoEnsim_Copie'); // Saving the copy under original format			
 			// Display the copied images
 			path1 = jimlabPath + '/help/images/logoEnsim_Copie.gif'; 
 			path2 = jimlabPath + '/help/images/logoEnsim_Copie.png';
-			jimdisp(path1,,info);
-			jimdisp(path2,,info);
+			jimdisp(path1,,'info');
+			jimdisp(path2,,'info');
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
