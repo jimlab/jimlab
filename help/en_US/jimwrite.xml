@@ -33,8 +33,8 @@
 		<listitem>
 			<para>
 				A mlist containing : the matrix of the image, the name, the format and encoding of the image
-			<para>
-		<listitem>
+			</para>
+		</listitem>
 
                 <term>imagePath</term>
                 <listitem>
@@ -47,15 +47,15 @@
 		<listitem>
 			<para>
 				A character string containing the image's format. Only 'jpg', 'png', 'gif', 'bmp' and 'wbmp' are supported. If the format 					isn't declared, the default format is the current format. 
-			<para>
-		<listitem>
+			</para>
+		</listitem>
 
 		<term>Name<term>
 		<listitem>
 			<para>
 				A character string containing the image's title. If the title isn't declared, the default name is the current name. 
-			<para>
-		<listitem>
+			</para>
+		</listitem>
 
             </varlistentry>
         </variablelist>
