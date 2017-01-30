@@ -21,8 +21,7 @@
     <refsynopsisdiv>
         <title>Syntax</title>
         <synopsis>
-           jimwrite(image,imagePath)
-	   jimwrite(image,imagePath,Format,Name)
+          
         </synopsis>
     </refsynopsisdiv>
     <refsection>
