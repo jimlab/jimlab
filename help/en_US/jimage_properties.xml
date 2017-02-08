@@ -50,9 +50,9 @@
             </variablelist>        
         </para>
 		<para>
-			Le type d'encodage 'gray' correspond à une matrice 2D pour les images en niveaux de gris. 
-			Le type d'encodage'rgb' correspond à une hypermatrice à trois couches. 
-			Le type d'encodage 'rgba' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
+			The 'gray' encoding type indicates a 2D matrix of gray levels data.
+			The 'rgb' encoding type indicates an hypermatrix with one layer for each color (Red, green and blue). 
+			The 'rgba' encoding type indicates an hypermatrix with 4 layers.The last one is for the alpha channel.
         </para>
 		<para>
 			<function>size</function>()	is usable with a <code>jimage</code> object. It returns the width and the height of the image.
@@ -80,11 +80,11 @@ dim = size(jimage)
         </simplelist>
     </refsection>
     <refsection>
-        <title>Historique</title>
+        <title>History</title>
         <revhistory>
             <revision>
                 <revnumber>2017-05</revnumber>
-                <revremark>Publication initiale du module Jimlab</revremark>
+                <revremark>Initial publication of Jimlab module</revremark>
             </revision>
         </revhistory>
     </refsection>
