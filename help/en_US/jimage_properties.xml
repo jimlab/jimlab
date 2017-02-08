@@ -44,7 +44,7 @@
 				<varlistentry>
                     <term>format</term>
                     <listitem>
-                        L'extension du fichier image.
+                        The file extension.
 					</listitem>
 				</varlistentry>
             </variablelist>        
@@ -55,13 +55,12 @@
 			Le type d'encodage 'rgba' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
         </para>
 		<para>
-			Le fonction <function>size</function>()	est utilisable avec l'objet <code>jimage</code>. Elle renvoie la hauteur et la largeur de l'image.
+			<function>size</function>()	is usable with a <code>jimage</code> object. It returns the width and the height of the image.
 		</para>
     </refsection>
     <refsection>
-        <title>Exemples</title>
+        <title>Examples</title>
         <programlisting role="example"><![CDATA[ 
-//A partir d'un fichier
 global jimlabPath
 path = jimlabPath + '/help/images/logoEnsim.png';
 jimage = jimread(path);
@@ -70,7 +69,7 @@ dim = size(jimage)
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
-        <title>Voir Aussi</title>
+        <title>See Also</title>
         <simplelist type="inline">
             <member>
                 <link linkend="jimread">jimread</link>
