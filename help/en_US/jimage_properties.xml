@@ -16,29 +16,29 @@
 		xml:lang="en" xml:id="jimage">
     <refnamediv>
         <refname>jimage</refname>
-        <refpurpose>Objet de type mlist spécifique au module <emphasis role="bold">jimlab</emphasis></refpurpose>
+        <refpurpose>Object with type mlist created for <emphasis role="bold">jimlab</emphasis></refpurpose>
     </refnamediv>
     <refsection>
         <title>Description</title>
         <para>
-            Cet objet est une liste typée décrivant une image. Ces champs sont : 
+            This object is a typed list which describe an image. Its fields are : 
             <variablelist>
                 <varlistentry>
                     <term>image</term>
                     <listitem>
-                        La matrice ou l'hypermatrice des valeurs des pixels.
+                        The matrix or hypermatrix with the values of each pixels.
 					</listitem>
 				</varlistentry>
 				<varlistentry>
                     <term>encoding</term>
                     <listitem>
-                        Le type d'encodage de l'image.
+                        The encoding type of the image.
 					</listitem>
 				</varlistentry>
 				<varlistentry>
                     <term>title</term>
                     <listitem>
-                        Le titre de l'image.
+                        The image title.
 					</listitem>
 				</varlistentry>
 				<varlistentry>
