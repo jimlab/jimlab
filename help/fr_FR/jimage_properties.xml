@@ -75,6 +75,9 @@ dim = size(jimage)
             <member>
                 <link linkend="jimread">jimread</link>
             </member>
+			<member>
+                <link linkend="jimread">jimdisp</link>
+			</member>
             <member>
                 <link linkend="jimwrite">jimwrite</link>
             </member>
