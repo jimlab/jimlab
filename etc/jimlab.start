@@ -64,13 +64,15 @@ function jimlablib = startModule()
     //addModulePreferences(TOOLBOX_TITLE, root_tlbx, etc_tlbx + "toolbox_skeleton_preferences.xml");
   //end
   
-  global jimlabPath;
-  if isdef('jimlablib') then
-    [m, mp] = libraryinfo('jimlablib');
-    jimlabPath = pathconvert(fullpath(mp + "../"), %t, %t);
-  end
+
 
 endfunction
 
 jimlablib = startModule();
+
+if isdef('jimlablib') then
+    [m, mp] = libraryinfo('jimlablib');
+    jimlabPath = pathconvert(fullpath(mp + "../"), %t, %t);
+end
+  
 clear startModule; // remove startModule on stack
