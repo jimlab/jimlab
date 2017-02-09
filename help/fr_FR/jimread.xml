@@ -57,6 +57,9 @@
 			Le type 'rgb' correspond à une hypermatrice à trois couches. 
 			Le type 'rgba' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
         </para>
+		<para>
+			Les types MIME png, bmp, gif et jpg sont supporté par <function>jimread</function>() à l'exception des images encodées en CMJN.
+		</para>
     </refsection>
     <refsection>
         <title>Exemples</title>
