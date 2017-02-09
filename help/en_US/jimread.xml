@@ -56,6 +56,9 @@
 			The 'rgb' type indicates an hypermatrix with one layer for each color (Red, green and blue). 
 			The 'rgba' type indicates an hypermatrix with 4 layers.The last one is for the alpha channel.
         	</para>
+			<para>
+				MIME-types png, bmp, gif and jpg are handled by <function>jimread</function>() besides images encoded in CMYK.
+			</para>
     </refsection>
     <refsection>
         <title>Examples</title>
