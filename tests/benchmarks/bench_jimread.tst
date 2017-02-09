@@ -10,9 +10,9 @@
 
 global jimlabPath;
 path = jimlabPath + '/tests/images/logoEnsim.png';
-[image, properties] = jimread(path);
+jimage = jimread(path);
 
 // <-- BENCH START -->
-[image, properties] = jimread(path);
+jimage = jimread(path);
 // <-- BENCH END -->
 
