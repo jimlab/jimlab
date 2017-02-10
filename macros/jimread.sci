@@ -1,4 +1,4 @@
-  //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+ //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  //This file must be used under the terms of the CeCILL.
  //This source file is licensed as described in the file COPYING, which
  //you should have received as part of this distribution.  The terms
@@ -96,8 +96,7 @@ function [jimage] = jimread_intrgb(bufferedIm, imPath)
     im = permute(im,[2 1 3]);                 //formatting the image data 
     im = uint8(im);                           //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to ..
-                                                increase it).\n");
+    msg = _("%s: No more memory.\n");
     error(msprintf(msg,"jimread"));
     end
     
@@ -138,8 +137,7 @@ function [jimage] = jimread_intargb(bufferedIm, imPath)
     im = permute(im,[2 1 3]);                 //formatting the image data 
     im = uint8(im);                           //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to ..
-                                                increase it).\n");
+    msg = _("%s: No more memory.\n");
     error(msprintf(msg,"jimread"));
     end
     
@@ -179,8 +177,7 @@ function [jimage] = jimread_intargbpre(bufferedIm, imPath)
     im = permute(im,[2 1 3]);        //formatting the image data 
     im = uint8(im);                  //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to ..
-                                                increase it).\n");
+    msg = _("%s: No more memory.\n");
     error(msprintf(msg,"jimread"));
     end
     
@@ -219,8 +216,7 @@ function [jimage] = jimread_intbgr(bufferedIm, imPath)
     im = permute(im,[2 1 3]);                 //formatting the image data 
     im = uint8(im);                           //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to ..
-                                                increase it).\n");
+    msg = _("%s: No more memory.\n");
     error(msprintf(msg,"jimread"));
     end
     
@@ -253,8 +249,7 @@ function [jimage] = jimread_3bytebgr(bufferedIm, imPath)
     im = matrix(im',dim);             //transpose matrix of the image
     im = permute(im,[2 1 3]);         //formatting the image data 
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to ..
-                                                increase it).\n");
+    msg = _("%s: No more memory.\n");
     error(msprintf(msg,"jimread"));
     end
     
@@ -288,8 +283,7 @@ function [jimage] = jimread_4byteabgr(bufferedIm, imPath)
     im = matrix(im',dim);             //transpose matrix of the image
     im = permute(im,[2 1 3]);         //formatting the image data 
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to ..
-                                                increase it).\n");
+    msg = _("%s: No more memory.\n");
     error(msprintf(msg,"jimread"));
     end
     
@@ -331,8 +325,7 @@ function [jimage] = jimread_4byteabgrpre(bufferedIm, imPath)
     im = permute(im,[2 1 3]);        //formatting the image data 
     im = uint8(im);                  //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to ..
-                                                increase it).\n");
+    msg = _("%s: No more memory.\n");
     error(msprintf(msg,"jimread"));
     end
     
@@ -370,8 +363,7 @@ function [jimage] = jimread_ushort565rgb(bufferedIm, imPath)
     im = permute(im,[2 1 3]);        //formatting the image data 
     im = uint8(im);                  //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to ..
-                                                increase it).\n");
+    msg = _("%s: No more memory.\n");
     error(msprintf(msg,"jimread"));
     end
     
@@ -409,8 +401,7 @@ function [jimage] = jimread_ushort555rgb(bufferedIm, imPath)
     im = permute(im,[2 1 3]);        //formatting the image data 
     im = uint8(im);                  //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to ..
-                                                increase it).\n");
+    msg = _("%s: No more memory.\n");
     error(msprintf(msg,"jimread"));
     end
     
@@ -441,8 +432,7 @@ function [jimage] = jimread_byteGray(bufferedIm, imPath)
     im = permute(im,[2 1 3]);         //formatting the image data 
     im = uint8(im);                   //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to ..
-                                                increase it).\n");
+    msg = _("%s: No more memory.\n");
     error(msprintf(msg,"jimread"));
     end
     
@@ -482,8 +472,7 @@ function [jimage] = jimread_ushortGray(bufferedIm, imPath)
     im = permute(im,[2 1 3]);        //formatting the image data 
     im = uint8(im);                  //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to ..
-                                                increase it).\n");
+    msg = _("%s: No more memory.\n");
     error(msprintf(msg,"jimread"));
     end
     
@@ -523,8 +512,7 @@ function [jimage] = jimread_byteIndexed(bufferedIm, imPath)
     im = permute(im,[2 1 3]);        //formatting the image data 
     im = uint8(im);                  //convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
-    msg = _("%s: stack size exceeded (Use stacksize function to ..
-                                                increase it).\n");
+    msg = _("%s: No more memory.\n");
     error(msprintf(msg,"jimread"));
     end
     
