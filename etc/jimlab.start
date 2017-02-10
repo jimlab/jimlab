@@ -70,9 +70,13 @@ endfunction
 
 jimlablib = startModule();
 
+//Path of the module
 if isdef('jimlablib') then
     [m, mp] = libraryinfo('jimlablib');
     jimlabPath = pathconvert(fullpath(mp + "../"), %t, %t);
 end
-  
+
+//Vesion of Scilab used
+v = getversion("scilab");
+
 clear startModule; // remove startModule on stack
