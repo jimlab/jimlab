@@ -20,6 +20,5 @@ function quitModule()
 
 endfunction
 
-
 quitModule();
-clear quitModule;
+clear quitModule jimlabPath v;
