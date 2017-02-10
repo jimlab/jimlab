@@ -64,7 +64,10 @@ function jimlablib = startModule()
     //addModulePreferences(TOOLBOX_TITLE, root_tlbx, etc_tlbx + "toolbox_skeleton_preferences.xml");
   //end
   
-
+  v = getversion("scilab");
+  if v(1) == 5 then
+      stacksize("max");
+  end
 
 endfunction
 
@@ -76,7 +79,6 @@ if isdef('jimlablib') then
     jimlabPath = pathconvert(fullpath(mp + "../"), %t, %t);
 end
 
-//Vesion of Scilab used
-v = getversion("scilab");
+
 
 clear startModule; // remove startModule on stack
