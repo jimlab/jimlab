@@ -6,7 +6,7 @@
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
 function jimwrite(jimage,imageMat,imagePath,Format,Name,Encoding)
- 
+ //javaclasspath('/usr/share/scilab//modules/jvm/jar/org.scilab.modules.jvm.jar');
     if(isdef(["imageMat"]))
         Mat = imageMat;
         arg_jimage = 0;
@@ -17,7 +17,7 @@ function jimwrite(jimage,imageMat,imagePath,Format,Name,Encoding)
         arg_jimage = 0;
         error('Not any jimage or matrix argument have been definded')
     end
-    
+    disp(arg_jimage);
     
      
      if((ndims(Mat) ~= 4)&(ndims(Mat) ~= 3)&(ndims(Mat) ~= 2)) // Verify if Mat is a 2D,3D or 4D matrix 
@@ -60,6 +60,8 @@ function jimwrite(jimage,imageMat,imagePath,Format,Name,Encoding)
      elseif(arg_jimage) 
          
          Name = jimage.title;
+         warning('Invalid Name detected, Jimage''s name will be used :'..
+          + Name)
      else
          Name = 'No_name';
          warning('Undefineded name, No_name will be used')     
@@ -80,13 +82,20 @@ function jimwrite(jimage,imageMat,imagePath,Format,Name,Encoding)
         warning('Invalid encoding detected, jimage encoding will be used : '..
          + jimage.encoding)
     elseif(invalid_Encoding)
-        warning('Invalid encoding detected, jimage encoding will be used : '..
-         + jimage.encoding)  //the default value is 'jpg'
-        Encoding = 'rgb';
+          Encoding = 'rgb';//the default value is 'rgb'
         warning('Not any encoding have been definded. rgb will be used')
          warning('Transparency wont be efficient')
      end
      
+     if(Encoding == 'rgba')
+         if((Format == 'jpg')|(Format == 'bmp'))
+             warning(Encoding +' is not aviable for '+ Format ..
+             + ' type. png will be used')
+             Format = 'png';
+         end
+     end
+     
+            
     jimport java.io.File;// Importe the java classes
     jimport javax.imageio.ImageIO; 
     jimport java.awt.image.BufferedImage;
@@ -94,7 +103,7 @@ function jimwrite(jimage,imageMat,imagePath,Format,Name,Encoding)
  
     
      
-    imagePath = imagePath + "\" + Name + "." + Format; // This code create the final path used by Java methode 'write'
+    imagePath = imagePath + "/" + Name + "." + Format; // This code create the final path used by Java methode 'write'
    
 
     f = jnewInstance(File,imagePath);// Transfome Scilab object into Java object
@@ -129,31 +138,20 @@ endfunction
         height = size(Mat,1);
         im = jnewInstance(BufferedImage,width,height, BufferedImage.TYPE_INT_RGB );
         tic
-        disp(int(Mat(50,50,3)))
-        if(size(Mat,3) == 3)
-            for (l = 1:height)
-                for(c =1:width) 
-                    A = jnewInstance(Color, double(Mat(l,c,1)),..
-                    double(Mat(l,c,2)),double(Mat(l,c,3)),1);
-                    R = jinvoke(A,"getRGB");
-                    jinvoke(im,"setRGB", int(c-1), int(l-1), int(R));
-                end
-            end
-        end
-       if(size(Mat,3) == 4)
-            for (l = 1:height)
-                for(c =1:width) 
-                    A = jnewInstance(Color, double(Mat(l,c,1)),..
-                    double(Mat(l,c,2)),double(Mat(l,c,3)),1);
-                    R = jinvoke(A,"getRGB");
-                   
-                    jinvoke(im,"setRGB", int(c-1), int(l-1), int(R));
-                end
-            end
-        end
-        
-            
-        toc
+       jcompile("Imageio",["public class im{"
+       "public static void ima(int width, int height, float Mat, BufferedImage im){"
+       "int l = 0;"
+       "int c= 0;"
+       " for (l = 1; l <= height; l++){"
+            "for(c =1; c<= width; c++){"
+               "Color A =  new Color( Mat(l,c,1),Mat(l,c,2),Mat(l,c,3),1);"
+               "/*R = getRGB(A);*/"
+               "im = SetRGB((c-1),(l-1),getRGB(A));"
+                "}"
+         "}"
+         "return im;"
+        "}}"]);
+         toc
 disp('RGB')
         Sa = ImageIO.write(im, Form, f);
 
@@ -173,17 +171,28 @@ disp('RGB')
          width = size(Mat,2);  // Definition of image's size
         height = size(Mat,1);
         im = jnewInstance(BufferedImage,width,height, BufferedImage.TYPE_INT_ARGB );
-        for (x = 1:height)
-            for(y =1:width) 
+        if(ndims(Mat) == 3)
+            for (l = 1:height)
+                for(c =1:width) 
+                    A = jnewInstance(Color, double(Mat(l,c,1)),..
+                    double(Mat(l,c,2)),double(Mat(l,c,3)),255);
+                    R = jinvoke(A,"getRGB");
+                    jinvoke(im,"setRGB", int(c-1), int(l-1), int(R));
+                end
+            end
+        else
+            for (x = 1:height)
+                for(y =1:width) 
     
-                A = jnewInstance(Color, double(Mat(x,y,1)),.. 
-                double(Mat(x,y,2)), double(Mat(x,y,3)),..
-                double(Mat(x,y,4)));
-                R = jinvoke(A,"getRGB");
-                jinvoke(im,"setRGB", int(y-1), int(x-1), int(R));
-    
-           end
+                    A = jnewInstance(Color, double(Mat(x,y,1)),.. 
+                    double(Mat(x,y,2)), double(Mat(x,y,3)),..
+                    double(Mat(x,y,4)));
+                    R = jinvoke(A,"getRGB");
+                    jinvoke(im,"setRGB", int(y-1), int(x-1), int(R));
+                   end
+            end
         end
+        
 disp('RGBA')
         Sa = ImageIO.write(im, Form, f);
 
@@ -200,11 +209,10 @@ disp('RGBA')
       
          width = size(Mat,2);  // Definition of image's size
          height = size(Mat,1);
-         disp( width); disp(height);
          im = jnewInstance(BufferedImage,width,height, BufferedImage.TYPE_BYTE_GRAY );
         for (x = 1:width)
             for(y =1:height) 
-            A = jnewInstance(Color, double(Mat(l,y)),1,1,1);
+            A = jnewInstance(Color, double(Mat(x,y)),128,128,128);
             R = jinvoke(A,"getRGB");
             jinvoke(im,"setRGB", int(y-1), int(x-1), int(R));
            end
