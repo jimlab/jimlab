@@ -6,6 +6,7 @@
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
 function image = jiminvert(image)
+// If a jimage argument is used, input and output arguments must be the same.
  
 
     if(type(image) == 1)
@@ -24,7 +25,7 @@ function image = jiminvert(image)
     
     
      if((ndims(im) == 4)|(ndims(im) == 3))// Verify if Mat is a 2D,3D or 4D matrix 
-        Encoding = 'rgb';
+        Encoding = 'rgb'; // Alpha channel isn't modified
      elseif(ndims(im) == 2)
         Encoding = 'gray';
       else    
@@ -54,7 +55,7 @@ endfunction
 // It is called by the function jiminvert.
 // im : The wxhx3 3D matrix, convMat : the matrix used for convertion 
 
-      im(:,:,1) = abs(convMat - im(:,:,1));   
+      im(:,:,1) = abs(convMat - im(:,:,1)); // Convertion algorithm  
       im(:,:,2) = abs(convMat - im(:,:,2));
       im(:,:,3) = abs(convMat - im(:,:,3));  
       convertedImage = im;
@@ -68,7 +69,6 @@ endfunction
 // It is called by the function jiminvert.
 // im : The wxh 2D matrix, convMat : the matrix used for convertion 
       
-      im(:,:) = abs(convMat - im(:,:));   
-      convertedImage =  im;
+      convertedImage = convMat - im;
          
     endfunction
