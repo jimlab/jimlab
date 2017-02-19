@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of the Jimlab module made for Scilab
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Nicolas AEGERTER
+ * 
+ * This file must be used under the terms of the CeCILL.
+ * This source file is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution.  The terms
+ * are also available at    
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ *
+ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
+		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+		xml:lang="fr" xml:id="jiminvert">
+    <refnamediv>
+        <refname>jiminvert</refname>
+        <refpurpose>Inverse les couleurs d'une image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Syntaxes</title>
+        <synopsis>
+           Modimage = jimwrite(image)
+	   </synopsis>
+    </refsynopsisdiv>
+    <refsection>
+        <title>Arguments</title>
+        <variablelist>
+            <varlistentry>
+		<term>image</term>
+		<listitem>
+			<para>
+			Une mliste jimage contenant l'image, son nom, son encodage et son format. Cet objet est crée par le fonction jimread. L'argument 				image peut aussi être un hyper-matrice 1, 3 ou 4 couches représentant une image RGB ou en nuance de gris
+			</para>
+		</listitem>
+
+   		<term>Modimage</term>
+    		<listitem>
+   		<para>
+			Modimage est soit un objet jimage, soit une hyper-matice qui représente l'image modifiée par jiminvert. Modimage doit être du même 				type que l'image placer en argument d'entrée de la fonction.  
+		</para>					
+                </listitem>
+				
+		
+		
+            </varlistentry>
+		
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Description</title>
+        	<para>
+            		Cette fonction inverse les couleurs d'une image représentenée par un objet jimage ou une hyper-matrice placée en paramètre.
+		</para>
+		<para>
+			Pour une image RGB, chaques nouvelle couleur sera calculé à l'aide de la formule "NewColor = 255 - OriginalColor".
+			De même, une martice une couche représentant une image en niveau de gris sera transformé celon la même formule/ L'image résultant 				sera donc le négatif de l'original.
+        </para>
+    </refsection>
+    <refsection>
+        <title>Exemples</title>
+        <programlisting role="example"><![CDATA[
+ 			// Avec un objet jimage
+			global jimlabPath
+			path = jimlabPath + '/help/images/logoEnsim.png';
+			jimage_original = jimread(path);// On charge l'image original
+			jimdisp(jimage_original,,'info');// Affichage de l'image original
+			
+			jimage_modified = jiminvert(jimage_original);// Inverssion de l'image
+			jimdisp(jimage_modified,,'info'); // Affichage de l'image modifiée
+			
+			// Avec une hyper-matrice
+			path = jimlabPath + '/help/images/mat.data'; // Impotation de ma matrice
+			jimdisp(mat); 
+			mat_modified = jiminvert(mat); // Invertion de la matrice
+			jimdisp(mat_modified); // Affichage de la matrice modifiée
+			
+	 ]]></programlisting>
+	</refsection>
+    <refsection role="see also">
+        <title>Voir Aussi</title>
+        <simplelist type="inline">
+            <member>
+                <link linkend="jimdisp">jimdisp</link>
+            </member>
+            <member>
+                <link linkend="jimread">jimread</link>
+            </member>
+	    <member>
+                <link linkend="jimage">jimage</link>
+	    </member>
+        </simplelist>
+    </refsection>
+    <refsection>
+        <title>Historique</title>
+        <revhistory>
+            <revision>
+                <revnumber>2017-05</revnumber>
+                <revremark>Publication initiale du module Jimlab</revremark>
+            </revision>
+        </revhistory>
+    </refsection>
+</refentry>
+
