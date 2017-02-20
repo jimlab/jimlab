@@ -11,22 +11,27 @@
                                         typeof(jimage) == "uint8") 
         jim = typeof(jimage) == "jimage"
         dim = size(jimage)
+        N = dim(1)*dim(2)
         gray = length(dim) == 2
         
+        //Case of a matrix with gray levels
         if gray & ~jim
+            //Calcul of the cumulated histogram
             x = [0:1:256]
             data = double(jimage)
             [cf, ind] = histc(x, data, normalization = %t)
+            //cf2(1)=cf(1);
+            //colorMap(1) = 255*cf2(1)
             tmp = 0
-            data = string(data)
             for i = 1:length(cf)
                 tmp = tmp + cf(i)
-                cf(i) = 255*tmp
-                tmp2 = string(ind(i))
-                tmp3 = string(cf(i))
-                equalizedJimage = strsubst(data, tmp2, tmp3)
+                newLevel(i) = tmp*255
             end
-            equalizedJimage = strtod(equalizedJimage)
+            for i = 1:dim(1)
+                for j = 1:dim(2)
+                    equalizedJimage(i,j) = newLevel(ind(i,j))
+                end
+            end
             equalizedJimage = uint8(equalizedJimage)
         end
      else
@@ -34,4 +39,4 @@
         or %s expected.\n");
         error(msprintf(msg,"jimhistEqual",1,"uint8","hypermet"));
      end
-     endfunction
+ endfunction
