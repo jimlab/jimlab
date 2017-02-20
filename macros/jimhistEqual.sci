@@ -16,7 +16,64 @@
         
         //Case of a matrix with gray levels
         if gray & ~jim
-            equalizedJimage = jimhistEqual_algo(jimage);
+            [newLevel, ind] = jimhistEqual_level(jimage);
+            //each pixel is assiciated with its new level
+            for i = 1:dim(1)
+                for j = 1:dim(2)
+                    equalizedJimage(i,j) = newLevel(ind(i,j))
+                end
+            end
+            //convertion into 8-bits unsigned intergers
+            equalizedJimage = uint8(equalizedJimage)
+        end
+        
+        //case of an object jimage with type of encoding 'gray'
+        if gray & jim
+            [newLevel, ind] = jimhistEqual_level(jimage.image);
+            //each pixel is assiciated with its new level
+            for i = 1:dim(1)
+                for j = 1:dim(2)
+                    equalizedImage(i,j) = newLevel(ind(i,j))
+                end
+            end
+            //convertion into 8-bits unsigned intergers
+            equalizedImage = uint8(equalizedImage)
+            equalizedJimage = mlist(['jimage','image','encoding','title',..
+                'format'], equalizedImage,jimage.encoding , jimage.title, ..
+                                                            jimage.format);
+        end
+        
+        //Case of a hypermatrix with RGB levels
+        if ~gray & ~jim
+            [newLevel, ind] = jimhistEqual_level(jimage);
+            //each pixel is assiciated with its new level
+            for i = 1:dim(1)
+                for j = 1:dim(2)
+                    for k = 1:dim(3)
+                        equalizedJimage(i,j,k) = newLevel(ind(i,j,k))
+                    end
+                end
+            end
+            //convertion into 8-bits unsigned intergers
+            equalizedJimage = uint8(equalizedJimage)
+        end
+        
+        //case of an object jimage with type of encoding 'rgb' or 'rgba'
+        if ~gray jim
+            [newLevel, ind] = jimhistEqual_level(jimage);
+            //each pixel is assiciated with its new level
+            for i = 1:dim(1)
+                for j = 1:dim(2)
+                    for k = 1:dim(3)
+                        equalizedImage(i,j,k) = newLevel(ind(i,j,k))
+                    end
+                end
+            end
+            //convertion into 8-bits unsigned intergers
+            equalizedImage = uint8(equalizedImage)
+            equalizedJimage = mlist(['jimage','image','encoding','title',..
+                'format'], equalizedImage,jimage.encoding , jimage.title, ..
+                                                            jimage.format);
         end 
      else
         msg = _("%s: Argument #%d: M-list or encoded integer(s) of type (%s) ..
@@ -25,12 +82,12 @@
      end
  endfunction
 
-function [equalizedIm] = jimhistEqual_algo(im)
-//This sub-function computes the algorithme of a histogram equalization. It is used by the function jimhistEqual()
-//equalizedIm : a 2D matrix representing the level of each pixel of the input matrix after histogram equalization
+function [newLevel, ind] = jimhistEqual_level(im)
+//This sub-function returns the new levels of an image after histogram equalisation and the indice of each pixel. It is used by the function jimhistEqual()
+//newLevel : an array with the new levels
+//ind : The indice of each pixel
 //im : a 2D matrix with the level of each pixel of an image from 0 to 255
 
-    //new levels are calculated
     x = [0:1:256]
     data = double(im)
     [cf, ind] = histc(x, data, normalization = %t)
@@ -40,12 +97,4 @@ function [equalizedIm] = jimhistEqual_algo(im)
         newLevel(i) = tmp*255
     end
     
-    //each pixel is assiciated with its new level
-    for i = 1:dim(1)
-        for j = 1:dim(2)
-            equalizedJimage(i,j) = newLevel(ind(i,j))
-        end
-    end
-    //convertion into 8-bits unsigned intergers
-    equalizedJimage = uint8(equalizedJimage)
 endfunction
