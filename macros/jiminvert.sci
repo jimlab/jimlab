@@ -5,7 +5,7 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-function image = jiminvert(image)
+function Mod_image = jiminvert(image)
 // If a jimage argument is used, input and output arguments must be the same.
  
 
@@ -42,9 +42,9 @@ function image = jiminvert(image)
     end
    
    if(arg_jimage)
-       image.image = convertedImage;
+       Modimage.image = convertedImage;
    else
-       image =  convertedImage;
+       Modimage =  convertedImage;
    end
    
 endfunction
