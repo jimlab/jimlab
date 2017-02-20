@@ -16,27 +16,36 @@
         
         //Case of a matrix with gray levels
         if gray & ~jim
-            //Calcul of the cumulated histogram
-            x = [0:1:256]
-            data = double(jimage)
-            [cf, ind] = histc(x, data, normalization = %t)
-            //cf2(1)=cf(1);
-            //colorMap(1) = 255*cf2(1)
-            tmp = 0
-            for i = 1:length(cf)
-                tmp = tmp + cf(i)
-                newLevel(i) = tmp*255
-            end
-            for i = 1:dim(1)
-                for j = 1:dim(2)
-                    equalizedJimage(i,j) = newLevel(ind(i,j))
-                end
-            end
-            equalizedJimage = uint8(equalizedJimage)
-        end
+            equalizedJimage = jimhistEqual_algo(jimage);
+        end 
      else
         msg = _("%s: Argument #%d: M-list or encoded integer(s) of type (%s) ..
         or %s expected.\n");
         error(msprintf(msg,"jimhistEqual",1,"uint8","hypermet"));
      end
  endfunction
+
+function [equalizedIm] = jimhistEqual_algo(im)
+//This sub-function computes the algorithme of a histogram equalization. It is used by the function jimhistEqual()
+//equalizedIm : a 2D matrix representing the level of each pixel of the input matrix after histogram equalization
+//im : a 2D matrix with the level of each pixel of an image from 0 to 255
+
+    //new levels are calculated
+    x = [0:1:256]
+    data = double(im)
+    [cf, ind] = histc(x, data, normalization = %t)
+    tmp = 0
+    for i = 1:length(cf)
+        tmp = tmp + cf(i)
+        newLevel(i) = tmp*255
+    end
+    
+    //each pixel is assiciated with its new level
+    for i = 1:dim(1)
+        for j = 1:dim(2)
+            equalizedJimage(i,j) = newLevel(ind(i,j))
+        end
+    end
+    //convertion into 8-bits unsigned intergers
+    equalizedJimage = uint8(equalizedJimage)
+endfunction
