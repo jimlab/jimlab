@@ -10,7 +10,11 @@
      if (typeof(jimage) == "jimage" | typeof(jimage) == "hypermat" | ..
                                         typeof(jimage) == "uint8") 
         jim = typeof(jimage) == "jimage"
-        dim = size(jimage)
+        if jim
+            dim = size(jimage.image)
+        else 
+            dim = size(jimage)
+        end
         N = dim(1)*dim(2)
         gray = length(dim) == 2
         
@@ -29,7 +33,8 @@
         
         //case of an object jimage with type of encoding 'gray'
         if gray & jim
-            [newLevel, ind] = jimhistEqual_level(jimage.image);
+            im = jimage.image
+            [newLevel, ind] = jimhistEqual_level(im);
             //each pixel is assiciated with its new level
             for i = 1:dim(1)
                 for j = 1:dim(2)
@@ -45,11 +50,12 @@
         
         //Case of a hypermatrix with RGB levels
         if ~gray & ~jim
-            [newLevel, ind] = jimhistEqual_level(jimage);
+            level = (jimage(:,:,1) + jimage(:,:,1) + jimage(:,:,1))/3
+            [newLevel, ind] = jimhistEqual_level(level);
             //each pixel is assiciated with its new level
             for i = 1:dim(1)
                 for j = 1:dim(2)
-                    for k = 1:dim(3)
+                    for k = 1:3
                         equalizedJimage(i,j,k) = newLevel(ind(i,j,k))
                     end
                 end
@@ -59,12 +65,14 @@
         end
         
         //case of an object jimage with type of encoding 'rgb' or 'rgba'
-        if ~gray jim
-            [newLevel, ind] = jimhistEqual_level(jimage);
+        if ~gray & jim
+            im = jimage.image
+            level = (im(:,:,1) + im(:,:,1) + im(:,:,1))/3
+            [newLevel, ind] = jimhistEqual_level(level);
             //each pixel is assiciated with its new level
             for i = 1:dim(1)
                 for j = 1:dim(2)
-                    for k = 1:dim(3)
+                    for k = 1:3
                         equalizedImage(i,j,k) = newLevel(ind(i,j,k))
                     end
                 end
