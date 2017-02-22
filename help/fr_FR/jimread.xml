@@ -65,7 +65,6 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 //A partir d'un fichier
-global jimlabPath
 path = jimlabPath + '/help/images/logoEnsim.png';
 jimage = jimread(path);
 
