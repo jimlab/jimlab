@@ -12,7 +12,7 @@ url = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_201
 im = jimread(url);
 
 //From a file, no error
-global jimlabPath
+
 root = jimlabPath + '\tests\images\noError';
 fileList = dir(root)
 nameList = fileList.name
