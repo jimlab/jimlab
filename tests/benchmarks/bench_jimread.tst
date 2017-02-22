@@ -8,7 +8,6 @@
 //
 //  <-- BENCH NB RUN : 10 -->
 
-global jimlabPath;
 path = jimlabPath + '/tests/images/logoEnsim.png';
 jimage = jimread(path);
 
