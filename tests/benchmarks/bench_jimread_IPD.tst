@@ -18,7 +18,7 @@ try
 catch
     msg = _("%s: This benchmark can not run with this OS.\n");
     error(msprintf(msg,"bench_jimread"));
-global jimlabPath;
+end
 path = jimlabPath + '/tests/images/logoEnsim.png';
 image = ReadImage(path);
 
