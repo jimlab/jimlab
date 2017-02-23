@@ -56,7 +56,7 @@
             for i = 1:dim(1)
                 for j = 1:dim(2)
                     for k = 1:3
-                        equalizedJimage(i,j,k) = newLevel(ind(i,j,k))
+                        equalizedJimage(i,j,k) = newLevel(im(i,j,k))
                     end
                 end
             end
@@ -73,7 +73,7 @@
             for i = 1:dim(1)
                 for j = 1:dim(2)
                     for k = 1:3
-                        equalizedImage(i,j,k) = newLevel(ind(i,j,k))
+                        equalizedImage(i,j,k) = newLevel(im(i,j,k))
                     end
                 end
             end
@@ -106,3 +106,4 @@ function [newLevel, ind] = jimhistEqual_level(im)
     end
     
 endfunction
+
