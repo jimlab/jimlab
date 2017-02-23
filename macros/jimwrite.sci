@@ -6,18 +6,21 @@
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
 function jimwrite(jimage,imageMat,imagePath,Format,Name,Encoding)
- //javaclasspath('/usr/share/scilab//modules/jvm/jar/org.scilab.modules.jvm.jar');
-    if(isdef(["imageMat"]))
+ 
+     if(isdef(["jimage"]))
+        arg_jimage = 1;
+        if(~(typeof(jimage) == 'jimage'))
+          arg_jimage = 0;
+        end
+        Mat = jimage.image;
+     elseif(isdef(["imageMat"]))
         Mat = imageMat;
         arg_jimage = 0;
-    elseif(isdef(["jimage"]))
-        arg_jimage = 1;
-        Mat = jimage.image;
     else
         arg_jimage = 0;
         error('Not any jimage or matrix argument have been definded')
     end
-    disp(arg_jimage);
+    
     
      
      if((ndims(Mat) ~= 4)&(ndims(Mat) ~= 3)&(ndims(Mat) ~= 2)) // Verify if Mat is a 2D,3D or 4D matrix 
