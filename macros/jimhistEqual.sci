@@ -22,8 +22,8 @@
         if gray & ~jim
             [newLevel, ind] = jimhistEqual_level(jimage);
             //each pixel is assiciated with its new level
-            for i = 1:dim(1)
-                for j = 1:dim(2)
+            for i = 1:dim(1)-1
+                for j = 1:dim(2)-1
                     equalizedJimage(i,j) = newLevel(ind(i,j))
                 end
             end
@@ -33,11 +33,11 @@
         
         //case of an object jimage with type of encoding 'gray'
         if gray & jim
-            im = jimage.image
+            im = uint16(jimage.image)
             [newLevel, ind] = jimhistEqual_level(im);
             //each pixel is assiciated with its new level
-            for i = 1:dim(1)
-                for j = 1:dim(2)
+            for i = 1:dim(1)-1
+                for j = 1:dim(2)-1
                     equalizedImage(i,j) = newLevel(ind(i,j))
                 end
             end
@@ -52,11 +52,12 @@
         if ~gray & ~jim
             level = (jimage(:,:,1) + jimage(:,:,1) + jimage(:,:,1))/3
             [newLevel, ind] = jimhistEqual_level(level);
+            ind = uint16(jimage)+1
             //each pixel is assiciated with its new level
-            for i = 1:dim(1)
-                for j = 1:dim(2)
+            for i = 1:dim(1)-1
+                for j = 1:dim(2)-1
                     for k = 1:3
-                        equalizedJimage(i,j,k) = newLevel(im(i,j,k))
+                        equalizedJimage(i,j,k) = newLevel(ind(i,j,k))
                     end
                 end
             end
@@ -69,11 +70,12 @@
             im = jimage.image
             level = (im(:,:,1) + im(:,:,1) + im(:,:,1))/3
             [newLevel, ind] = jimhistEqual_level(level);
+            ind = uint16(im)+1
             //each pixel is assiciated with its new level
-            for i = 1:dim(1)
-                for j = 1:dim(2)
-                    for k = 1:3
-                        equalizedImage(i,j,k) = newLevel(im(i,j,k))
+            for k = 1:3
+                for i = 1:dim(1)-1
+                    for j = 1:dim(2)-1
+                        equalizedImage(i,j,k) = newLevel(ind(i,j,k));
                     end
                 end
             end
