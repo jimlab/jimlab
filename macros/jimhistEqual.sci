@@ -72,13 +72,30 @@
             [newLevel, ind] = jimhistEqual_level(level);
             ind = uint16(im)+1
             //each pixel is assiciated with its new level
-            for k = 1:3
-                for i = 1:dim(1)-1
-                    for j = 1:dim(2)-1
-                        equalizedImage(i,j,k) = newLevel(ind(i,j,k));
-                    end
-                end
-            end
+            eqImage = jcompile("eqImage",..
+            ["public class eqImage {"
+            "public static double[][][] fill(int width, int height, int layers, double newLevel[], int[][][] ind) {"
+            "   double[][][] out = new double[width][height][layers];"
+            "   for (int k = 1; k <= layers; k++) {"
+            "       for (int i = 1; i < width; i++) {"
+            "          for (int j = 1; j < height; j++) {"
+            "               out[i][j][k] = newLevel[ind[i][j][k]];"
+            "               }"
+            "           }"
+            "       }"
+            "   return out;"
+            "   }"
+            "}"]);
+            
+            newLevel = newLevel(:)';
+            equalizedImage = eqImage.fill(dim(1), dim(2), 3, newLevel, ind);
+            //for k = 1:3
+                //for i = 1:dim(1)-1
+                    //for j = 1:dim(2)-1
+                        //equalizedImage(i,j,k) = newLevel(ind(i,j,k));
+                    //end
+                //end
+            //end
             //convertion into 8-bits unsigned intergers
             equalizedImage = uint8(equalizedImage)
             equalizedJimage = mlist(['jimage','image','encoding','title',..
@@ -108,4 +125,5 @@ function [newLevel, ind] = jimhistEqual_level(im)
     end
     
 endfunction
+
 
