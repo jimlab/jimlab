@@ -16,22 +16,23 @@
 		xml:lang="fr" xml:id="jimwrite">
     <refnamediv>
         <refname>jimwrite</refname>
-        <refpurpose>Ecrit une image dans un répertoire à partir d'une mlist jimage</refpurpose>
+        <refpurpose>Ecrit une image dans un répertoire à partir d'une mlist jimage ou d'une hyper-matrice</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-           jimwrite(image,imagePath)
-	   jimwrite(image,imagePath,Format)
-	   jimwrite(image,imagePath,,Name)
-	   jimwrite(image,imagePath,Format,Name)
+           jimwrite(jimage,,imagePath)
+	   jimwrite(jimage,,imagePath,Format)
+	   jimwrite(jimage,,imagePath,Format,Name)
+	   jimwrite(jimage,,imagePath,Format,Name,Encoding)
+	   jimwrite(,Matrix,imagePath,Format,Name,Encoding)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
         <title>Arguments</title>
         <variablelist>
             <varlistentry>
-		<term>image</term>
+		<term>jimage</term>
 		<listitem>
 			<para>
 			Une mliste jimage contenant l'image, son nom, son encodage et son format. Cet objet est crée par le fonction jimread
