@@ -138,19 +138,21 @@ endfunction
         height = size(Mat,1);
         im = jnewInstance(BufferedImage,width,height, BufferedImage.TYPE_INT_RGB );
         tic
-       jcompile("Imageio",["public class im{"
-       "public static void ima(int width, int height, float Mat, BufferedImage im){"
+       jcompile("Ima",["public class Ima{"
+       "public static int CstrImage(int width, int height, int[][][] Mat, int image){"
        "int l = 0;"
        "int c= 0;"
+       "int im;"
        " for (l = 1; l <= height; l++){"
             "for(c =1; c<= width; c++){"
-               "Color A =  new Color( Mat(l,c,1),Mat(l,c,2),Mat(l,c,3),1);"
-               "/*R = getRGB(A);*/"
-               "im = SetRGB((c-1),(l-1),getRGB(A));"
+               "int A = java.awt.Color.Color( Mat[l][c][1],Mat[l][c][2],Mat[l][c][3],1);"
+               
+               "im = setRGB((c-1),(l-1),getRGB(A));"
                 "}"
          "}"
          "return im;"
         "}}"]);
+        im = Ima.CstrImage(width,height,Mat,im);
          toc
 disp('RGB')
         Sa = ImageIO.write(im, Form, f);
@@ -223,5 +225,7 @@ disp('gray')
          jremove f im A Form R;
     
     endfunction
+
+    
 
     
