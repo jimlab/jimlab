@@ -88,7 +88,8 @@
             "}"]);
             
             newLevel = newLevel(:)';
-            equalizedImage = eqImage.fill(dim(1), dim(2), 3, newLevel, ind);
+            jind = jwrap(ind);
+            equalizedImage = eqImage.fill(dim(1), dim(2), 3, newLevel, jind);
             //for k = 1:3
                 //for i = 1:dim(1)-1
                     //for j = 1:dim(2)-1
