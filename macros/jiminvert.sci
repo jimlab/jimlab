@@ -6,7 +6,7 @@
 //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
 function Mod_image = jiminvert(image)
-// If a jimage argument is used, input and output arguments must be the same.
+// If a jimage argument is used, will be a jimage object with the same properties than input jimage.
  
     if(type(image) == 1) // Testing aruments's type
         arg_jimage = 0;
