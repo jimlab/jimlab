@@ -55,7 +55,7 @@ endfunction
 function convertedImage = jiminvertRgb(im,convMat)
 // This sub-function invert an image definded by a 3D or 4D rgb matrix.
 // It is called by the function jiminvert.
-// im : The wxhx3 3D matrix, convMat : the matrix used for convertion 
+// im : The wxhx3 or wxhx4 3D or 4D matrix, convMat : the matrix used for convertion 
 
       im(:,:,1) = convMat - im(:,:,1); // Convertion algorithm  
       im(:,:,2) = convMat - im(:,:,2);
