@@ -72,8 +72,9 @@
 			
 			jimage_modified = jiminvert(jimage_original);// Inverssion de l'image
 			jimdisp(jimage_modified,,'info'); // Affichage de l'image modifiée
-			
+
 			// Avec une hyper-matrice
+
 			path = jimlabPath + '/help/images/mat.data'; // Impotation de la matrice
 			load(path);
 			jimdisp(mat); 
