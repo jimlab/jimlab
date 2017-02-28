@@ -81,7 +81,10 @@
 			L'encodage 'Gray' correspond à une matrice 2D pour les images en niveaux de gris. 
 			L'encodage 'RGB' correspond à une hypermatrice à trois couches. 
 			L'encodage 'RGBA' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
-			Cette liste est fournie par la fonction jimread. 
+			Cette liste est fournie par la fonction jimread.
+			
+			Lorsque un objet jimage est placer en paramètre d'entrée de la fonction jimwrite, l'image sera enregistrée avec les
+			paramètres de type, d'encodage et le nom contenus dans l'objet jimage 
         </para>
     </refsection>
     <refsection>
