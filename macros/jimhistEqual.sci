@@ -88,8 +88,10 @@
             "}"]);
             
             newLevel = newLevel(:)';
-            jind = jwrap(ind);
-            equalizedImage = eqImage.fill(dim(1), dim(2), 3, newLevel, jind);
+            jwrap(ind(:,:,1))
+            jwrap(ind(:,:,2))
+            jwrap(ind(:,:,3))
+            equalizedImage = eqImage.fill(dim(1), dim(2), 3, newLevel, ind);
             //for k = 1:3
                 //for i = 1:dim(1)-1
                     //for j = 1:dim(2)-1
@@ -126,5 +128,6 @@ function [newLevel, ind] = jimhistEqual_level(im)
     end
     
 endfunction
+
 
 
