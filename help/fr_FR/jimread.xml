@@ -65,7 +65,7 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 //A partir d'un fichier
-path = jimlabPath + '/help/images/logoEnsim.png';
+path = jimlabPath + 'tests' + s + 'images' + s + 'noError' + s + 'rgb.bmp';
 jimage = jimread(path);
 
 //A partir d'une URL
