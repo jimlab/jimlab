@@ -63,20 +63,29 @@ function jimlablib = startModule()
   //if getscilabmode() == "STD" then
     //addModulePreferences(TOOLBOX_TITLE, root_tlbx, etc_tlbx + "toolbox_skeleton_preferences.xml");
   //end
-  
-  v = getversion("scilab");
-  if v(1) == 5 then
-      stacksize('max');
-  end
+
 
 endfunction
 
 jimlablib = startModule();
 
+//In Scilab 6.0.0, all the memory of the computer is available
+v = getversion("scilab");
+if v(1) == 5 then
+    stacksize('max');
+end
+
 //Path of the module
 if isdef('jimlablib') then
     [m, mp] = libraryinfo('jimlablib');
-    jimlabPath = pathconvert(fullpath(mp + "../"), %t, %t);
+    //remove '/marcos' from jimlabPath in Scilab 6.0.0
+    if v(1) == 6 then
+        jimlabPath = pathconvert(fullpath(mp), %t, %t);
+        tmp = filesep() + 'macros'
+        jimlabPath = strsubst(jimlabPath, tmp, '')
+    else
+        jimlabPath = pathconvert(fullpath(mp + "../"), %t, %t);
+    end
 end
 
 
