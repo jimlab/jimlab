@@ -74,23 +74,21 @@
             //each pixel is assiciated with its new level
             eqImage = jcompile("eqImage",..
             ["public class eqImage {"
-            "public static double[][][] fill(int width, int height, int layers, double newLevel[], int[][][] ind) {"
-            "   double[][][] out = new double[width][height][layers];"
-            "   for (int k = 0; k <= layers; k++) {"
-            "       for (int i = 0; i < width; i++) {"
-            "          for (int j = 0; j < height; j++) {"
-            "               out[i][j][k] = newLevel[ind[i][j][k]];"
-            "               }"
-            "           }"
-            "       }"
+            "public static double[] fill( double[] newLevel, int[] jind) {"
+            "   int N = jind.length;"
+            "   double[] out = new double[N];"
+            "   for (int n = 0; n < N; n++) {"
+            "      out[n] = newLevel[jind[n]];"
+            "      }"
             "   return out;"
             "   }"
             "}"]);
             
-            newLevel = newLevel(:)';
-            jind = jarray("int", dim(1), dim(2), 3);
-            //jind(:,:,:) = ind(:,:,:);
-            equalizedImage = eqImage.fill(dim(1), dim(2), 3, newLevel, jind);
+            newLevel = jwrap(newLevel(:)');
+            jind = jwrap(matrix(ind, -1));
+            equalizedImage = jarray("double", N);
+            equalizedImage = jinvoke(eqImage, "fill", (newLevel, jind);
+            jremove eqImage
             //for k = 1:3
                 //for i = 1:dim(1)-1
                     //for j = 1:dim(2)-1
