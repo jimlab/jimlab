@@ -30,7 +30,7 @@
         jremove File ImageIO f;
         
         //The image JAVA type conditions the choice of the extracting method 
-        select imType
+        select double(imType)
         case 1 then
             [jimage] = jimread_intrgb(bufferedIm, imPath);
         case 2 then
