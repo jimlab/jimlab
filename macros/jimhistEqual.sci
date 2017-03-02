@@ -76,9 +76,9 @@
             ["public class eqImage {"
             "public static double[][][] fill(int width, int height, int layers, double newLevel[], int[][][] ind) {"
             "   double[][][] out = new double[width][height][layers];"
-            "   for (int k = 1; k <= layers; k++) {"
-            "       for (int i = 1; i < width; i++) {"
-            "          for (int j = 1; j < height; j++) {"
+            "   for (int k = 0; k <= layers; k++) {"
+            "       for (int i = 0; i < width; i++) {"
+            "          for (int j = 0; j < height; j++) {"
             "               out[i][j][k] = newLevel[ind[i][j][k]];"
             "               }"
             "           }"
@@ -88,10 +88,9 @@
             "}"]);
             
             newLevel = newLevel(:)';
-            jwrap(ind(:,:,1))
-            jwrap(ind(:,:,2))
-            jwrap(ind(:,:,3))
-            equalizedImage = eqImage.fill(dim(1), dim(2), 3, newLevel, ind);
+            jind = jarray("int", dim(1), dim(2), 3);
+            //jind(:,:,:) = ind(:,:,:);
+            equalizedImage = eqImage.fill(dim(1), dim(2), 3, newLevel, jind);
             //for k = 1:3
                 //for i = 1:dim(1)-1
                     //for j = 1:dim(2)-1
