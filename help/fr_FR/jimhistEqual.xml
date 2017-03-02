@@ -51,7 +51,7 @@
             Cette fonction permet d'ajuster le contraste d'une image en niveaux de gris ou d'une image en couleur par la méthode d'égalisation d'histogramme. 
 		</para>
 		<para>
-			<function>jimhistEqual</function>() renvoie un objet du même type que l'objet en entrée. Si un objet <function>jimage</function> est donné en entrée, les champs encoding, title et format sont conservés pour l'objet en sortie. 
+			<function>jimhistEqual</function>() renvoie un objet du même type que l'objet en entrée. Si un objet <code>jimage</code> est donné en entrée, les champs encoding, title et format sont conservés pour l'objet en sortie. 
         </para>
     </refsection>
     <refsection>
@@ -82,7 +82,7 @@ jimdisp(equalizedImage)
         <title>Voir Aussi</title>
         <simplelist type="inline">
 			<member>
-                <link linkend="jimage_properties">jimage_properties</link>
+                <link linkend="jimage_properties">jimage</link>
             </member>
         </simplelist>
     </refsection>
