@@ -84,10 +84,10 @@
             "   }"
             "}"]);
             
-            newLevel = jwrap(newLevel(:)');
-            jind = jwrap(matrix(ind, -1));
+            newLevel = jwrap(newLevel);
+            jind = jwrap(matrix(ind, N*3));
             equalizedImage = jarray("double", N);
-            equalizedImage = jinvoke(eqImage, "fill", (newLevel, jind);
+            equalizedImage = jinvoke(eqImage, "fill", newLevel, jind);
             jremove eqImage
             //for k = 1:3
                 //for i = 1:dim(1)-1
