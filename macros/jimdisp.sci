@@ -57,7 +57,7 @@ function jimdisp_mat(image)
     height = dim(2);
 
     //Setting of the display
-    if type(image) ==10 then
+    if typeof(image) == 'jimage' then
     Matplot(image.image)
     fig.figure_name = image.title+image.format;
     else
