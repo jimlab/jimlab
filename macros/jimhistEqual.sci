@@ -22,13 +22,10 @@
         if gray & ~jim
             [newLevel, ind] = jimhistEqual_level(jimage);
             //each pixel is assiciated with its new level
-            for i = 1:dim(1)-1
-                for j = 1:dim(2)-1
-                    equalizedJimage(i,j) = newLevel(ind(i,j))
-                end
-            end
+            equalizedJimage = newLevel(ind);
             //convertion into 8-bits unsigned intergers
             equalizedJimage = uint8(equalizedJimage)
+            matrix(equalizedJimage, dim(1), dim(2), -1)
         end
         
         //case of an object jimage with type of encoding 'gray'
@@ -36,13 +33,10 @@
             im = uint16(jimage.image)
             [newLevel, ind] = jimhistEqual_level(im);
             //each pixel is assiciated with its new level
-            for i = 1:dim(1)-1
-                for j = 1:dim(2)-1
-                    equalizedImage(i,j) = newLevel(ind(i,j))
-                end
-            end
+            equalizedImage = newLevel(ind);
             //convertion into 8-bits unsigned intergers
             equalizedImage = uint8(equalizedImage)
+            matrix(equalizedImage, dim(1), dim(2), -1)
             equalizedJimage = mlist(['jimage','image','encoding','title',..
                 'format'], equalizedImage,jimage.encoding , jimage.title, ..
                                                             jimage.format);
@@ -54,15 +48,10 @@
             [newLevel, ind] = jimhistEqual_level(level);
             ind = uint16(jimage)+1
             //each pixel is assiciated with its new level
-            for i = 1:dim(1)-1
-                for j = 1:dim(2)-1
-                    for k = 1:3
-                        equalizedJimage(i,j,k) = newLevel(ind(i,j,k))
-                    end
-                end
-            end
+            equalizedJimage = newLevel(ind);
             //convertion into 8-bits unsigned intergers
             equalizedJimage = uint8(equalizedJimage)
+            matrix(equalizedJimage, dim(1), dim(2), -1);
         end
         
         //case of an object jimage with type of encoding 'rgb' or 'rgba'
@@ -72,32 +61,10 @@
             [newLevel, ind] = jimhistEqual_level(level);
             ind = uint16(im)+1
             //each pixel is assiciated with its new level
-            eqImage = jcompile("eqImage",..
-            ["public class eqImage {"
-            "public static double[] fill( double[] newLevel, int[] jind) {"
-            "   int N = jind.length;"
-            "   double[] out = new double[N];"
-            "   for (int n = 0; n < N; n++) {"
-            "      out[n] = newLevel[jind[n]];"
-            "      }"
-            "   return out;"
-            "   }"
-            "}"]);
-            
-            newLevel = jwrap(newLevel);
-            jind = jwrap(matrix(ind, N*3));
-            equalizedImage = jarray("double", N);
-            equalizedImage = jinvoke(eqImage, "fill", newLevel, jind);
-            jremove eqImage
-            //for k = 1:3
-                //for i = 1:dim(1)-1
-                    //for j = 1:dim(2)-1
-                        //equalizedImage(i,j,k) = newLevel(ind(i,j,k));
-                    //end
-                //end
-            //end
+            equalizedImage = newLevel(ind);
             //convertion into 8-bits unsigned intergers
             equalizedImage = uint8(equalizedImage)
+            matrix(equalizedImage, dim(1), dim(2), -1)
             equalizedJimage = mlist(['jimage','image','encoding','title',..
                 'format'], equalizedImage,jimage.encoding , jimage.title, ..
                                                             jimage.format);
