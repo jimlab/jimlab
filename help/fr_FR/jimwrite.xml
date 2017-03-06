@@ -35,33 +35,49 @@
 		<term>jimage</term>
 		<listitem>
 			<para>
-			Une mliste jimage contenant l'image, son nom, son encodage et son format. Cet objet est crée par le fonction jimread
+			Une mliste jimage contenant l'image, son nom, son encodage et son type MIME. Cet objet est crée par le fonction jimread.
 			</para>
 		</listitem>
-
+		<term>Matrix</term>
+		<listitem>
+			<para>
+			Une matrice une, trois ou quatres couches représentant l'image en nuance de gris, en rgb ou en rgba. L'argument Matrix ne peut être 
+			placé avec un objet jimage. Si les deux paramètres sont présents, l'argument Matrix ne sera pas pris en compte.
+			</para>
+		</listitem>
    		<term>imagePath</term>
     		<listitem>
    		<para>
-			Une chaîne de caractère contenant le chemin du répertoir où l'image doit être enregistrer. Si ce paramètre n'est pas 
-			précisé, l'image sera enregistée dans le répertoire courant. Attention, le chemin ne doit pas contenir le noms du fichier image 
-			à crée. Le noms de l'image sera précisé avec "Name"
+			Une chaîne de caractère contenant le chemin du répertoire où l'image doit être enregistrée. Si ce paramètre n'est pas 
+			précisé, ou si ce n'est pas une chaine de charactère, l'image sera enregistée dans le répertoire courant. Attention, 
+			le chemin ne doit pas contenir le noms du fichier image à crée. Le noms de l'image sera précisé avec "Name".
 		</para>					
                 </listitem>
 				
 		<term>Format</term>
 		<listitem>
 		<para>
-			Une chaine de caractère donnant le format dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif', 'bmp' 					
-			et 'wbmp' sont disponibles. Si le format n'est pas précisé, l'image sera enregistrée au format JPEG (jpg). 
+			Une chaine de caractère donnant le type MIME dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif', 'bmp' 					
+			et 'wbmp' sont disponibles. Si le format n'est pas précisé, ou si il est incompatible, le type MIME présent dans la mliste jimage
+			sera utilisée. Si la déclaration est faite avec Matrix, l'image sera enregistrée au format JPEG (jpg). 
 		</para>
 		</listitem>
 
 		<term>Name</term>
 		<listitem>
 			<para>
-			Une chaine de caractère dommant le noms sous lequel l'image sera enregistrée. Si aucun nom n'est précisé, l'image sera 					
-			enregistrée sous le nom "No_name".
+			Une chaine de caractère dommant le noms sous lequel l'image sera enregistrée. Si aucun noms n'est précisé, ou si ce n'est pas une chaine de 
+			charactère, le noms présent dans la mliste jimage sera utilisée. Si la déclaration est faite avec Matrix, l'image sera enregistrée sous le 
+			noms "No_name".
 			</para>
+		</listitem>
+		<term>Encoding</term>
+		<listitem>
+		<para>
+			Une chaine de caractère donnant l'encodage de l'image. Seul les types d'encodages 'gray', 'rgb' et 'rgba' sont disponibles. Si le type d'encodage
+			n'est pas précisé, ou si il est incompatible, le type d'encodage présent dans la mliste jimage sera utilisée. Si la déclaration est faite avec Matrix, 
+			l'image sera enregistrée en 'rgb'. 
+		</para>
 		</listitem>
 
 		
@@ -72,33 +88,40 @@
     <refsection>
         <title>Description</title>
         	<para>
-            	Cette fonction créé et enregistre une image à partir d'une mliste jimage. Il est possible d'enregistrer des images RGB, RGBA et en 				
-				nuance de gris.
+            	Cette fonction créé et enregistre une image à partir d'une mliste jimage ou bien df'une hypermatrice. Il est possible d'enregistrer des images RGB, RGBA et en 				
+		nuance de gris.
 		</para>
 		<para>
-			La liste jimage rassemble : l'hypermatrice représentant l'image, le titre de l'image sous forme d'une chaîne de caractères, son 			
+			La mliste jimage rassemble : l'hypermatrice représentant l'image, le titre de l'image sous forme d'une chaîne de caractères, son 			
 			format d'origine, et son type d'encodage sous forme d'une chaîne de caracères.
 			L'encodage 'Gray' correspond à une matrice 2D pour les images en niveaux de gris. 
 			L'encodage 'RGB' correspond à une hypermatrice à trois couches. 
 			L'encodage 'RGBA' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
-			Cette liste est fournie par la fonction jimread.
+			Cette mliste est fournie par la fonction jimread.
 			
-			Lorsque un objet jimage est placer en paramètre d'entrée de la fonction jimwrite, l'image sera enregistrée avec les
-			paramètres de type, d'encodage et le nom contenus dans l'objet jimage. Si l'utilisateur place les arguments place en
-			paramètres un nouveau noms, un types diffétents ou en nouvel encodage, ceux-ci seront alors utiliser à la place.
+			Lorsque un objet jimage est placé en paramètre d'entrée de la fonction jimwrite, l'image sera enregistrée avec les
+			paramètres de type, d'encodage et le noms contenus dans l'objet jimage. Si l'utilisateur place en
+			paramètres un nouveau noms, un types MIME différents ou en nouvel encodage, ceux-ci seront alors utilisé à la place.
 			Cependant, en cas d'erreur ou d'incompatibilité des arguments, les paramètres de la jimage seront conservés.
 			
 			Lorsqu'une hyper-matrice est placer en paramètre de la fonction jimwrite, le noms, le format et l'encodage de l'image à 
 			enregistré sont attendus en paramètres. Si ils sont absent ou incompatibles entres eux, les valeurs par défault seront utilisées.
 			
-			paragraphe rgba-joeg
+			La fonction jimwrite ne permet pas l'écriture d'une matrice quatre couches dans un format ne prenant pas en compte la couche de 
+			transparence. Ainsi, les images représetées par des matrice quatres couches ne sont enregistrable uniquement en PNG et en GIF. Si une 
+			déclaration de jimwrite associant une valeur d'encodage 'rgba' et un type MIME incompatible est effectuée, la fonction jimwrite 
+			modifira le type MIME pour le type 'png'. 
+			
+			Une image représentée par une matrice trois couche peut cependant être écrite en 'gif' ou en 'png' à l'aide de jimwrite.
         </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 			global jimlabPath
+			
 			// A partir d'un objet jimage
+			
 			path = jimlabPath + '/help/images/logoEnsim.png';
 			jimage_original = jimread(path);// On charge l'image original
 			path = jimlabPath + '/help/images'; // Redéfinition du chemin
@@ -111,9 +134,10 @@
 			path2 = jimlabPath + '/help/images/logoEnsim_Copie.png';
 			jimdisp(path1,,'info');
 			jimdisp(path2,,'info');
-			// Suppression des fichiers
+			// Suppression des fichiers créés
 			deletefile(path1);
 			deletefile(path2);
+			
 			// A partir d'une hyper-matrice
 
 			path = jimlabPath + '/help/images/mat.data';
@@ -127,7 +151,7 @@
 			path2 = jimlabPath + '/help/images/logo_mat.png';
 			jimdisp(path1,,'info');
 			jimdisp(path2,,'info');
-			// Suppression des fichiers
+			// Suppression des fichiers créés
 			deletefile(path1);
 			deletefile(path2);
 			
