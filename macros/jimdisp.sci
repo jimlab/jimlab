@@ -52,16 +52,23 @@ function jimdisp_mat(image)
     fig = gcf();
 
     //Size of the matrix
-    [height,width] = jimagesize(image);
+    dim = size(image);
+    width = dim(1);
+    height = dim(2);
 
     //Setting of the display
+    if type(image) ==10 then
     Matplot(image.image)
+    fig.figure_name = image.title+image.format;
+    else
+    Matplot(image)
+    end
     ax.box="off";
     ax.axes_visible = ["off","off","off"];
     ax.isoview = "on"; // Squared pixels
     ax.auto_scale = "on";
     ax.tight_limits = "on"; 
-    fig.figure_name = image.title+image.format;
+
     
     // Centering of the displayed image (depends on the size)
     if height > 100 then
@@ -90,20 +97,13 @@ function withinfo(image)
     ax = gca();
 
     // Size of the matrix
-    [height,width] = jimagesize(image);
+    dim = size(image);
+    width = dim(1);
+    height = dim(2);
     
     ax.title.text = image.title+image.format+"  -  "+"Type : "..
     +image.encoding+"  -  "+"Size : "+string(height)+" x "+string(width);
 
-endfunction
-
-function [height,width] = jimagesize(jimage)
-    // This subfonction returns the size of the matrix which is
-    // in the first field of the jimage object. It is the
-    // size of the image you want to display.
-    
-    height = size(jimage.image,1);
-    width = size(jimage.image,2);
 endfunction
 
 function jimreset(image)
@@ -111,7 +111,9 @@ function jimreset(image)
     // parameters of the graphic environment and plotting a white
     // box the size of the image.
     
-    [height,width] = jimagesize(image);
+    dim = size(image);
+    width = dim(1);
+    height = dim(2);
     Matplot(8*ones(height+10,width+10));
 
     // Opening of the current parameters of the graphic environment
