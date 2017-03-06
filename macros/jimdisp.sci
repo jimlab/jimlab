@@ -53,8 +53,8 @@ function jimdisp_mat(image)
 
     //Size of the matrix
     dim = size(image);
-    width = dim(1);
-    height = dim(2);
+    width = dim(2);
+    height = dim(1);
 
     //Setting of the display
     if typeof(image) == 'jimage' then
@@ -71,11 +71,22 @@ function jimdisp_mat(image)
 
     
     // Centering of the displayed image (depends on the size)
-    if height > 100 then
-        ax.data_bounds = [-10,width+11,-10,height+11];
-    else
-        ax.data_bounds = [-3,width+4,-3,height+4];
+    
+    h_min = -3;
+    w_min = -3;
+    h_max = 4;
+    w_max = 4;
+    
+    if (height > 100 | width > 100) then
+        
+       h_min = -10 ;
+       h_max = 11 ;
+       w_min = -10 ;
+       w_max = 11 ;
+       
     end
+       
+    ax.data_bounds = [w_min,width+w_max,h_min,height+h_max];
 
 endfunction
 
@@ -98,8 +109,8 @@ function withinfo(image)
 
     // Size of the matrix
     dim = size(image);
-    width = dim(1);
-    height = dim(2);
+    width = dim(2);
+    height = dim(1);
     
     ax.title.text = image.title+image.format+"  -  "+"Type : "..
     +image.encoding+"  -  "+"Size : "+string(height)+" x "+string(width);
@@ -112,8 +123,8 @@ function jimreset(image)
     // box the size of the image.
     
     dim = size(image);
-    width = dim(1);
-    height = dim(2);
+    width = dim(2);
+    height = dim(1);
     Matplot(8*ones(height+10,width+10));
 
     // Opening of the current parameters of the graphic environment
