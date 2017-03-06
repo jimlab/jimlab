@@ -1,18 +1,31 @@
-function new_image = jimblur(image)
-hw = jcompile("Float", ["public class Float {"
-                             "public static float [] getArray() {"
-                             "float[] matrix = new float[600];"
-                              "for (int i = 0; i < 400; i++) matrix[i] = 1.0f/500.0f;"
-                             "return matrix;"
-                             "}"
-                             "}"]);
-
-m = hw.getArray();
-
-jremove hello hw
-sourceImage = jcast(image, "java.awt.image.BufferedImage");
-destImage =jnull ;
-noyau= Kernel.new (20, 30, m);
-op = ConvolveOp.new (ker, ConvolveOp.EDGE_NO_OP, jnull );
-blurredImage = op.filter(sourceImage, destImage);
-endfunction 
+function [MG]=gsm2d(M,sigma,rayon)
+    // déclaration des variables
+    Kf=0;
+    g=0;
+    
+    select argn(2)
+        case 1
+           sigma = 5;
+        case 0
+           error('Invalid number of arguments.');
+       end
+       
+       if(sigma==1) then   error('erreur');end
+       if(rayon<1) then   error('erreur');end
+       
+    for i = -rayon:rayon
+        for j = -rayon:rayon
+             e= exp( -(i^2+j^2) /(2*sigma*sigma));
+             kf=kf+e;
+             Kernel(i+rayon, j+rayon) =e;
+         end 
+     end
+     
+       for i = -rayon:rayon
+        for j = -rayon:rayon
+              Kernel(i+rayon, j+rayon)  =   Kernel(i+rayon, j+rayon) /kf;
+        end
+       end
+       
+       MG= conv2(Kernel,M); 
+ end      
