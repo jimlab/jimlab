@@ -8,9 +8,7 @@
 // <-- NO CHECK REF -->
 
 // From an image file pre-loaded with jimread
-global jimlabPath
 imagePath = jimlabPath +'\tests\images\noError\rgb.jpg';
-
 jimage1 = jimread(imagePath);
 
 jimdisp(jimage1);
