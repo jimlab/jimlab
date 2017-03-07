@@ -8,11 +8,11 @@
 function jimdisp(image,box,info)
 
     // Initializing default parameters
-    if exists('info') == 0 then
+    if exists('info','l') == 0 then
     info='no';
     end
 
-    if exists('box') == 0 then
+    if exists('box','l') == 0 then
     box='no';
     end
 
@@ -58,10 +58,10 @@ function jimdisp_mat(image)
 
     //Setting of the display
     if typeof(image) == 'jimage' then
-    Matplot(image.image)
-    fig.figure_name = image.title+image.format;
+        Matplot(image.image)
+        fig.figure_name = image.title+image.format;
     else
-    Matplot(image)
+        Matplot(image)
     end
     ax.box="off";
     ax.axes_visible = ["off","off","off"];
