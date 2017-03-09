@@ -64,13 +64,14 @@
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
+s = filesep();
 //A partir d'un fichier
 path = jimlabPath + 'tests' + s + 'images' + s + 'noError' + s + 'rgb.bmp';
-jimage = jimread(path);
+jimage = jimread(path)
 
 //A partir d'une URL
 path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
-jimage = jimread(path);
+jimage = jimread(path)
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
