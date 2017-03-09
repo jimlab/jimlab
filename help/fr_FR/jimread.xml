@@ -84,7 +84,7 @@ jimage = jimread(path)
                 <link linkend="jimwrite">jimwrite</link>
             </member>
 			<member>
-                <link linkend="jimage_properties">jimage_properties</link>
+                <link linkend="jimage_properties">jimage</link>
             </member>
         </simplelist>
     </refsection>
