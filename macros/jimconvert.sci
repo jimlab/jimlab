@@ -16,8 +16,6 @@
                 ext = jimage.format;
                 jimage = jimage.image;
             end
-            dim = size(jimage)
-            N = dim(1)*dim(2)
             
             select encoding
             case 'gray' then
