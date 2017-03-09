@@ -14,17 +14,30 @@
                 name = jimage.title;
                 ext = jimage.format;
                 jimage = jimage.image;
+            else
+                name = 'your ';
+                ext = 'image';
             end
             
             select encoding
             case 'gray' then
-                jimage = double(jimage);
-                convertedJimage = (jimage(:,:,1) + jimage(:,:,2) + ..
-                                                      jimage(:,:,3))/3;
-                convertedJimage = round(convertedJimage);
-                convertedJimage = uint8(convertedJimage);
+                if (typeof(jimage) == "hypermat")
+                    jimage = double(jimage);
+                    convertedJimage = (jimage(:,:,1) + jimage(:,:,2) + ..
+                                                         jimage(:,:,3))/3;
+                    convertedJimage = round(convertedJimage);
+                    convertedJimage = uint8(convertedJimage);
+                else
+                    msg = _("%s: %s cannot be converted into gray encoding.\n");
+                    error(msprintf(msg,"jimconvert", name + ext));
+                end
             case 'rgb' then
-                convertedJimage = jimage(:,:,[1:3]);
+                if (size(jimage, 3) == 4)
+                    convertedJimage = jimage(:,:,[1:3]);
+                else
+                    msg = _("%s: %s cannot be converted into rgb encoding.\n");
+                    error(msprintf(msg,"jimconvert", name + ext));
+                end
             else
                 msg = _("%s: Argument #%d: rgb or gray expected.\n");
                 error(msprintf(msg,"jimconvert",2));
@@ -39,7 +52,7 @@
             error(msprintf(msg,"jimconvert",2));
         end
      else
-        msg = _("%s: Argument #%d: M-list or %s or %s expected.\n");
+        msg = _("%s: Argument #%d: M-list or %s expected.\n");
         error(msprintf(msg,"jimconvert",1,"hypermat"));
      end
     
