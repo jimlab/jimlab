@@ -51,7 +51,7 @@
         </para>
 		<para>
 			Le type d'encodage 'gray' correspond à une matrice 2D pour les images en niveaux de gris. 
-			Le type d'encodage'rgb' correspond à une hypermatrice à trois couches. 
+			Le type d'encodage 'rgb' correspond à une hypermatrice à trois couches. 
 			Le type d'encodage 'rgba' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
         </para>
 		<para>
