@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of the Jimlab module made for Scilab
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+ * 
+ * This file must be used under the terms of the CeCILL.
+ * This source file is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution.  The terms
+ * are also available at    
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ *
+ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
+		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+		xml:lang="fr" xml:id="jimconvert">
+    <refnamediv>
+        <refname>jimconvert</refname>
+        <refpurpose>Conversion du type d'encodage d'une image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Syntaxes</title>
+        <synopsis>
+            convertedJimage = jimconvert(jimage)
+        </synopsis>
+    </refsynopsisdiv>
+    <refsection>
+        <title>Arguments</title>
+        <variablelist>
+            <varlistentry>
+                <term>jimage</term>
+                <listitem>
+                    <para>
+						Un objet de type jimage ou une hypermatrice à 3 ou 4 couches. 		
+					</para>					
+                </listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>convertedJimage</term> 
+                <listitem>
+                    <para>
+						Un objet de type jimage dont le champ <code>encoding</code> est 'gray' ou une matrice de niveaux de gris.
+					</para>
+                </listitem>
+			</varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Description</title>
+        <para>
+            Cette fonction permet de convertir le type d'encodage d'une image. Une image encodée en RGBA peut être convertie en RGB ou en niveaux de gris. Une image encodée en RGB peut être convertie en niveaux de gris. 
+		</para>
+		<para>
+			<function>jimconvert</function>() renvoie un objet du même type que l'objet en entrée. Si un objet <code>jimage</code> est donné en entrée, les champs title et format sont conservés pour l'objet en sortie. Si l'image d'entrée est encodée sur 3 ou 4 couches, une matrice est retournée.
+        </para>
+    </refsection>
+    <refsection>
+        <title>Exemples</title>
+        <programlisting role="example"><![CDATA[ 
+s = filesep()
+path = jimlabPath + 'tests' + s + 'images' + s + 'noError' + s + 'rgba.png';
+jimage = jimread(path);
+
+jgray = jimconvert(jimage, 'gray');
+gray = jimconvert(jimage.image, 'gray');
+jrgb = jimconvert(jimage, 'rgb');
+rgb = jimconvert(jimage.image, 'rgb');
+
+jgray.encoding
+jrgb.encoding
+
+subplot(1,2,1)
+jimdisp(rgb)
+subplot(1,2,2)
+jimdisp(gray)
+ ]]></programlisting>
+	</refsection>
+    <refsection role="see also">
+        <title>Voir Aussi</title>
+        <simplelist type="inline">
+			<member>
+                <link linkend="jimage_properties">jimage</link>
+            </member>
+        </simplelist>
+    </refsection>
+    <refsection>
+        <title>Historique</title>
+        <revhistory>
+            <revision>
+                <revnumber>2017-05</revnumber>
+                <revremark>Publication initiale du module Jimlab</revremark>
+            </revision>
+        </revhistory>
+    </refsection>
+</refentry>
