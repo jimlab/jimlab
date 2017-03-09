@@ -8,67 +8,34 @@
 
  function [equalizedJimage] = jimhistEqual(jimage)
      if (typeof(jimage) == "jimage" | typeof(jimage) == "hypermat" | ..
-                                        typeof(jimage) == "uint8") 
+                                type(jimage) == 1 | type(jimage) == 8) 
         jim = typeof(jimage) == "jimage"
         if jim
-            dim = size(jimage.image)
-        else 
-            dim = size(jimage)
+            name = jimage.title;
+            ext = jimage.format;
+            jimage = jimage.image;
         end
-        N = dim(1)*dim(2)
+        dim = size(jimage);
         gray = length(dim) == 2
         
-        //Case of a matrix with gray levels
-        if gray & ~jim
-            [newLevel, ind] = jimhistEqual_level(jimage);
-            //each pixel is assiciated with its new level
-            equalizedJimage = newLevel(ind);
-            //convertion into 8-bits unsigned intergers
-            equalizedJimage = uint8(equalizedJimage)
-            matrix(equalizedJimage, dim(1), dim(2), -1)
+        //'rgb' and 'rgba' encoded images must be converted into 'gray' encoded images
+        if ~gray 
+            jimage = jimconvert(jimage, 'gray');
         end
         
-        //case of an object jimage with type of encoding 'gray'
-        if gray & jim
-            im = uint16(jimage.image)
-            [newLevel, ind] = jimhistEqual_level(im);
-            //each pixel is assiciated with its new level
-            equalizedImage = newLevel(ind);
-            //convertion into 8-bits unsigned intergers
-            equalizedImage = uint8(equalizedImage)
-            matrix(equalizedImage, dim(1), dim(2), -1)
-            equalizedJimage = mlist(['jimage','image','encoding','title',..
-                'format'], equalizedImage,jimage.encoding , jimage.title, ..
-                                                            jimage.format);
-        end
+        [newLevel, ind] = jimhistEqual_level(jimage);
+        //each pixel is assiciated with its new level
+        equalizedJimage = newLevel(ind);
+        //convertion into 8-bits unsigned intergers
+        equalizedJimage = uint8(equalizedJimage)
+        //
+        equalizedJimage = matrix(equalizedJimage, dim(1), dim(2))
         
-        //Case of a hypermatrix with RGB levels
-        if ~gray & ~jim
-            level = (jimage(:,:,1) + jimage(:,:,1) + jimage(:,:,1))/3
-            [newLevel, ind] = jimhistEqual_level(level);
-            ind = uint16(jimage)+1
-            //each pixel is assiciated with its new level
-            equalizedJimage = newLevel(ind);
-            //convertion into 8-bits unsigned intergers
-            equalizedJimage = uint8(equalizedJimage)
-            matrix(equalizedJimage, dim(1), dim(2), -1);
+        if jim
+            equalizedJimage = mlist(['jimage','image','encoding',..
+                    'title','format'], equalizedJimage,'gray' , ..
+                                                    name, ext);
         end
-        
-        //case of an object jimage with type of encoding 'rgb' or 'rgba'
-        if ~gray & jim
-            im = jimage.image
-            level = (im(:,:,1) + im(:,:,1) + im(:,:,1))/3
-            [newLevel, ind] = jimhistEqual_level(level);
-            ind = uint16(im)+1
-            //each pixel is assiciated with its new level
-            equalizedImage = newLevel(ind);
-            //convertion into 8-bits unsigned intergers
-            equalizedImage = uint8(equalizedImage)
-            matrix(equalizedImage, dim(1), dim(2), -1)
-            equalizedJimage = mlist(['jimage','image','encoding','title',..
-                'format'], equalizedImage,jimage.encoding , jimage.title, ..
-                                                            jimage.format);
-        end 
      else
         msg = _("%s: Argument #%d: M-list or encoded integer(s) of type (%s) ..
         or %s expected.\n");
