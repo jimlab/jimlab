@@ -16,7 +16,7 @@ try
         atomsLoad('IPD')
     end
 catch
-    msg = _("%s: This benchmark can not run with this OS.\n");
+    msg = _("%s: This benchmark can not run with this OS or this version of Scilab.\n");
     error(msprintf(msg,"bench_jimread"));
 end
 path = jimlabPath + '/tests/images/logoEnsim.png';
