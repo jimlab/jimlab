@@ -12,6 +12,8 @@
         if (type(encoding) == 10)
             jim = typeof(jimage) == "jimage"
             if jim
+                name = jimage.title;
+                ext = jimage.format;
                 jimage = jimage.image;
             end
             dim = size(jimage)
@@ -22,12 +24,19 @@
                 jimage = double(jimage);
                 convertedJimage = (jimage(:,:,1) + jimage(:,:,2) + ..
                                                       jimage(:,:,3))/3;
+                convertedJimage = round(convertedJimage);
+                convertedJimage = uint8(convertedJimage);
+            case 'rgb' then
+                convertedJimage = jimage(:,:,[1:3]);
             else
-                msg = _("%s: Argument #%d: rgb, rgba or gray expected.\n");
+                msg = _("%s: Argument #%d: rgb or gray expected.\n");
                 error(msprintf(msg,"jimconvert",2));
             end
-            convertedJimage = round(convertedJimage);
-            convertedJimage = uint8(convertedJimage);
+            if jim
+                convertedJimage = mlist(['jimage','image','encoding',..
+                'title','format'], convertedJimage, encoding, name, ..
+                                                            ext);
+            end
         else
             msg = _("%s: Argument #%d: Text(s) expected.\n");
             error(msprintf(msg,"jimconvert",2));
