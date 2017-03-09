@@ -159,8 +159,8 @@ function [jimage] = jimread_intargbpre(bufferedIm, imPath)
     
     //gets the integer value of the color in the RGB color space for each pixels
     m = zeros(1,height*width);
-    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),..
-                                int(height-1),m,0,int(width));
+    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width),..
+                                int(height),m,0,int(width));
     
     //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,4) = floor(unprocessedData./uint32(16^6));
@@ -307,8 +307,8 @@ function [jimage] = jimread_4byteabgrpre(bufferedIm, imPath)
     
     //gets the integer value of the color in the RGB color space for each pixels
     m = zeros(1,height*width);
-    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),..
-                                int(height-1),m,0,int(width));
+    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width),..
+                                int(height),m,0,int(width));
     
     //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,4) = floor(unprocessedData./uint32(16^6));
@@ -347,8 +347,8 @@ function [jimage] = jimread_ushort565rgb(bufferedIm, imPath)
     
     //gets the integer value of the color in the RGB color space for each pixels
     m = zeros(1,height*width);
-    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),..
-                                int(height-1),m,0,int(width));
+    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width),..
+                                int(height),m,0,int(width));
     
     //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,1) = floor(unprocessedData./uint32(16^4));
@@ -385,8 +385,8 @@ function [jimage] = jimread_ushort555rgb(bufferedIm, imPath)
     
     //gets the integer value of the color in the RGB color space for each pixels
     m = zeros(1,height*width);
-    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),..
-                                int(height-1),m,0,int(width));
+    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width),..
+                                int(height),m,0,int(width));
     
     //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,1) = floor(unprocessedData./uint32(16^4));
@@ -456,8 +456,8 @@ function [jimage] = jimread_ushortGray(bufferedIm, imPath)
     
     //gets the integer value of the color in the RGB color space for each pixels
     m = zeros(1,height*width);
-    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),..
-                                int(height-1),m,0,int(width));
+    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width),..
+                                int(height),m,0,int(width));
     
     //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,1) = floor(unprocessedData./uint32(16^4));
@@ -494,8 +494,8 @@ function [jimage] = jimread_byteIndexed(bufferedIm, imPath)
     
     //gets the integer value of the color in the RGB color space for each pixels
     m = zeros(1,height*width);
-    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width-1),..
-                            int(height-1),m,0,int(width));
+    unprocessedData = jinvoke(bufferedIm,"getRGB",0,0,int(width),..
+                            int(height),m,0,int(width));
     
     //decomposes the integer value of the color into the three 8-bits color components and an 8-bits alpha component for each pixels
     im(:,:,4) = floor(unprocessedData./uint32(16^6));
