@@ -18,14 +18,13 @@ fileNumber = fileNumber(1);
 for i = 1:fileNumber
     path = root + s + nameList(i);
     jim = jimread(path);
-    if (strstr(convstr(nameList(i)),'rgba') == convstr(nameList(i))) ..
-    then
+    
+    if (jim.encoding == 'rgba') then
         jgray = jimconvert(jim, 'gray');
         gray = jimconvert(jim.image, 'gray');
         jrgb = jimconvert(jim , 'rgb');
         rgb = jimconvert(jim.image, 'rgb');
-    elseif ~(strstr(convstr(nameList(i)),'gray') == ..
-                                        convstr(nameList(i))) then
+    elseif (jim.encoding == 'rgb') then
         jgray = jimconvert(jim, 'gray');
         gray = jimconvert(jim.image, 'gray');
     end
