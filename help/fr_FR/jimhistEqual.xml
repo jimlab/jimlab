@@ -51,7 +51,7 @@
             Cette fonction permet d'ajuster le contraste d'une image par la méthode d'égalisation d'histogramme. 
 		</para>
 		<para>
-			<function>jimhistEqual</function>() renvoie un objet du même type que l'objet en entrée. Si un objet <code>jimage</code> est donné en entrée, les champs title et format sont conservés pour l'objet en sortie. Si l'image d'entrée est encodée sur 3 ou 4 couches, elle sera convertie en niveaux de gris.
+			<function>jimhistEqual</function>() renvoie un objet du même type que l'objet en entrée. Si un objet <code>jimage</code> est donné en entrée, les champs <code>title</code> et <code>format</code> sont conservés pour l'objet en sortie. Si l'image d'entrée est encodée sur 3 ou 4 couches, elle sera convertie en niveaux de gris.
         </para>
     </refsection>
     <refsection>
