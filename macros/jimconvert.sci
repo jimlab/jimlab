@@ -7,8 +7,7 @@
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
  function [convertedJimage] = jimconvert(jimage, encoding)
-     if (typeof(jimage) == "jimage" | typeof(jimage) == "hypermat" | ..
-                                type(jimage) == 1 | type(jimage) == 8) 
+     if (typeof(jimage) == "jimage" | typeof(jimage) == "hypermat") 
         if (type(encoding) == 10)
             jim = typeof(jimage) == "jimage"
             if jim
@@ -41,7 +40,7 @@
         end
      else
         msg = _("%s: Argument #%d: M-list or %s or %s expected.\n");
-        error(msprintf(msg,"jimconvert",1,"matrix","hypermat"));
+        error(msprintf(msg,"jimconvert",1,"hypermat"));
      end
     
 endfunction
