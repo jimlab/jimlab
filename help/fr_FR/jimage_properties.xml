@@ -16,7 +16,7 @@
 		xml:lang="fr" xml:id="jimage">
     <refnamediv>
         <refname>jimage</refname>
-        <refpurpose>Objet de type mlist spécifique au module <emphasis role="bold">jimlab</emphasis></refpurpose>
+        <refpurpose>Objet de type mlist spécifique au module jimlab</refpurpose>
     </refnamediv>
     <refsection>
         <title>Description</title>
@@ -61,7 +61,8 @@
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
-path = jimlabPath + '/help/images/logoEnsim.png';
+s = filesep();
+path = jimlabPath + 'tests' + s + 'images' + s + 'noError' + s + 'rgb.png';
 jimage = jimread(path)
 dim = size(jimage)
  ]]></programlisting>
