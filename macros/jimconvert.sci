@@ -19,13 +19,15 @@
             
             select encoding
             case 'gray' then
+                jimage = double(jimage);
                 convertedJimage = (jimage(:,:,1) + jimage(:,:,2) + ..
-                                                        jimage(:,:,3))/3;
+                                                      jimage(:,:,3))/3;
             else
                 msg = _("%s: Argument #%d: rgb, rgba or gray expected.\n");
                 error(msprintf(msg,"jimconvert",2));
             end
-            
+            convertedJimage = round(convertedJimage);
+            convertedJimage = uint8(convertedJimage);
         else
             msg = _("%s: Argument #%d: Text(s) expected.\n");
             error(msprintf(msg,"jimconvert",2));
