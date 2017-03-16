@@ -7,7 +7,18 @@
 
 function resized_image = jimresize (original_image,height,width)
 
-im=original_image.image;
+    // Case where a jimage object is given
+    if typeof(original_image) == 'jimage' then
+
+        // Extracting the matrix of the image
+        im = original_image.image;
+    
+    // Case where a 2D or 3D matrix is given
+    else
+    
+        im = original_image ;
+        
+    end
 
     // Input and output sizes
     in_rows = size(im,1);
@@ -44,7 +55,7 @@ im=original_image.image;
     out = zeros(out_rows, out_cols, size(im, 3));
     
     for idx = 1:size(im,3)
-        chan = double(im(:,:,1))
+        chan = double(im(:,:,idx))
         d1=matrix(chan(in1_ind),out_rows,out_cols);
         d2=matrix(chan(in2_ind),out_rows,out_cols);
         d3=matrix(chan(in3_ind),out_rows,out_cols);
@@ -54,7 +65,20 @@ im=original_image.image;
         DD3=d3.*(1 - delta_R).*(delta_C);
         DD4=d4.*(delta_R).*(delta_C);
         tmp = DD1+DD2+DD3+DD4;
-        resized_image(:,:,idx) = uint8(tmp);
+        out(:,:,idx) = uint8(tmp);
     end;
+    // Case where a jimage object is given
+    if typeof(original_image) == 'jimage' then
+
+        // Extracting the matrix of the image
+            resized_image = mlist(['jimage','image','encoding','title','format'], uint8(out),..
+    original_image.encoding, original_image.title, original_image.format);
+    
+    // Case where a 2D or 3D matrix is given
+    else
+        
+        resized_image = uint8(out);
+        
+    end
 
 endfunction
