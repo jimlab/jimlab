@@ -21,6 +21,12 @@
         f = jnewInstance(File, imPath);
         try
         bufferedIm = jinvoke(ImageIO, "read", f);
+        catch
+        msg = _("%s: Cannot open file.\n");
+        error(msprintf(msg,"jimread"));
+        end
+    
+        try
         imType = jgetfield(bufferedIm,"type");
         catch
         msg = _("%s: Unexpected image type.\n");
