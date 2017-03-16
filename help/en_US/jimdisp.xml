@@ -16,7 +16,7 @@
 		xml:lang="en" xml:id="jimdisp">
     <refnamediv>
         <refname>jimdisp</refname>
-        <refpurpose>Display an image from a <link linkend="jimage">jimage</link> object, a path or a url.</refpurpose>
+        <refpurpose>Display an image from a <link linkend="jimage">jimage</link> object, a matrix or hypermatrix, a path or a url.</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Calling Sequence</title>
