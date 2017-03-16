@@ -13,5 +13,4 @@ function subdemolist = demo_gateway()
 endfunction
 
 subdemolist = demo_gateway();
-clear demo_gateway  // remove demo_gateway on stack
-colorbar()
+clear demo_gateway
