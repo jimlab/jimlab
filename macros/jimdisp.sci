@@ -8,11 +8,11 @@
 function jimdisp(image,box,info)
 
     // Initializing default parameters
-    if exists('info','l') == 0 then
+    if ~isdef('info','l') then
     info='no';
     end
 
-    if exists('box','l') == 0 then
+    if ~isdef('box','l') then
     box='no';
     end
 
