@@ -57,8 +57,8 @@
 		<term>Format</term>
 		<listitem>
 		<para>
-			Une chaine de caractère donnant le type MIME dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif', 'bmp' 					
-			et 'wbmp' sont disponibles. Si le format n'est pas précisé, ou si il est incompatible, le type MIME présent dans la mliste jimage
+			Une chaine de caractère donnant le type MIME dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif'  					
+			et 'bmp' sont disponibles. Si le format n'est pas précisé, ou si il est incompatible, le type MIME présent dans la mliste jimage
 			sera utilisée. Si la déclaration est faite avec Matrix, l'image sera enregistrée au format JPEG (jpg). 
 		</para>
 		</listitem>
