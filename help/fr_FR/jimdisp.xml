@@ -16,7 +16,7 @@
 		xml:lang="fr" xml:id="jimdisp">
     <refnamediv>
         <refname>jimdisp</refname>
-        <refpurpose>Affiche une image à partir d'un objet <link linkend="jimage">jimage</link>, d'un chemin de fichier ou d'un URL.</refpurpose>
+        <refpurpose>Affiche une image à partir d'un objet <link linkend="jimage">jimage</link>, d'une matrice ou hypermatrice, d'un chemin de fichier ou d'un URL.</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
@@ -34,7 +34,7 @@
                 <term>image</term>
                 <listitem>
                     <para>
-                        Objet <link linkend="jimage">jimage</link>, ou chaîne de caractères donnant l'emplacement du fichier image (chemin ou URL).
+                        Objet <link linkend="jimage">jimage</link>, matrice, hypermatrice ou chaîne de caractères donnant l'emplacement du fichier image (chemin ou URL).
                     </para>					
                 </listitem>
             </varlistentry>
