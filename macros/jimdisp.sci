@@ -1,4 +1,5 @@
 //Copyright (C) 2017 - ENSIM, Université du Maine - Gael SENEE
+//
 //This file must be used under the terms of the CeCILL.
 //This source file is licensed as described in the file COPYING, which
 //you should have received as part of this distribution.  The terms
@@ -9,36 +10,36 @@ function jimdisp(image,box,info)
 
     // Initializing default parameters
     if ~isdef('info','l') then
-    info='no';
+        info = 'no';
     end
 
     if ~isdef('box','l') then
-    box='no';
+        box = 'no';
     end
 
     // Case where an image path or URL is given : the image is first
     // loaded with jimread.
     if type(image) == 10 then
-        jimage1=jimread(image);
+        jimage1 = jimread(image);
         jimreset(jimage1);
-        jimdisp_mat(jimage1)
+        jimdisp_mat(jimage1);
         
         if info == 'info' then
             withinfo(jimage1)
         end
 
-    // Case where a 2D or 3D matrix is given
+    // Case where a 2D, 3D matrix or a jimage object is given
     else
         jimreset(image);
-        jimdisp_mat(image)
+        jimdisp_mat(image);
         
         if info == 'info' then
-            withinfo(image)
+            withinfo(image);
         end
     end
 
     if box == 'box' then
-        withbox()
+        withbox();
     end
 
 endfunction
@@ -53,21 +54,21 @@ function jimdisp_mat(image)
 
     //Size of the matrix
     dim = size(image);
-    width = dim(2);
     height = dim(1);
-
-    //Setting of the display
+    width = dim(2);
+    
+    // Setting of the display
     if typeof(image) == 'jimage' then
-        Matplot(image.image)
-        fig.figure_name = image.title+image.format;
+        Matplot(image.image);
+        fig.figure_name = image.title + image.format;
     else
-        Matplot(image)
+        Matplot(image);
     end
-    ax.box="off";
+    ax.box = "off";
     ax.axes_visible = ["off","off","off"];
-    ax.isoview = "on"; // Squared pixels
+    ax.isoview = "on";
     ax.auto_scale = "on";
-    ax.tight_limits = "on"; 
+    ax.tight_limits = "on";
 
     
     // Centering of the displayed image (depends on the size)
@@ -85,8 +86,8 @@ function jimdisp_mat(image)
        w_max = 11 ;
        
     end
-       
-    ax.data_bounds = [w_min,width+w_max,h_min,height+h_max];
+
+    ax.data_bounds = [w_min, width + w_max, h_min, height + h_max];
 
 endfunction
 
@@ -109,11 +110,11 @@ function withinfo(image)
 
     // Size of the matrix
     dim = size(image);
-    width = dim(2);
     height = dim(1);
+    width = dim(2);
     
-    ax.title.text = image.title+image.format+"  -  "+"Type : "..
-    +image.encoding+"  -  "+"Size : "+string(height)+" x "+string(width);
+    ax.title.text = image.title + image.format + "  -  " + "Type : "..
+    + image.encoding + "  -  " + "Size : " + string(height) + " x " + string(width);
 
 endfunction
 
@@ -123,12 +124,13 @@ function jimreset(image)
     // box the size of the image.
     
     dim = size(image);
-    width = dim(2);
     height = dim(1);
+    width = dim(2);
     Matplot(8*ones(height+10,width+10));
 
     // Opening of the current parameters of the graphic environment
     ax = gca();
     
-    ax.title.text = ''
+    ax.title.text = '';
+    
 endfunction
