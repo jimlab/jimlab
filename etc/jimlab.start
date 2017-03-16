@@ -1,9 +1,11 @@
- //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
- //This file must be used under the terms of the CeCILL.
- //This source file is licensed as described in the file COPYING, which
- //you should have received as part of this distribution.  The terms
- //are also available at    
- //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+// Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+// Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
+ 
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution.  The terms
+// are also available at    
+// http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
 function jimlablib = startModule()
 
@@ -12,20 +14,19 @@ function jimlablib = startModule()
 
   mprintf("Start " + TOOLBOX_TITLE + "\n");
 
-  if isdef("jimlablib") then
-    warning("jimlab library is already loaded");
-    return;
-  end
-
   etc_tlbx  = get_absolute_file_path("jimlab.start");
   etc_tlbx  = getshortpathname(etc_tlbx);
   root_tlbx = strncpy( etc_tlbx, length(etc_tlbx)-length("\etc\") );
 
 //Load  functions library
 // =============================================================================
-  mprintf("\tLoad macros\n");
-  pathmacros = pathconvert( root_tlbx ) + "macros" + filesep();
-  jimlablib = lib(pathmacros);
+  if isdef("jimlablib") then
+      warning("jimlab library is already loaded");
+  else
+      mprintf("\tLoad macros\n");
+      pathmacros = pathconvert( root_tlbx ) + "macros" + filesep();
+      jimlablib = lib(pathmacros);
+  end
 
 // load gateways and Java libraries
 // =============================================================================
@@ -38,7 +39,7 @@ function jimlablib = startModule()
   //ilib_verbose(verboseMode);
 
 // load localization
-  addlocalizationdomain(TOOLBOX_NAME, root_tlbx + "/locales");
+//  addlocalizationdomain(TOOLBOX_NAME, root_tlbx + "/locales");
 
 // Load and add help chapter
 // =============================================================================
@@ -52,11 +53,11 @@ function jimlablib = startModule()
 
 // Load demos
 // =============================================================================
-  //if or(getscilabmode() == ["NW";"STD"]) then
-    //mprintf("\tLoad demos\n");
-    //pathdemos = pathconvert(root_tlbx+"/demos/toolbox_skeleton.dem.gateway.sce", %F, %T);
-    //add_demo(TOOLBOX_TITLE, pathdemos);
-  //end
+  if or(getscilabmode() == ["NW";"STD"]) then
+    mprintf("\tLoad demos\n");
+    pathdemos = pathconvert(root_tlbx+"/demos/jimlab.dem.gateway.sce", %F, %T);
+    add_demo(TOOLBOX_TITLE, pathdemos);
+  end
 
 // Load Preferences GUI
 // =============================================================================
@@ -64,12 +65,11 @@ function jimlablib = startModule()
     //addModulePreferences(TOOLBOX_TITLE, root_tlbx, etc_tlbx + "toolbox_skeleton_preferences.xml");
   //end
 
-
 endfunction
 
 jimlablib = startModule();
 
-//In Scilab 6.0.0, all the memory of the computer is available
+// In Scilab 6.0.0, all the memory of the computer is available
 v = getversion("scilab");
 if v(1) == 5 then
     stacksize('max');
@@ -88,6 +88,4 @@ if isdef('jimlablib') then
     end
 end
 
-
-
-clear startModule; // remove startModule on stack
+clear v m mp tmp startModule
