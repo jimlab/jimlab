@@ -20,7 +20,7 @@ function jimwrite(jimage,imageMat,imagePath,Format,Name,Encoding)
     disp(arg_jimage);
     
      
-     if((size(Mat,3) ~= 4)&(size(Mat,3) ~= 3)&(size(Mat,3) ~= 1)) // Verify if Mat is a 2D,3D or 4D matrix 
+     if((size(Mat,3) ~= 4)&(size(Mat,3) ~= 3)&(size(Mat,3) ~= 1)) // Verify if Mat is a 2D or 3D matrix 
             error('Argument Mat is not a matrix')
      end
     
@@ -232,9 +232,9 @@ endfunction
     endfunction
 
     function Sa = jimwriteRGBA(Mat,imagePath,typeMIME)
-// This sub-function saved an image definded by a 4D rgba matrix using java methode "write", from BufferedImage class. 
+// This sub-function saved an image definded by a 3D rgba matrix using java methode "write", from BufferedImage class. 
 // It is called by the function jimwrite.
-// Mat : The wxhx4 4D matrix, 
+// Mat : The wxhx4 3D matrix, 
 // imagePath : A string giving the writting path
 // typeMIME : A string giving the typeMIME for the new image 
 // Sa : A boolean
