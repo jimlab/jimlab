@@ -22,10 +22,10 @@
         <title>Syntaxes</title>
         <synopsis>
            jimwrite(jimage,,imagePath)
-	   jimwrite(jimage,,imagePath,Format)
-	   jimwrite(jimage,,imagePath,Format,Name)
-	   jimwrite(jimage,,imagePath,Format,Name,Encoding)
-	   jimwrite(,Matrix,imagePath,Format,Name,Encoding)
+	   jimwrite(jimage,,imagePath,typeMIME)
+	   jimwrite(jimage,,imagePath,typeMIME,Name)
+	   jimwrite(jimage,,imagePath,typeMIME,Name,Encoding)
+	   jimwrite(,Matrix,imagePath,typeMIME,Name,Encoding)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -54,7 +54,7 @@
 		</para>					
                 </listitem>
 				
-		<term>Format</term>
+		<term>typeMIME</term>
 		<listitem>
 		<para>
 			Une chaine de caractère donnant le type MIME dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif'  					
@@ -93,7 +93,7 @@
 		</para>
 		<para>
 			La mliste jimage rassemble : l'hypermatrice représentant l'image, le titre de l'image sous forme d'une chaîne de caractères, son 			
-			format d'origine, et son type d'encodage sous forme d'une chaîne de caracères.
+			type MIME d'origine, et son type d'encodage sous forme d'une chaîne de caracères.
 			L'encodage 'Gray' correspond à une matrice 2D pour les images en niveaux de gris. 
 			L'encodage 'RGB' correspond à une hypermatrice à trois couches. 
 			L'encodage 'RGBA' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
