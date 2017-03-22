@@ -26,7 +26,7 @@ function jimwrite(jimage,imageMat,imagePath,Format,Name,Encoding)
     
     
     if(~isdef(["imagePath"],"l") | type(imagePath) ~= 10) //Verify if imagePath is a string  
-        warning('Invalid Path of file, current depository will be used');
+        warning('Invalid Path of file, the current depository will be used');
         imagePath = pwd;
     end
     
