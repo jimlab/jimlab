@@ -31,7 +31,7 @@
                 <term>imagePath</term>
                 <listitem>
                     <para>
-						Une chaîne de caractère contenant le chemin complet du fichier image ou une URL			
+						Une chaîne de caractère contenant le chemin du fichier image ou une URL			
 					</para>					
                 </listitem>
 			</varlistentry>
@@ -49,10 +49,14 @@
         <title>Description</title>
         <para>
             Cette fonction lit une image à partir de son chemin ou d'une URL.
-			Elle retourne une matrice contenant les données de l'image en niveaux de gris ou une hypermatrice contenant les données RGB de l'image en fonction du type de l'image en entrée.
 		</para>
 		<para>
-			La mlist jimage rassemble : les données de l'image dans le champ 'image', le type d'encodage dans le champ 'encoding', le titre de l'image dans le champ 'title' et le format de l'image dans le champ 'format'. 
+			La mlist jimage rassemble : les données de l'image dans le champ <code>.image</code>, le type d'encodage dans le champ <code>.encoding</code>, le titre de l'image dans le champ <code>.title</code> et le type MIME de l'image dans le champ <code>.format</code>. 
+		</para>
+		<para>
+			Les données de l'image sont codées sur un octet en entiers non signés.
+		</para>
+		<para>
 			Le type 'gray' correspond à une matrice 2D pour les images en niveaux de gris. 
 			Le type 'rgb' correspond à une hypermatrice à trois couches. 
 			Le type 'rgba' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
