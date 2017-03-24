@@ -16,7 +16,7 @@
 		xml:lang="fr" xml:id="jimread">
     <refnamediv>
         <refname>jimread</refname>
-        <refpurpose>Lit un fichier image local ou istant et fournit l'image en matrice Scilab</refpurpose>
+        <refpurpose>Lit un fichier image local ou distant et fournit l'image en matrice Scilab</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
@@ -31,7 +31,7 @@
                 <term>imagePath</term>
                 <listitem>
                     <para>
-						Une chaîne de caractères contenant le chemin relaif ou absolu du fichier image ou une URL. Les types MIME png, bmp, gif et jpg sont supporté par <function>jimread</function>() à l'exception des images encodées en CMJN et des gif animés. 			
+						Une chaîne de caractères contenant le chemin relaif ou absolu du fichier image ou une URL. Les types MIME png, bmp, gif et jpg sont supporté par <literal>jimread</literal>() à l'exception des images encodées en CMJN et des gif animés. Le canal alpha est supporté pour les png et les gif mais la couleur de transparence est perdue lors de l'import en matrice Scilab.  			
 					</para>					
                 </listitem>
 			</varlistentry>
@@ -39,7 +39,7 @@
 				<term>jimage</term> 
                 <listitem>
                     <para>
-						Une mlist de type jimage 
+						Un objet de type <literal>jimage</literal> (mlist) avec les champs <literal>.image</literal>, <litteral>.encoding</litteral>, <litteral>.title</litteral> et <litteral>.format</litteral>.
 					</para>
                 </listitem>
 			</varlistentry>
@@ -48,10 +48,13 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction lit une image à partir de son chemin ou d'une URL.
+            Cette fonction charge dans une variable Scilab une image résidant dans un fichier local ou distant indiqué par son chemin ou son URL.
 		</para>
 		<para>
-			La mlist jimage rassemble : les données de l'image dans le champ <code>.image</code>, le type d'encodage dans le champ <code>.encoding</code>, le titre de l'image dans le champ <code>.title</code> et le type MIME de l'image dans le champ <code>.format</code>. 
+			La mlist jimage rassemble : 
+			<itemizedlist>
+				<listitem>l'intensité des pixels de l'image encodée en entier 8 bits positifs dans le champ <literal>.image</literal></listitem>
+			</itemizedlist>les données de l'image dans le champ <code>.image</code>, le type d'encodage dans le champ <code>.encoding</code>, le titre de l'image dans le champ <code>.title</code> et le type MIME de l'image dans le champ <code>.format</code>. 
 		</para>
 		<para>
 			Les données de l'image sont codées sur un octet en entiers non signés.
@@ -61,9 +64,6 @@
 			Le type 'rgb' correspond à une hypermatrice à trois couches. 
 			Le type 'rgba' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
         </para>
-		<para>
-			Les types MIME png, bmp, gif et jpg sont supporté par <function>jimread</function>() à l'exception des images encodées en CMJN.
-		</para>
     </refsection>
     <refsection>
         <title>Exemples</title>
@@ -88,7 +88,7 @@ jimage = jimread(path)
                 <link linkend="jimwrite">jimwrite</link>
             </member>
 			<member>
-                <link linkend="jimage_properties">jimage</link>
+                <link linkend="jimage_properties">jimage_properties</link>
             </member>
         </simplelist>
     </refsection>
@@ -96,7 +96,7 @@ jimage = jimread(path)
         <title>Historique</title>
         <revhistory>
             <revision>
-                <revnumber>2017-05</revnumber>
+                <revnumber>0.1 - 2017-05</revnumber>
                 <revremark>Publication initiale du module Jimlab</revremark>
             </revision>
         </revhistory>
