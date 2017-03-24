@@ -16,7 +16,7 @@
 		xml:lang="fr" xml:id="jimread">
     <refnamediv>
         <refname>jimread</refname>
-        <refpurpose>Lit une image à partir d'un fichier ou d'une URL</refpurpose>
+        <refpurpose>Lit un fichier image local ou istant et fournit l'image en matrice Scilab</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
@@ -31,7 +31,7 @@
                 <term>imagePath</term>
                 <listitem>
                     <para>
-						Une chaîne de caractère contenant le chemin du fichier image ou une URL			
+						Une chaîne de caractères contenant le chemin relaif ou absolu du fichier image ou une URL. Les types MIME png, bmp, gif et jpg sont supporté par <function>jimread</function>() à l'exception des images encodées en CMJN et des gif animés. 			
 					</para>					
                 </listitem>
 			</varlistentry>
