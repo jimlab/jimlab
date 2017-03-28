@@ -51,31 +51,54 @@
             Cette fonction charge dans une variable Scilab une image résidant dans un fichier local ou distant indiqué par son chemin ou son URL.
 		</para>
 		<para>
-			La mlist jimage rassemble : 
+			L'objet jimage rassemble : 
 			<itemizedlist>
-				<listitem>l'intensité des pixels de l'image encodée en entier 8 bits positifs dans le champ <literal>.image</literal></listitem>
-			</itemizedlist>les données de l'image dans le champ <code>.image</code>, le type d'encodage dans le champ <code>.encoding</code>, le titre de l'image dans le champ <code>.title</code> et le type MIME de l'image dans le champ <code>.format</code>. 
+				<listitem>
+					l'intensité des pixels de l'image encodée en entier 8 bits positifs dans le champ <literal>.image</literal>,
+				</listitem>
+				<listitem>
+					le type d'encodage ('gray', 'rgb', ou 'rgba') dans le champ <literal>.ecoding</literal>,
+				</listitem>
+				<listitem>
+					le titre de l'image dans le champ <literal>.title</literal>,
+				</listitem>
+				<listitem>
+					le type MIME de l'image dans le champ <literal>.format</literal>.
+				</listitem>
+			</itemizedlist>
 		</para>
-		<para>
-			Les données de l'image sont codées sur un octet en entiers non signés.
-		</para>
-		<para>
-			Le type 'gray' correspond à une matrice 2D pour les images en niveaux de gris. 
-			Le type 'rgb' correspond à une hypermatrice à trois couches. 
-			Le type 'rgba' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
-        </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
-s = filesep();
 //A partir d'un fichier
-path = jimlabPath + 'tests' + s + 'images' + s + 'noError' + s + 'rgb.bmp';
-jimage = jimread(path)
+root = jimpath("/");
+
+//jpg en niveaux de gris
+path = root + 'tests/images/noError/gray.jpg';
+jimage1 = jimread(path);
+
+//bmp en RGB
+path = root + 'tests/images/noError/rgb.bmp';
+jimage2 = jimread(path);
+
+//png en RGBA
+path = root + 'tests/images/noError/rgba.png';
+jimage3 = jimread(path);
 
 //A partir d'une URL
 path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
-jimage = jimread(path)
+jimage4 = jimread(path);
+
+//Affichage
+subplot(2,2,1)
+jimdisp(jimage1)
+subplot(2,2,2)
+jimdisp(jimage2)
+subplot(2,2,3)
+jimdisp(jimage3)
+subplot(2,2,4)
+jimdisp(jimage4)
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
