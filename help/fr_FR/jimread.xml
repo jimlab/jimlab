@@ -39,7 +39,7 @@
 				<term>jimage</term> 
                 <listitem>
                     <para>
-						Un objet de type <literal>jimage</literal> (mlist) avec les champs <literal>.image</literal>, <litteral>.encoding</litteral>, <litteral>.title</litteral> et <litteral>.format</litteral>.
+						Un objet de type <literal>jimage</literal> (mlist) avec les champs <literal>.image</literal>, <literal>.encoding</literal>, <literal>.title</literal> et <literal>.format</literal>.
 					</para>
                 </listitem>
 			</varlistentry>
