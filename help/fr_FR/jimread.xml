@@ -51,22 +51,30 @@
             Cette fonction charge dans une variable Scilab une image résidant dans un fichier local ou distant indiqué par son chemin ou son URL.
 		</para>
 		<para>
-			L'objet jimage rassemble : 
-			<itemizedlist>
-				<listitem>
-					l'intensité des pixels de l'image encodée en entier 8 bits positifs dans le champ <literal>.image</literal>,
-				</listitem>
-				<listitem>
-					le type d'encodage ('gray', 'rgb', ou 'rgba') dans le champ <literal>.ecoding</literal>,
-				</listitem>
-				<listitem>
-					le titre de l'image dans le champ <literal>.title</literal>,
-				</listitem>
-				<listitem>
-					le type MIME de l'image dans le champ <literal>.format</literal>.
-				</listitem>
-			</itemizedlist>
+		L'objet jimage rassemble : 
 		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					l'intensité des pixels de l'image encodée en entier 8 bits positifs dans le champ <literal>.image</literal>,
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					le type d'encodage ('gray', 'rgb', ou 'rgba') dans le champ <literal>.ecoding</literal>,
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					le titre de l'image dans le champ <literal>.title</literal>,
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					le type MIME de l'image dans le champ <literal>.format</literal>.
+				</para>
+			</listitem>
+		</itemizedlist>
     </refsection>
     <refsection>
         <title>Exemples</title>
