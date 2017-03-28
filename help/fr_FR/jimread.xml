@@ -79,7 +79,7 @@
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
-//A partir d'un fichier
+//A partir d'un fichier local
 root = jimpath("/");
 
 //jpg en niveaux de gris
@@ -94,7 +94,7 @@ jimage2 = jimread(path);
 path = root + 'tests/images/noError/rgba.png';
 jimage3 = jimread(path);
 
-//A partir d'une URL
+//A partir d'un fichier distant
 path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
 jimage4 = jimread(path);
 
