@@ -8,7 +8,8 @@
 //
 //  <-- BENCH NB RUN : 10 -->
 
-path = jimlabPath + '/tests/images/logoEnsim.png';
+root = jimpath();
+path = root + '/tests/images/logoEnsim.png';
 jimage = jimread(path);
 
 // <-- BENCH START -->
