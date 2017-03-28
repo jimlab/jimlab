@@ -61,7 +61,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					le type d'encodage ('gray', 'rgb', ou 'rgba') dans le champ <literal>.ecoding</literal>,
+					le type d'encodage ('gray', 'rgb', ou 'rgba') dans le champ <literal>.encoding</literal>,
 				</para>
 			</listitem>
 			<listitem>
