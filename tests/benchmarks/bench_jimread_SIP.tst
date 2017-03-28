@@ -8,21 +8,34 @@
 //
 //  <-- BENCH NB RUN : 10 -->
 
-try
-    if ~atomsIsLoaded('SIP') then
-            loaded=1;
-            if ~atomsIsInstalled('SIP') then
-            installed=1;
-            atomsInstall('SIP')
-        end
-        atomsLoad('SIP')
-    end
-catch
-    msg = _("%s: This benchmark can not run with this OS.\n");
+v = getversion('scilab');
+
+if v(1) == 5 then
+    module = "SIP";
+elseif v(1) == 6 then
+    module ="IPCV"
+else
+    msg = _("%s: This benchmark cannot run with this version of Scilab.\n");
     error(msprintf(msg,"bench_jimread"));
 end
 
-path = jimlabPath + '/tests/images/logoEnsim.png';
+
+if (getos() == "Linux") then
+    if ~atomsIsLoaded(module) then
+            loaded=1;
+            if ~atomsIsInstalled(module) then
+            installed=1;
+            atomsInstall(module)
+        end
+        atomsLoad(module)
+    end
+else
+    msg = _("%s: This benchmark cannot run with this OS.\n");
+    error(msprintf(msg,"bench_jimread"));
+end
+
+root = jimpath();
+path = root + '/tests/images/logoEnsim.png';
 image = imread(path);
 
 // <-- BENCH START -->
@@ -30,9 +43,9 @@ image = imread(path);
 // <-- BENCH END -->
 
 if ~loaded then
-    atomsQuit('SIP')
+    atomsQuit(module)
     if ~installed then
-        atomsRemove('SIP')
+        atomsRemove(module)
     end
 end
 
