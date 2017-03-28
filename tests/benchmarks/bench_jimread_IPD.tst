@@ -8,18 +8,23 @@
 //
 //  <-- BENCH NB RUN : 10 -->
 
-try
-    if ~atomsIsLoaded('IPD') then
-            if ~atomsIsInstalled('IPD') then
-            atomsInstall('IPD')
-        end
-        atomsLoad('IPD')
-    end
-catch
-    msg = _("%s: This benchmark can not run with this OS or this version of Scilab.\n");
+v = getversion('scilab');
+
+if v(1) ~= 5 then
+    msg = _("%s: This benchmark cannot run with this version of Scilab.\n");
     error(msprintf(msg,"bench_jimread"));
 end
-path = jimlabPath + '/tests/images/logoEnsim.png';
+
+
+if ~atomsIsLoaded('IPD') then
+    if ~atomsIsInstalled('IPD') then
+        atomsInstall('IPD')
+    end
+    atomsLoad('IPD')
+end
+
+root = jimpath();
+path = root + '/tests/images/logoEnsim.png';
 image = ReadImage(path);
 
 // <-- BENCH START -->
