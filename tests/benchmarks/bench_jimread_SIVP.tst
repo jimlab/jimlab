@@ -17,7 +17,9 @@ end
 
 if (getos() == "Windows" | getos() == "Linux")
     if ~atomsIsLoaded('SIVP') then
-            if ~atomsIsInstalled('SIVP') then
+        loaded = 1;
+        if ~atomsIsInstalled('SIVP') then
+            installed = 1;
             atomsInstall('SIVP')
         end
         atomsLoad('SIVP')
@@ -27,7 +29,7 @@ else
     error(msprintf(msg,"bench_jimread"));
 end
 
-root = jimpath();
+root = jimlabPath();
 path = root + '/tests/images/logoEnsim.png';
 image = imread(path);
 
@@ -35,9 +37,10 @@ image = imread(path);
 image = imread(path);
 // <-- BENCH END -->
 
-if ~loaded then
+if loaded then
     atomsQuit('SIVP')
-    if ~installed then
+    if installed then
         atomsRemove('SIVP')
     end
 end
+
