@@ -9,11 +9,12 @@
 function jimdisp(image,box,info)
 
     // Initializing default parameters
-    if ~isdef('info','l') then
+    //if ~isdef('info','l') then
+    if ~isdef('info','l') | type(info) == 0  then
         info = 'no';
     end
-
-    if ~isdef('box','l') then
+    //if ~isdef('box','l') then
+    if ~isdef('box','l') | type(box) == 0 then
         box = 'no';
     end
 
@@ -69,6 +70,7 @@ function jimdisp_mat(image)
     ax.isoview = "on";
     ax.auto_scale = "on";
     ax.tight_limits = "on";
+    ax.title.text = '';
 
     
     // Centering of the displayed image (depends on the size)
@@ -127,10 +129,5 @@ function jimreset(image)
     height = dim(1);
     width = dim(2);
     Matplot(8*ones(height+10,width+10));
-
-    // Opening of the current parameters of the graphic environment
-    ax = gca();
-    
-    ax.title.text = '';
     
 endfunction
