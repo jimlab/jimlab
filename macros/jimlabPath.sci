@@ -13,7 +13,7 @@ function path = jimlabPath(sep)
     //sep : a character, "/" or "\". If sep exists, a final separator is added to jimlabPath.
     if (isdef(['jimlablib'],'a')) then 
         v = getversion("scilab");
-        [m, mp] = libraryinfo("jimlablib");
+        [m, mp] = libraryinfo("jimlablib");// Get the path from libraryinfo.
          //remove '/marcos' from jimlabPath
          path = pathconvert(fullpath(mp), %t, %t);
          tmp= filesep() + 'macros' + filesep()
@@ -27,7 +27,7 @@ function path = jimlabPath(sep)
             msg = _("%s: Argument #%d: / or \ expected.\n");
             warning(msprintf(msg,"jimpath", 1));
         else
-            path = path + filesep()
+            path = path + filesep() //adding a final separator.
         end
     end
     
