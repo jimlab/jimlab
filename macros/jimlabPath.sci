@@ -8,6 +8,7 @@
 // are also available at    
 // http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
+
 function path = jimlabPath(sep)
     //This function returns the path of Jimlab library in a string with or without a final separator.
     //sep : a character, "/" or "\". If sep exists, a final separator is added to jimlabPath.
@@ -15,7 +16,7 @@ function path = jimlabPath(sep)
     //Jimlab must be loaded 
     if (isdef(['jimlablib'],'a')) then 
         v = getversion("scilab");
-        [m, mp] = libraryinfo("jimlablib");// Get the path from libraryinfo.
+        [m, mp] = libraryinfo("jimlablib"); // Get the path from libraryinfo.
         //remove '/marcos' from path
         path = pathconvert(fullpath(mp), %t, %t);
         tmp= filesep() + 'macros' + filesep()
@@ -25,6 +26,7 @@ function path = jimlabPath(sep)
         error(msprintf(msg,"jimlabPath"));
     end
     
+    //If a wrong argument is given, no final separator is added and the user is warned
     if(isdef(["sep"],"l"))
         if ((sep ~= "/" )& (sep ~= "\")) then
             msg = _("%s: Argument #%d: / or \ expected.\n");
@@ -33,6 +35,8 @@ function path = jimlabPath(sep)
             path = path + filesep() //adding a final separator.
         end
     end
+    
+endfunction
     
 endfunction
     
