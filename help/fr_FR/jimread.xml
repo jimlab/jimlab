@@ -80,7 +80,7 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 //A partir d'un fichier local
-root = jimpath("/");
+root = jimlabPath("/");
 
 //jpg en niveaux de gris
 path = root + 'tests/images/noError/gray.jpg';
