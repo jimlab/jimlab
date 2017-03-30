@@ -18,11 +18,11 @@ end
 
 if ~atomsIsLoaded('IPD') then
     loaded=1;
-    atomsLoad('IPD')
     if ~atomsIsInstalled('IPD') then
         installed=1;
         atomsInstall('IPD')
     end
+    atomsLoad('IPD')
 end
 
 root = jimlabPath();
