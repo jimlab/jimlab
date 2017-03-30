@@ -34,7 +34,7 @@ else
     error(msprintf(msg,"bench_jimread"));
 end
 
-root = jimpath();
+root = jimlabPath();
 path = root + '/tests/images/logoEnsim.png';
 image = imread(path);
 
@@ -42,9 +42,9 @@ image = imread(path);
 image = imread(path);
 // <-- BENCH END -->
 
-if ~loaded then
+if loaded then
     atomsQuit(module)
-    if ~installed then
+    if installed then
         atomsRemove(module)
     end
 end
