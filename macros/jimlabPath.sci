@@ -7,7 +7,7 @@
 // are also available at    
 // http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-function jimlabPath = jimpath(sep)
+function path = jimlabPath(sep)
     //This function returns the path of Jimlab library in a string with or without a final separator.
     //sep : a character, "/" or "\". If sep exists, a final separator is added to jimlabPath.
     
