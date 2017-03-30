@@ -109,7 +109,7 @@ function jimwrite(jimage,imageMat,imagePath,typeMIME,Name,Encoding)
  
     
      
-    imagePath = imagePath + "/" + Name + "." + typeMIME; // This code create the final path used by Java methode 'write'
+    imagePath = imagePath + filesep() + Name + "." + typeMIME; // This code create the final path used by Java methode 'write'
 
     S = 0;
     
