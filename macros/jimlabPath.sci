@@ -1,4 +1,5 @@
 // Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+// Copyright (C) 2017 - ENSIM, Université du Maine - Nicolas AEGERTER
 // Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
  
 // This file must be used under the terms of the CeCILL.
@@ -10,21 +11,25 @@
 function path = jimlabPath(sep)
     //This function returns the path of Jimlab library in a string with or without a final separator.
     //sep : a character, "/" or "\". If sep exists, a final separator is added to jimlabPath.
-    
-    if (sep ~= "/" & sep ~= "\") then
-        msg = _("%s: Argument #%d: / or \ expected.\n");
-        error(msprintf(msg,"jimpath", 1));
-    else
-        if isdef('jimlablib') then
-            v = getversion("scilab");
-            [m, mp] = libraryinfo('jimlablib');
-            //remove '/marcos' from jimlabPath
-            jimlabPath = pathconvert(fullpath(mp), %t, %t);
-            tmp= filesep() + 'macros' + filesep()
-            jimlabPath = strsubst(jimlabPath, tmp, '')
-        else 
-            msg = _("%s: Jimlab library is not loaded.\n");
-            error(msprintf(msg,"jimpath"));
+    if (isdef(['jimlablib'],'a')) then 
+        v = getversion("scilab");
+        [m, mp] = libraryinfo("jimlablib");
+         //remove '/marcos' from jimlabPath
+         path = pathconvert(fullpath(mp), %t, %t);
+         tmp= filesep() + 'macros' + filesep()
+         path = strsubst(path, tmp, '')
+    else 
+        msg = _("%s: Jimlab library is not loaded.\n");
+        error(msprintf(msg,"jimpath"));
+    end
+    if(isdef(["sep"],"l"))
+        if ((sep ~= "/" )& (sep ~= "\")) then
+            msg = _("%s: Argument #%d: / or \ expected.\n");
+            warning(msprintf(msg,"jimpath", 1));
+        else
+            path = path + filesep()
         end
     end
+    
 endfunction
+    
