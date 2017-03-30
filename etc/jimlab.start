@@ -75,17 +75,4 @@ if v(1) == 5 then
     stacksize('max');
 end
 
-//Path of the module
-if isdef('jimlablib') then
-    [m, mp] = libraryinfo('jimlablib');
-    //remove '/marcos' from jimlabPath in Scilab 6.0.0
-    if v(1) == 6 then
-        jimlabPath = pathconvert(fullpath(mp), %t, %t);
-        tmp = filesep() + 'macros'
-        jimlabPath = strsubst(jimlabPath, tmp, '')
-    else
-        jimlabPath = pathconvert(fullpath(mp + "../"), %t, %t);
-    end
-end
-
-clear v m mp tmp startModule
+clear v startModule
