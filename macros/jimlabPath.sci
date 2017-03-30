@@ -11,21 +11,24 @@
 function path = jimlabPath(sep)
     //This function returns the path of Jimlab library in a string with or without a final separator.
     //sep : a character, "/" or "\". If sep exists, a final separator is added to jimlabPath.
+    
+    //Jimlab must be loaded 
     if (isdef(['jimlablib'],'a')) then 
         v = getversion("scilab");
         [m, mp] = libraryinfo("jimlablib");// Get the path from libraryinfo.
-         //remove '/marcos' from jimlabPath
-         path = pathconvert(fullpath(mp), %t, %t);
-         tmp= filesep() + 'macros' + filesep()
-         path = strsubst(path, tmp, '')
+        //remove '/marcos' from path
+        path = pathconvert(fullpath(mp), %t, %t);
+        tmp= filesep() + 'macros' + filesep()
+        path = strsubst(path, tmp, '')
     else 
         msg = _("%s: Jimlab library is not loaded.\n");
-        error(msprintf(msg,"jimpath"));
+        error(msprintf(msg,"jimlabPath"));
     end
+    
     if(isdef(["sep"],"l"))
         if ((sep ~= "/" )& (sep ~= "\")) then
             msg = _("%s: Argument #%d: / or \ expected.\n");
-            warning(msprintf(msg,"jimpath", 1));
+            warning(msprintf(msg,"jimlabPath", 1));
         else
             path = path + filesep() //adding a final separator.
         end
