@@ -17,13 +17,15 @@ end
 
 
 if ~atomsIsLoaded('IPD') then
+    loaded=1;
+    atomsLoad('IPD')
     if ~atomsIsInstalled('IPD') then
+        installed=1;
         atomsInstall('IPD')
     end
-    atomsLoad('IPD')
 end
 
-root = jimpath();
+root = jimlabPath();
 path = root + '/tests/images/logoEnsim.png';
 image = ReadImage(path);
 
@@ -31,9 +33,9 @@ image = ReadImage(path);
 image = ReadImage(path);
 // <-- BENCH END -->
 
-if ~loaded then
+if loaded then
     atomsQuit('IPD')
-    if ~installed then
+    if installed then
         atomsRemove('IPD')
     end
 end
