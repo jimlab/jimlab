@@ -13,58 +13,81 @@
 <refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
 		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
 		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
-		xml:lang="fr" xml:id="jimage">
+		xml:lang="fr" xml:id="jimage_properties">
     <refnamediv>
         <refname>jimage</refname>
-        <refpurpose>Objet de type mlist spécifique au module jimlab</refpurpose>
+        <refpurpose>Objet spécifique au module Jimlab (mlist)</refpurpose>
     </refnamediv>
     <refsection>
         <title>Description</title>
         <para>
-            Cet objet est une liste typée décrivant une image. Ces champs sont : 
+            L'objet jimage permet de représenter un fichier image en Scilab. Ces champs sont : 
             <variablelist>
                 <varlistentry>
-                    <term>image</term>
+                    <term>.image</term>
                     <listitem>
-                        La matrice ou l'hypermatrice des valeurs des pixels.
+                        Une matrice ou une hypermatrice décrivant l'intensité des pixels de l'image. Elle est codée en entiers 8 bits positifs dans l'intervalle [0;255]. 
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-                    <term>encoding</term>
+                    <term>.encoding</term>
                     <listitem>
-                        Le type d'encodage de l'image.
+                        Une chaîne de caractères décrivant le type d'encodage de l'image. 
+						<itemizedlist>
+							<listitem>
+								<para>
+								'gray' : <literal>jimage.image</literal> est une matrice décrivant une image en niveaux de gris sur 256 niveaux.  
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+								'rgb' : <literal>jimage.image</literal> est une hypermatrice à 3 couches. Chaque couche donne l'intensité des pixels pour une couleur (rouge, vert et bleu) sur 256 niveaux.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+								'rgba' : <literal>jimage.image</literal> est une hypermatrice à 4 couches dont la dernière gère le canal alpha. 
+								</para>
+							</listitem>
+						</itemizedlist>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-                    <term>title</term>
+                    <term>.title</term>
                     <listitem>
-                        Le titre de l'image.
+                        Une chaîne de caractères contenant le nom de l'image. Si l'objet <literal>jimage</literal> est créé avec la fonction <function>jimread</function>(), le titre de l'image correspond au nom du fichier sans son extension. 
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-                    <term>format</term>
+                    <term>.format</term>
                     <listitem>
-                        L'extension du fichier image.
+                        Une chaîne de caractères contenant le type MIME de l'image : '.png', '.bmp', '.gif' ou '.jpg'.
 					</listitem>
 				</varlistentry>
             </variablelist>        
         </para>
 		<para>
-			Le type d'encodage 'gray' correspond à une matrice 2D pour les images en niveaux de gris. 
-			Le type d'encodage 'rgb' correspond à une hypermatrice à trois couches. 
-			Le type d'encodage 'rgba' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
-        </para>
+			Le fonction <function>size</function>()	est utilisable avec l'objet <literal>jimage</literal>. Elle renvoie la hauteur et la largeur de l'image.
+		</para>
 		<para>
-			Le fonction <function>size</function>()	est utilisable avec l'objet <code>jimage</code>. Elle renvoie la hauteur et la largeur de l'image.
+			Le fonction <function>disp</function>()	permet d'afficher les propriétés de l'objet <literal>jimage</literal>. Pour afficher l'image dans une fenêtre graphique, il faut utiliser la fonction <function>jimdisp</function>().
 		</para>
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
-s = filesep();
-path = jimlabPath + 'tests' + s + 'images' + s + 'noError' + s + 'rgb.png';
-jimage = jimread(path)
+root = jimlabPath("/");
+path = root + 'tests/images/noError/rgb.png';
+
+//chargement d'une image dans un objet jimage
+jimage = jimread(path);
+
+//Utilisation de size() et disp() 
 dim = size(jimage)
+disp(jimage)
+
+//Affichage
+jimdisp(jimage,'box','info')
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
@@ -85,7 +108,7 @@ dim = size(jimage)
         <title>Historique</title>
         <revhistory>
             <revision>
-                <revnumber>2017-05</revnumber>
+                <revnumber>0.1 - 2017-05</revnumber>
                 <revremark>Publication initiale du module Jimlab</revremark>
             </revision>
         </revhistory>
