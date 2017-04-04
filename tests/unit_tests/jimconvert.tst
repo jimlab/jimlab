@@ -8,12 +8,13 @@
  
 // <-- NO CHECK REF -->
 
-s = filesep();
-root = jimlabPath + s + 'tests' + s + 'images' + s + 'noError';
+//List of images to test
+root = jimlabPath("/") + 'tests/images/noError';
 fileList = dir(root);
 nameList = fileList.name;
 fileNumber = size(nameList);
 fileNumber = fileNumber(1);
+s = filesep();
 
 for i = 1:fileNumber
     path = root + s + nameList(i);
@@ -24,8 +25,31 @@ for i = 1:fileNumber
         gray = jimconvert(jim.image, 'gray');
         jrgb = jimconvert(jim , 'rgb');
         rgb = jimconvert(jim.image, 'rgb');
+        
     elseif (jim.encoding == 'rgb') then
         jgray = jimconvert(jim, 'gray');
         gray = jimconvert(jim.image, 'gray');
+        
+        //already rgb encoding
+        msg = "%s: %s cannot be converted into rgb encoding.";
+        name = jim.title + jim.format;
+        assert_checkerror("gray = jimconvert(jim , ""rgb"")", msg, [], "jimconvert",  name)
+        
+    elseif (jim.encoding == 'gray') then
+        //jimconvert() cannot convert a gray encoding into a rgb or a gray encoding
+        msg = "%s: %s cannot be converted into rgb encoding.";
+        name = jim.title + jim.format;
+        assert_checkerror("rgb = jimconvert(jim , ""rgb"")", msg, [], "jimconvert",  name)
+        msg = "%s: Argument #%d: M-list or %s expected.\n";
+        name = jim.title + jim.format;
+        assert_checkerror("gray = jimconvert(jim.image , ""gray"")", msg, [], "jimconvert", 1, "hypermat")
     end
 end
+
+//Wrong second argument
+msg = "%s: Argument #%d: rgb or gray expected.";
+assert_checkerror("rgba = jimconvert(jim.image , ""rgba"")", msg, [], "jimconvert", 2)
+
+//Wrong first argument
+msg = "%s: Argument #%d: M-list or %s expected.\n";
+assert_checkerror("gray = jimconvert(23 , ""gray"")", msg, [], "jimconvert", 1, "hypermat")
