@@ -37,6 +37,3 @@ function path = jimlabPath(sep)
     end
     
 endfunction
-    
-endfunction
-    
