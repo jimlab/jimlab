@@ -23,8 +23,9 @@
             case 'gray' then
                 if (typeof(jimage) == "hypermat")
                     jimage = double(jimage);
-                    convertedJimage = (jimage(:,:,1) + jimage(:,:,2) + ..
-                                                         jimage(:,:,3))/3;
+                    //Coefficients are the same used by Matplot() 
+                    convertedJimage = (0.299 .* jimage(:,:,1) + 0.587 .* jimage(:,:,2) + ..
+                                                         0.114 .* jimage(:,:,3))/3;
                     convertedJimage = round(convertedJimage);
                     convertedJimage = uint8(convertedJimage);
                 else
