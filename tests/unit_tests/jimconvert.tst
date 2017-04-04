@@ -40,9 +40,9 @@ for i = 1:fileNumber
         msg = "%s: %s cannot be converted into rgb encoding.";
         name = jim.title + jim.format;
         assert_checkerror("rgb = jimconvert(jim , ""rgb"")", msg, [], "jimconvert",  name)
-        msg = "%s: Argument #%d: M-list or %s expected.\n";
+        msg = "%s: %s cannot be converted into rgb encoding.";
         name = jim.title + jim.format;
-        assert_checkerror("gray = jimconvert(jim.image , ""gray"")", msg, [], "jimconvert", 1, "hypermat")
+        assert_checkerror("gray = jimconvert(jim , ""gray"")", msg, [], "jimconvert", name)
     end
 end
 
