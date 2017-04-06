@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of the Jimlab module made for Scilab
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+ * 
+ * This file must be used under the terms of the CeCILL.
+ * This source file is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution.  The terms
+ * are also available at    
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ *
+ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
+		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+		xml:lang="fr" xml:id="jimroi">
+    <refnamediv>
+        <refname>jimroi</refname>
+        <refpurpose>Selection d'une zone polygonale fermée d'intérêt sur l'étendue complète d'une image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Syntaxes</title>
+        <synopsis>
+            [imroi, transparencyColor, polygon, offset] = jimroi(image, polygon, localization, transparencyColor, reducedSize)
+			[imroi, transparencyColor, polygon, offset] = jimroi(image, polygon, localization, transparencyColor)
+			[imroi, transparencyColor, polygon, offset] = jimroi(image, polygon, localization,, reducedSize)
+            [imroi, transparencyColor, polygon, offset] = jimroi(image, polygon,, transparencyColor, reducedSize)			
+			[imroi, transparencyColor, polygon, offset] = jimroi(image, polygon, localization)
+
+        </synopsis>
+    </refsynopsisdiv>
+    <refsection>
+        <title>Arguments</title>
+        <variablelist>
+            <varlistentry>
+                <term>imagePath</term>
+                <listitem>
+                    <para>
+						Une chaîne de caractères contenant le chemin relaif ou absolu du fichier image ou une URL. Les types MIME png, bmp, gif et jpg sont supportés par <literal>jimread</literal>() à l'exception des images encodées en CMJN et des gif animés. Le canal alpha est supporté pour les png et les gif mais la couleur de transparence est perdue lors de l'import en matrice Scilab.  			
+					</para>					
+                </listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>jimage</term> 
+                <listitem>
+                    <para>
+						Un objet de type <literal>jimage</literal> (mlist) avec les champs <literal>.image</literal>, <literal>.encoding</literal>, <literal>.title</literal>, <literal>.format</literal> et <literal>.transparencyColor</literal>.
+					</para>
+                </listitem>
+			</varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Description</title>
+        <para>
+            Cette fonction charge dans une variable Scilab une image résidant dans un fichier local ou distant indiqué par son chemin ou son URL.
+		</para>
+		<para>
+		L'objet jimage rassemble : 
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					l'intensité des pixels de l'image encodée en entier 8 bits positifs dans le champ <literal>.image</literal>,
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					le type d'encodage ('gray', 'rgb', ou 'rgba') dans le champ <literal>.encoding</literal>,
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					le titre de l'image dans le champ <literal>.title</literal>,
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					le type MIME de l'image dans le champ <literal>.format</literal>.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					la couleur de transparence de l'image dans le champ <literal>.transparencyColor</literal>.
+				</para>
+			</listitem>
+		</itemizedlist>
+		La couleur de transparence de l'image étant perdue lors de l'import en objet Scilab, la valeur du champ <literal>jimage.transparencyColor</literal> est -1 par défaut. 
+    </refsection>
+    <refsection>
+        <title>Exemples</title>
+        <programlisting role="example"><![CDATA[ 
+//A partir d'un fichier local
+root = jimlabPath("/");
+//jpg en niveaux de gris
+path = root + 'tests/images/noError/gray.jpg';
+jimage1 = jimread(path);
+//bmp en RGB
+path = root + 'tests/images/noError/rgb.bmp';
+jimage2 = jimread(path);
+//png en RGBA
+path = root + 'tests/images/noError/rgba.png';
+jimage3 = jimread(path);
+//A partir d'un fichier distant
+path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
+jimage4 = jimread(path);
+//Affichage
+subplot(2,2,1)
+jimdisp(jimage1)
+subplot(2,2,2)
+jimdisp(jimage2)
+subplot(2,2,3)
+jimdisp(jimage3)
+subplot(2,2,4)
+jimdisp(jimage4)
+ ]]></programlisting>
+	</refsection>
+    <refsection role="see also">
+        <title>Voir Aussi</title>
+        <simplelist type="inline">
+            <member>
+                <link linkend="jimdisp">jimdisp</link>
+            </member>
+            <member>
+                <link linkend="jimwrite">jimwrite</link>
+            </member>
+			<member>
+                <link linkend="jimage_properties">jimage_properties</link>
+            </member>
+        </simplelist>
+    </refsection>
+    <refsection>
+        <title>Historique</title>
+        <revhistory>
+            <revision>
+                <revnumber>0.1 - 2017-05</revnumber>
+                <revremark>Publication initiale du module Jimlab</revremark>
+            </revision>
+        </revhistory>
+    </refsection>
+</refentry>
