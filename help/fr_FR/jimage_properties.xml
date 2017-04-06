@@ -64,6 +64,30 @@
                         Une chaîne de caractères contenant le type MIME de l'image : '.png', '.bmp', '.gif' ou '.jpg'.
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+                    <term>.transparencyColor</term>
+                    <listitem>
+						Ce champ représente la couleur de transparence d'une image.  
+                        <itemizedlist>
+							<listitem>
+								<para>
+									-1 : il n'y a pas de couleur de transparence. C'est la valeur par défaut de ce champ lorsque l'objet jimage a été créé à l'aide de la fonction <function>jimread</function>(),
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									un entier positif encodé sur 8 bits : la nuance de gris utilisée pour représenter un pixel transparent,
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									un vecteur d'entiers positifs encodés sur 8 bits : la couleur utilisée pour représenter un pixel transparent. 
+								</para>
+							</listitem>
+						</itemizedlist>
+						Cette couleur de transparence est modifiée lors de l'utilisation de la fonction <function>jimroi</function>(). Elle permet la sélection de zone d'une image. Lors de l'exportation d'un objet <literal>jimage</literal> avec la fonction <function>jimwrite</function>(), la couleur de transparence n'est pas écrite dans les métadonnées de l'image.
+					</listitem>
+				</varlistentry>
             </variablelist>        
         </para>
 		<para>
