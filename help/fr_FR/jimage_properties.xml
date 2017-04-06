@@ -126,6 +126,9 @@ jimdisp(jimage,'box','info')
             <member>
                 <link linkend="jimwrite">jimwrite</link>
             </member>
+			<member>
+                <link linkend="jimroi">jimroi</link>
+            </member>
         </simplelist>
     </refsection>
     <refsection>
