@@ -76,12 +76,12 @@
 							</listitem>
 							<listitem>
 								<para>
-									un entier positif encodé sur 8 bits : la nuance de gris utilisée pour représenter un pixel transparent,
+									un entier positif encodé sur 8 bits : la nuance de gris utilisée pour représenter un pixel transparent dans une image en niveaux de gris,
 								</para>
 							</listitem>
 							<listitem>
 								<para>
-									un vecteur d'entiers positifs encodés sur 8 bits : la couleur utilisée pour représenter un pixel transparent. 
+									un vecteur d'entiers positifs encodés sur 8 bits : la couleur utilisée pour représenter un pixel transparent dans une image RGB. 
 								</para>
 							</listitem>
 						</itemizedlist>
