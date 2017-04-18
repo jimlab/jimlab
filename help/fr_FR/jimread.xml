@@ -31,7 +31,7 @@
                 <term>imagePath</term>
                 <listitem>
                     <para>
-						Une chaîne de caractères contenant le chemin relaif ou absolu du fichier image ou une URL. Les types MIME png, bmp, gif et jpg sont supportés par <literal>jimread</literal>() à l'exception des images encodées en CMJN et des gif animés. Le canal alpha est supporté pour les png et les gif mais la couleur de transparence est perdue lors de l'import en matrice Scilab.  			
+						Une chaîne de caractères contenant le chemin relaif ou absolu du fichier image ou une URL. Les types MIME png, bmp, gif et jpg sont supportés, à l'exception des images encodées en CMJN et des gif animés.	Le canal alpha est supporté pour les png et les gif.	
 					</para>					
                 </listitem>
 			</varlistentry>
@@ -48,7 +48,7 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction charge dans une variable Scilab une image résidant dans un fichier local ou distant indiqué par son chemin ou son URL.
+            Cette fonction charge dans une variable Scilab une image et des métadonnées résidant dans un fichier local ou distant indiqué par son chemin ou son URL.
 		</para>
 		<para>
 		L'objet jimage rassemble : 
@@ -78,33 +78,35 @@
 				<para>
 					la couleur de transparence de l'image dans le champ <literal>.transparencyColor</literal>.
 				</para>
+				<warning>		
+					La couleur de transparence de l'image est perdue lors de l'import en objet Scilab. La valeur du champ <literal>jimage.transparencyColor</literal> est -1 par défaut. 
+				</warning>
 			</listitem>
 		</itemizedlist>
-		La couleur de transparence de l'image étant perdue lors de l'import en objet Scilab, la valeur du champ <literal>jimage.transparencyColor</literal> est -1 par défaut. 
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 //A partir d'un fichier local
-root = jimlabPath("/");
 
 //jpg en niveaux de gris
-path = root + 'tests/images/noError/gray.jpg';
-jimage1 = jimread(path);
+path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+jimage1 = jimread(path)
 
 //bmp en RGB
-path = root + 'tests/images/noError/rgb.bmp';
-jimage2 = jimread(path);
+path = jimlabPath("/") + 'tests/images/noError/rgb.bmp';
+jimage2 = jimread(path)
 
 //png en RGBA
-path = root + 'tests/images/noError/rgba.png';
-jimage3 = jimread(path);
+path = jimlabPath("/") + 'tests/images/noError/rgba.png';
+jimage3 = jimread(path)
 
 //A partir d'un fichier distant
 path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
-jimage4 = jimread(path);
+jimage4 = jimread(path)
 
 //Affichage
+clf
 subplot(2,2,1)
 jimdisp(jimage1)
 subplot(2,2,2)
