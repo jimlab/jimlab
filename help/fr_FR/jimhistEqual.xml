@@ -16,30 +16,30 @@
 		xml:lang="fr" xml:id="jimhistEqual">
     <refnamediv>
         <refname>jimhistEqual</refname>
-        <refpurpose>Égalisation d'histogramme d'une image</refpurpose>
+        <refpurpose>Amélioration d'une image par égalisation d'histogramme</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            equalizedJimage = jimhistEqual(jimage)
+            equalizedImage = jimhistEqual(image)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
         <title>Arguments</title>
         <variablelist>
             <varlistentry>
-                <term>jimage</term>
+                <term>image</term>
                 <listitem>
                     <para>
-						Un objet de type jimage, une matrice de niveaux de gris ou une hypermatrice. 		
+						Un objet de type jimage, une matrice de niveaux de gris encodée sur l'intervalle [0 1] ou sur l'l'intervalle [0 255], une hypermatrice. 		
 					</para>					
                 </listitem>
 			</varlistentry>
 			<varlistentry>
-				<term>equalizedJimage</term> 
+				<term>equalizedImage</term> 
                 <listitem>
                     <para>
-						Un objet de type jimage ou  une matrice de niveaux de gris.
+						Un objet de type jimage ou une matrice de niveaux de gris.
 					</para>
                 </listitem>
 			</varlistentry>
@@ -58,8 +58,7 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 //Objet de type jimage
-s = filesep();
-path = jimlabPath + 'tests' + s + 'images' + s + 'noError' + s + 'rgb.bmp';
+path = jimlabPath("/") + 'tests/images/noError/rgb.bmp';
 jimage = jimread(path);
 equalizedJimage = jimhistEqual(jimage);
 subplot(2,2,1)
@@ -73,7 +72,7 @@ jimage = jimread(path);
 image = jimage.image;
 equalizedImage = jimhistEqual(image);
 subplot(2,2,3)
-jimdisp(jimage)
+jimdisp(image)
 subplot(2,2,4)
 jimdisp(equalizedImage)
  ]]></programlisting>
