@@ -35,10 +35,20 @@
          end
          
          usedColors = unique(vectImage)
-         if (intersect(usedColors, targetColor) == '') then
+         if (intersect(usedColors, targetColor) == []) then
              Color = targetColor;
          else
-             
+             //If the target color is used, the nearest value is returned
+             while (~exists('Color','l'))
+                targetInf = targetColor - 1;
+                targetSup = targetColor + 1;
+                if (intersect(usedColors, targetInf) == []) then
+                    Color = targetInf;
+                elseif (intersect(usedColors, targetSup) == []) then
+                    Color = targetSup;
+                end
+            end
+            //Mettre un warning
          end
      end
     
