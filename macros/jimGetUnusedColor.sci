@@ -19,6 +19,8 @@
          image = image.image;
      end
      
+     targetColor = uint8(targetColor);
+     
      if (size(image, 3) == 1) then
          //case of an image in gray levels
          
@@ -32,7 +34,12 @@
              error(msprintf(msg,"jimGetUnusedColor", 2, 0, 255));
          end
          
-         
+         usedColors = unique(vectImage)
+         if (intersect(usedColors, targetColor) == '') then
+             Color = targetColor;
+         else
+             
+         end
      end
     
 endfunction
