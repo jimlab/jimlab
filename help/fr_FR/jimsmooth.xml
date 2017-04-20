@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of the Jimlab module made for Scilab
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Alix Melaine Mnoubue
+ * 
+ * This file must be used under the terms of the CeCILL.
+ * This source file is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution.  The terms
+ * are also available at    
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+-->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
+		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+		xml:lang="fr" xml:id="jimsmooth">
+    <refnamediv>
+        <refname>jimsmooth</refname>
+        <refpurpose>Floutage d'une image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Syntaxes</title>
+        <synopsis>
+            smoothimage = jimsmooth(im,type_filter,varargin)
+        </synopsis>
+    </refsynopsisdiv>
+    <refsection>
+        <title>Arguments</title>
+        <variablelist>
+            <varlistentry>
+                <term>im</term>
+		 <term>type_filter</term>
+		  <term>varargin</term>
+                <listitem>
+                    <para>
+			Un objet de type jimage, une matrice de niveaux de gris ou une hypermatrice. 		
+		    </para>
+		    <para>
+			Une chaine de caractères spécifiant le filtre à appliquer à l'image pouvant prendre les valeurs : "gaussian" ,"uniforme" ou "triangular". 		
+		    </para>
+		    <para>
+			Liste de paramètres optionelle dont le premier élément représente la largeur du masque du filtre et le second élément représente le masque de filtre personnalisé. 		
+		    </para>						
+                </listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>jimsmooth</term> 
+                <listitem>
+                    <para>
+			Un objet de type jimage ou une matrice de niveaux de gris.
+		    </para>
+                </listitem>
+			</varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Description</title>
+        <para>
+            Cette fonction permet de filtrer une image à l'aide des filtres suivants: gaussien, uniforme ou triangulaire ou à l'aide du masque d'un filtre donné en paramètre.
+	</para>
+		<para>
+			<function>jimsmooth</function>() renvoie une matrice correspondant à la matrice d'une image modifiée à l'aide d'un filtre gaussien . Si un objet <code>jimage</code> est donné en entrée, les champs <code>.title</code> et <code>.format</code> sont conservés pour l'objet en sortie. Si l'image d'entrée est encodée sur 3 ou 4 couches, elle sera convertie en niveaux de gris.
+               </para>
+    </refsection>
+    <refsection>
+        <title>Exemples</title>
+        <programlisting role="example"><![CDATA[ 
+		//Objet de type jimage
+		s = filesep();
+
+		path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+		jimage = jimread(path);
+		smoothimage = jimsmooth(jimage,"gaussian",3);
+		subplot(2,2,1)
+		jimdisp(jimage)
+		subplot(2,2,2)
+		jimdisp(smoothimage)
+
+ ]]></programlisting>
+	</refsection>
+    <refsection role="see also">
+        <title>Voir Aussi</title>
+        <simplelist type="inline">
+			<member>
+                <link linkend="jimage_properties">jimage</link>
+            </member>
+        </simplelist>
+    </refsection>
+    <refsection>
+        <title>Historique</title>
+        <revhistory>
+            <revision>
+                <revnumber>2017-05</revnumber>
+                <revremark>Publication initiale du module Jimlab</revremark>
+            </revision>
+        </revhistory>
+    </refsection>
+</refentry>
