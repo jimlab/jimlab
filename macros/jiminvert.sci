@@ -51,8 +51,8 @@ function Mod_image = jiminvert(image)
     end
    
    if(arg_jimage)
-    Mod_image = mlist(["jimage","image","encoding","title","format"],..
-    convertedImage,image.encoding, image.title, image.format);
+    Mod_image = mlist(["jimage","image","encoding","title","mime"],..
+    convertedImage,image.encoding, image.title, image.mime);
        
    else
        Mod_image =  convertedImage;
