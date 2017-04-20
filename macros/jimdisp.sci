@@ -61,7 +61,7 @@ function jimdisp_mat(image)
     // Setting of the display
     if typeof(image) == 'jimage' then
         Matplot(image.image);
-        fig.figure_name = image.title + image.format;
+        fig.figure_name = image.title + '.' + image.mime;
     else
         Matplot(image);
     end
@@ -115,7 +115,7 @@ function withinfo(image)
     height = dim(1);
     width = dim(2);
     
-    ax.title.text = image.title + image.format + "  -  " + "Type : "..
+    ax.title.text = image.title + '.' + image.mime + "  -  " + "Type : "..
     + image.encoding + "  -  " + "Size : " + string(height) + " x " + string(width);
 
 endfunction
