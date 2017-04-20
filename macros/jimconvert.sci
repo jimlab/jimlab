@@ -9,15 +9,21 @@
  function [convertedJimage] = jimconvert(jimage, encoding)
      
      // test of the first argument and convertion in uint8 if necessary
-     if (typeof(jimage) ~= "jimage") then
+     if (typeof(jimage) == "jimage") then
+         image = jimage.image;
+         jim = %t;
+     elseif (type(jimage(:,:,1)) ~= 8) then
          [jimage, originalType] = jimstandard(jimage);
          if (jimage == %f) then
              msg = _("%s: Argument #%d: Wrong type of input argument.\n");
              error(msprintf(msg,"jimconvert", 1));
          end
-     else
-         image = image.image;
-         jim = %t;
+     elseif (inttype(jimage(:,:,1)) ~= 11) then
+         [jimage, originalType] = jimstandard(jimage);
+         if (jimage == %f) then
+             msg = _("%s: Argument #%d: Wrong type of input argument.\n");
+             error(msprintf(msg,"jimconvert", 1));
+         end
      end
      
      if (type(encoding) == 10)
