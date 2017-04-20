@@ -12,13 +12,7 @@
      if (typeof(jimage) == "jimage") then
          image = jimage.image;
          jim = %t;
-     elseif (type(jimage(:,:,1)) ~= 8) then
-         [jimage, originalType] = jimstandard(jimage);
-         if (jimage == %f) then
-             msg = _("%s: Argument #%d: Wrong type of input argument.\n");
-             error(msprintf(msg,"jimconvert", 1));
-         end
-     elseif (inttype(jimage(:,:,1)) ~= 11) then
+     else 
          [jimage, originalType] = jimstandard(jimage);
          if (jimage == %f) then
              msg = _("%s: Argument #%d: Wrong type of input argument.\n");
