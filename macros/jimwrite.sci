@@ -44,7 +44,7 @@ function jimwrite(jimage,imageMat,imagePath,typeMIME,Name,Encoding)
       end
       
       if(arg_jimage & invalid_typeMIME) // Jimage typeMIME is used 
-          typeMIME = part(jimage.format,[2:length(jimage.format)])
+          typeMIME = jimage.mime
            warning('Invalid typeMIME detected, jimage typeMIME will be used :'..
           + typeMIME)
      elseif(invalid_typeMIME)
