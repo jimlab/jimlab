@@ -21,17 +21,53 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            convertedJimage = jimconvert(jimage, encoding)
+            convertedImage = jimconvert(image, encoding)
+			convertedImage = jimconvert(image, encoding, colormap)
+			convertedImage = jimconvert(image, encoding, argb)
+			convertedImage = jimconvert(image, encoding, Type)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
         <title>Arguments</title>
         <variablelist>
             <varlistentry>
-                <term>jimage</term>
+                <term>image</term>
                 <listitem>
                     <para>
-						Un objet de type jimage ou une hypermatrice à 3 ou 4 couches. 		
+						Cet argument d'entrée peut prendre les formes suivantes :
+							<itemizedlist>
+								<listitem>
+									<para>
+									un objet <literal>jimage</literal>
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+									une matrice d'entiers sur 32 bits (signées ou non signés) qui donne les couleurs d'un pixels en RGBA ou en ARGB
+									<warning>Il est conseillé de renseigner l'argument <literal>argb</literal></warning>
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+									une matrice d'index dans la colormap : dans ce cas, l'argument <literal>colormap</literal> doit obligatoirement être renseigné
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+									une hypermatrice à 3 ou 4 couches d'entiers sur 8 bits (signées ou non signés)
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+									entiers sur 16 bits (signées ou non signés) : dans ce cas, l'argument <literal>Type</literal> doit obligatoirement être renseigné.
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+									entiers sur 8 bits (signées ou non signés),
+									</para>
+								</listitem>
+						</itemizedlist>
 					</para>					
                 </listitem>
 			</varlistentry>
