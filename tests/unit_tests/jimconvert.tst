@@ -31,25 +31,25 @@ for i = 1:fileNumber
         gray = jimconvert(jim.image, 'gray');
         
         //already rgb encoding
-        msg = "%s: %s cannot be converted into rgb encoding.";
-        name = jim.title + jim.format;
+        msg = "%s: %s cannot be converted into rgb encoding.\n";
+        name = jim.title + '.' + jim.mime;
         assert_checkerror("gray = jimconvert(jim , ""rgb"")", msg, [], "jimconvert",  name)
         
     elseif (jim.encoding == 'gray') then
         //jimconvert() cannot convert a gray encoding into a rgb or a gray encoding
-        msg = "%s: %s cannot be converted into rgb encoding.";
-        name = jim.title + jim.format;
+        msg = "%s: %s cannot be converted into rgb encoding.\n";
+        name = jim.title + '.' + jim.mime;
         assert_checkerror("rgb = jimconvert(jim , ""rgb"")", msg, [], "jimconvert",  name)
-        msg = "%s: %s cannot be converted into rgb encoding.";
-        name = jim.title + jim.format;
+        msg = "%s: %s cannot be converted into gray encoding.\n";
+        name = jim.title + '.' + jim.mime;
         assert_checkerror("gray = jimconvert(jim , ""gray"")", msg, [], "jimconvert", name)
     end
 end
 
 //Wrong second argument
-msg = "%s: Argument #%d: rgb or gray expected.";
+msg = "%s: Argument #%d: rgb or gray expected.\n";
 assert_checkerror("rgba = jimconvert(jim.image , ""rgba"")", msg, [], "jimconvert", 2)
 
 //Wrong first argument
-msg = "%s: Argument #%d: M-list or %s expected.\n";
-assert_checkerror("gray = jimconvert(23 , ""gray"")", msg, [], "jimconvert", 1, "hypermat")
+msg = "%s: Argument #%d: Wrong type of input argument.\n";
+assert_checkerror("gray = jimconvert(""wrong"" , ""gray"")", msg, [], "jimconvert", 1)
