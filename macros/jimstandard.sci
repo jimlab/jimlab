@@ -12,7 +12,6 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
     //If the type is not supported by jimstandard(), the function returns false
     convertedMat = %f;
     originalType = 0;
-    
     if(isdef(["argb"],"l")&(argb ~= "")) then
         // If an hypermatrix is define as ARGB or RGBA
        
@@ -56,7 +55,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
                 //If the coefficients are not normalized
                 m = min(imageMat);
                 M = max(imageMat);
-                if(M == 255 | m == M)
+                if(M == 255)
                     m = 0;
                 end
                 tmp = (imageMat - m)/(M - m);
@@ -67,23 +66,24 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
             convertedMat = uint8(255*imageMat);
             originalType = "bool";
         case 8 then     //matrix of integer
-            if (inttype(imageMat(:,:,1)) == 1) then
+            tmp = inttype(imageMat(:,:,1));
+            if (tmp == 1) then
                 convertedMat = imageMat + 127;
                 originalType = "int8";
-            elseif(inttype(imageMat(:,:,1)) == 11)
+            elseif(tmp == 11)
                 convertedMat = imageMat;
                 originalType = "uint8";
-            elseif(inttype(imageMat(:,:,1)) == 12) then
+            elseif(tmp == 12) then
                 convertedMat = jimstandard_uint16(imageMat,Type);
                 originalType = "uint16";
-            elseif(inttype(imageMat(:,:,1)) == 2) then
+            elseif(tmp == 2) then
                 tmp = imageMat + 32768;
                 convertedMat = jimstandard_uint16(imageMat,Type);
                 originalType = "int16";
-            elseif (inttype(imageMat(:,:,1)) == 14) then
+            elseif (tmp == 14) then
                  convertedMat = jimstandard_uint32(imageMat,argb);
                  originalType = "uint32";
-           elseif(inttype(imageMat(:,:,1)) == 4) then
+           elseif(tmp == 4) then
                  tmp = imageMat + 2147483648; 
                  convertedMat = jimstandard_uint32(tmp,argb);
                  originalType = "int32";
