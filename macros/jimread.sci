@@ -107,8 +107,9 @@ function [jimage] = jimread_intrgb(bufferedIm, imPath)
     end
     
     //creates a mlist with the image data and some properties
-    jimage = mlist(['jimage','image','encoding','title','format','transparencyColor'], im,..
-    'rgb', basename(imPath), fileext(imPath), -1);
+    mime = strsubst(fileext(imPath), ".", "");
+    jimage = mlist(['jimage','image','encoding','title','mime','transparencyColor'], im,..
+    'rgb', basename(imPath), mime, -1);
     
 endfunction
 
@@ -148,8 +149,9 @@ function [jimage] = jimread_intargb(bufferedIm, imPath)
     end
     
     //creates a mlist with the image data and some properties
-    jimage = mlist(['jimage','image','encoding','title','format','transparencyColor'], im,..
-    'rgba', basename(imPath), fileext(imPath), -1);
+    mime = strsubst(fileext(imPath), ".", "");
+    jimage = mlist(['jimage','image','encoding','title','mime','transparencyColor'], im,..
+    'rgba', basename(imPath), mime, -1);
     
 endfunction
 
@@ -188,8 +190,9 @@ function [jimage] = jimread_intargbpre(bufferedIm, imPath)
     end
     
     //creates a mlist with the image data and some properties
-    jimage = mlist(['jimage','image','encoding','title','format','transparencyColor'], im,..
-    'rgba', basename(imPath), fileext(imPath), -1);
+    mime = strsubst(fileext(imPath), ".", "");
+    jimage = mlist(['jimage','image','encoding','title','mime','transparencyColor'], im,..
+    'rgba', basename(imPath), mime, -1);
     
 endfunction
 
@@ -227,8 +230,9 @@ function [jimage] = jimread_intbgr(bufferedIm, imPath)
     end
     
     //creates a mlist with the image data and some properties
-    jimage = mlist(['jimage','image','encoding','title','format','transparencyColor'], im,..
-    'rgb', basename(imPath), fileext(imPath), -1);
+    mime = strsubst(fileext(imPath), ".", "");
+    jimage = mlist(['jimage','image','encoding','title','mime','transparencyColor'], im,..
+    'rgb', basename(imPath), mime, -1);
     
 endfunction
 
@@ -262,8 +266,9 @@ function [jimage] = jimread_3bytebgr(bufferedIm, imPath)
     jremove unprocessedData
     
     //creates a mlist with the image data and some properties
-    jimage = mlist(['jimage','image','encoding','title','format','transparencyColor'], im,..
-    'rgb', basename(imPath), fileext(imPath), -1);
+    mime = strsubst(fileext(imPath), ".", "");
+    jimage = mlist(['jimage','image','encoding','title','mime','transparencyColor'], im,..
+    'rgb', basename(imPath), mime, -1);
     
 endfunction
 
@@ -296,8 +301,9 @@ function [jimage] = jimread_4byteabgr(bufferedIm, imPath)
     jremove unprocessedData
     
     //creates a mlist with the image data and some properties
-    jimage = mlist(['jimage','image','encoding','title','format','transparencyColor'], im,..
-    'rgba', basename(imPath), fileext(imPath), -1);
+    mime = strsubst(fileext(imPath), ".", "");
+    jimage = mlist(['jimage','image','encoding','title','mime','transparencyColor'], im,..
+    'rgba', basename(imPath), mime, -1);
     
 endfunction
 
@@ -336,8 +342,9 @@ function [jimage] = jimread_4byteabgrpre(bufferedIm, imPath)
     end
     
     //creates a mlist with the image data and some properties
-    jimage = mlist(['jimage','image','encoding','title','format','transparencyColor'], im,..
-    'rgba', basename(imPath), fileext(imPath), -1);
+    mime = strsubst(fileext(imPath), ".", "");
+    jimage = mlist(['jimage','image','encoding','title','mime','transparencyColor'], im,..
+    'rgba', basename(imPath), mime, -1);
     
 endfunction
 
@@ -374,8 +381,9 @@ function [jimage] = jimread_ushort565rgb(bufferedIm, imPath)
     end
     
     //creates a mlist with the image data and some properties
-    jimage = mlist(['jimage','image','encoding','title','format','transparencyColor'], im,..
-    'rgb', basename(imPath), fileext(imPath), -1);
+    mime = strsubst(fileext(imPath), ".", "");
+    jimage = mlist(['jimage','image','encoding','title','mime','transparencyColor'], im,..
+    'rgb', basename(imPath), mime, -1);
     
 endfunction
 
@@ -412,8 +420,9 @@ function [jimage] = jimread_ushort555rgb(bufferedIm, imPath)
     end
     
     //creates a mlist with the image data and some properties
-    jimage = mlist(['jimage','image','encoding','title','format','transparencyColor'], im,..
-    'rgb', basename(imPath), fileext(imPath), -1);
+    mime = strsubst(fileext(imPath), ".", "");
+    jimage = mlist(['jimage','image','encoding','title','mime','transparencyColor'], im,..
+    'rgb', basename(imPath), mime, -1);
     
 endfunction
 
@@ -445,8 +454,9 @@ function [jimage] = jimread_byteGray(bufferedIm, imPath)
     jremove unprocessedData
     
     //creates a mlist with the image data and some properties
-    jimage = mlist(['jimage','image','encoding','title','format','transparencyColor'], im,..
-    'gray', basename(imPath), fileext(imPath), -1);
+    mime = strsubst(fileext(imPath), ".", "");
+    jimage = mlist(['jimage','image','encoding','title','mime','transparencyColor'], im,..
+    'gray', basename(imPath), mime, -1);
     
 endfunction
 
@@ -483,8 +493,9 @@ function [jimage] = jimread_ushortGray(bufferedIm, imPath)
     end
     
     //creates a mlist with the image data and some properties
-    jimage = mlist(['jimage','image','encoding','title','format','transparencyColor'], im,..
-    'rgb', basename(imPath), fileext(imPath), -1);
+    mime = strsubst(fileext(imPath), ".", "");
+    jimage = mlist(['jimage','image','encoding','title','mime','transparencyColor'], im,..
+    'rgb', basename(imPath), mime, -1);
     
 endfunction
 
@@ -523,7 +534,8 @@ function [jimage] = jimread_byteIndexed(bufferedIm, imPath)
     end
     
     //creates a mlist with the image data and some properties
-    jimage = mlist(['jimage','image','encoding','title','format','transparencyColor'], im,..
-    'rgba', basename(imPath), fileext(imPath), -1);
+    mime = strsubst(fileext(imPath), ".", "");
+    jimage = mlist(['jimage','image','encoding','title','mime','transparencyColor'], im,..
+    'rgba', basename(imPath), mime, -1);
     
 endfunction
