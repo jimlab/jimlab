@@ -39,7 +39,7 @@
              Color = targetColor;
          else
              //If the target color is used, the nearest value is returned
-             while (~exists('Color','l'))
+             while (~isdef('Color','l') | type(Color) == 0)
                 targetInf = targetColor - 1;
                 targetSup = targetColor + 1;
                 if (intersect(usedColors, targetInf) == []) then
