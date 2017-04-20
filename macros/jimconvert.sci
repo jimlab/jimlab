@@ -1,4 +1,4 @@
-  //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+ //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  //
  //This file must be used under the terms of the CeCILL.
  //This source file is licensed as described in the file COPYING, which
@@ -10,10 +10,16 @@
      
      // test of the first argument and convertion in uint8 if necessary
      if (typeof(jimage) == "jimage") then
-         jimage = jimage.image;
-         jim = %t;
+           mime = jimage.mime;
+           name = jimage.title;
+           ext = '.' + mime;
+           jimage = jimage.image;
+           jim = %t;
      else 
          [jimage, originalType] = jimstandard(jimage);
+         name = 'your ';
+         ext = 'image';
+         jim = %f;
          if (type(jimage) == 4) then
              if (jimage == %f) then
                 msg = _("%s: Argument #%d: Wrong type of input argument.\n");
@@ -23,16 +29,6 @@
      end
      
      if (type(encoding) == 10)
-       jim = typeof(jimage) == "jimage"
-       if jim
-           mime = jimage.mime;
-           name = jimage.title;
-           ext = '.' + mime;
-           jimage = jimage.image;
-       else
-           name = 'your ';
-           ext = 'image';
-       end
             
        select encoding
        case 'gray' then
