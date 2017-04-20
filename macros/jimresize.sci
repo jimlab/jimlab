@@ -1,4 +1,5 @@
 //Copyright (C) 2017 - ENSIM, Université du Maine - Gael SENEE
+
 //This file must be used under the terms of the CeCILL.
 //This source file is licensed as described in the file COPYING, which
 //you should have received as part of this distribution.  The terms
@@ -71,8 +72,8 @@ function resized_image = jimresize (original_image,height,width)
     if typeof(original_image) == 'jimage' then
 
         // Extracting the matrix of the image
-            resized_image = mlist(['jimage','image','encoding','title','format'], uint8(out),..
-    original_image.encoding, original_image.title, original_image.format);
+            resized_image = mlist(['jimage','image','encoding','title','mime'], uint8(out),..
+    original_image.encoding, original_image.title, original_image.mime);
     
     // Case where a 2D or 3D matrix is given
     else
