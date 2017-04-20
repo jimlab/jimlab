@@ -28,6 +28,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
     end
     
     if(isdef(["Type"],"l")&(Type ~= ""))
+         argb = %f;
          stdr_Type = strstr(["444","555","4444","5551"],Type);
          if(stdr_Type == "")
              Type = -1;
@@ -71,12 +72,11 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
                 convertedMat = imageMat;
                 originalType = "uint8";
             elseif(inttype(imageMat) == 12) then
-                 argb16 = strstr(["444","555","4444","5551"],argb);
-                convertedMat = jimstandard_uint16(imageMat,argb16);
+                convertedMat = jimstandard_uint16(imageMat,Type);
                 originalType = "uint16";
             elseif(inttype(imageMat) == 2) then
                 tmp = imageMat + 32768;
-                convertedMat = jimstandard_uint16(imageMat,argb);
+                convertedMat = jimstandard_uint16(imageMat,Type);
                 originalType = "int16";
             elseif (inttype(imageMat) == 14) then
                  convertedMat = jimstandard_uint32(imageMat,argb);
