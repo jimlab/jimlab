@@ -37,8 +37,8 @@
                                                     name, ext);
         end
      else
-        msg = _("%s: Argument #%d: M-list or encoded integer(s) of type (%s) ..
-        or %s expected.\n");
+        msg = _("%s: Argument #%d: M-list or encoded integer(s) of type (%s) "..
+        + "or %s expected.\n");
         error(msprintf(msg,"jimhistEqual",1,"uint8","hypermet"));
      end
  endfunction
@@ -59,6 +59,5 @@ function [newLevel, ind] = jimhistEqual_level(im)
     end
     
 endfunction
-
 
 
