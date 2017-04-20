@@ -1,6 +1,6 @@
 function [] = %jimage_p(jimage)
     //This function overloads disp(). 
-    //Title, encoding, format and size of the jimage object are displayed.
+    //Title, encoding, mime type and size of the jimage object are displayed.
     
     image = jimage.image;
     dim = size(image);
@@ -8,6 +8,7 @@ function [] = %jimage_p(jimage)
     width = string(dim(2));
     
     disp([ 'title : ' + jimage.title ; ['encoding : ' + ..
-jimage.encoding ; ['format : ' + jimage.format ; ['size : ' + width ..
+jimage.encoding ; ['MIME type : ' + jimage.mime ; ['size : ' + width ..
                                                     + 'x' + height]]]])
 endfunction
+
