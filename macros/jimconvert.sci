@@ -1,4 +1,4 @@
- //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+  //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  //
  //This file must be used under the terms of the CeCILL.
  //This source file is licensed as described in the file COPYING, which
@@ -23,6 +23,7 @@
      end
      
      if (type(encoding) == 10)
+       jim = typeof(jimage) == "jimage"
        if jim
            mime = jimage.mime;
            name = jimage.title;
