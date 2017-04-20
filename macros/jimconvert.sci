@@ -23,8 +23,9 @@
      if (type(encoding) == 10)
        jim = typeof(jimage) == "jimage"
        if jim
+           mime = jimage.mime;
            name = jimage.title;
-           ext = jimage.format;
+           ext = '.' + mime;
            jimage = jimage.image;
        else
            name = 'your ';
@@ -57,8 +58,8 @@
        end
        if jim
            convertedJimage = mlist(['jimage','image','encoding',..
-           'title','format'], convertedJimage, encoding, name, ..
-                                                       ext);
+           'title','mime'], convertedJimage, encoding, name, ..
+                                                       mime);
        end
     else 
        msg = _("%s: Argument #%d: Text(s) expected.\n");
