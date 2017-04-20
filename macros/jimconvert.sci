@@ -10,18 +10,19 @@
      
      // test of the first argument and convertion in uint8 if necessary
      if (typeof(jimage) == "jimage") then
-         image = jimage.image;
+         jimage = jimage.image;
          jim = %t;
      else 
          [jimage, originalType] = jimstandard(jimage);
-         if (jimage == %f) then
-             msg = _("%s: Argument #%d: Wrong type of input argument.\n");
-             error(msprintf(msg,"jimconvert", 1));
+         if (type(jimage) == 4) then
+             if (jimage == %f) then
+                msg = _("%s: Argument #%d: Wrong type of input argument.\n");
+                error(msprintf(msg,"jimconvert", 1));
+            end
          end
      end
      
      if (type(encoding) == 10)
-       jim = typeof(jimage) == "jimage"
        if jim
            mime = jimage.mime;
            name = jimage.title;
@@ -34,7 +35,7 @@
             
        select encoding
        case 'gray' then
-           if (typeof(jimage) == "hypermat")
+           if (size(jimage,3) == 3 | size(jimage,3) == 4)
                jimage = double(jimage);
                //Coefficients are the same used by Matplot() 
                convertedJimage = (0.299 .* jimage(:,:,1) + 0.587 .* jimage(:,:,2) + ..
