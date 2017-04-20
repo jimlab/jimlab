@@ -6,7 +6,7 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
- function [convertedJimage] = jimconvert(jimage, encoding)
+ function [convertedJimage] = jimconvert(jimage, encoding, varargin)
      
      // test of the first argument and convertion in uint8 if necessary
      if (typeof(jimage) == "jimage") then
@@ -16,7 +16,7 @@
            jimage = jimage.image;
            jim = %t;
      else 
-         [jimage, originalType] = jimstandard(jimage);
+         [jimage, originalType] = jimstandard(jimage, varargin(:));
          name = 'your ';
          ext = 'image';
          jim = %f;
