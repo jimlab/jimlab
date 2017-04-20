@@ -12,7 +12,7 @@
         jim = typeof(jimage) == "jimage"
         if jim
             name = jimage.title;
-            ext = jimage.format;
+            mime = jimage.mime;
             jimage = jimage.image;
         end
         dim = size(jimage);
@@ -33,8 +33,8 @@
         
         if jim
             equalizedJimage = mlist(['jimage','image','encoding',..
-                    'title','format'], equalizedJimage,'gray' , ..
-                                                    name, ext);
+                    'title','mime'], equalizedJimage,'gray' , ..
+                                                    name, mime);
         end
      else
         msg = _("%s: Argument #%d: M-list or encoded integer(s) of type (%s) "..
