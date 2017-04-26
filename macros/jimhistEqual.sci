@@ -6,41 +6,49 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
- function [equalizedJimage] = jimhistEqual(jimage)
-     if (typeof(jimage) == "jimage" | typeof(jimage) == "hypermat" | ..
-                                type(jimage) == 1 | type(jimage) == 8) 
-        jim = typeof(jimage) == "jimage"
-        if jim
-            name = jimage.title;
-            mime = jimage.mime;
-            jimage = jimage.image;
-        end
-        dim = size(jimage);
-        gray = length(dim) == 2
-        
-        //'rgb' and 'rgba' encoded images must be converted into 'gray' encoded images
-        if ~gray 
-            jimage = jimconvert(jimage, 'gray');
-        end
-        
-        [newLevel, ind] = jimhistEqual_level(jimage);
-        //each pixel is assiciated with its new level
-        equalizedJimage = newLevel(ind);
-        //convertion into 8-bits unsigned intergers
-        equalizedJimage = uint8(equalizedJimage)
-        //
-        equalizedJimage = matrix(equalizedJimage, dim(1), dim(2))
-        
-        if jim
-            equalizedJimage = mlist(['jimage','image','encoding',..
-                    'title','mime'], equalizedJimage,'gray' , ..
-                                                    name, mime);
-        end
-     else
-        msg = _("%s: Argument #%d: M-list or encoded integer(s) of type (%s) "..
-        + "or %s expected.\n");
-        error(msprintf(msg,"jimhistEqual",1,"uint8","hypermet"));
+ function [equalizedJimage] = jimhistEqual(jimage, varargin)
+          // test of the first argument and convertion in uint8 if necessary
+     if (typeof(jimage) == "jimage") then
+           mime = jimage.mime;
+           name = jimage.title;
+           ext = '.' + mime;
+           jimage = jimage.image;
+           jim = %t;
+     else 
+         [jimage, originalType] = jimstandard(jimage, varargin(:));
+         name = 'your ';
+         ext = 'image';
+         jim = %f;
+         if (type(jimage) == 4) then
+             if (jimage == %f) then
+                msg = _("%s: Argument #%d: Wrong type of input argument.\n");
+                error(msprintf(msg,"jimhistEqual", 1));
+            end
+         end
      end
+
+    dim = size(jimage);
+    gray = length(dim) == 2
+        
+    //'rgb' and 'rgba' encoded images must be converted into 'gray' encoded images
+    if ~gray 
+        jimage = jimconvert(jimage, 'gray');
+    end
+        
+    [newLevel, ind] = jimhistEqual_level(jimage);
+    //each pixel is assiciated with its new level
+    equalizedJimage = newLevel(ind);
+    //convertion into 8-bits unsigned intergers
+    equalizedJimage = uint8(equalizedJimage)
+    //formatting the data
+    equalizedJimage = matrix(equalizedJimage, dim(1), dim(2))
+        
+    if jim
+        equalizedJimage = mlist(['jimage','image','encoding',..
+                    'title','mime'], equalizedJimage,'gray' , ..
+                                                name, mime);
+    end
+
  endfunction
 
 function [newLevel, ind] = jimhistEqual_level(im)
