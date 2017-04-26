@@ -8,14 +8,14 @@
  
 // <-- NO CHECK REF -->
 
-s = filesep();
-root = jimlabPath + s + 'tests' + s + 'images' + s + 'noError';
+root = jimlabPath("/") + 'tests/images/noError';
 fileList = dir(root)
 nameList = fileList.name
 fileNumber = size(nameList)
 fileNumber = fileNumber(1)
 
 for i = 1:fileNumber
+    s = filesep()
     path = root + s + nameList(i);
     jim = jimread(path);
     equalizedJimage = jimhistEqual(jim)
