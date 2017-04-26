@@ -14,7 +14,7 @@ im = jimread(url);
 
 //From a file, no error
 s = filesep();
-root = jimlabPath + s + 'tests' + s + 'images' + s + 'noError';
+root = jimlabPath() + '/tests/images/noError';
 fileList = dir(root)
 nameList = fileList.name
 fileNumber = size(nameList)
@@ -26,7 +26,7 @@ for i = 1:fileNumber
 end
 
 //From a file, error
-root = jimlabPath + s + 'tests' + s + 'images' + s + 'Error';
+root = jimlabPath() + '/tests/images/Error';;
 fileList = dir(root);
 nameList = fileList.name;
 fileNumber = size(nameList);
