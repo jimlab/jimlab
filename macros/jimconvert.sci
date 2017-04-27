@@ -13,7 +13,7 @@
          mime = jimage.mime;
          name = jimage.title;
          if (~isdef('transparencyColor') | type(transparencyColor) == 0)
-            transparencyColor = jim.transparencyColor;
+            transparencyColor = jimage.transparencyColor;
          end
          ext = '.' + mime;
          jimage = jimage.image;
@@ -23,9 +23,16 @@
          jim = %f;
          bw = %t; 
      else 
-         [jimage, originalType] = jimstandard(jimage, varargin(:));
+         if (~isdef('varargin') | type(varargin) == 0)
+             [jimage, originalType] = jimstandard(jimage);
+         else
+            [jimage, originalType] = jimstandard(jimage, varargin(:));
+        end
          name = 'your ';
          ext = 'image';
+         if (~isdef('transparencyColor') | type(transparencyColor) == 0)
+            transparencyColor = cat(3, uint8(255), uint8(255), uint8(255));
+         end
          jim = %f;
          bw = %f;
          if (type(jimage) == 4) then
@@ -41,13 +48,17 @@
        select encoding
        case 'gray' then
            if (size(jimage,3) == 4)
-               jimage = jimconvert(jimage,'rgb', transparencyColor);
+               if (~isdef('varargin') | type(varargin) == 0)
+                   jimage = jimconvert(jimage, 'rgb', transparencyColor)
+               else
+                   jimage = jimconvert(jimage,'rgb', transparencyColor, varargin(:));
+               end
            end
            if (size(jimage,3) == 3)
                jimage = double(jimage);
                //Coefficients are the same used by Matplot() 
-               convertedJimage = (0.299 .* jimage(:,:,1) + 0.587 .* jimage(:,:,2) + ..
-                                                    0.114 .* jimage(:,:,3))/3;
+               convertedJimage = 0.299 .* jimage(:,:,1) + 0.587 .* jimage(:,:,2) + ..
+                                                    0.114 .* jimage(:,:,3);
                convertedJimage = round(convertedJimage);
                convertedJimage = uint8(convertedJimage);
            elseif bw == %t
