@@ -12,7 +12,6 @@
      if (typeof(jimage) == "jimage") then
          mime = jimage.mime;
          name = jimage.title;
-         transparencyColor = jim.transparencyColor;
          if (~isdef('transparencyColor') | type(transparencyColor) == 0)
             transparencyColor = jim.transparencyColor;
          end
@@ -41,7 +40,10 @@
 
        select encoding
        case 'gray' then
-           if (size(jimage,3) == 3 | size(jimage,3) == 4)
+           if (size(jimage,3) == 4)
+               jimage = jimconvert(jimage,'rgb', transparencyColor);
+           end
+           if (size(jimage,3) == 3)
                jimage = double(jimage);
                //Coefficients are the same used by Matplot() 
                convertedJimage = (0.299 .* jimage(:,:,1) + 0.587 .* jimage(:,:,2) + ..
@@ -57,8 +59,12 @@
        case 'rgb' then
            if (size(jimage, 3) == 4)
                transparency = jimage(:,:,4) == 0;
-               transparencyMat = uint8(transparency) .* transparencyColor;
-               convertedMat = jimage(:,:,[1:3]) .* uint8(~transparency);
+               transparencyMat(:,:,1) = uint8(transparency) .* transparencyColor(:,:,1);
+               transparencyMat(:,:,2) = uint8(transparency) .* transparencyColor(:,:,2);
+               transparencyMat(:,:,3) = uint8(transparency) .* transparencyColor(:,:,3);
+               convertedMat(:,:,1) = jimage(:,:,1) .* uint8(~transparency);
+               convertedMat(:,:,2) = jimage(:,:,2) .* uint8(~transparency);
+               convertedMat(:,:,3) = jimage(:,:,3) .* uint8(~transparency);
                convertedJimage = transparencyMat + convertedMat;
            else
                msg = _("%s: %s cannot be converted into rgb encoding.\n");
