@@ -67,7 +67,7 @@
 				<varlistentry>
                     <term>.transparencyColor</term>
                     <listitem>
-						Ce champ représente la couleur de transparence d'une image.  
+						Ce champ représente la couleur de transparence d'une image. 
                         <itemizedlist>
 							<listitem>
 								<para>
@@ -81,7 +81,7 @@
 							</listitem>
 							<listitem>
 								<para>
-									un vecteur d'entiers positifs encodés sur 8 bits : la couleur utilisée pour représenter un pixel transparent dans une image RGB. 
+									une hypermatrice à trois composantes encodées en entiers positifs sur 8 bits : la couleur utilisée pour représenter un pixel transparent dans une image RGB. 
 								</para>
 							</listitem>
 						</itemizedlist>
