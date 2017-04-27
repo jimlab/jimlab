@@ -6,14 +6,22 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
- function [convertedJimage] = jimconvert(jimage, encoding, transparencyColor, varargin)
+ function [convertedJimage] = jimconvert(jimage, encoding, ..
+                                        transparencyColor, varargin)
      
      // test of the first argument and convertion in uint8 if necessary
      if (typeof(jimage) == "jimage") then
          mime = jimage.mime;
          name = jimage.title;
-         if (~isdef('transparencyColor') | type(transparencyColor) == 0)
+         //Priority for the intput argument 
+         if (~isdef('transparencyColor') | type(transparencyColor) ..
+                                                                == 0)
             transparencyColor = jimage.transparencyColor;
+            //If there is no transparencyColor, white is choosen by default
+            if (transparencyColor(1) == -1)
+                transparencyColor = cat(3, uint8(255), uint8(255),..
+                                                     uint8(255));
+            end
          end
          ext = '.' + mime;
          jimage = jimage.image;
@@ -30,14 +38,19 @@
         end
          name = 'your ';
          ext = 'image';
-         if (~isdef('transparencyColor') | type(transparencyColor) == 0)
-            transparencyColor = cat(3, uint8(255), uint8(255), uint8(255));
+         if (~isdef('transparencyColor') | type(transparencyColor) ..
+                                                                == 0)
+             //If there is no transparencyColor, white is choosen by default
+            transparencyColor = cat(3, uint8(255), uint8(255), ..
+                                                        uint8(255));
          end
          jim = %f;
          bw = %f;
+         //jimstandard() return %f if the (hyper)matrix encoding is not supported by jimlab
          if (type(jimage) == 4) then
              if (jimage == %f) then
-                msg = _("%s: Argument #%d: Wrong type of input argument.\n");
+                msg = _("%s: Argument #%d: Wrong type of input "..
+                                                    + "argument.\n");
                 error(msprintf(msg,"jimconvert", 1));
             end
          end
@@ -49,36 +62,46 @@
        case 'gray' then
            if (size(jimage,3) == 4)
                if (~isdef('varargin') | type(varargin) == 0)
-                   jimage = jimconvert(jimage, 'rgb', transparencyColor)
+                   jimage = jimconvert(jimage, 'rgb', ..
+                                                   transparencyColor)
                else
-                   jimage = jimconvert(jimage,'rgb', transparencyColor, varargin(:));
+                   jimage = jimconvert(jimage,'rgb', ..
+                                     transparencyColor, varargin(:));
                end
            end
            if (size(jimage,3) == 3)
                jimage = double(jimage);
                //Coefficients are the same used by Matplot() 
-               convertedJimage = 0.299 .* jimage(:,:,1) + 0.587 .* jimage(:,:,2) + ..
-                                                    0.114 .* jimage(:,:,3);
+               convertedJimage = 0.299 .* jimage(:,:,1) + 0.587 .* ..
+                              jimage(:,:,2) + 0.114 .* jimage(:,:,3);
                convertedJimage = round(convertedJimage);
                convertedJimage = uint8(convertedJimage);
            elseif bw == %t
                convertedJimage = uint8(jimage) * 255;
            else
-               msg = _("%s: %s cannot be converted into gray encoding.\n");
+               msg = _("%s: %s cannot be converted into gray " ..
+                                                    + "encoding.\n");
                error(msprintf(msg,"jimconvert", name + ext));
            end
        case 'rgb' then
            if (size(jimage, 3) == 4)
                transparency = jimage(:,:,4) == 0;
-               transparencyMat(:,:,1) = uint8(transparency) .* transparencyColor(:,:,1);
-               transparencyMat(:,:,2) = uint8(transparency) .* transparencyColor(:,:,2);
-               transparencyMat(:,:,3) = uint8(transparency) .* transparencyColor(:,:,3);
-               convertedMat(:,:,1) = jimage(:,:,1) .* uint8(~transparency);
-               convertedMat(:,:,2) = jimage(:,:,2) .* uint8(~transparency);
-               convertedMat(:,:,3) = jimage(:,:,3) .* uint8(~transparency);
+               transparencyMat(:,:,1) = uint8(transparency) .* ..
+                                        transparencyColor(:,:,1);
+               transparencyMat(:,:,2) = uint8(transparency) .* ..
+                                         transparencyColor(:,:,2);
+               transparencyMat(:,:,3) = uint8(transparency) .* ..
+                                          transparencyColor(:,:,3);
+               convertedMat(:,:,1) = jimage(:,:,1) .* ..
+                                            uint8(~transparency);
+               convertedMat(:,:,2) = jimage(:,:,2) .* ..
+                                            uint8(~transparency);
+               convertedMat(:,:,3) = jimage(:,:,3) .* ..
+                                            uint8(~transparency);
                convertedJimage = transparencyMat + convertedMat;
            else
-               msg = _("%s: %s cannot be converted into rgb encoding.\n");
+               msg = _("%s: %s cannot be converted into rgb " ..
+                                                + "encoding.\n");
                error(msprintf(msg,"jimconvert", name + ext));
            end
        else
@@ -87,8 +110,8 @@
        end
        if jim
            convertedJimage = mlist(['jimage','image','encoding',..
-           'title','mime','transparencyColor'], convertedJimage, encoding, name, ..
-                                                       mime, transparencyColor);
+           'title','mime','transparencyColor'], convertedJimage, ..
+                    encoding, name, mime, transparencyColor);
        end
     else 
        msg = _("%s: Argument #%d: Text(s) expected.\n");
