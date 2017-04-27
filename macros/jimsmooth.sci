@@ -43,6 +43,7 @@ function [IMB] =jimsmooth(im, type_filter, varargin)
     if(typeof(im) == 'hypermat' ) then
         mat_image = im;
     elseif(typeof(im) == 'jimage' ) then
+        jimage=1;
         mat_image = im. image;
     else
         error('Not any jimage or matrix argument have been defined' );
@@ -58,19 +59,25 @@ function [IMB] =jimsmooth(im, type_filter, varargin)
 
     select type_image,
     case "gray" then
-        IMB= uint8(conv2(mat_filter, double( mat_image))) ;
+        result= uint8(conv2(mat_filter, double( mat_image))) ;
     case "rgb" then
         // Convolve the three separate color .
         mat_image(:,:,1)=conv2(double(mat_image(:,:,1)),mat_filter,'same');
         mat_image(:,:,2)=conv2(double(mat_image(:,:,2)),mat_filter,'same');
-        mat_image(:,:,3)=conv2(double(mat_image(:,:,3)),mat_filter),'same');
+        mat_image(:,:,3)=conv2(double(mat_image(:,:,3)),mat_filter,'same');
         
         //Recombine separate color channels into a single
-        RGB = cat(3, uint8( mat_image(:,:,1)), uint8( mat_image(:,:,2)), uint8( mat_image(:,:,3)));
-        IMB=RGB;
+        result = cat(3, uint8( mat_image(:,:,1)), uint8( mat_image(:,:,2)), uint8( mat_image(:,:,3)));
+       
 
     end
-
+if(jimage)
+    IMB = mlist(["jimage","image","encoding","title","format"],..
+    result,im.encoding, im.title, im.format);
+       
+   else
+       IMB =  result;
+   end
 endfunction
 
 //Function returning the specified input mask
@@ -110,3 +117,5 @@ function [matMask] =jimsmooth_mask(type_filter, width)
     end
 
 endfunction
+
+
