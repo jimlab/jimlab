@@ -10,24 +10,34 @@ function [IMB] =jimsmooth(im, type_filter, varargin)
     if( argn(2) <2) then
         error('Invalid number of arguments.' ) ;
     end
-    
+
     if( argn(2) <3) then
         width=3;
+         mat_filter = jimsmooth_mask(type_filter,width) ;
     end
 
     if(argn(2) >=3 ) then
         if(length(varargin) ==1) then
             width=varargin(1) ;
+             mat_filter = jimsmooth_mask(type_filter,width) ;
         end
         if(length(varargin) ==2) then
             if(~( isequal(type_filter, 'customize' ))) then
                 warning('The filter type should be customize' ) ;
             end
-            mat_filter =jimsmooth_mask_customise((varargin(2))) ;
+            width=varargin(1) ;
+            if(~ modulo(length(varargin(2)) , 3) )
+                mat_filter=varargin(2);
+            else 
+                error('the length of the matrix must be odd and bigger than 1' ) ;
+
+            end
+
         end
     end
-    //create the mask of the filter
-    mat_filter = jimsmooth_mask(type_filter,width) ; 
+   
+   
+  
 
     // Testing arguments's typetype_filter
     if(typeof(im) == 'hypermat' ) then
@@ -37,14 +47,14 @@ function [IMB] =jimsmooth(im, type_filter, varargin)
     else
         error('Not any jimage or matrix argument have been defined' );
     end
-    
+
     if((ndims(mat_image) == 4) | (ndims(mat_image) == 3)) // Verify if Mat is a 2D
         type_image = "rgb"; // Alpha channel isn't modified
     elseif(ndims(mat_image) == 2) // For 2D matrix
         type_image = "gray";
     else
-    error("Argument Mat is not a matrix");
-     end
+        error("Argument Mat is not a matrix");
+    end
 
     select type_image,
     case "gray" then
@@ -80,15 +90,14 @@ function [matMask] =jimsmooth_mask(type_filter, width)
         matMask = matMask/sum(matMask) ;
     case "rectangular" then
         matMask = (1/width^2) *ones(width,width) ;
-    case "uniform" then
-        matMask = (1/width^2) *ones(width,wdth) ;
+        // case "uniform" then matMask = (1/width^2) *ones(width,width) ;
     case "triangular" then
 
         if(width > 3) then
             mat=(1/width^2) *ones(width,width) ;
-            matmask = conv2(mat,mat) ;
+            matMask = conv2(mat,mat) ;
         else
-             error('the size of this filter musb be bigger than 3' ) ;
+            error('the size of this filter musb be bigger than 3' ) ;
         end
 
     else
@@ -97,11 +106,4 @@ function [matMask] =jimsmooth_mask(type_filter, width)
 
 endfunction
 
-function [matMask_c] =jimsmooth_mask_customise(customize_matrix)
-    if(~ modulo(length(customize_matrix) , 2) )
-        matMask_c =customize_matrix;
-    else error('the length of the matrix must be odd and bigger than 1' ) ;
 
-    end
-
-endfunction
