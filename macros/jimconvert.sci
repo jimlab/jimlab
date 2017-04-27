@@ -6,20 +6,29 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
- function [convertedJimage] = jimconvert(jimage, encoding, varargin)
+ function [convertedJimage] = jimconvert(jimage, encoding, transparencyColor, varargin)
      
      // test of the first argument and convertion in uint8 if necessary
      if (typeof(jimage) == "jimage") then
-           mime = jimage.mime;
-           name = jimage.title;
-           ext = '.' + mime;
-           jimage = jimage.image;
-           jim = %t;
+         mime = jimage.mime;
+         name = jimage.title;
+         transparencyColor = jim.transparencyColor;
+         if (~isdef('transparencyColor') | type(transparencyColor) == 0)
+            transparencyColor = jim.transparencyColor;
+         end
+         ext = '.' + mime;
+         jimage = jimage.image;
+         jim = %t;
+         bw = %f;
+     elseif (type(jimage) == 4) 
+         jim = %f;
+         bw = %t; 
      else 
          [jimage, originalType] = jimstandard(jimage, varargin(:));
          name = 'your ';
          ext = 'image';
          jim = %f;
+         bw = %f;
          if (type(jimage) == 4) then
              if (jimage == %f) then
                 msg = _("%s: Argument #%d: Wrong type of input argument.\n");
@@ -29,7 +38,7 @@
      end
      
      if (type(encoding) == 10)
-            
+
        select encoding
        case 'gray' then
            if (size(jimage,3) == 3 | size(jimage,3) == 4)
@@ -39,13 +48,18 @@
                                                     0.114 .* jimage(:,:,3))/3;
                convertedJimage = round(convertedJimage);
                convertedJimage = uint8(convertedJimage);
+           elseif bw == %t
+               convertedJimage = uint8(jimage) * 255;
            else
                msg = _("%s: %s cannot be converted into gray encoding.\n");
                error(msprintf(msg,"jimconvert", name + ext));
            end
        case 'rgb' then
            if (size(jimage, 3) == 4)
-               convertedJimage = jimage(:,:,[1:3]);
+               transparency = jimage(:,:,4) == 0;
+               transparencyMat = uint8(transparency) .* transparencyColor;
+               convertedMat = jimage(:,:,[1:3]) .* uint8(~transparency);
+               convertedJimage = transparencyMat + convertedMat;
            else
                msg = _("%s: %s cannot be converted into rgb encoding.\n");
                error(msprintf(msg,"jimconvert", name + ext));
@@ -56,8 +70,8 @@
        end
        if jim
            convertedJimage = mlist(['jimage','image','encoding',..
-           'title','mime'], convertedJimage, encoding, name, ..
-                                                       mime);
+           'title','mime','transparencyColor'], convertedJimage, encoding, name, ..
+                                                       mime, transparencyColor);
        end
     else 
        msg = _("%s: Argument #%d: Text(s) expected.\n");
