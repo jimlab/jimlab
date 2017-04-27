@@ -11,6 +11,7 @@
      if (typeof(jimage) == "jimage") then
            mime = jimage.mime;
            name = jimage.title;
+           transparencyColor = jimage.transparencyColor;
            ext = '.' + mime;
            jimage = jimage.image;
            jim = %t;
@@ -45,8 +46,8 @@
         
     if jim
         equalizedJimage = mlist(['jimage','image','encoding',..
-                    'title','mime'], equalizedJimage,'gray' , ..
-                                                name, mime);
+                    'title','mime','transparencyColor'], equalizedJimage,'gray' , ..
+                                                name, mime, transparencyColor);
     end
 
  endfunction
