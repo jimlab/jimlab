@@ -41,7 +41,10 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
 
     if (isdef(["colormap"],'l')&(colormap ~= "")) then
         //If a colormap is given, the image is indexed
-        convertedMat = jimstandard_ind(imageMat, colormap,);
+        dim = size(imageMat)
+        imageDouble = colormap(imageMat,:)
+        convertedMat = matrix(imageDouble, dim(1), dim(2), -1)
+        convertedMat = uint8(255*convertedMat);
         originalType = "ind";
         
     else 
@@ -184,4 +187,3 @@ endfunction
 
     
  endfunction
-
