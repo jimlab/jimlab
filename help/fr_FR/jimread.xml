@@ -40,7 +40,7 @@
 				<term>jimage</term> 
                 <listitem>
                     <para>
-						Un objet de type <literal>jimage</literal> (mlist) avec les champs <literal>.image</literal>, <literal>.encoding</literal>, <literal>.title</literal>, <literal>.format</literal> et <literal>.transparencyColor</literal>.
+						Un objet de type <literal>jimage</literal> (mlist) avec les champs <literal>.image</literal>, <literal>.encoding</literal>, <literal>.title</literal>, <literal>.mime</literal> et <literal>.transparencyColor</literal>.
 					</para>
                 </listitem>
 			</varlistentry>
@@ -52,7 +52,7 @@
             Cette fonction charge dans une variable Scilab une image et des métadonnées résidant dans un fichier local ou distant indiqué par son chemin ou son URL.
 		</para>
 		<para>
-		L'objet jimage rassemble : 
+		L'objet <literal>jimage</literal> rassemble : 
 		</para>
 		<itemizedlist>
 			<listitem>
@@ -72,7 +72,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					le type MIME de l'image dans le champ <literal>.format</literal>.
+					le type MIME de l'image dans le champ <literal>.mime</literal>.
 				</para>
 			</listitem>
 			<listitem>
