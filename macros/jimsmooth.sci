@@ -60,9 +60,14 @@ function [IMB] =jimsmooth(im, type_filter, varargin)
     case "gray" then
         IMB= uint8(conv2(mat_filter, double( mat_image))) ;
     case "rgb" then
-        mat_image=mat_image(:,:,2);
-        mat_image = uint8(conv2(mat_filter, double( mat_image))) ;
-        IMB=mat_image;
+        // Convolve the three separate color .
+        mat_image(:,:,1)=conv2(double(mat_image(:,:,1)),mat_filter,'same');
+        mat_image(:,:,2)=conv2(double(mat_image(:,:,2)),mat_filter,'same');
+        mat_image(:,:,3)=conv2(double(mat_image(:,:,3)),mat_filter),'same');
+        //mat_image = uint8(conv2(mat_filter, double( mat_image))) ;
+        //Recombine separate color channels into a single, true color RGB image.
+        RGB = cat(3, uint8( mat_image(:,:,1)), uint8( mat_image(:,:,2)), uint8( mat_image(:,:,3)));
+        IMB=RGB;
 
     end
 
@@ -105,5 +110,6 @@ function [matMask] =jimsmooth_mask(type_filter, width)
     end
 
 endfunction
+
 
 
