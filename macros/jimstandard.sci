@@ -12,7 +12,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
     //If the type is not supported by jimstandard(), the function returns false
     convertedMat = %f;
     originalType = 0;
-    if(isdef(["argb"],"l")&(argb ~= "")) then
+    if(isdef(["argb"],"l")&(type(argb) ~= 0)) then
         // If an hypermatrix is define as ARGB or RGBA
        
         if((argb == 1)|(argb == %t)) then
@@ -28,7 +28,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
         argb = %f;
     end
     
-    if(isdef(["Type"],"l")&(Type ~= ""))
+    if(isdef(["Type"],"l")&(type(Type) ~= 0))
          argb = %f;
          stdr_Type = strstr(["444","555","4444","5551"],Type);
          if(stdr_Type == "")
@@ -39,13 +39,18 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
      end
      
 
-    if (isdef(["colormap"],'l')&(colormap ~= "")) then
+    if (isdef(["colormap"],'l')&(type(colormap) ~= 0)) then
         //If a colormap is given, the image is indexed
-        dim = size(imageMat)
-        imageDouble = colormap(imageMat,:)
-        convertedMat = matrix(imageDouble, dim(1), dim(2), -1)
-        convertedMat = uint8(255*convertedMat);
-        originalType = "ind";
+        if(max(colormap) <= 1. & min(colormap) >= 0)
+            dim = size(imageMat)
+            imageDouble = colormap(imageMat,:)
+            convertedMat = matrix(imageDouble, dim(1), dim(2), -1)
+            convertedMat = uint8(255*convertedMat);
+            originalType = "ind";
+        else
+            msg = _("%s: Argument #%d: coefficients of the colormap must be in the intervalle[0,1].\n");
+            error(msprintf(msg,"jimstandard", 3));
+        end
         
     else 
         t = type(imageMat(:,:,1));
@@ -62,7 +67,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
                     m = 0;
                 end
                 tmp = (imageMat - m)/(M - m);
-                convertedMat = uint8(255*imageMat);
+                convertedMat = uint8(255*tmp);
                 originalType = ["double";string(m);string(M)];
             end
         case 4 then     //boolean matrix
@@ -187,3 +192,4 @@ endfunction
 
     
  endfunction
+
