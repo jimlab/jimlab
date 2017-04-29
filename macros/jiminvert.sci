@@ -23,7 +23,7 @@ function Mod_image = jiminvert(image)
     else
         error("Not any jimage or matrix argument have been definded")     
     end
-    
+    [im, originalType] = jimstandard(im);
     
      if((ndims(im) == 4)|(ndims(im) == 3))// Verify if Mat is a 2D or 3D matrix 
          Encoding = "rgb"; // Alpha channel isn't modified
