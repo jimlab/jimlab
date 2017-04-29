@@ -6,19 +6,20 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-function jimwrite(jimage,imageMat,imagePath,typeMIME,Name,Encoding)
+function jimwrite(image,imagePath,Encoding,typeMIME,Name)
  
-    if(isdef(["imageMat"],"l"))
-        Mat = imageMat;
+    if(isdef(["image"],"l"))// Verify if image is a jimage object or a matrix
+        if((typeof(image) == "hypermat")|(typeof(image) == "constant"))
+        Mat = image;
         arg_jimage = 0;
-    elseif(isdef(["jimage"],"l"))
+    elseif(typeof(image) == "jimage")
         arg_jimage = 1;
-        Mat = jimage.image;
+        Mat = image.image;
     else
-        arg_jimage = 0;
+        arg_jimage = -1;
         error('Not any jimage or matrix argument have been definded')
     end
-    disp(arg_jimage);
+    deftypeMIME = "jpg png gif bmp";
     
      
      if((size(Mat,3) ~= 4)&(size(Mat,3) ~= 3)&(size(Mat,3) ~= 1)) // Verify if Mat is a 2D or 3D matrix 
@@ -28,23 +29,54 @@ function jimwrite(jimage,imageMat,imagePath,typeMIME,Name,Encoding)
     
     if(~isdef(["imagePath"],"l") | type(imagePath) ~= 10) //Verify if imagePath is a string  
         warning('Invalid Path of file, current depository will be used');
-        imagePath = pwd;
+        imagePath = pwd();
     end
     
+        if(isdir(imagePath))// if imagePath refer to a directory, definition of the name and the TypeMIME
+            if(arg_jimage)
+                Name = image.title;
+                warning("Invalid Name detected, jimage""s name will be used :"..
+                    + Name);
+             else
+                Name = "No_name";
+                 warning('Undefineded name, No_name will be used');
+                 warning('Undefineded type MIME, jpg will be used');
+                 MIME = "jpg";
+                 
+             end
+             
+         else
+             MIME = fileparts(imagePath,"extension");
+             MIME = strsubst(MIME, ".", "");
+             if(MIME == "")
+                 MIME = "jpg";
+             end
+             
+         end
+     end
+     
+             
+                     
+    
     if(isdef(["typeMIME"],"l"))
+        
          invalid_typeMIME = 0;
-         deftypeMIME = ['jpg','png','gif','bmp'];
          comptypeMIME = strstr(deftypeMIME,typeMIME); // Verify if user's specified format is supported
            if((type(typeMIME) ~= 10)|(comptypeMIME == '')) // If typeMIME is not definded or wrong, 
                 invalid_typeMIME = 1;
            end
-      elseif(~(isdef(["typeMIME"],"l"))) 
+      elseif(~(isdef(["typeMIME"],"l")))
+          if(strstr(deftypeMIME,MIME) == "")
+              invalid_typeMIME = 1;
+          else 
+              typeMIME = MIME;
+              invalid_typeMIME = 0;
+          end
           
-          invalid_typeMIME = 1;
       end
-      
+
       if(arg_jimage & invalid_typeMIME) // Jimage typeMIME is used 
-          typeMIME = jimage.mime
+          typeMIME = image.mime
            warning('Invalid typeMIME detected, jimage typeMIME will be used :'..
           + typeMIME)
      elseif(invalid_typeMIME)
@@ -52,22 +84,7 @@ function jimwrite(jimage,imageMat,imagePath,typeMIME,Name,Encoding)
           warning('Undefineded typeMIME, jpg will be used')
      end
      
-     if(isdef(["Name"],"l"))
-         
-         if((type(Name) ~= 10)|(Name == ''))// If Name isn't definded or wrong, the default value is 'No Name'
-            warning('Name is not a string, the image will be called No_name');
-            Name = 'No_name';
-        end
-     elseif(arg_jimage) 
-         
-         Name = jimage.title;
-         warning('Invalid Name detected, jimage''s name will be used :'..
-          + Name)
-     else
-         Name = 'No_name';
-         warning('Undefineded name, No_name will be used')     
-    end
-    
+        
    if(isdef(["Encoding"],"l"))
        if((type(Encoding) == 10))
          invalid_Encoding = 0;
@@ -84,17 +101,21 @@ function jimwrite(jimage,imageMat,imagePath,typeMIME,Name,Encoding)
         invalid_Encoding = 1;
      end
     if(arg_jimage & invalid_Encoding)// Jimage's encoding is used 
-        Encoding = jimage.encoding;
+        Encoding = image.encoding;
         warning('Invalid encoding detected, jimage encoding will be used : '..
-         + jimage.encoding)
-    elseif(invalid_Encoding)
+         + image.encoding)
+    elseif(invalid_Encoding & (size(image,3) >= 3))
           Encoding = 'rgb';//the default value is 'rgb'
-        warning('Not any encoding have been definded. rgb will be used')
-         warning('Transparency wont be efficient')
+        warning('Wrong definition of encoding. rgb will be used')
+         warning('Transparency won''t be efficient')
+     elseif(invalid_Encoding &( size(image,3) < 3))
+          Encoding = 'gray';//the default value is 'rgb'
+        warning('Wrong definition of encoding. gray will be used')
+         warning('Transparency won''t be efficient')
      end
      
      if(Encoding == 'rgba')
-         if((typeMIME == 'jpg')|(typeMIME == 'bmp'))
+         if((typeMIME == 'jpg')|(typeMIME == 'bmp'))// RGBA is not aviable for jpg and bmp
              warning(Encoding +' is not aviable for '+ typeMIME ..
              + ' type. png will be used')
              typeMIME = 'png';
@@ -108,9 +129,16 @@ function jimwrite(jimage,imageMat,imagePath,typeMIME,Name,Encoding)
     jimport java.awt.Color;   
  
     
-     
-    imagePath = imagePath + filesep() + Name + "." + typeMIME; // This code create the final path used by Java methode 'write'
-
+    if (isdef(["Name"],"l"))
+        imagePath = fileparts(imagePath,"path") + Name + "." + typeMIME;
+ 
+    else
+    
+    imagePath = fileparts(imagePath,"path") +..
+    fileparts(imagePath,"fname") + "." + typeMIME;
+end
+// This code create the final path used by Java methode 'write'
+disp(imagePath);
     S = 0;
     
     select Encoding,
