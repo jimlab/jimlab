@@ -21,26 +21,21 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-           jimwrite(jimage,,imagePath)
-	   jimwrite(jimage,,imagePath,typeMIME)
-	   jimwrite(jimage,,imagePath,typeMIME,Name)
-	   jimwrite(jimage,,imagePath,typeMIME,Name,Encoding)
-	   jimwrite(,Matrix,imagePath,typeMIME,Name,Encoding)
+           jimwrite(image,imagePath)
+	   jimwrite(image,imagePath,Encoding)
+	   jimwrite(image,,imagePath,Encoding,typeMIME)
+	   jimwrite(image,imagePath,Encoding,typeMIME,Name)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
         <title>Arguments</title>
         <variablelist>
             <varlistentry>
-		<term>jimage</term>
+		<term>image</term>
 		<listitem>
 			<para>
-			Une mliste jimage contenant l'image, son nom, son encodage et son type MIME. Cet objet est crée par le fonction jimread.
-			</para>
-		</listitem>
-		<term>Matrix</term>
-		<listitem>
-			<para>
+			L'argument image peut être soit un objet  jimage contenant l'image, et des métadonnées. Cet objet est crée par la fonction <link linkend="jimread">jimread</link>.
+		
 			Une matrice une, trois ou quatres couches représentant l'image en nuance de gris, en rgb ou en rgba. L'argument Matrix ne peut être 
 			placé avec un objet jimage. Si les deux paramètres sont présents, l'argument Matrix ne sera pas pris en compte.
 			</para>
