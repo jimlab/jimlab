@@ -32,7 +32,7 @@
                 <term>imagePath</term>
                 <listitem>
                     <para>
-						A string containing the relative/complete path handled are png, bmp, gif and jpg besides images encoded in CMYK and animated gif. Alphan channel is handled for MIME types png and gif. 
+						A string containing the relative/complete path of the image file or an URL. The MIME types handled are png, bmp, gif and jpg besides images encoded in CMYK and animated gif. Alpha channel is handled for MIME types png and gif. 
 					</para>					
                 </listitem>
 			</varlistentry>
@@ -57,12 +57,12 @@
 		<itemizedlist>
 			<listitem>
 				<para>
-					the intensity of each pixel encoded in positive 8-bits intergers in the field <literal>.image</literal>,
+					the intensity of each pixel encoded in positive 8-bits integers in the field <literal>.image</literal>,
 				</para>
 			</listitem>
 			<listitem>
 				<para>
-					the encoding type ('gray', 'rgb', ou 'rgba') in the field <literal>.encoding</literal>,
+					the encoding type ('gray', 'rgb', or 'rgba') in the field <literal>.encoding</literal>,
 				</para>
 			</listitem>
 			<listitem>
