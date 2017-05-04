@@ -19,8 +19,10 @@ else
     error(msprintf(msg,"bench_jimread"));
 end
 
+loaded = 0;
+installed = 0;
 
-if (getos() == "Linux") then
+if (getos() == "Linux" | (getos() == "Windows" & module == "IPCV")) then
     if ~atomsIsLoaded(module) then
             loaded=1;
             if ~atomsIsInstalled(module) then
@@ -43,9 +45,9 @@ image = imread(path);
 // <-- BENCH END -->
 
 if loaded then
-    atomsQuit(module)
+    atomsRemove(module)
     if installed then
-        atomsRemove(module)
+        atomsRemove(module,,%T)
     end
 end
 
