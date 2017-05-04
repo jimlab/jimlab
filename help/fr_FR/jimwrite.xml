@@ -109,16 +109,16 @@
 					
 			// A partir d'un objet jimage
 			
-			path = jimlabPath + '/help/images/logoEnsim.png';
+			path = jimlabPath("/") + '/help/images/logoEnsim.png';
 			jimage_original = jimread(path);// On charge l'image original
-			path = jimlabPath + '/help/images'; // Redéfinition du chemin
+			path = jimlabPath("/") + '/help/images'; // Redéfinition du chemin
 			jimdisp(jimage_original,,'info');// Affichage de l'image original
 			
 			jimwrite(jimage_original,,path,,'logoEnsim_Copie'); // Enregistrement de la copie au format d'origine
 			jimwrite(jimage_original,,path,'gif','logoEnsim_Copie'); // Eregistrement sans chagement du format gif		
 			// Affichage des images copiées
-			path1 = jimlabPath + '/help/images/logoEnsim_Copie.gif'; 
-			path2 = jimlabPath + '/help/images/logoEnsim_Copie.png';
+			path1 = jimlabPath("/") + '/help/images/logoEnsim_Copie.gif'; 
+			path2 = jimlabPath("/") + '/help/images/logoEnsim_Copie.png';
 			jimdisp(path1,,'info');
 			jimdisp(path2,,'info');
 			// Suppression des fichiers créés
@@ -127,15 +127,15 @@
 			
 			// A partir d'une hyper-matrice
 
-			path = jimlabPath + '/help/images/mat.data';
+			path = jimlabPath("/") + '/help/images/mat.data';
 			load(path);// Chargement de l'hyper-matrice
-			path = jimlabPath + '/help/images';
+			path = jimlabPath("/") + '/help/images';
 			jimdisp(mat); // Affichage de la matrice
 			jimwrite(,mat,path); // Enregistrement sans paramètres de noms, format ou d'encodage
 			jimwrite(,mat,path,'png','logo_mat','rgb'); // Enregistrement avec tous les paramètres
 			// Affichage des images
-			path1 = jimlabPath + '/help/images/No_name.jpg'; 
-			path2 = jimlabPath + '/help/images/logo_mat.png';
+			path1 = jimlabPath("/") + '/help/images/No_name.jpg'; 
+			path2 = jimlabPath("/") + '/help/images/logo_mat.png';
 			jimdisp(path1,,'info');
 			jimdisp(path2,,'info');
 			// Suppression des fichiers créés
