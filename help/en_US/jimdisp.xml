@@ -16,10 +16,10 @@
 		xml:lang="en" xml:id="jimdisp">
     <refnamediv>
         <refname>jimdisp</refname>
-        <refpurpose>Display an image from a <link linkend="jimage">jimage</link> object, a matrix or hypermatrix, a path or a url.</refpurpose>
+        <refpurpose>Displays an image from a <literal>jimage</literal> object, a matrix or hypermatrix, a path or a url.</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
-        <title>Calling Sequence</title>
+        <title>Syntax</title>
         <synopsis>
             jimdisp(image)
 			jimdisp(image,'box')
@@ -34,7 +34,7 @@
                 <term>data</term>
                 <listitem>
                     <para>
-                        <link linkend="jimage">jimage</link> object, or a string of characters (path or URL of the image file).
+                        <literal>jimage</literal> object, or a string of characters containing the relative/complete path of the image file or a URL.
                     </para>					
                 </listitem>
             </varlistentry>
@@ -42,7 +42,7 @@
                 <term>'box'</term>
                 <listitem>
                     <para>
-						Display a box around the image if the argument is written.
+						Displays a box around the image if the argument is written.
                     </para>
                 </listitem>
             </varlistentry>
@@ -50,7 +50,7 @@
                 <term>'info'</term>
                 <listitem>
                     <para>
-						Display some parameters of the image if the argument is written.
+						Displays some parameters of the image if the argument is written.
                     </para>					
                 </listitem>
             </varlistentry>
@@ -59,37 +59,38 @@
     <refsection>
         <title>Description</title>
         <para>
-            This fonction can display an image from its path, a url or a <link linkend="jimage">jimage</link> object created with the help of <link linkend="jimread">jimread</link>.
+            This fonction can display an image from its path, a url or a <literal>jimage</literal> object created with the help of <literal>jimread</literal>.
         </para>
         <para>
             Properties which can be displayed include the title, format, size, and type of encoding of the image.
-			These properties, except for the size, are directly taken from the fields of the <link linkend="jimage">jimage</link> object.
+			These properties, except for the size, are directly taken from the fields of the <literal>jimage</literal> object.
         </para>
     </refsection>
     <refsection>
         <title>Examples</title>
         <programlisting role="example"><![CDATA[ 
 // From a pre-loaded image file
-global jimlabPath
-path = jimlabPath + '/help/images/logoEnsim.png';
+path = jimlabPath("/") + '/help/images/logoEnsim.png';
 image = jimread(path);
 jimdisp(image,'box','info');
 
 // From a path or a URL
+path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
 jimdisp(path,'','info')
+
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
         <title>See Also</title>
         <simplelist type="inline">
             <member>
-                <link linkend="jimread">jimread</link>
-            </member>
-            <member>
                 <link linkend="jimage">jimage</link>
             </member>
             <member>
-                <link linkend="jimwrite">jimwrite</link>
+                <link linkend="jimread">jimread</link>
+            </member>
+			<member>
+                <link linkend="jimage_properties">jimage_properties</link>
             </member>
         </simplelist>
     </refsection>
@@ -97,7 +98,7 @@ jimdisp(path,'','info')
         <title>History</title>
         <revhistory>
             <revision>
-                <revnumber>2017-05</revnumber>
+                <revnumber>0.1 - 2017-05</revnumber>
                 <revremark>First publication of Jimlab</revremark>
             </revision>
         </revhistory>
