@@ -21,9 +21,9 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-           jimwrite(image,imagePath)
+       jimwrite(image,imagePath)
 	   jimwrite(image,imagePath,Encoding)
-	   jimwrite(image,,imagePath,Encoding,typeMIME)
+	   jimwrite(image,imagePath,Encoding,typeMIME)
 	   jimwrite(image,imagePath,Encoding,typeMIME,Name)
         </synopsis>
     </refsynopsisdiv>
@@ -34,44 +34,45 @@
 		<term>image</term>
 		<listitem>
 			<para>
-			L'argument image peut être soit un objet  jimage contenant l'image, et des métadonnées. Cet objet est crée par la fonction <link linkend="jimread">jimread</link>.
+			L'argument image peut être soit un objet <literal>jimage</literal> contenant l'image, et ses métadonnées, soit une matrice à une, trois ou quatres couches représentant l'image en nuance de gris, en RVB ou en RVBA.
+
+			L'objet est crée par la fonction <link linkend="jimread">jimread</link>.
+			
+			Seul les matrices entières codées sur 8, 16, et 32 bits, les matrices booléennes et les matrices de réels sont supportées.
+			
 		
-			Une matrice une, trois ou quatres couches représentant l'image en nuance de gris, en rgb ou en rgba. L'argument Matrix ne peut être 
-			placé avec un objet jimage. Si les deux paramètres sont présents, l'argument Matrix ne sera pas pris en compte.
 			</para>
 		</listitem>
    		<term>imagePath</term>
     		<listitem>
    		<para>
-			Une chaîne de caractère contenant le chemin du répertoire où l'image doit être enregistrée. Si ce paramètre n'est pas 
-			précisé, ou si ce n'est pas une chaine de charactère, l'image sera enregistée dans le répertoire courant. Attention, 
-			le chemin ne doit pas contenir le noms du fichier image à crée. Le noms de l'image sera précisé avec "Name".
+			Une chaîne de caractère contenant le chemin du répertoire où l'image doit être enregistrée. Ce chemin peut être relatif ou absolu. 
+			imagePath peut aussi être le chemin vers un dossier. Dans se cas, les arguments Name et typeMIMe sont attendus, ou si non déclarés seront remplacer par leurs valeurs par défault.
+			
 		</para>					
-                </listitem>
+        </listitem>
 				
 		<term>typeMIME</term>
 		<listitem>
 		<para>
-			Une chaine de caractère donnant le type MIME dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif'  					
-			et 'bmp' sont disponibles. Si le format n'est pas précisé, ou si il est incompatible, le type MIME présent dans la mliste jimage
-			sera utilisée. Si la déclaration est faite avec Matrix, l'image sera enregistrée au format JPEG (jpg). 
+			Une chaine de caractère donnant le type MIME dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif' et 'bmp' sont disponibles. Si le format n'est pas précisé, ou si il est incompatible, le type MIME présent dans la mliste jimage
+			sera utilisée. Si la déclaration est faite avec une matrice, l'image sera enregistrée au format JPEG (jpg). 
 		</para>
 		</listitem>
 
 		<term>Name</term>
 		<listitem>
 			<para>
-			Une chaine de caractère dommant le noms sous lequel l'image sera enregistrée. Si aucun noms n'est précisé, ou si ce n'est pas une chaine de 
-			charactère, le noms présent dans la mliste jimage sera utilisée. Si la déclaration est faite avec Matrix, l'image sera enregistrée sous le 
+			Une chaine de caractère dommant le noms sous lequel l'image sera enregistrée. Si aucun noms n'est précisé, ou si imagePath est une chemin vers un dossier existant, le noms présent dans la mliste jimage sera utilisée. Si la déclaration est faite avec une martice, l'image sera enregistrée sous le 
 			noms "No_name".
 			</para>
 		</listitem>
 		<term>Encoding</term>
 		<listitem>
 		<para>
-			Une chaine de caractère donnant l'encodage de l'image. Seul les types d'encodages 'gray', 'rgb' et 'rgba' sont disponibles. Si le type d'encodage
-			n'est pas précisé, ou si il est incompatible, le type d'encodage présent dans la mliste jimage sera utilisée. Si la déclaration est faite avec Matrix, 
-			l'image sera enregistrée en 'rgb'. 
+			Une chaine de caractère donnant l'encodage de l'image. Seul les types d'encodages 'GRAY', 'RGB' et 'RGBA' sont disponibles. Si le type d'encodage
+			n'est pas précisé, ou si il est incompatible, le type d'encodage présent dans la mliste jimage sera utilisée. Si la déclaration est faite avec une matrice, 
+			l'image sera enregistrée en 'RGB'. 
 		</para>
 		</listitem>
 
@@ -85,36 +86,27 @@
         	<para>
             	Cette fonction créé et enregistre une image à partir d'une mliste jimage ou bien df'une hypermatrice. Il est possible d'enregistrer des images RGB, RGBA et en 				
 		nuance de gris.
-		</para>
-		<para>
-			La mliste jimage rassemble : l'hypermatrice représentant l'image, le titre de l'image sous forme d'une chaîne de caractères, son 			
-			type MIME d'origine, et son type d'encodage sous forme d'une chaîne de caracères.
-			L'encodage 'Gray' correspond à une matrice 2D pour les images en niveaux de gris. 
-			L'encodage 'RGB' correspond à une hypermatrice à trois couches. 
-			L'encodage 'RGBA' correspond à une hypermatrice à quatre couches dont la dernière gère la transparence de l'image.
-			Cette mliste est fournie par la fonction jimread.
+			</para>
+			<para>
+				Lorsque un objet jimage est placé en paramètre d'entrée de la fonction jimwrite, l'image sera enregistrée avec les paramètres de type, d'encodage et le noms contenus dans l'objet jimage. Si l'utilisateur place en
+				paramètres un nouveau noms, un types MIME différents ou en nouvel encodage, ceux-ci seront alors utilisé à la place.
+				Cependant, en cas d'erreur ou d'incompatibilité des arguments, les paramètres de la jimage seront conservés.
 			
-			Lorsque un objet jimage est placé en paramètre d'entrée de la fonction jimwrite, l'image sera enregistrée avec les
-			paramètres de type, d'encodage et le noms contenus dans l'objet jimage. Si l'utilisateur place en
-			paramètres un nouveau noms, un types MIME différents ou en nouvel encodage, ceux-ci seront alors utilisé à la place.
-			Cependant, en cas d'erreur ou d'incompatibilité des arguments, les paramètres de la jimage seront conservés.
+				Lorsqu'une hyper-matrice est placer en paramètre de la fonction jimwrite, le noms, le format et l'encodage de l'image à 
+				enregistré sont attendus en paramètres. Si ils sont absent ou incompatibles entres eux, les valeurs par défault seront utilisées.
 			
-			Lorsqu'une hyper-matrice est placer en paramètre de la fonction jimwrite, le noms, le format et l'encodage de l'image à 
-			enregistré sont attendus en paramètres. Si ils sont absent ou incompatibles entres eux, les valeurs par défault seront utilisées.
+				La fonction jimwrite ne permet pas l'écriture d'une matrice quatre couches dans un format ne prenant pas en compte la couche de 
+				transparence. Ainsi, les images représetées par des matrice quatres couches ne sont enregistrable uniquement en PNG et en GIF. Si une 
+				déclaration de jimwrite associant une valeur d'encodage 'rgba' et un type MIME incompatible est effectuée, la fonction jimwrite 
+				modifira le type MIME pour le type 'png'. 
 			
-			La fonction jimwrite ne permet pas l'écriture d'une matrice quatre couches dans un format ne prenant pas en compte la couche de 
-			transparence. Ainsi, les images représetées par des matrice quatres couches ne sont enregistrable uniquement en PNG et en GIF. Si une 
-			déclaration de jimwrite associant une valeur d'encodage 'rgba' et un type MIME incompatible est effectuée, la fonction jimwrite 
-			modifira le type MIME pour le type 'png'. 
-			
-			Une image représentée par une matrice trois couche peut cependant être écrite en 'gif' ou en 'png' à l'aide de jimwrite.
+				Une image représentée par une matrice trois couche peut cependant être écrite en 'gif' ou en 'png' à l'aide de jimwrite.
         </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
-			global jimlabPath
-			
+					
 			// A partir d'un objet jimage
 			
 			path = jimlabPath + '/help/images/logoEnsim.png';
@@ -156,13 +148,20 @@
         <title>Voir Aussi</title>
         <simplelist type="inline">
             <member>
-                <link linkend="jimdisp">jimdisp</link>
-            </member>
-            <member>
+				<link linked="jimage_properties">jimage_properties</link>
+				</member>
+				<member>
                 <link linkend="jimread">jimread</link>
             </member>
+				<member>
+                <link linkend="jimdisp">jimdisp</link>
+            </member>
+            
 	    <member>
-                <link linkend="jimage">jimage</link>
+                <link linkend="save">save</link>
+	    </member>
+		 <member>
+                <link linkend="xsave">xsave</link>
 	    </member>
         </simplelist>
     </refsection>
