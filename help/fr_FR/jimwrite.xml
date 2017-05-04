@@ -24,7 +24,6 @@
        jimwrite(image,imagePath)
 	   jimwrite(image,imagePath,Encoding)
 	   jimwrite(image,imagePath,Encoding,typeMIME)
-	   jimwrite(image,imagePath,Encoding,typeMIME,Name)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -47,25 +46,13 @@
     		<listitem>
    		<para>
 			Une chaîne de caractère contenant le chemin du répertoire où l'image doit être enregistrée. Ce chemin peut être relatif ou absolu. 
-			imagePath peut aussi être le chemin vers un dossier. Dans se cas, les arguments Name et typeMIMe sont attendus, ou si non déclarés seront remplacer par leurs valeurs par défault.
+			imagePath peut aussi être le chemin vers un dossier. 
+			Dans se cas et pour un objet jimage, se seront le noms de fichier et le type MIME contenus dans l'objet qui seront utilisés.
+			Pour une matrice, le nom "No_name" sera attribuer au fichier crée. Le type MIME utilisé sera celui passer en argument typeMIME, ou bien
+			par défault en JPEG (.jpg). 
+			
 			
 		</para>					
-        </listitem>
-				
-		<term>typeMIME</term>
-		<listitem>
-		<para>
-			Une chaine de caractère donnant le type MIME dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif' et 'bmp' sont disponibles. Si le format n'est pas précisé, ou si il est incompatible, le type MIME présent dans la mliste jimage
-			sera utilisée. Si la déclaration est faite avec une matrice, l'image sera enregistrée au format JPEG (jpg). 
-		</para>
-		</listitem>
-
-		<term>Name</term>
-		<listitem>
-			<para>
-			Une chaine de caractère dommant le noms sous lequel l'image sera enregistrée. Si aucun noms n'est précisé, ou si imagePath est une chemin vers un dossier existant, le noms présent dans la mliste jimage sera utilisée. Si la déclaration est faite avec une martice, l'image sera enregistrée sous le 
-			noms "No_name".
-			</para>
 		</listitem>
 		<term>Encoding</term>
 		<listitem>
@@ -74,9 +61,15 @@
 			n'est pas précisé, ou si il est incompatible, le type d'encodage présent dans la mliste jimage sera utilisée. Si la déclaration est faite avec une matrice, 
 			l'image sera enregistrée en 'RGB'. 
 		</para>
+		</listitem> 
+				
+		<term>typeMIME</term>
+		<listitem>
+		<para>
+			Une chaine de caractère donnant le type MIME dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif' et 'bmp' sont disponibles. Si le format n'est pas précisé, ou si il est incompatible, le type MIME présent dans la mliste jimage
+			sera utilisée. Si la déclaration est faite avec une matrice, l'image sera enregistrée au format JPEG (jpg). 
+		</para>
 		</listitem>
-
-		
             </varlistentry>
 		
         </variablelist>
@@ -114,16 +107,16 @@
 			path = jimlabPath("/") + '/help/images'; // Redéfinition du chemin
 			jimdisp(jimage_original,,'info');// Affichage de l'image original
 			
-			jimwrite(jimage_original,,path,,'logoEnsim_Copie'); // Enregistrement de la copie au format d'origine
-			jimwrite(jimage_original,,path,'gif','logoEnsim_Copie'); // Eregistrement sans chagement du format gif		
+			jimwrite(jimage_original,path + 'logoEnsim_Copie'); // Enregistrement de la copie au format d'origine
+			jimwrite(jimage_original,path + 'logoEnsim_Copie',,'gif'); // Eregistrement sans chagement du format gif		
 			// Affichage des images copiées
 			path1 = jimlabPath("/") + '/help/images/logoEnsim_Copie.gif'; 
 			path2 = jimlabPath("/") + '/help/images/logoEnsim_Copie.png';
 			jimdisp(path1,,'info');
 			jimdisp(path2,,'info');
 			// Suppression des fichiers créés
-			deletefile(path1);
-			deletefile(path2);
+			mdelete(path1);
+			mdelete(path2);
 			
 			// A partir d'une hyper-matrice
 
@@ -131,25 +124,25 @@
 			load(path);// Chargement de l'hyper-matrice
 			path = jimlabPath("/") + '/help/images';
 			jimdisp(mat); // Affichage de la matrice
-			jimwrite(,mat,path); // Enregistrement sans paramètres de noms, format ou d'encodage
-			jimwrite(,mat,path,'png','logo_mat','rgb'); // Enregistrement avec tous les paramètres
+			jimwrite(mat,path); // Enregistrement sans paramètres de noms, format ou d'encodage
+			jimwrite(mat,path + 'logo_mat','rgb','png'); // Enregistrement avec tous les paramètres
 			// Affichage des images
 			path1 = jimlabPath("/") + '/help/images/No_name.jpg'; 
 			path2 = jimlabPath("/") + '/help/images/logo_mat.png';
 			jimdisp(path1,,'info');
 			jimdisp(path2,,'info');
 			// Suppression des fichiers créés
-			deletefile(path1);
-			deletefile(path2);
+			mdelete(path1);
+			mdelete(path2);
 			
 	 ]]></programlisting>
 	</refsection>
     <refsection role="see also">
         <title>Voir Aussi</title>
         <simplelist type="inline">
-            <member>
-				<link linked="jimage_properties">jimage_properties</link>
-				</member>
+            	<member>
+		<link linked="jimage_properties">jimage_properties</link>
+		</member>
 				<member>
                 <link linkend="jimread">jimread</link>
             </member>
