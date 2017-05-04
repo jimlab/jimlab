@@ -13,13 +13,13 @@ function [IMB] =jimsmooth(im, type_filter, varargin)
 
     if( argn(2) <3) then
         width=3;
-         mat_filter = jimsmooth_mask(type_filter,width) ;
+        mat_filter = jimsmooth_mask(type_filter,width) ;
     end
 
     if(argn(2) >=3 ) then
         if(length(varargin) ==1) then
             width=varargin(1) ;
-             mat_filter = jimsmooth_mask(type_filter,width) ;
+            mat_filter = jimsmooth_mask(type_filter,width) ;
         end
         if(length(varargin) ==2) then
             if(~( isequal(type_filter, 'customize' ))) then
@@ -35,9 +35,9 @@ function [IMB] =jimsmooth(im, type_filter, varargin)
 
         end
     end
-   
-   
-  
+
+
+
 
     // Testing arguments's typetype_filter
     if(typeof(im) == 'hypermat' ) then
@@ -65,19 +65,15 @@ function [IMB] =jimsmooth(im, type_filter, varargin)
         mat_image(:,:,1)=conv2(double(mat_image(:,:,1)),mat_filter,'same');
         mat_image(:,:,2)=conv2(double(mat_image(:,:,2)),mat_filter,'same');
         mat_image(:,:,3)=conv2(double(mat_image(:,:,3)),mat_filter,'same');
-        
+
         //Recombine separate color channels into a single
         result = cat(3, uint8( mat_image(:,:,1)), uint8( mat_image(:,:,2)), uint8( mat_image(:,:,3)));
-       
+
 
     end
-if(jimage)
-    IMB = mlist(["jimage","image","encoding","title","format"],..
-    result,im.encoding, im.title, im.format);
-       
-   else
-       IMB =  result;
-   end
+    
+        IMB =  result;
+  
 endfunction
 
 //Function returning the specified input mask
@@ -91,7 +87,7 @@ function [matMask] =jimsmooth_mask(type_filter, width)
     select type_filter
 
 
-    case "gaussien" then
+    case "gaussian" then
         ic = int(width/2) +1; // index of the center
         sigma = (width/2) /order;
         // Matrix of distances to the mask's center:
@@ -117,5 +113,7 @@ function [matMask] =jimsmooth_mask(type_filter, width)
     end
 
 endfunction
+
+
 
 
