@@ -174,8 +174,8 @@ path = jimlabPath("/") + 'tests/images/logoEnsim.png';
 jimage2 = jimread(path)
 image2 = jimage2.image;
 transparencyColor = uint8(cat(3, 100, 100, 100));
-jrgb = jimconvert(jimage, 'rgb', transparencyColor)
-rgb = jimconvert(image, 'rgb', transparencyColor);
+jrgb = jimconvert(jimage2, 'rgb', transparencyColor)
+rgb = jimconvert(image2, 'rgb', transparencyColor);
 typeof(rgb)
 
 //Affichage des images converties
@@ -202,7 +202,7 @@ path = jimlabPath("/") + 'tests/images/logoEnsim.png';
 jimage2 = jimread(path)
 image2 = jimage2.image;
 transparencyColor = uint8(cat(3, 100, 100, 100));
-jrgb = jimconvert(jimage, 'rgb', transparencyColor)
+jrgb = jimconvert(jimage2, 'rgb', transparencyColor)
 
 //Affichage des images converties
 subplot(2,2,1)
