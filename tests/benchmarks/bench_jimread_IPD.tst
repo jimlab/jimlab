@@ -15,6 +15,8 @@ if v(1) ~= 5 then
     error(msprintf(msg,"bench_jimread"));
 end
 
+loaded = 0;
+installed = 0;
 
 if ~atomsIsLoaded('IPD') then
     loaded=1;
@@ -34,8 +36,8 @@ image = ReadImage(path);
 // <-- BENCH END -->
 
 if loaded then
-    atomsQuit('IPD')
+    atomsRemove('IPD')
     if installed then
-        atomsRemove('IPD')
+        atomsRemove('IPD',, %T)
     end
 end
