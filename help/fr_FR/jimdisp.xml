@@ -16,7 +16,7 @@
 		xml:lang="fr" xml:id="jimdisp">
     <refnamediv>
         <refname>jimdisp</refname>
-        <refpurpose>Affiche une image à partir d'un objet <link linkend="jimage">jimage</link>, d'une matrice ou hypermatrice, d'un chemin de fichier ou d'un URL.</refpurpose>
+        <refpurpose>Affiche une image à partir d'un objet <literal>jimage</literal>, d'une matrice ou hypermatrice, d'un chemin de fichier ou d'un URL.</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
@@ -34,7 +34,7 @@
                 <term>image</term>
                 <listitem>
                     <para>
-                        Objet <link linkend="jimage">jimage</link>, matrice, hypermatrice ou chaîne de caractères donnant l'emplacement du fichier image (chemin ou URL).
+                        Objet <literal>jimage</literal>, matrice, hypermatrice ou chaîne de caractères contenant le chemin relaif ou absolu du fichier image ou un URL.
                     </para>					
                 </listitem>
             </varlistentry>
@@ -59,23 +59,23 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet d'afficher une image à partir de son chemin, d'un URL, ou d'un objet <link linkend="jimage">jimage</link> préalablement créé par la fonction <link linkend="jimread">jimread</link>.
+            Cette fonction permet d'afficher une image à partir de son chemin, d'un URL, ou d'un objet <literal>jimage</literal> préalablement créé par la fonction <link linkend="jimread">jimread</link>.
         </para>
         <para>
             L'affichage des propriétés par la présence de l'argument 'info' comprend : le titre, le format, la taille et le type d'encodage de l'image.
-			Ces informations, à l'exception de la taille, sont stockées dans les champs de l'objet <link linkend="jimage">jimage</link>.
+			Ces informations, à l'exception de la taille, sont stockées dans les champs de l'objet <literal>jimage</literal>.
         </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 // A partir d'une image pré-chargée
-global jimlabPath
-path = jimlabPath + '/help/images/logoEnsim.png';
+path = jimlabPath("/") + '/help/images/logoEnsim.png';
 image = jimread(path);
 jimdisp(image,'box','info');
 
-// A partir d'un chemin ou d'un URL
+// A partir d'un fichier local
+path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
 jimdisp(path,'','info')
 
  ]]></programlisting>
@@ -84,13 +84,13 @@ jimdisp(path,'','info')
         <title>Voir Aussi</title>
         <simplelist type="inline">
             <member>
-                <link linkend="jimread">jimread</link>
-            </member>
-            <member>
                 <link linkend="jimage">jimage</link>
             </member>
             <member>
-                <link linkend="jimwrite">jimwrite</link>
+                <link linkend="jimread">jimread</link>
+            </member>
+			<member>
+                <link linkend="jimage_properties">jimage_properties</link>
             </member>
         </simplelist>
     </refsection>
@@ -98,7 +98,7 @@ jimdisp(path,'','info')
         <title>Historique</title>
         <revhistory>
             <revision>
-                <revnumber>2017-05</revnumber>
+                <revnumber>0.1 - 2017-05</revnumber>
                 <revremark>Publication initiale du module Jimlab</revremark>
             </revision>
         </revhistory>
