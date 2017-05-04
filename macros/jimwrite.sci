@@ -6,7 +6,7 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-function jimwrite(image,imagePath,Encoding,typeMIME,Name)
+function jimwrite(image,imagePath,Encoding,typeMIME)
  
     if(isdef(["image"],"l"))// Verify if image is a jimage object or a matrix
         if((typeof(image) == "hypermat")|(typeof(image) == "constant"))
@@ -37,6 +37,9 @@ function jimwrite(image,imagePath,Encoding,typeMIME,Name)
                 Name = image.title;
                 warning("Invalid Name detected, jimage""s name will be used :"..
                     + Name);
+                MIME = image.mime;
+                MIME = strsubst(MIME, ".", "");
+                
              else
                 Name = "No_name";
                  warning('Undefineded name, No_name will be used');
@@ -46,7 +49,7 @@ function jimwrite(image,imagePath,Encoding,typeMIME,Name)
              end
              
          else
-             MIME = fileparts(imagePath,"extension");
+             MIME = convstr(fileparts(imagePath,"extension"));
              MIME = strsubst(MIME, ".", "");
              if(MIME == "")
                  MIME = "jpg";
@@ -121,7 +124,7 @@ function jimwrite(image,imagePath,Encoding,typeMIME,Name)
              typeMIME = 'png';
          end
      end
-     
+     Encoding = convstr(Encoding);
             
     jimport java.io.File;// Importe the java classes
     jimport javax.imageio.ImageIO; 
