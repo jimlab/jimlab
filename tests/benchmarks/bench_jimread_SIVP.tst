@@ -15,6 +15,9 @@ if v(1) ~= 5 then
     error(msprintf(msg,"bench_jimread"));
 end
 
+loaded = 0;
+installed = 0;
+
 if (getos() == "Windows" | getos() == "Linux")
     if ~atomsIsLoaded('SIVP') then
         loaded = 1;
@@ -38,9 +41,9 @@ image = imread(path);
 // <-- BENCH END -->
 
 if loaded then
-    atomsQuit('SIVP')
+    atomsRemove('SIVP')
     if installed then
-        atomsRemove('SIVP')
+        atomsRemove('SIVP',, %T)
     end
 end
 
