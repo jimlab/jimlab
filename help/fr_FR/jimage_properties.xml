@@ -121,7 +121,7 @@ jimdisp(jimage,'box','info')
                 <link linkend="jimread">jimread</link>
             </member>
 			<member>
-                <link linkend="jimread">jimdisp</link>
+                <link linkend="jimdisp">jimdisp</link>
 			</member>
             <member>
                 <link linkend="jimwrite">jimwrite</link>
