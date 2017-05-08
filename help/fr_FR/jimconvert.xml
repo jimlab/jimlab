@@ -173,12 +173,13 @@ typeof(gray)
 path = jimlabPath("/") + 'tests/images/logoEnsim.png';
 jimage2 = jimread(path)
 image2 = jimage2.image;
-transparencyColor = uint8(cat(3, 100, 100, 100));
+transparencyColor = uint8(cat(3, 200, 200, 200));
 jrgb = jimconvert(jimage2, 'rgb', transparencyColor)
 rgb = jimconvert(image2, 'rgb', transparencyColor);
 typeof(rgb)
 
 //Affichage des images converties
+clf
 subplot(2,2,1)
 jimdisp(jimage,,'info')
 subplot(2,2,2)
@@ -189,10 +190,9 @@ subplot(2,2,4)
 jimdisp(jrgb,,'info')
  ]]></programlisting>
  <scilab:image>
- //Chargement de l'image depuis un fichier
+//Chargement de l'image depuis un fichier
 path = jimlabPath("/") + 'tests/images/noError/rgba.png';
 jimage = jimread(path)
-image = jimage.image;
 
 //Conversion en niveaux de gris
 jgray = jimconvert(jimage, 'gray')
@@ -200,11 +200,11 @@ jgray = jimconvert(jimage, 'gray')
 //Conversion en RGB
 path = jimlabPath("/") + 'tests/images/logoEnsim.png';
 jimage2 = jimread(path)
-image2 = jimage2.image;
-transparencyColor = uint8(cat(3, 100, 100, 100));
+transparencyColor = uint8(cat(3, 200, 200, 200));
 jrgb = jimconvert(jimage2, 'rgb', transparencyColor)
 
 //Affichage des images converties
+clf
 subplot(2,2,1)
 jimdisp(jimage,,'info')
 subplot(2,2,2)
@@ -236,4 +236,3 @@ jimdisp(jrgb,,'info')
         </revhistory>
     </refsection>
 </refentry>
-
