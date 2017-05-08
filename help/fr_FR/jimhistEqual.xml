@@ -48,7 +48,7 @@
 								</listitem>
 								<listitem>
 									<para>
-									une matrice ou une hypermatrice de doubles 
+									une matrice ou une hypermatrice de doubles normalisés entre 0 et 1 ou non
 									</para>
 								</listitem>
 								<listitem>
@@ -82,15 +82,72 @@
 					</para>					
                 </listitem>
 			</varlistentry>
+			<varlistentry>
+				<term>colormap</term> 
+                <listitem>
+                    <para>
+						Une matrice de dimensions M x 3. M est le nombre de couleurs de la colormap. Pour chaque ligne, les trois coefficients définissent l'intesité du rouge, du vert et du bleu normalisée entre 0 et 1. 
+					</para>
+                </listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>argb</term> 
+                <listitem>
+                    <para>
+						Un booléen : <literal>%t</literal> si l'image est encodée en ARGB, <literal>%f</literal> si l'image est encodée en RGBA. Par défaut, la valeur de cet argument est <literal>%f</literal>.
+					</para>
+                </listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Type</term> 
+                <listitem>
+                    <para>
+						Une chaîne de caractère donnant le type d'encodage pour une matrice en entrée codée en uint16 : 
+						<itemizedlist>
+								<listitem>
+									<para>
+									'444' indique que chaque couleur est codée sur 4 bits
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+									'555' indique que chaque couleur est codée sur 5 bits
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+									'4444' indique que chaque couleur ainsi que la transparence est codée sur 4 bits
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+									'5551' indique que chaque couleur est codé sur 5 bits et la transparence sur 1 bit. 
+									</para>
+								</listitem>
+						</itemizedlist>
+					</para>
+                </listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>equalizedImage</term> 
+                <listitem>
+                    <para>
+						Un objet de type jimage dont le champ <literal>.image</literal> est encodé en niveaux de gris ou une matrice encodée en niveaux de gris sur des entiés 8 bits non signés.
+					</para>
+                </listitem>
+			</varlistentry>
         </variablelist>
     </refsection>
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet d'ajuster le contraste d'une image par la méthode d'égalisation d'histogramme. 
+            Cette fonction permet d'ajuster automatiquement le contraste d'une image par la méthode d'égalisation d'histogramme. 
 		</para>
 		<para>
-			<function>jimhistEqual</function>() renvoie un objet du même type que l'objet en entrée. Si un objet <code>jimage</code> est donné en entrée, les champs <code>.title</code> et <code>.format</code> sont conservés pour l'objet en sortie. Si l'image d'entrée est encodée sur 3 ou 4 couches, elle sera convertie en niveaux de gris.
+			Si un objet <code>jimage</code> est donné en entrée, les champs <code>.title</code> et <code>.format</code> sont conservés pour l'objet en sortie. Dans le cas où le champ <literal>.transparencyColor</literal> est différent de -1, elle n'est pas prise en compte dans l'algorithme d'égalisation d'histogramme.
+        </para>
+		<para>
+			Si l'image d'entrée est encodée en couleurs sur 3 ou 4 couches, elle sera convertie en niveaux de gris.
         </para>
     </refsection>
     <refsection>
@@ -134,4 +191,3 @@ jimdisp(equalizedImage)
         </revhistory>
     </refsection>
 </refentry>
-
