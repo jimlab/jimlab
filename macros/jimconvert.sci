@@ -19,7 +19,6 @@
                      error(msprintf(msg,"jimconvert", 3));
                  end
              end
-             transparencyColor = uint8(transparencyColor);
          else
              msg = _("%s: Argument #%d: hypermatrix with 3 components expected.\n");
              error(msprintf(msg,"jimconvert", 3));
@@ -127,7 +126,7 @@
        if jim
            convertedJimage = mlist(['jimage','image','encoding',..
            'title','mime','transparencyColor'], convertedJimage, ..
-                    encoding, name, mime, uint8(transparencyColor));
+                    encoding, name, mime, int16(transparencyColor));
        end
     else 
        msg = _("%s: Argument #%d: Text(s) expected.\n");
@@ -135,4 +134,3 @@
     end
     
 endfunction
-
