@@ -6,9 +6,18 @@ function [] = %jimage_p(jimage)
     dim = size(image);
     height = string(dim(1));
     width = string(dim(2));
+    tColor = string(jimage.transparencyColor)
     
-    disp([ 'title : ' + jimage.title ; ['encoding : ' + ..
+    if size(tColor, 3) == 3 then
+        disp([ 'title : ' + jimage.title ; ['encoding : ' + jimage.encoding ; ..
+ ['MIME type : ' + jimage.mime ; ['size : ' + width + 'x' + height ; ..
+ ['transparency Color : ' + tColor(1) + ' ' + tColor(2) + ' ' + tColor(3)]]]]])
+    else
+        disp([ 'title : ' + jimage.title ; ['encoding : ' + ..
 jimage.encoding ; ['MIME type : ' + jimage.mime ; ['size : ' + width ..
-                                                    + 'x' + height]]]])
++ 'x' + height ; ['transparency Color : ' + tColor]]]]])
+    end
+    
+
 endfunction
 
