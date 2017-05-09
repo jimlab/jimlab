@@ -92,7 +92,7 @@
                                         jimage(:,:,2) + 0.114 .* jimage(:,:,3);
                convertedJimage = round(convertedJimage);
                convertedJimage = uint8(convertedJimage);
-               if (length(transparencyColor) == 3)
+               if (length(transparencyColor) == 3.)
                    transparencyColor = 0.299 .* transparencyColor(:,:,1) + ..
         0.587 .* transparencyColor(:,:,2) + 0.114 .* transparencyColor(:,:,3);
                 end
