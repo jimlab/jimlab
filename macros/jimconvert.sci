@@ -127,7 +127,7 @@
        if jim
            convertedJimage = mlist(['jimage','image','encoding',..
            'title','mime','transparencyColor'], convertedJimage, ..
-                    encoding, name, mime, transparencyColor);
+                    encoding, name, mime, uint8(transparencyColor));
        end
     else 
        msg = _("%s: Argument #%d: Text(s) expected.\n");
@@ -135,3 +135,4 @@
     end
     
 endfunction
+
