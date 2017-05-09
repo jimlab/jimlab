@@ -34,7 +34,7 @@
             transparencyColor = jimage.transparencyColor;
             //If there is no transparencyColor, white is choosen by default
             if (transparencyColor(1) == -1 & jimage.encoding == 'rgba')
-                transparencyColor = cat(3, uint8(255), uint8(255), uint8(255));
+                transparencyColor = cat(3, 255, 255, 255);
             end
          end
          ext = '.' + mime;
@@ -56,7 +56,7 @@
          ext = 'image';
          if (~isdef('transparencyColor', 'l') | type(transparencyColor) == 0)
              //If there is no transparencyColor, white is choosen by default
-            transparencyColor = cat(3, uint8(255), uint8(255), uint8(255));
+            transparencyColor = cat(3, 255, 255, 255);
          end
          jim = %f;
          bw = %f;
