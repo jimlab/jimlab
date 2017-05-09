@@ -153,7 +153,7 @@
             Cette fonction permet de convertir le type d'encodage d'une image. Une image encodée en RGBA peut être convertie en RGB ou en niveaux de gris. Une image encodée en RGB peut être convertie en niveaux de gris. 
 		</para>
 		<para>
-			Si un objet <code>jimage</code> est donné en entrée, l'objet de sortie sera aussi de type <literal>jimage</literal> avec les champs <code>.title</code> et <code>.format</code> conservés. Sinon, l'objet <literal>convertedImage</literal> est une matrice ou une hypermatrice encodée en entiers 8 bits non signés. 
+			Si un objet <code>jimage</code> est donné en entrée, l'objet de sortie sera aussi de type <literal>jimage</literal> avec les champs <code>.title</code> et <code>.format</code> conservés et le champ <literal>.transparencyColor</literal> converti. Sinon, l'objet <literal>convertedImage</literal> est une matrice ou une hypermatrice encodée en entiers 8 bits non signés. 
         </para>
     </refsection>
     <refsection>
