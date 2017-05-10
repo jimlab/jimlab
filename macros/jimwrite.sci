@@ -61,7 +61,8 @@ function jimwrite(image,imagePath,Encoding,typeMIME)
                      
     
     if(isdef(["typeMIME"],"l"))
-        
+         
+         typeMIME = convstr(typeMIME),
          invalid_typeMIME = 0;
          comptypeMIME = strstr(deftypeMIME,typeMIME); // Verify if user's specified format is supported
            if((type(typeMIME) ~= 10)|(comptypeMIME == '')) // If typeMIME is not definded or wrong, 
@@ -89,6 +90,7 @@ function jimwrite(image,imagePath,Encoding,typeMIME)
         
    if(isdef(["Encoding"],"l"))
        if((type(Encoding) == 10))
+         Encoding = convstr(Encoding);
          invalid_Encoding = 0;
          defEncoding = ['rgb','rgba','gray'];
          compEncoding = strstr(defEncoding,Encoding); // Verify if user's specified encoding is supported
@@ -123,7 +125,7 @@ function jimwrite(image,imagePath,Encoding,typeMIME)
              typeMIME = 'png';
          end
      end
-     Encoding = convstr(Encoding);
+     
             
     jimport java.io.File;// Importe the java classes
     jimport javax.imageio.ImageIO; 
