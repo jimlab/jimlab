@@ -7,45 +7,58 @@
 
 // <-- NO CHECK REF -->
 
-// From an jimage file 
-global jimlabPath
-imagePath = jimlabPath +'\tests\images\noError\rgb.jpg';
+// From an jimage file, noError
 
-jimage = jimread(imagePath);
-imagePath = jimlabPath +'\tests\images\noError\';
+OriginPath = pwd(); 
+imPath = jimlabPath() + s +"tests\images\noError";// Images's directory
+dirPath = jimlabPath() + s + "tests\jimwriteTest"; // Writting directory
+mkdir(dirPath);// Creation of dirPath
+cd(dirPath);
+s = filesep();
+FileList = dir(imPath)// 
+NameList = FileList.name;
+FileNumber = size(NameList);
+w = 1;
+
+MIME = ["jpg","png","gif","bmp"];
+Encoding = ["RGB","RGBA","GRAY"];
 
 // Simple call
-jimwrite(jimage);
 
-// With path
-jimwrite(jimage,imagePath);
+im = jimread(imPath + s + NameList(1));
+jimwrite(im);
 
-// With path and format
-jimwrite(jimage,imagePath,'jpg');
-jimwrite(jimage,imagePath,'png');
-jimwrite(jimage,imagePath,'gif');
-jimwrite(jimage,imagePath,'bmp');
-jimwrite(jimage,imagePath,'wbmp');
+// With path containing name and MIME
 
-// With format
-jimwrite(jimage,,'jpg');
-jimwrite(jimage,,'png');
-jimwrite(jimage,,'gif');
-jimwrite(jimage,,'bmp');
-jimwrite(jimage,,'wbmp');
+for (i = 1:FileNumber(1))
+    im = jimread(imPath + s + NameList(i));
+    jimwrite(im,dirPath + s + NameList(i));
+    
+// Wrtting with a new type MIME en Encoding
+    select i
+    case 1 then
+        m = 1;
+        e = 1;
+    case 2 then
+        m = 4;
+        e = 1;
+    case 3 then
+        m = 2;
+        e = 2;
+    else
+        w = 0;
+end
+if(w)
+    jimwrite(im,dirPath,Encoding(e),MIME(m));
+end
+end
 
-// With path, format and name
-jimwrite(jimage,imagePath,'png','testname');
-jimwrite(jimage,imagePath,'gif','testname');
-jimwrite(jimage,imagePath,'bmp','testname');
-jimwrite(jimage,imagePath,'wbmp','testname');
+// Writting from an RGB hyper-matrix
 
-// With path and name
-jimwrite(jimage,imagePath,,'testname');
+load(jimlabPath() + s +"tests\images\mat.data");
+jimwrite(mat,dirPath + s + "matImage","rgb","jpg");
 
-// With format and name
-jimwrite(jimage,,'png','testname');
-jimwrite(jimage,,'gif','testname');
-jimwrite(jimage,,'bmp','testname');
-jimwrite(jimage,,'wbmp','testname');
+cd(OriginPath);
+rmdir(dirPath,'s');
+
 
