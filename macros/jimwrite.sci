@@ -35,14 +35,13 @@ function jimwrite(image,imagePath,Encoding,typeMIME)
         if(isdir(imagePath))// if imagePath refer to a directory, definition of the name and the TypeMIME
             if(arg_jimage)
                 Name = image.title;
-                warning("Invalid Name detected, jimage""s name will be used :"..
-                    + Name);
+                warning("jimage""s name will be used :"+ Name);
                 MIME = image.mime;
                 MIME = strsubst(MIME, ".", "");
                 
              else
                 Name = "No_name";
-                 warning('Undefineded name, No_name will be used');
+                 warning("No_name will be used as file name");
                  warning('Undefineded type MIME, jpg will be used');
                  MIME = "jpg";
                  
