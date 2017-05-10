@@ -115,8 +115,8 @@ function withinfo(image)
     height = dim(1);
     width = dim(2);
     
-    ax.title.text = image.title + '.' + image.mime + "  -  " + "Type : "..
-    + image.encoding + "  -  " + "Size : " + string(height) + " x " + string(width);
+    ax.title.text = image.title + '.' + image.mime + "  - " ..
+    + image.encoding + " - " + string(height) + " x " + string(width);
 
 endfunction
 
