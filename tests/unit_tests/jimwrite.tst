@@ -10,8 +10,8 @@
 // From an jimage file, noError
 
 OriginPath = pwd(); 
-imPath = jimlabPath() + s +"tests\images\noError";// Images's directory
-dirPath = jimlabPath() + s + "tests\jimwriteTest"; // Writting directory
+imPath = jimlabPath() + s +"tests"+ s+"images"+s+"noError";// Images's directory
+dirPath = jimlabPath() + s + "tests"+s+"jimwriteTest"; // Writting directory
 mkdir(dirPath);// Creation of dirPath
 cd(dirPath);
 s = filesep();
@@ -38,10 +38,10 @@ for (i = 1:FileNumber(1))
     select i
     case 1 then
         m = 1;
-        e = 1;
+        e = 3;
     case 2 then
         m = 4;
-        e = 1;
+        e = 3;
     case 3 then
         m = 2;
         e = 2;
@@ -55,7 +55,7 @@ end
 
 // Writting from an RGB hyper-matrix
 
-load(jimlabPath() + s +"tests\images\mat.data");
+load(jimlabPath() + s +"tests"+s+"images"+s+"mat.data");
 jimwrite(mat,dirPath + s + "matImage","rgb","jpg");
 
 cd(OriginPath);
