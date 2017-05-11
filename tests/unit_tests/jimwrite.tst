@@ -9,12 +9,12 @@
 
 // From an jimage file, noError
 
+s = filesep();
 OriginPath = pwd(); 
 imPath = jimlabPath() + s +"tests"+ s+"images"+s+"noError";// Images's directory
 dirPath = jimlabPath() + s + "tests"+s+"jimwriteTest"; // Writting directory
 mkdir(dirPath);// Creation of dirPath
 cd(dirPath);
-s = filesep();
 FileList = dir(imPath)// 
 NameList = FileList.name;
 FileNumber = size(NameList);
