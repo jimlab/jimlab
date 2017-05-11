@@ -71,6 +71,8 @@ function jimdisp_mat(image)
     ax.auto_scale = "on";
     ax.tight_limits = "on";
     ax.title.text = '';
+    ax.background = -2; // Forcing the background to remain white
+    fig.background = -2; // Forcing the background to remain white
 
     
     // Centering of the displayed image (depends on the size)
