@@ -138,7 +138,14 @@
 				<term>colormap</term> 
                 <listitem>
                     <para>
-						A M x 3 matrix. M is the number of colors in the colormap. In each line, the three components define the intensity of red, green and blue normalized between 0 and 1.
+						<itemizedlist>
+							<listitem>
+								A M x 3 matrix. M is the number of colors in the colormap. In each line, the three components define the intensity of red, green and blue normalized between 0 and 1.
+							</listitem>
+							<listitem>
+								A figure handle.
+							</listitem>
+						</itemizedlist>
 					</para>
                 </listitem>
 			</varlistentry>
@@ -238,6 +245,9 @@ jimdisp(jrgb,,'info')
             </member>
 			<member>
                 <link linkend="Matplot_properties">Matplot_properties</link>
+            </member>
+			<member>
+                <link linkend="gcf">gcf</link>
             </member>
         </simplelist>
     </refsection>
