@@ -34,7 +34,7 @@
                 <term>image</term>
                 <listitem>
                     <para>
-                        Objet <literal>jimage</literal>, matrice, hypermatrice ou chaîne de caractères contenant le chemin relaif ou absolu du fichier image ou un URL.
+                        Objet <literal>jimage</literal>, matrice (une couche), hypermatrice (trois ou quatre couches), ou chaîne de caractères contenant le chemin relaif ou absolu du fichier image ou un URL.
                     </para>					
                 </listitem>
             </varlistentry>
@@ -62,7 +62,7 @@
             Cette fonction permet d'afficher une image à partir de son chemin, d'un URL, ou d'un objet <literal>jimage</literal> préalablement créé par la fonction <link linkend="jimread">jimread</link>.
         </para>
         <para>
-            L'affichage des propriétés par la présence de l'argument 'info' comprend : le titre, le format, la taille et le type d'encodage de l'image.
+            L'affichage des propriétés par la présence de l'argument 'info' comprend : le titre, le type mime, la taille et le type d'encodage de l'image.
 			Ces informations, à l'exception de la taille, sont stockées dans les champs de l'objet <literal>jimage</literal>.
         </para>
     </refsection>
@@ -70,12 +70,12 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 // A partir d'une image pré-chargée
-path = jimlabPath("/") + '/help/images/logoEnsim.png';
+path = jimlabPath() + '/help/images/logoEnsim.png';
 image = jimread(path);
 jimdisp(image,'box','info');
 
 // A partir d'un fichier local
-path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+path = jimlabPath() + '/tests/images/noError/gray.jpg';
 jimdisp(path,'','info')
 
  ]]></programlisting>
