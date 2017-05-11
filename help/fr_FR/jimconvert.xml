@@ -23,11 +23,11 @@
         <synopsis>
             convertedImage = jimconvert(image, encoding)
 			convertedImage = jimconvert(image, encoding, transparencyColor)
+			convertedImage = jimconvert(image, encoding, argb?)
+			convertedImage = jimconvert(image, encoding, colorsBits)
 			convertedImage = jimconvert(image, encoding, colormap)
-			convertedImage = jimconvert(image, encoding, argb)
-			convertedImage = jimconvert(image, encoding, Type)
-			convertedImage = jimconvert(image, encoding, transparecncyColor, argb)
-			convertedImage = jimconvert(image, encoding, transparencyColor, Type)
+			convertedImage = jimconvert(image, encoding, transparencyColor, argb?)
+			convertedImage = jimconvert(image, encoding, transparencyColor, colorsBits)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -46,8 +46,8 @@
 								</listitem>
 								<listitem>
 									<para>
-									une matrice d'entiers sur 32 bits (signés ou non signés) qui donne les couleurs d'un pixels en RGBA ou en ARGB
-									<warning>Il est conseillé de renseigner l'argument <literal>argb</literal></warning>
+									une matrice d'entiers sur 32 bits (signés ou non signés) qui donne les couleurs d'un pixels en RGBA ou en ARGB (voir Matplot_properties)
+									<warning>Par défaut l'argument <literal>argb?</literal> est <literal>%f</literal></warning>
 									</para>
 								</listitem>
 								<listitem>
@@ -63,12 +63,12 @@
 								<listitem>
 									<para>
 									une matrice d'entiers sur 16 bits (signés ou non signés) qui donne les couleurs des pixels en RGB ou RGBA.
-									<warning>Il est conseillé de renseigner l'argument <literal>Type</literal></warning>
+									<warning>Par défaut,  l'encodage binaire <literal>colorsBits</literal> utilisé est "444"</warning>
 									</para>
 								</listitem>
 								<listitem>
 									<para>
-									une matrice booléenne. 
+									une matrice booléenne
 									</para>
 								</listitem>
 						</itemizedlist>
@@ -79,7 +79,7 @@
 				<term>encoding</term> 
                 <listitem>
                     <para>
-						Une chaîne de caractères contenant le type d'encodage désiré en sortie : 'gray' ou 'rgb'. 
+						Mot <emphasis role="bold">"gray"</emphasis> ou <emphasis role="bold">"rgb"</emphasis> : encodage souhaité en sortie
 					</para>
                 </listitem>
 			</varlistentry>
@@ -87,23 +87,15 @@
 				<term>transparencyColor</term> 
                 <listitem>
                     <para>
-						Une hypermatrice à trois coefficients encodés en uint8 dans l'intervalle [0:255]. Elle correspond à la nuance de couleur qui sera utilisée pour tous les pixels ayant leur transparence au maximum. Par défaut, le blanc est choisi comme couleur de transparence. 
+						Un vecteur à trois coefficients dans l'intervalle [0;255]. Elle correspond à la nuance de couleur qui sera utilisée pour tous les pixels ayant leur transparence au maximum. Par défaut, le blanc est choisi comme couleur de transparence. 
 					</para>
                 </listitem>
 			</varlistentry>
 			<varlistentry>
-				<term>colormap</term> 
+				<term>argb?</term> 
                 <listitem>
                     <para>
-						Une matrice de dimensions M x 3. M est le nombre de couleurs de la colormap. Pour chaque ligne, les trois coefficients définissent l'intesité du rouge, du vert et du bleu normalisée entre 0 et 1. 
-					</para>
-                </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>argb</term> 
-                <listitem>
-                    <para>
-						Un booléen : <literal>%t</literal> si l'image est encodée en ARGB, <literal>%f</literal> si l'image est encodée en RGBA. Par défaut, la valeur de cet argument est <literal>%f</literal>.
+						Un booléen : <literal>%t</literal> si l'image d'entrée est encodée en ARGB, <literal>%f</literal> si l'image est encodée en RGBA. Par défaut, la valeur de cet argument est <literal>%f</literal>.
 					</para>
                 </listitem>
 			</varlistentry>
@@ -138,10 +130,28 @@
                 </listitem>
 			</varlistentry>
 			<varlistentry>
-				<term>convertedJimage</term> 
+				<term>colormap</term> 
                 <listitem>
                     <para>
-						Un objet de type jimage dont le champ <literal>.image</literal> à l'encodage correspondant à l'argument <literal>encoding</literal>, une matrice de niveaux de gris ou une hypermatrice à 3 couches encodée en uint8.
+						Une matrice de dimensions M x 3. M est le nombre de couleurs de la colormap. Pour chaque ligne, les trois coefficients définissent l'intensité du rouge, du vert et du bleu normalisée entre 0 et 1. 
+					</para>
+                </listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>convertedImage</term> 
+                <listitem>
+                    <para>
+						<itemizedlist>
+							<listitem>
+							Un objet de type <litéral>jimage</litéral> dont le champ <literal>.image</literal> a l'encodage correspondant à l'argument <literal>encoding</literal>
+							</listitem>
+							<listitem>
+							une matrice de niveaux de gris encodée en entiers 8 bits non signés
+							</listitem>
+							<listitem>
+							une hypermatrice à 3 couches encodée en uint8
+							</listitem>
+						</itemizedlist>
 					</para>
                 </listitem>
 			</varlistentry>
@@ -155,6 +165,9 @@
 		<para>
 			Si un objet <code>jimage</code> est donné en entrée, l'objet de sortie sera aussi de type <literal>jimage</literal> avec les champs <code>.title</code> et <code>.format</code> conservés et le champ <literal>.transparencyColor</literal> converti. Sinon, l'objet <literal>convertedImage</literal> est une matrice ou une hypermatrice encodée en entiers 8 bits non signés. 
         </para>
+		<para>
+			Une image booléenne est traduite en noir (<literal>%f</literal>) et blanc (<literal>%t</literal>).
+		</para>
     </refsection>
     <refsection>
         <title>Exemples</title>
@@ -180,14 +193,10 @@ typeof(rgb)
 
 //Affichage des images converties
 clf
-subplot(2,2,1)
-jimdisp(jimage,,'info')
-subplot(2,2,2)
-jimdisp(jgray,,'info')
-subplot(2,2,3)
-jimdisp(jimage2,,'info')
-subplot(2,2,4)
-jimdisp(jrgb,,'info')
+subplot(2,2,1), jimdisp(jimage,,'info')
+subplot(2,2,2), jimdisp(jgray,,'info')
+subplot(2,2,3), jimdisp(jimage2,,'info')
+subplot(2,2,4), jimdisp(jrgb,,'info')
  ]]></programlisting>
  <scilab:image>
 //Chargement de l'image depuis un fichier
@@ -223,6 +232,9 @@ jimdisp(jrgb,,'info')
             </member>
 			<member>
                 <link linkend="colormap">colormap</link>
+            </member>
+			<member>
+                <link linkend="Matplot_properties">Matplot_properties</link>
             </member>
         </simplelist>
     </refsection>
