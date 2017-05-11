@@ -135,7 +135,7 @@ jimdisp(jimage,'box','info')
         <revhistory>
             <revision>
                 <revnumber>0.1 - 2017-05</revnumber>
-                <revremark>Initial publication of Jimlab module</revremark>
+                <revremark>First release of Jimlab</revremark>
             </revision>
         </revhistory>
     </refsection>
