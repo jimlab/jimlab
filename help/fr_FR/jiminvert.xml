@@ -2,6 +2,7 @@
 <!--
  * This file is part of the Jimlab module made for Scilab
  * Copyright (C) 2017 - ENSIM, Université du Maine - Nicolas AEGERTER
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON 
  * 
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
@@ -31,8 +32,11 @@
 		<term>image</term>
 		<listitem>
 			<para>
-			Une mliste jimage contenant l'image, son nom, son encodage et son type MIME. Cet objet est crée par le fonction jimread. L'argument 				
-			image peut aussi être une hyper-matrice 1, 3 ou 4 couches représentant une image en nuance de gris, RGB ou RGBA.
+			L'argument image peut être soit un objet <literal>jimage</literal> contenant l'image, et ses métadonnées, soit une matrice à une, trois ou quatres couches représentant l'image en nuance de gris, en RVB ou en RVBA.
+
+			L'objet est crée par la fonction <link linkend="jimread">jimread</link>.
+			
+			Seul les matrices entières codées sur 8, 16, et 32 bits, les matrices booléennes et les matrices de réels sont supportées.
 			</para>
 		</listitem>
 
@@ -57,7 +61,7 @@
             		Cette fonction inverse les couleurs d'une image représentenée par un objet jimage ou une hyper-matrice placée en paramètre.
 		</para>
 		<para>
-			Pour une image RGB, chaques nouvelle couleur sera calculée à l'aide de la formule "NewColor = 255 - OriginalColor".
+			Pour une image RVB, chaques nouvelle couleur sera calculée à l'aide de la formule "NewColor = 255 - OriginalColor".
 			De même, une martice une couche représentant une image en niveau de gris sera transformée selon la même formule. L'image résultante 				
 			sera donc le négatif de l'image original.
         </para>
@@ -66,8 +70,8 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
  			// Avec un objet jimage
-			global jimlabPath
-			path = jimlabPath + '/help/images/logoEnsim.png';
+			s = filesep();
+			path = jimlabPath("/") + "help/images/logoEnsim.png';
 			jimage_original = jimread(path);// On charge l'image original
 			jimdisp(jimage_original,,'info');// Affichage de l'image original
 			
@@ -76,7 +80,7 @@
 
 			// Avec une hyper-matrice
 
-			path = jimlabPath + '/help/images/mat.data'; // Impotation de la matrice
+			path = jimlabPath("/") + 'help/images/mat.data'; // Impotation de la matrice
 			load(path);
 			jimdisp(mat); 
 			mat_modified = jiminvert(mat); // Invertion de la matrice
