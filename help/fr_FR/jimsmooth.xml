@@ -20,15 +20,16 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            smoothimage = jimsmooth(im,filterType)
+            smoothimage = jimsmooth(image,filterType)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
         <title>Arguments</title>
         <variablelist>
+		<listitem>
             <varlistentry>
-                <term>im</term>
-				 <listitem>
+                <term>image</term>
+				 
                     <para>
 			Un objet de type jimage, une matrice de niveaux de gris ou une hypermatrice. 		
 					</para>
@@ -39,26 +40,29 @@
 			Une chaine de caractères spécifiant le filtre à appliquer à l'image pouvant prendre les valeurs : "gaussian" ,"uniform" ou "triangular". 		
 				</para>
 				</varlistentry>
-				    </listitem>
+				</listitem>
 			
-				<refsection>
+				
 		    <para>
 			Donc les syntaxes admises seront:
-			blured= <function>jimsmooth(Image,fogType)</function>
-			blured=	<function> jimsmooth(Image,fogType,fogWidth)</function>  
-			blured=	<function> jimsmooth(Image,fogMatrix)</function>
+			<synopsis>
+			blured= jimsmooth(Image,fogType)
+			blured=	 jimsmooth(Image,fogType,fogWidth) 
+			blured=	 jimsmooth(Image,fogMatrix)
+			</synopsis>
 		    </para>	
+			
 			<para>
 				fogWidth est un nombre entier positif impair et fogMatrix est une matrice 
 			</para>	
-			</refsection>
+		    
             
 			<varlistentry>
 				<term>jimsmooth</term> 
                 <listitem>
                     <para>
 			Un objet de type jimage ou une matrice de niveaux de gris et de même taille que l'image.
-		    </para>
+					</para>
                 </listitem>
 			</varlistentry>
         </variablelist>
@@ -73,7 +77,7 @@
                </para>
     </refsection>
     <refsection>
-        <title>Exemple1:</title>
+        <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 		//Objet de type jimage(gray image)
 	
@@ -83,12 +87,7 @@
 		jimdisp(jimage)
 		subplot(2,2,2)
 		jimdisp(smoothimage)
- ]]></programlisting>
-	</refsection>
-	
-	 <refsection>
-        <title>Exemple2:</title>
-        <programlisting role="example"><![CDATA[ 
+		
 		//Objet de type jimage(RGB image)
 	
 		jimage = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
@@ -99,7 +98,6 @@
 		jimdisp(smoothimage)
  ]]></programlisting>
 	</refsection>
-	
     <refsection role="see also">
         <title>Voir Aussi</title>
         <simplelist type="inline">
