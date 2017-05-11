@@ -15,18 +15,18 @@
 		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
 		xml:lang="fr" xml:id="jimage_properties">
     <refnamediv>
-        <refname>jimage</refname>
-        <refpurpose>Objet spécifique au module Jimlab (mlist)</refpurpose>
+        <refname>Propriétés jimage</refname>
+        <refpurpose>Objet spécifique au module Jimlab : liste typée (mlist) contenant des champs de données sur l'image.</refpurpose>
     </refnamediv>
     <refsection>
         <title>Description</title>
         <para>
-            L'objet jimage permet de représenter un fichier image en Scilab. Ces champs sont : 
+            Jimlab définit le type <literal>jimage</literal> agrégeant une image (matrice ou hypermatrice de pixels à une, 3 ou 4 couches) et un lot de méta-données associées. Les champs définis sont : 
             <variablelist>
                 <varlistentry>
                     <term>.image</term>
                     <listitem>
-                        Une matrice ou une hypermatrice décrivant l'intensité des pixels de l'image. Elle est codée en entiers 8 bits positifs dans l'intervalle [0;255]. 
+                        Une matrice ou une hypermatrice décrivant l'intensité des pixels de l'image. Elle est codée en entiers 8 bits positifs (uint8) dans l'intervalle [0,255].
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -55,13 +55,13 @@
 				<varlistentry>
                     <term>.title</term>
                     <listitem>
-                        Une chaîne de caractères contenant le nom de l'image. Si l'objet <literal>jimage</literal> est créé avec la fonction <function>jimread</function>(), le titre de l'image correspond au nom du fichier sans son extension. 
+                        Une chaîne de caractères (une seule ligne) contenant le titre associé à l'image. Si l'objet <literal>jimage</literal> est créé avec la fonction <function>jimread</function>(), le titre de l'image correspond au nom du fichier sans son extension.
 					</listitem>
 				</varlistentry>
 				<varlistentry>
                     <term>.mime</term>
                     <listitem>
-                        Une chaîne de caractères contenant le type MIME de l'image : '.png', '.bmp', '.gif' ou '.jpg'.
+                        Une chaîne de caractères contenant le type MIME de l'image : 'png', 'bmp', 'gif' ou 'jpg'.
 					</listitem>
 				</varlistentry>
 				<varlistentry>
@@ -71,46 +71,42 @@
                         <itemizedlist>
 							<listitem>
 								<para>
-									-1 : il n'y a pas de couleur de transparence. C'est la valeur par défaut de ce champ lorsque l'objet jimage a été créé à l'aide de la fonction <function>jimread</function>(),
+									-1 : il n'y a pas de couleur de transparence. C'est la valeur par défaut de ce champ lorsque l'objet jimage a été créé à l'aide de la fonction <function>jimread</function>().
 								</para>
 							</listitem>
 							<listitem>
 								<para>
-									un entier positif encodé sur 8 bits : la nuance de gris utilisée pour représenter un pixel transparent dans une image en niveaux de gris,
+									Pour une image en niveaux de gris, un entier positif encodé sur 8 bits :a nuance de gris utilisée pour représenter un pixel transparent dans une image en niveaux de gris.
 								</para>
 							</listitem>
 							<listitem>
 								<para>
-									une hypermatrice à trois composantes encodées en entiers positifs sur 8 bits : la couleur utilisée pour représenter un pixel transparent dans une image RGB. 
+									Pour une image RGB ou RGBA, une hypermatrice à trois composantes encodées en entiers positifs sur 8 bits : la couleur utilisée pour représenter un pixel transparent dans une image RGB.
+
 								</para>
 							</listitem>
 						</itemizedlist>
-						Cette couleur de transparence est modifiée lors de l'utilisation de la fonction <function>jimroi</function>(). Elle permet la sélection de zone d'une image. Lors de l'exportation d'un objet <literal>jimage</literal> avec la fonction <function>jimwrite</function>(), la couleur de transparence n'est pas écrite dans les métadonnées de l'image.
+						La fonction <function>jimroi</function>() peut déterminer affecter la couleur de transparence aux pixels situés hors de la zone d'intérêt sélectionnée.
+						Lors de l'exportation d'un objet <literal>jimage</literal> avec la fonction <function>jimwrite</function>(), la couleur de transparence n'est pas écrite dans les métadonnées de l'image.
 					</listitem>
 				</varlistentry>
             </variablelist>        
         </para>
-		<para>
-			Le fonction <function>size</function>()	est utilisable avec l'objet <literal>jimage</literal>. Elle renvoie la hauteur et la largeur de l'image.
-		</para>
-		<para>
-			Le fonction <function>disp</function>()	permet d'afficher les propriétés de l'objet <literal>jimage</literal>. Pour afficher l'image dans une fenêtre graphique, il faut utiliser la fonction <function>jimdisp</function>().
-		</para>
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
-root = jimlabPath("/");
-path = root + 'tests/images/noError/rgb.png';
 
-//chargement d'une image dans un objet jimage
+path = jimlabPath("/") + 'tests/images/noError/rgb.png';
+
+// Chargement d'une image dans un objet jimage
 jimage = jimread(path);
 
-//Utilisation de size() et disp() 
+// Utilisation de size() et disp() 
 dim = size(jimage)
 disp(jimage)
 
-//Affichage
+// Affichage
 jimdisp(jimage,'box','info')
  ]]></programlisting>
 	</refsection>
@@ -128,6 +124,12 @@ jimdisp(jimage,'box','info')
             </member>
 			<member>
                 <link linkend="jimroi">jimroi</link>
+            </member>
+			<member>
+                <link linkend="Matplot_properties">Matplot_properties</link>
+            </member>
+			<member>
+                <link linkend="size">size</link>
             </member>
         </simplelist>
     </refsection>
