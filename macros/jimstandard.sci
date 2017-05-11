@@ -48,7 +48,8 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
             end
         elseif colormap == gcf()
             //colormap of the current graphic handle can be used
-            colormap = gcf().color_map
+            f = gcf()
+            colormap = f.color_map
         else
             msg = _("%s: Argument #%d: M x 3 matrix or graphic handle expected.\n");
             error(msprintf(msg,"jimstandard", 3));
