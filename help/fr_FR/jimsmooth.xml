@@ -81,21 +81,21 @@
         <programlisting role="example"><![CDATA[ 
 		//Objet de type jimage(gray image)
 	
-		jimage = jimread(jimlabPath("/") + 'tests/images/noError/gray.jpg');
-		smoothimage = jimsmooth(jimage,"gaussian",9);
+		jimage1 = jimread(jimlabPath("/") + 'tests/images/noError/gray.jpg');
+		smoothimage1 = jimsmooth(jimage1,"gaussian",9);
 		subplot(2,2,1)
-		jimdisp(jimage)
+		jimdisp(jimage1)
 		subplot(2,2,2)
-		jimdisp(smoothimage)
+		jimdisp(smoothimage1)
 		
 		//Objet de type jimage(RGB image)
 	
-		jimage = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
-		smoothimage = jimsmooth(jimage,"gaussian",9);
+		jimage2 = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
+		smoothimage2 = jimsmooth(jimage2,"gaussian",9);
 		subplot(2,2,1)
-		jimdisp(jimage)
+		jimdisp(jimage2)
 		subplot(2,2,2)
-		jimdisp(smoothimage)
+		jimdisp(smoothimage2)
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
