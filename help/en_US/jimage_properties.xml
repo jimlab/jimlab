@@ -42,7 +42,7 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-                    <term>format</term>
+                    <term>mime</term>
                     <listitem>
                         The file extension.
 					</listitem>
