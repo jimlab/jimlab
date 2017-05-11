@@ -87,7 +87,7 @@
 				<term>transparencyColor</term> 
                 <listitem>
                     <para>
-						Un vecteur à trois coefficients dans l'intervalle [0;255]. Elle correspond à la nuance de couleur qui sera utilisée pour tous les pixels ayant leur transparence au maximum. Par défaut, le blanc est choisi comme couleur de transparence. 
+						Un vecteur à trois ccomposantes dans l'intervalle [0;255]. Il correspond à la nuance de couleur qui sera utilisée pour tous les pixels ayant leur transparence au maximum. Par défaut, le blanc est choisi comme couleur de transparence. 
 					</para>
                 </listitem>
 			</varlistentry>
