@@ -49,7 +49,7 @@ jimlablib = startModule();
 // In Scilab 6.0.0, all the memory of the computer is available
 v = getversion("scilab");
 if v(1) == 5 then
-    stacksize('max');
+    stacksize(160e6/8);
 end
 
 clear v startModule
