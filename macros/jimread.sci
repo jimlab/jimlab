@@ -15,6 +15,8 @@
         //Tests the type of the input argument
         if(strstr(convstr(imPath),'http') == convstr(imPath))
             imPath = getURL(imPath,TMPDIR);
+        else
+            imPath = pathconvert(imPath, %f);
         end
         
         //Reads the image file using Java
