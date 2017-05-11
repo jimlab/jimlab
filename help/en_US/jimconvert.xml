@@ -143,7 +143,7 @@
                     <para>
 						<itemizedlist>
 							<listitem>
-							An object <litéral>jimage</litéral> whose <literal>.image</literal> field has the encoding given by the input argument <literal>encoding</literal>
+							An object <literal>jimage</literal> whose <literal>.image</literal> field has the encoding given by the input argument <literal>encoding</literal>
 							</listitem>
 							<listitem>
 							A matrix of gray levels encoded in uint8
