@@ -91,16 +91,16 @@
     <refsection role="see also">
         <title>Voir Aussi</title>
         <simplelist type="inline">
-            <member>
-                <link linkend="jimdisp">jimdisp</link>
-            </member>
-            <member>
+		<member>
+		<link linkend="jimage_properties">propriétés jimage</link>
+		</member>
+		<member>
                 <link linkend="jimread">jimread</link>
-            </member>
-	    <member>
-                <link linkend="jimage">jimage</link>
-	    </member>
-        </simplelist>
+            	</member>
+		<member>
+                <link linkend="jimdisp">jimdisp</link>
+            	</member>
+	</simplelist>
     </refsection>
     <refsection>
         <title>Historique</title>
