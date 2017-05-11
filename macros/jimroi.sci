@@ -7,6 +7,11 @@
 
 function [mask, out_image, polygon, ijTopLeft] = jimroi(image, polygon, crop2polygon)
 
+// WIP --- Left to do :
+// output polygon
+// ijTopLeft
+
+
 // INPUT ARGUMENTS
 // image : jimage object, single layered matrix, 3-layered or
 // 4-layered hypermatrix.
@@ -27,20 +32,20 @@ function [mask, out_image, polygon, ijTopLeft] = jimroi(image, polygon, crop2pol
 // within the whole matrix of the image.
 
 
-// Testing input arguments
-
-// Checking the type of the input image
+    // Testing input arguments
+    
+    // Checking the type of the input image
     if isdef("image","l")
        if typeof(image) == 'jimage' then
             Matrix = image.image;
-        elseif typeof(image) == 8 then // Matrix of integers
+        elseif type(image) == 8 then // Matrix of integers
             Matrix = image;
         end
     else
         error('A (hyper)matrix of 1, 3 or 4 layers, or a jimage object must be given as an entry')
     end
 
-// Checking the type of the matrix of the summits
+    // Checking the type of the matrix of the summits
     if ~type(polygon) == 1 then
         error('This argument must be a [N ; 2] matrix of integers.')
     end
@@ -49,31 +54,54 @@ function [mask, out_image, polygon, ijTopLeft] = jimroi(image, polygon, crop2pol
         error('This argument must be a [N ; 2] matrix of integers describing the N summits of (x,y) coordinates')
     end
 
-// Checking the optional argument
-    if ~isdef('crop2polygon','l') | type(box) == 0 then
+    // Checking the optional argument
+    if ~isdef('crop2polygon','l') | type(crop2polygon) == 0 then
         crop2polygon = 'no';
     end
     if ~type(crop2polygon) == 10 then
         error('This argument must be a string of characters.')
     end
 
+    // Creation of the mask
+    [mask,poly_out] = jimcreateMask(polygon,Matrix);
+    
+    // Returning the output image
+    output_image = jimselectOutputImage(mask, Matrix, poly_out, crop2polygon);
+    
+    // In the same format as the input
+    
+    if typeof(image) == 'jimage' then
+        tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
+        out_image = mlist(tmp, output_image, image.encoding, image.title, image.mime, image.transparencyColor);
+    else
+        out_image = output_image;
+    end
 
-// Creation of the mask
+endfunction
+
+
+
+function [mask,out_polygon] = jimcreateMask(polygon,mat_image)
+// This subfonction creates the boolean mask which describes the zone being
+// selected.
+// polygon : a [N ; 2] matrix containing the summits of the
+// polygon (correctly sorted for the polygone to avoid any
+// intersection)
 
     x_poly = polygon(:,1);
     y_poly = polygon(:,2);
 
-// Displaying the polygon
-// (0.5 offsets are here to align with Matplot figures)
-// xpoly(x_poly-0.5, y_poly+0.5,'lines',1);
+    // Displaying the polygon
+    // (0.5 offsets are here to align with Matplot figures)
+    // xpoly(x_poly-0.5, y_poly+0.5,'lines',1);
 
-    [h,w] = size(Matrix);
+    [h,w] = size(mat_image);
 
-// Adapting the polygon in the orientation of the image
-// Only for squared image (WIP)
-// The origin of a Matplot figure is at the bottom left but the
-// function point_in_polygon seems to have the origin on the top left.
-// This function needs to be reworked
+    // Adapting the polygon in the orientation of the image
+    // Only for squared image (WIP)
+    // The origin of a Matplot figure is at the bottom left but the
+    // function point_in_polygon seems to have the origin on the top left.
+    // This function needs to be reworked
 
     poly_out = polygon;
     poly_out(:,1) = h;
@@ -81,28 +109,72 @@ function [mask, out_image, polygon, ijTopLeft] = jimroi(image, polygon, crop2pol
     y_poly_out = x_poly;
     x_poly_out = poly_out(:,1)-y_poly;
 
-// The polygon now displays the same shape than the summits describe.
+    // The polygon now displays the same shape than the summits describe.
 
-// Gray and RGB matrix (subfunction)
+    // Gray and RGB matrix (subfunction)
     for i = 1:h
         for j = 1:w
-            in(i,j) = point_in_polygon(xpol2, ypol2, i,j);
+            in(i,j) = point_in_polygon(x_poly_out, y_poly_out, i,j);
         end
     end
 
-// Creating the boolean mask
+    // Creating the boolean mask
     mask = in(:,:) == 1;
+    out_polygon=[x_poly_out,y_poly_out];
+    
+endfunction
 
 
-// Display the selected zone
+function out_image = jimselectOutputImage(mask,mat_image,polygon,crop2polygon)
+// This subfunction returns the output image once the mask has been applied.
+// The user chooses to crop this output image to the minimal sized
+// rectangle containing the polygon, or not.
+// The type of the output is the same as the input.
+// mask : mask created by the first subfunction.
+// mat_image : Matrix or hypermatrix (1, 3 or 4 layers) of the image.
+// crop2polygon : String of characters with 'no' as a default value.
+// Argument for the user to choose to crop the output image to the minimal
+// sized rectangle containing the polygon.
 
-// TO DO :
-// Check if the crop2polygon is asked and then create conditions
+    n_layers = size(mat_image,3)
+    
+    // Summits of the minimal rectangle surrounding the polygon
+    poly_top = max(polygon(:,2));
+    poly_bot = min(polygon(:,1));
+    poly_left = min(polygon(:,1));
+    poly_right = max(polygon(:,2));
 
-    for i = 1:3
-        out_image(:,:,i) = uint8(mask) .* im(:,:,i) + uint8(~mask) .* 255;
+    // Case for RGBA images
+    if (n_layers == 4) then
+        if crop2polygon == 'no' then
+            for i = 1:3
+            out_image(:,:,i) = uint8(mask) .* mat_image(:,:,i) + uint8(~mask) .* 255;
+            end
+            out_image(:,:,4) = mat_image(:,:,4);
+
+        else
+            for i = 1:n_layers
+                cropped_image(:,:,i) = uint8(mask) .* mat_image(:,:,i) + uint8(~mask) .* 255;
+                out_image(:,:,i) = cropped_image(poly_left:poly_right,poly_bot:poly_top,i);
+            end
+            out_image(:,:,4) = mat_image(poly_left:poly_right,poly_bot:poly_top,4);
+        end
+
+    // Case for RGB and grayscale images
+    elseif n_layers < 4 then
+    
+        if crop2polygon == 'no' then
+            for i = 1:n_layers
+                out_image(:,:,i) = uint8(mask) .* mat_image(:,:,i) + uint8(~mask) .* 255;
+            end
+        
+        else
+            for i = 1:n_layers
+                cropped_image(:,:,i) = uint8(mask) .* mat_image(:,:,i) + uint8(~mask) .* 255;
+                out_image(:,:,i) = cropped_image(poly_left:poly_right,poly_bot:poly_top,i);
+            end
+        end
     end
 
-    
 
 endfunction
