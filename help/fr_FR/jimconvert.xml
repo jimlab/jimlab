@@ -143,7 +143,7 @@
                     <para>
 						<itemizedlist>
 							<listitem>
-							Un objet de type <litéral>jimage</litéral> dont le champ <literal>.image</literal> a l'encodage correspondant à l'argument <literal>encoding</literal>
+							Un objet de type <literal>jimage</literal> dont le champ <literal>.image</literal> a l'encodage correspondant à l'argument <literal>encoding</literal>
 							</listitem>
 							<listitem>
 							une matrice de niveaux de gris encodée en entiers 8 bits non signés
