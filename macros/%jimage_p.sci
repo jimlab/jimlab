@@ -21,10 +21,10 @@ function [] = %jimage_p(jimage)
     else
         tColor = msprintf("%d\n", tColor);
     end
-    t = [ 'Title     : ' + jimage.title 
-          'Encoding  : ' + jimage.encoding
-          'MIME type : ' + jimage.mime
-          msprintf('Size      : %d x %d\n', dim(1), dim(2))
+    t = [ 'Title      : ' + jimage.title 
+          'Encoding   : ' + jimage.encoding
+          'MIME type  : ' + jimage.mime
+          msprintf('Size       : %d x %d\n', dim(1), dim(2))
           msprintf("Transparent: %s\n", tColor)
           ];
     mprintf("%s\n",t)
