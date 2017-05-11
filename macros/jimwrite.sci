@@ -9,7 +9,7 @@
 function jimwrite(image,imagePath,Encoding,typeMIME)
  
     if(isdef(["image"],"l"))// Verify if image is a jimage object or a matrix
-        if((typeof(image) == "hypermat")|(typeof(image) == "constant"))
+        if((typeof(image) == "hypermat")|(typeof(image) == "uint8"))
         Mat = image;
         arg_jimage = 0;
     elseif(typeof(image) == "jimage")
