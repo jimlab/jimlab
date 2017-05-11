@@ -12,13 +12,16 @@
      //test of transparencyColor argument
      //must be a hypermatrix with three components in the intervalle [0:255]
      if (isdef('transparencyColor',"l") & type(transparencyColor) ~= 0) then
-         if (size(transparencyColor, 3) == 3.) 
+         if (length(transparencyColor) == 3.) 
              for i = 1:3
                  if (transparencyColor(i) > 255 | transparencyColor(i) < 0)
-                     msg = _("%s: Argument #%d: Components of transparencyColor must be in the intervalle [0:255].\n");
+                     msg = _("%s: Argument #%d: Components of transparencyColor" ..
+                     + " must be in the intervalle [0:255].\n");
                      error(msprintf(msg,"jimconvert", 3));
                  end
              end
+             transparencyColor = cat(3, transparencyColor(1), transparencyColor(2)..
+             , transparencyColor(3));
          else
              msg = _("%s: Argument #%d: hypermatrix with 3 components expected.\n");
              error(msprintf(msg,"jimconvert", 3));
