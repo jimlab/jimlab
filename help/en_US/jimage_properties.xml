@@ -13,59 +13,98 @@
 <refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
 		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
 		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
-		xml:lang="en" xml:id="jimage">
+		xml:lang="en" xml:id="jimage_properties">
     <refnamediv>
         <refname>jimage</refname>
-        <refpurpose>Object with type mlist created for <emphasis role="bold">jimlab</emphasis></refpurpose>
+        <refpurpose>Typed list object (mlist) created for Jimlab and containing data of an image in several fields.</refpurpose>
     </refnamediv>
     <refsection>
         <title>Description</title>
         <para>
-            This object is a typed list which describe an image. Its fields are : 
+            Jimlab defines the type <literal>jimage</literal> which describes an image (matrix or hypermatrix of pixels with one, three or four layers). Its fields are : 
             <variablelist>
                 <varlistentry>
-                    <term>image</term>
+                    <term>.image</term>
                     <listitem>
-                        The matrix or hypermatrix with the values of each pixels.
+                        The matrix or hypermatrix with the values of each pixels. The standard format used in Jimlab is uint8 : values are in the range [0,255].
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-                    <term>encoding</term>
+                    <term>.encoding</term>
                     <listitem>
                         The encoding type of the image.
+						<itemizedlist>
+							<listitem>
+								<para>
+								'gray' : <literal>jimage.image</literal> is a matrix describing a grayscale image (with 256 gray levels).  
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+								'rgb' : <literal>jimage.image</literal> is a three-layer hypermatrix. Each of these layers gives the pixel values for one color (Red, Green, Blue) on 256 levels.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+								'rgba' : <literal>jimage.image</literal> is a four-layer hypermatrix. The fourth layer contains the alpha channel.
+								</para>
+							</listitem>
+						</itemizedlist>
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-                    <term>title</term>
+                    <term>.title</term>
                     <listitem>
-                        The image title.
+                        A string of characters containing the title of the image. If the jimage object is created by the fonction <literal>jimread()</literal>,
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-                    <term>mime</term>
+                    <term>.mime</term>
                     <listitem>
-                        The file extension.
+                        A string of characters containing the file extension : 'png', 'bmp', 'gif' ou 'jpg'.
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+                    <term>.transparencyColor</term>
+                    <listitem>
+						This field contains the transparency color of the image. 
+                        <itemizedlist>
+							<listitem>
+								<para>
+									-1 : There's no transparency color. It's the default value of this field when the jimage object is cr'eated by the function <function>jimread</function>(),
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									For a grayscale image, an 8-bit unsigned integer is used : gray levels are used for describing a transparent pixel,
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									For a RGB or RGBA image, a three-layer hypermatrix containing three uint8 values is used. The transparency color is separated in three layers : the first layer contains its Red value, the second layer contains its Green value and the third one contains its Blue value.
+								</para>
+							</listitem>
+						</itemizedlist>
+						This transparency color is modified when the function <function>jimroi</function>() is used.  Elle permet la sélection de zone d'une image. Lors de l'exportation d'un objet <literal>jimage</literal> avec la fonction <function>jimwrite</function>(), la couleur de transparence n'est pas écrite dans les métadonnées de l'image.
 					</listitem>
 				</varlistentry>
             </variablelist>        
         </para>
-		<para>
-			The 'gray' encoding type indicates a 2D matrix of gray levels data.
-			The 'rgb' encoding type indicates an hypermatrix with one layer for each color (Red, green and blue). 
-			The 'rgba' encoding type indicates an hypermatrix with 4 layers.The last one is for the alpha channel.
-        </para>
-		<para>
-			<function>size</function>()	is usable with a <code>jimage</code> object. It returns the width and the height of the image.
-		</para>
     </refsection>
     <refsection>
         <title>Examples</title>
         <programlisting role="example"><![CDATA[ 
-global jimlabPath
-path = jimlabPath + '/help/images/logoEnsim.png';
+path = jimlabPath("/") + 'tests/images/noError/rgb.png';
+
+// Loading an image in a jimage object
 jimage = jimread(path);
-jimage
+
+// Use of size() et disp()
 dim = size(jimage)
+disp(jimage)
+
+// Display
+jimdisp(jimage,'box','info')
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
@@ -74,8 +113,20 @@ dim = size(jimage)
             <member>
                 <link linkend="jimread">jimread</link>
             </member>
+			<member>
+                <link linkend="jimdisp">jimdisp</link>
+			</member>
             <member>
                 <link linkend="jimwrite">jimwrite</link>
+            </member>
+			<member>
+                <link linkend="jimroi">jimroi</link>
+            </member>
+			<member>
+                <link linkend="Matplot_properties">Matplot_properties</link>
+            </member>
+			<member>
+                <link linkend="size">size</link>
             </member>
         </simplelist>
     </refsection>
@@ -83,7 +134,7 @@ dim = size(jimage)
         <title>History</title>
         <revhistory>
             <revision>
-                <revnumber>2017-05</revnumber>
+                <revnumber>0.1 - 2017-05</revnumber>
                 <revremark>Initial publication of Jimlab module</revremark>
             </revision>
         </revhistory>
