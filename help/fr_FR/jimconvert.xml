@@ -138,7 +138,14 @@
 				<term>colormap</term> 
                 <listitem>
                     <para>
-						Une matrice de dimensions M x 3. M est le nombre de couleurs de la colormap. Pour chaque ligne, les trois coefficients définissent l'intensité du rouge, du vert et du bleu normalisée entre 0 et 1. 
+						<itemizedlist>
+							<listitem>
+								Une matrice de dimensions M x 3. M est le nombre de couleurs de la colormap. Pour chaque ligne, les trois coefficients définissent l'intensité du rouge, du vert et du bleu normalisée entre 0 et 1. 
+							</listitem>
+							<listitem>
+								Un identifiant de figure.
+							</listitem>
+						</itemizedlist>
 					</para>
                 </listitem>
 			</varlistentry>
@@ -238,6 +245,9 @@ jimdisp(jrgb,,'info')
             </member>
 			<member>
                 <link linkend="Matplot_properties">Matplot_properties</link>
+            </member>
+			<member>
+                <link linkend="gcf">gcf</link>
             </member>
         </simplelist>
     </refsection>
