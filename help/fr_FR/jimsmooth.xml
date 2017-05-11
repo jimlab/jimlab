@@ -20,7 +20,7 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            smoothimage = jimsmooth(im,type_filter,varargin)
+            smoothimage = jimsmooth(im,filterType)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -28,25 +28,36 @@
         <variablelist>
             <varlistentry>
                 <term>im</term>
-		 <term>type_filter</term>
-		  <term>varargin</term>
-                <listitem>
+				 <listitem>
                     <para>
 			Un objet de type jimage, une matrice de niveaux de gris ou une hypermatrice. 		
-		    </para>
+					</para>
+				</varlistentry>
+				<varlistentry>
+				<term>type_filter</term>
+				 <para>
+			Une chaine de caractères spécifiant le filtre à appliquer à l'image pouvant prendre les valeurs : "gaussian" ,"uniform" ou "triangular". 		
+				</para>
+				</varlistentry>
+				    </listitem>
+			
+				<refsection>
 		    <para>
-			Une chaine de caractères spécifiant le filtre à appliquer à l'image pouvant prendre les valeurs : "gaussian" ,"uniforme" ou "triangular". 		
-		    </para>
-		    <para>
-			Liste de paramètres optionelle dont le premier élément représente la largeur du masque du filtre et le second élément représente le masque de filtre personnalisé. 		
-		    </para>						
-                </listitem>
-			</varlistentry>
+			Donc les syntaxes admises seront:
+			blured= <function>jimsmooth(Image,fogType)</function>
+			blured=	<function> jimsmooth(Image,fogType,fogWidth)</function>  
+			blured=	<function> jimsmooth(Image,fogMatrix)</function>
+		    </para>	
+			<para>
+				fogWidth est un nombre entier positif impair et fogMatrix est une matrice 
+			</para>	
+			</refsection>
+            
 			<varlistentry>
 				<term>jimsmooth</term> 
                 <listitem>
                     <para>
-			Un objet de type jimage ou une matrice de niveaux de gris.
+			Un objet de type jimage ou une matrice de niveaux de gris et de même taille que l'image.
 		    </para>
                 </listitem>
 			</varlistentry>
@@ -55,28 +66,40 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet de filtrer une image à l'aide des filtres suivants: gaussien, uniforme ou triangulaire ou à l'aide du masque d'un filtre donné en paramètre.
+            Cette fonction permet de flouter une image à l'aide des profils prédéfinis de floutage suivant: uniforme ou triangulaire ou gaussien(sigma =flogWidth/4), à l'aide d'une matrice de floutage explicite <literal> flogMatrix </literal> peut alternativement être fournie.
 	</para>
 		<para>
-			<function>jimsmooth</function>() renvoie une matrice correspondant à la matrice d'une image modifiée à l'aide d'un filtre gaussien . Si un objet <code>jimage</code> est donné en entrée, les champs <code>.title</code> et <code>.format</code> sont conservés pour l'objet en sortie. Si l'image d'entrée est encodée sur 3 ou 4 couches, elle sera convertie en niveaux de gris.
+			<function>jimsmooth</function>() renvoie une matrice correspondant à la matrice d'une image modifiée à l'aide d'un filtre gaussien . Si un objet <code>jimage</code> est donné en entrée, les champs <code>.title</code> et <code>.format</code> sont conservés pour l'objet en sortie, seul le champ <code> .image </code> est modifié.
                </para>
     </refsection>
     <refsection>
-        <title>Exemples</title>
+        <title>Exemple1:</title>
         <programlisting role="example"><![CDATA[ 
-		//Objet de type jimage
-		s = filesep();
-
-		path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
-		jimage = jimread(path);
-		smoothimage = jimsmooth(jimage,"gaussian",3);
+		//Objet de type jimage(gray image)
+	
+		jimage = jimread(jimlabPath("/") + 'tests/images/noError/gray.jpg');
+		smoothimage = jimsmooth(jimage,"gaussian",9);
 		subplot(2,2,1)
 		jimdisp(jimage)
 		subplot(2,2,2)
 		jimdisp(smoothimage)
-
  ]]></programlisting>
 	</refsection>
+	
+	 <refsection>
+        <title>Exemple2:</title>
+        <programlisting role="example"><![CDATA[ 
+		//Objet de type jimage(RGB image)
+	
+		jimage = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
+		smoothimage = jimsmooth(jimage,"gaussian",9);
+		subplot(2,2,1)
+		jimdisp(jimage)
+		subplot(2,2,2)
+		jimdisp(smoothimage)
+ ]]></programlisting>
+	</refsection>
+	
     <refsection role="see also">
         <title>Voir Aussi</title>
         <simplelist type="inline">
