@@ -26,8 +26,8 @@
 			convertedImage = jimconvert(image, encoding, , , argb?)
 			convertedImage = jimconvert(image, encoding, , , , colorsBits)
 			convertedImage = jimconvert(image, encoding, , colormap)
-			convertedImage = jimconvert(image, encoding, transparencyColor, argb?)
-			convertedImage = jimconvert(image, encoding, transparencyColor, colorsBits)
+			convertedImage = jimconvert(image, encoding, transparencyColor, , argb?)
+			convertedImage = jimconvert(image, encoding, transparencyColor, , , colorsBits)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -46,7 +46,12 @@
 								</listitem>
 								<listitem>
 									<para>
-									a matrix of 32 bits integers (signed or unsigned) which gives the colors of a pixel in RGBA or ARGB (see Matplot_properties)
+									a matrix of doubles normalized between 0 and 1 or not
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+									a matrix of 32 bits integers (int32 or uint32) which gives the colors of a pixel in RGBA or ARGB (see Matplot_properties)
 									<warning>By default, the argument <literal>argb?</literal> is <literal>%f</literal></warning>
 									</para>
 								</listitem>
@@ -57,12 +62,12 @@
 								</listitem>
 								<listitem>
 									<para>
-									a hypermatrix RGB, RGBA or ARGB of 8 bits integers (signed or unsigned)
+									a hypermatrix RGB, RGBA or ARGB of 8 bits integers (int8 or uint8)
 									</para>
 								</listitem>
 								<listitem>
 									<para>
-									a matrix of 16 bits integers (signed or unsigned) which gives the color of each pixel in RGB or RGBA
+									a matrix of 16 bits integers (int16 or uint16) which gives the color of each pixel in RGB or RGBA
 									<warning>By default,  binary encoding <literal>colorsBits</literal> used is "444"</warning>
 									</para>
 								</listitem>
@@ -196,7 +201,7 @@ subplot(2,2,3), jimdisp(jimage2,,'info')
 subplot(2,2,4), jimdisp(jrgb,,'info')
  ]]></programlisting>
  <scilab:image>
-//Chargement de l'image depuis un fichier
+<!--//Chargement de l'image depuis un fichier
 path = jimlabPath("/") + 'tests/images/noError/rgba.png';
 jimage = jimread(path)
 
@@ -219,6 +224,7 @@ subplot(2,2,3)
 jimdisp(jimage2,,'info')
 subplot(2,2,4)
 jimdisp(jrgb,,'info')
+-->
  </scilab:image>
 	</refsection>
     <refsection role="see also">
