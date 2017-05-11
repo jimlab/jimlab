@@ -16,7 +16,7 @@
 		xml:lang="en" xml:id="jimdisp">
     <refnamediv>
         <refname>jimdisp</refname>
-        <refpurpose>Displays an image from a <literal>jimage</literal> object, a matrix or hypermatrix, a path or a url.</refpurpose>
+        <refpurpose>Displays an image from a <literal>jimage</literal> object, a matrix or a hypermatrix, a path or a url.</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntax</title>
@@ -31,10 +31,10 @@
         <title>Arguments</title>
         <variablelist>
             <varlistentry>
-                <term>data</term>
+                <term>image</term>
                 <listitem>
                     <para>
-                        <literal>jimage</literal> object, or a string of characters containing the relative/complete path of the image file or a URL.
+                        a <literal>jimage</literal> object, a matrix (single-layered) or a hypermatrix (three or four layers), or a string of characters containing the relative/complete path of the image file or a URL.
                     </para>					
                 </listitem>
             </varlistentry>
@@ -62,7 +62,7 @@
             This fonction can display an image from its path, a url or a <literal>jimage</literal> object created with the help of <literal>jimread</literal>.
         </para>
         <para>
-            Properties which can be displayed include the title, format, size, and type of encoding of the image.
+            Properties which can be displayed include the title, mime type, size, and type of encoding of the image.
 			These properties, except for the size, are directly taken from the fields of the <literal>jimage</literal> object.
         </para>
     </refsection>
@@ -70,12 +70,12 @@
         <title>Examples</title>
         <programlisting role="example"><![CDATA[ 
 // From a pre-loaded image file
-path = jimlabPath("/") + '/help/images/logoEnsim.png';
+path = jimlabPath() + '/help/images/logoEnsim.png';
 image = jimread(path);
 jimdisp(image,'box','info');
 
 // From a path or a URL
-path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+path = jimlabPath() + '/tests/images/noError/gray.jpg';
 jimdisp(path,'','info')
 
  ]]></programlisting>
@@ -89,7 +89,7 @@ jimdisp(path,'','info')
             <member>
                 <link linkend="jimread">jimread</link>
             </member>
-			<member>
+	    <member>
                 <link linkend="jimage_properties">jimage_properties</link>
             </member>
         </simplelist>
@@ -99,7 +99,7 @@ jimdisp(path,'','info')
         <revhistory>
             <revision>
                 <revnumber>0.1 - 2017-05</revnumber>
-                <revremark>First publication of Jimlab</revremark>
+                <revremark>First release of Jimlab</revremark>
             </revision>
         </revhistory>
     </refsection>
