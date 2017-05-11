@@ -23,9 +23,9 @@
         <synopsis>
             convertedImage = jimconvert(image, encoding)
 			convertedImage = jimconvert(image, encoding, transparencyColor)
-			convertedImage = jimconvert(image, encoding, argb?)
-			convertedImage = jimconvert(image, encoding, colorsBits)
-			convertedImage = jimconvert(image, encoding, colormap)
+			convertedImage = jimconvert(image, encoding, , , argb?)
+			convertedImage = jimconvert(image, encoding, , , , colorsBits)
+			convertedImage = jimconvert(image, encoding, , colormap)
 			convertedImage = jimconvert(image, encoding, transparencyColor, argb?)
 			convertedImage = jimconvert(image, encoding, transparencyColor, colorsBits)
         </synopsis>
