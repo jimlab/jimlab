@@ -11,8 +11,8 @@
 
 s = filesep();
 OriginPath = pwd(); 
-imPath = jimlabPath() + s +"tests"+ s+"images"+s+"noError";// Images's directory
-dirPath = jimlabPath() + s + "tests"+s+"jimwriteTest"; // Writting directory
+imPath = jimlabPath("/") + "tests"+ s+"images"+s+"noError";// Images's directory
+dirPath = jimlabPath("/") + "tests"+s+"jimwriteTest"; // Writting directory
 mkdir(dirPath);// Creation of dirPath
 cd(dirPath);
 FileList = dir(imPath)// 
@@ -55,7 +55,7 @@ end
 
 // Writting from an RGB hyper-matrix
 
-load(jimlabPath() + s +"tests"+s+"images"+s+"mat.data");
+load(jimlabPath("/") + "tests"+s+"images"+s+"mat.data");
 jimwrite(mat,dirPath + s + "matImage","rgb","jpg");
 
 cd(OriginPath);
