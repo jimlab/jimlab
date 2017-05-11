@@ -10,7 +10,6 @@ function main_builder()
     TOOLBOX_NAME  = "jimlab";
     TOOLBOX_TITLE = "jimlab";
     toolbox_dir = pwd();        // for working out
-    toolbox_dir   = get_absolute_file_path("builder.sce");
 
     // Check Scilab's version
     // ======================
@@ -26,11 +25,9 @@ function main_builder()
 
     // Actions
     // =======
+    toolbox_dir   = get_absolute_file_path("builder.sce");
     // Macros
     tbx_builder_macros(toolbox_dir);
-
-    // Help pages
-    tbx_builder_help(toolbox_dir);
 
     // loader and cleaner
     if v(1)==5 then
@@ -40,6 +37,9 @@ function main_builder()
         tbx_build_loader(toolbox_dir);
         tbx_build_cleaner(toolbox_dir);
     end
+
+    // Help pages
+    tbx_builder_help(toolbox_dir);
 endfunction
 // =============================================================================
 main_builder();
