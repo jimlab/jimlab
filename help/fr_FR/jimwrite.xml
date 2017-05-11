@@ -2,7 +2,8 @@
 <!--
  * This file is part of the Jimlab module made for Scilab
  * Copyright (C) 2017 - ENSIM, Université du Maine - Nicolas AEGERTER
- * 
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON 
+ *
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
  * you should have received as part of this distribution.  The terms
@@ -12,7 +13,7 @@
  -->
 <refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
 		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
 		xml:lang="fr" xml:id="jimwrite">
     <refnamediv>
         <refname>jimwrite</refname>
@@ -101,17 +102,17 @@
         <programlisting role="example"><![CDATA[ 
 					
 			// A partir d'un objet jimage
-			
-			path = jimlabPath("/") + '/help/images/logoEnsim.png';
+			s = filesep();
+			path = jimlabPath("/") + "help"+s+"images"+s+"logoEnsim.png';
 			jimage_original = jimread(path);// On charge l'image original
-			path = jimlabPath("/") + '/help/images'; // Redéfinition du chemin
+			path = jimlabPath("/") + "help"+s+"images'; // Redéfinition du chemin
 			jimdisp(jimage_original,,'info');// Affichage de l'image original
 			
-			jimwrite(jimage_original,path + 'logoEnsim_Copie'); // Enregistrement de la copie au format d'origine
-			jimwrite(jimage_original,path + 'logoEnsim_Copie',,'gif'); // Eregistrement sans chagement du format gif		
+			jimwrite(jimage_original,path +  s+ 'logoEnsim_Copie'); // Enregistrement de la copie au format d'origine
+			jimwrite(jimage_original,path + s +'logoEnsim_Copie',,'gif'); // Eregistrement sans chagement du format gif		
 			// Affichage des images copiées
-			path1 = jimlabPath("/") + '/help/images/logoEnsim_Copie.gif'; 
-			path2 = jimlabPath("/") + '/help/images/logoEnsim_Copie.png';
+			path1 = jimlabPath("/") + "help"+s+"images"+s+"logoEnsim_Copie.gif"; 
+			path2 = jimlabPath("/") + "help"+s+"images"+s+"logoEnsim_Copie.png";
 			jimdisp(path1,,'info');
 			jimdisp(path2,,'info');
 			// Suppression des fichiers créés
@@ -120,15 +121,15 @@
 			
 			// A partir d'une hyper-matrice
 
-			path = jimlabPath("/") + '/help/images/mat.data';
+			path = jimlabPath("/") + "help"+s+"images"+s+"mat.data';
 			load(path);// Chargement de l'hyper-matrice
-			path = jimlabPath("/") + '/help/images';
+			path = jimlabPath("/") + "help"+s+"images';
 			jimdisp(mat); // Affichage de la matrice
 			jimwrite(mat,path); // Enregistrement sans paramètres de noms, format ou d'encodage
-			jimwrite(mat,path + 'logo_mat','rgb','png'); // Enregistrement avec tous les paramètres
+			jimwrite(mat,path + +s+'logo_mat','rgb','png'); // Enregistrement avec tous les paramètres
 			// Affichage des images
-			path1 = jimlabPath("/") + '/help/images/No_name.jpg'; 
-			path2 = jimlabPath("/") + '/help/images/logo_mat.png';
+			path1 = jimlabPath("/") + "help"+s+"images"+s+"No_name.jpg"; 
+			path2 = jimlabPath("/") + "help"+s+"images"+s+"logo_mat.png";
 			jimdisp(path1,,'info');
 			jimdisp(path2,,'info');
 			// Suppression des fichiers créés
