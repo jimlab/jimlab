@@ -26,8 +26,8 @@
 			convertedImage = jimconvert(image, encoding, , , argb?)
 			convertedImage = jimconvert(image, encoding, , , , colorsBits)
 			convertedImage = jimconvert(image, encoding, , colormap)
-			convertedImage = jimconvert(image, encoding, transparencyColor, argb?)
-			convertedImage = jimconvert(image, encoding, transparencyColor, colorsBits)
+			convertedImage = jimconvert(image, encoding, transparencyColor, , argb?)
+			convertedImage = jimconvert(image, encoding, transparencyColor, , , colorsBits)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -46,7 +46,12 @@
 								</listitem>
 								<listitem>
 									<para>
-									une matrice d'entiers sur 32 bits (signés ou non signés) qui donne les couleurs d'un pixels en RGBA ou en ARGB (voir Matplot_properties)
+									une matrice ou une hypermatrice de doubles normalisés entre 0 et 1 ou non
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+									une matrice d'entiers sur 32 bits (int32 ou uint32) qui donne les couleurs d'un pixels en RGBA ou en ARGB (voir Matplot_properties)
 									<warning>Par défaut l'argument <literal>argb?</literal> est <literal>%f</literal></warning>
 									</para>
 								</listitem>
@@ -57,12 +62,12 @@
 								</listitem>
 								<listitem>
 									<para>
-									une hypermatrice RGB, RGBA ou ARGB d'entiers sur 8 bits (signés ou non signés)
+									une hypermatrice RGB, RGBA ou ARGB d'entiers sur 8 bits (int8 ou uint8)
 									</para>
 								</listitem>
 								<listitem>
 									<para>
-									une matrice d'entiers sur 16 bits (signés ou non signés) qui donne les couleurs des pixels en RGB ou RGBA.
+									une matrice d'entiers sur 16 bits (int16 ou uint16) qui donne les couleurs des pixels en RGB ou RGBA.
 									<warning>Par défaut,  l'encodage binaire <literal>colorsBits</literal> utilisé est "444"</warning>
 									</para>
 								</listitem>
@@ -146,7 +151,7 @@
 							Un objet de type <literal>jimage</literal> dont le champ <literal>.image</literal> a l'encodage correspondant à l'argument <literal>encoding</literal>
 							</listitem>
 							<listitem>
-							une matrice de niveaux de gris encodée en entiers 8 bits non signés
+							une matrice de niveaux de gris encodée en uint8
 							</listitem>
 							<listitem>
 							une hypermatrice à 3 couches encodée en uint8
@@ -160,14 +165,11 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet de convertir le type d'encodage d'une image. Une image encodée en RGBA peut être convertie en RGB ou en niveaux de gris. Une image encodée en RGB peut être convertie en niveaux de gris. 
+            Cette fonction permet de convertir le type d'encodage d'une image. Une image encodée en RGBA peut être convertie en RGB ou en niveaux de gris. Une image encodée en RGB peut être convertie en niveaux de gris. Une image booléenne est traduite en noir (<literal>%f</literal>) et blanc (<literal>%t</literal>). 
 		</para>
 		<para>
 			Si un objet <code>jimage</code> est donné en entrée, l'objet de sortie sera aussi de type <literal>jimage</literal> avec les champs <code>.title</code> et <code>.format</code> conservés et le champ <literal>.transparencyColor</literal> converti. Sinon, l'objet <literal>convertedImage</literal> est une matrice ou une hypermatrice encodée en entiers 8 bits non signés. 
         </para>
-		<para>
-			Une image booléenne est traduite en noir (<literal>%f</literal>) et blanc (<literal>%t</literal>).
-		</para>
     </refsection>
     <refsection>
         <title>Exemples</title>
@@ -199,7 +201,7 @@ subplot(2,2,3), jimdisp(jimage2,,'info')
 subplot(2,2,4), jimdisp(jrgb,,'info')
  ]]></programlisting>
  <scilab:image>
-//Chargement de l'image depuis un fichier
+<!--//Chargement de l'image depuis un fichier
 path = jimlabPath("/") + 'tests/images/noError/rgba.png';
 jimage = jimread(path)
 
@@ -222,6 +224,7 @@ subplot(2,2,3)
 jimdisp(jimage2,,'info')
 subplot(2,2,4)
 jimdisp(jrgb,,'info')
+-->
  </scilab:image>
 	</refsection>
     <refsection role="see also">
