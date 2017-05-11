@@ -59,7 +59,7 @@
 					</listitem>
 				</varlistentry>
 				<varlistentry>
-                    <term>.format</term>
+                    <term>.mime</term>
                     <listitem>
                         Une chaîne de caractères contenant le type MIME de l'image : '.png', '.bmp', '.gif' ou '.jpg'.
 					</listitem>
