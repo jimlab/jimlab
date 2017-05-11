@@ -100,7 +100,7 @@
                 </listitem>
 			</varlistentry>
 			<varlistentry>
-				<term>Type</term> 
+				<term>colorsBits</term> 
                 <listitem>
                     <para>
 						Une chaîne de caractère donnant le type d'encodage pour une matrice en entrée codée en uint16 : 
