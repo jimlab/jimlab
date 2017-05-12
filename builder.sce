@@ -13,13 +13,8 @@ function main_builder()
 
     // Check Scilab's version
     // ======================
-    try
-        v = getversion("scilab");
-    catch
-        error(gettext("Scilab 5.5 or more is required."));
-    end
-    if strcmp(msprintf("%d.%d",v(1),v(2)), "5.5")<0 then
-        // new API in scilab 5.5
+    v = getversion("scilab");
+    if strcmp(msprintf("%d.%d",v(1),v(2)), "5.5") < 0 then
         error(gettext("Scilab 5.5 or more is required."));
     end
 
