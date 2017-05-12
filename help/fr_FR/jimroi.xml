@@ -2,7 +2,8 @@
 <!--
  * This file is part of the Jimlab module made for Scilab
  * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
- * 
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Gael SENÉE
+ *
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
  * you should have received as part of this distribution.  The terms
@@ -16,103 +17,81 @@
 		xml:lang="fr" xml:id="jimroi">
     <refnamediv>
         <refname>jimroi</refname>
-        <refpurpose>Selection d'une zone polygonale fermée d'intérêt sur l'étendue complète d'une image</refpurpose>
+        <refpurpose>Sélection d'une zone polygonale fermée d'intérêt sur l'étendue complète d'une image</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            [imroi, transparencyColor, polygon, offset] = jimroi(image, polygon, localization, transparencyColor, reducedSize)
-			[imroi, transparencyColor, polygon, offset] = jimroi(image, polygon, localization, transparencyColor)
-			[imroi, transparencyColor, polygon, offset] = jimroi(image, polygon, localization,, reducedSize)
-            [imroi, transparencyColor, polygon, offset] = jimroi(image, polygon,, transparencyColor, reducedSize)			
-			[imroi, transparencyColor, polygon, offset] = jimroi(image, polygon, localization)
-
+            [mask, out_image, [polygon, ijTopLeft]] = jimroi(input_image, polygon, [crop2polygon])     
         </synopsis>
     </refsynopsisdiv>
     <refsection>
         <title>Arguments</title>
         <variablelist>
             <varlistentry>
-                <term>imagePath</term>
+                <term>input_image</term> 
+                <listitem>
+                <para>
+                    Objet <literal>jimage</literal>, matrice d'entiers à une couche, ou hypermatrice d'entiers à trois ou quatre couches.
+		</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>polygon</term> 
+                <listitem>
+                <para>
+                    Matrice de taille [N;2] des sommets de la zone polygonale d'intérêt. Les N sommets ont pour coordonnées une couple (x,y).
+		</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>crop2polygon</term> 
+                <listitem>
+                <para>
+                    Chaîne de caractères. 'cropped' réduit la taille de l'objet de sortie aux dimensions minimales entourant le polygone de sélection. Par défaut, 'no'.
+		</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>mask</term>
                 <listitem>
                     <para>
-						Une chaîne de caractères contenant le chemin relaif ou absolu du fichier image ou une URL. Les types MIME png, bmp, gif et jpg sont supportés par <literal>jimread</literal>() à l'exception des images encodées en CMJN et des gif animés. Le canal alpha est supporté pour les png et les gif mais la couleur de transparence est perdue lors de l'import en matrice Scilab.  			
-					</para>					
+                        Matrice de booléens correspondant à la zone sélectionnée. Les points à l'intérieur du polygone de sélection prennent pour valeur %True, ceux à l'extérieur %False.
+                    </para>					
                 </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>jimage</term> 
+            </varlistentry>
+            <varlistentry>
+                <term>out_image</term> 
                 <listitem>
-                    <para>
-						Un objet de type <literal>jimage</literal> (mlist) avec les champs <literal>.image</literal>, <literal>.encoding</literal>, <literal>.title</literal>, <literal>.format</literal> et <literal>.transparencyColor</literal>.
-					</para>
+                <para>
+                    L'objet retourné est du même type que l'objet d'entrée.
+		</para>
                 </listitem>
-			</varlistentry>
+            </varlistentry>
+            <varlistentry>
+                <term>ijTopLeft</term> 
+                <listitem>
+                <para>
+                    Couple (x,y) du nombre de lignes et de colonnes supprimées, lorsque l'objet de sortie est rogné. L'origine est considérée dans le coin inférieur gauche.
+		</para>
+                </listitem>
+            </varlistentry>
         </variablelist>
     </refsection>
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction charge dans une variable Scilab une image résidant dans un fichier local ou distant indiqué par son chemin ou son URL.
-		</para>
+            Cette fonction applique une zone de sélection sur une image.
+        </para>
 		<para>
-		L'objet jimage rassemble : 
+		
 		</para>
-		<itemizedlist>
-			<listitem>
-				<para>
-					l'intensité des pixels de l'image encodée en entier 8 bits positifs dans le champ <literal>.image</literal>,
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					le type d'encodage ('gray', 'rgb', ou 'rgba') dans le champ <literal>.encoding</literal>,
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					le titre de l'image dans le champ <literal>.title</literal>,
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					le type MIME de l'image dans le champ <literal>.format</literal>.
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					la couleur de transparence de l'image dans le champ <literal>.transparencyColor</literal>.
-				</para>
-			</listitem>
-		</itemizedlist>
-		La couleur de transparence de l'image étant perdue lors de l'import en objet Scilab, la valeur du champ <literal>jimage.transparencyColor</literal> est -1 par défaut. 
+
+
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
-//A partir d'un fichier local
-root = jimlabPath("/");
-//jpg en niveaux de gris
-path = root + 'tests/images/noError/gray.jpg';
-jimage1 = jimread(path);
-//bmp en RGB
-path = root + 'tests/images/noError/rgb.bmp';
-jimage2 = jimread(path);
-//png en RGBA
-path = root + 'tests/images/noError/rgba.png';
-jimage3 = jimread(path);
-//A partir d'un fichier distant
-path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
-jimage4 = jimread(path);
-//Affichage
-subplot(2,2,1)
-jimdisp(jimage1)
-subplot(2,2,2)
-jimdisp(jimage2)
-subplot(2,2,3)
-jimdisp(jimage3)
-subplot(2,2,4)
-jimdisp(jimage4)
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
