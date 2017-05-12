@@ -26,13 +26,20 @@ function [y] = mean(x,orient)
     //      is strange but corresponds to matlab behavior)
 
     [lhs,rhs] = argn()
+    v = getversion("scilab");
     // some arguments checking
     if rhs == 0 | rhs > 2 then
         msg = gettext("%s: Wrong number of input argument: %d to %d expected.\n");
         error(msprintf(msg, "mean", 1, 2));
     else
         if type(x) <> 1 then
-            ovname = "%" + typeof(x,"overload") + "_mean";
+            if v(1)==5
+                oc = ["s" "p" "" "b" "sp" "spb" "msp" "i" "h" "c" "" "" ..
+                      "mc" "f" "l" typeof(x) typeof(x)];
+                ovname = "%" + oc(type(x)) + "_mean";
+            else
+                ovname = "%" + typeof(x,"overload") + "_mean";
+            end    
             if isdef(ovname)
                 if isdef("orient","l")
                     execstr("y = " + ovname + "(x, orient);")
