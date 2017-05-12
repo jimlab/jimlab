@@ -10,7 +10,7 @@
  
 function r = %jimage_stdev(image, side, varargin)
     // r: decimal numbers (even when image.image are encoded integers)
-    // side: 1, 2, "r", "c", "m" as for mean()
+    // side: 1, 2, "r", "c", "*" as for stdev()
     // varargin: 
     //    (1): given Mean wrt which the standard deviation is computed
 
