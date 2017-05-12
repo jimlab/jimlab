@@ -12,6 +12,10 @@ function m = %jimage_mean(image, side)
     // m: decimal numbers (even when image.image are encoded integers)
     // side: 1, 2, "r", "c", "m" as for mean()
     image = image.image;
+    if size(image,3)>3 then
+        // Removing the alpha channel
+        image = image(:,:,1:3);
+    end
     image = double(image);
     if ~isdef("side", "l") | type(side)==0 then
         if ndims(image)>2
@@ -20,6 +24,15 @@ function m = %jimage_mean(image, side)
             m = mean(image);
         end
     else
-        m = mean(image,side);
+        // Scilab 5: "r" "c" "m" are badly managed by %hm_mean()
+        if side=="r"
+            side = 1
+        elseif side=="c"
+            side = 2;
+        elseif side=="m"
+            side = min(find(size(image)>1))
+            if side==[], side = 1; end
+        end
+        m = mean(image, side);
     end
 endfunction
