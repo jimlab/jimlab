@@ -78,7 +78,7 @@ function sd = stdev(x, o, m)
         case "c" then
             on = 2
         else
-            if type(o) <> 1 || size(o, "*") <> 1 || floor(o) <> o | o < 1 | o > ndims(x) then
+            if type(o) <> 1 | size(o, "*") <> 1 | floor(o) <> o | o < 1 | o > ndims(x) then
                 msg = _("%s: Argument #%d: Must be in the set {%s}.\n")
                 sset =  """*"" ""r"" ""c"" 1 2"
                 if ndims(x)>2
