@@ -17,6 +17,9 @@
             imPath = getURL(imPath,TMPDIR);
         else
             imPath = pathconvert(imPath, %f);
+            if getos()=="Windows"
+                imPath = getlongpathname(imPath);
+            end
         end
         
         //Reads the image file using Java
