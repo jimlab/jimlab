@@ -40,6 +40,7 @@ function [y] = mean(x,orient)
                 end
                 oc = ["s" "p" "" "b" "sp" "spb" "msp" "i" "h" ..
                       "c" "" "" "mc" "f" "l" tox tox];
+                ovname = "%" + oc(type(x)) + "_mean";
             else
                 ovname = "%" + typeof(x,"overload") + "_mean";
             end    
