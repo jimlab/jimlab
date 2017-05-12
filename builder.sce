@@ -22,7 +22,9 @@ function main_builder()
     // =======
     toolbox_dir   = get_absolute_file_path("builder.sce");
     // Macros
-    tbx_builder_macros(toolbox_dir);
+    mprintf("Building macros...\n-- Creation of [%s] --\n", TOOLBOX_NAME+"lib");
+    genlib(TOOLBOX_NAME+"lib", toolbox_dir+"macros", %t); // to force rebuilding
+    //tbx_builder_macros(toolbox_dir);
 
     // loader and cleaner
     if v(1)==5 then
