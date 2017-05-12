@@ -13,7 +13,6 @@ function r = %jimage_stdev(image, side, varargin)
     // side: 1, 2, "r", "c", "*" as for stdev()
     // varargin: 
     //    (1): given Mean wrt which the standard deviation is computed
-
     image = image.image;
     if size(image,3)>3 then
         // Removing the alpha channel
@@ -34,6 +33,9 @@ function r = %jimage_stdev(image, side, varargin)
     end
     if ~noOpt
         Mean = opt(1)
+        if ndims(image)>2 & length(Mean)==1
+            Mean = [Mean Mean Mean];
+        end
     end
     if ndims(image)>2
         r = list();
