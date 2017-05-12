@@ -18,7 +18,6 @@ path = jimlabPath("/") + "tests/images/";
 // RGB image
 // =========
 jimage = jimread(path + "lena_color.gif");
-itype = inttype(jimage.image);
 assert_checkequal(size(jimage),[500 512]);
 assert_checkequal(size(jimage, 1), 500);
 assert_checkequal(size(jimage, 2), 512);
@@ -30,7 +29,6 @@ assert_checkequal(size(jimage, "*"), 500*512);
 // RGBA image
 // ==========
 jimage = jimread(path+"noError/rgba.png");
-itype = inttype(jimage.image);
 assert_checkequal(size(jimage),[50 50]);
 assert_checkequal(size(jimage, 1), 50);
 assert_checkequal(size(jimage, 2), 50);
@@ -42,7 +40,6 @@ assert_checkequal(size(jimage, "*"), 2500);
 // Gray image
 // ==========
 jimage = jimread(path+"noError/gray.jpg");
-itype = inttype(jimage.image);
 assert_checkequal(size(jimage),[50 50]);
 assert_checkequal(size(jimage, 1), 50);
 assert_checkequal(size(jimage, 2), 50);
