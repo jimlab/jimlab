@@ -35,8 +35,8 @@ function sd = stdev(x, o, m)
     //The input argument m represents the a priori mean. If it is present, then the sum is
     //divided by size(x,"*"). Otherwise ("sample standard deviation"), it is divided by size(x,"*")-1.
     //
-
     [lhs, rhs] = argn(0);
+    v = getversion("scilab");
 
     if rhs < 1 then
         msg = _("%s: Wrong number of input arguments: %d to %d expected.\n")
@@ -49,7 +49,17 @@ function sd = stdev(x, o, m)
             error(msprintf(msg, "stdev", 1))
         end
     else
-        ovname = "%" + typeof(x,"overload")+"_stdev";
+        if v(1)==5
+            tox = typeof(x);
+            if tox=="hypermat"
+                tox = "hm"
+            end
+            oc = ["s" "p" "" "b" "sp" "spb" "msp" "i" "h" ..
+                  "c" "" "" "mc" "f" "l" tox tox];
+            ovname = "%" + oc(type(x)) + "_stdev";
+        else
+            ovname = "%" + typeof(x,"overload") + "_stdev";
+        end
         if isdef(ovname)
             tmp = "sd = " + ovname + "(x";
             if isdef("o","l")
