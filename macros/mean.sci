@@ -32,11 +32,14 @@ function [y] = mean(x,orient)
         msg = gettext("%s: Wrong number of input argument: %d to %d expected.\n");
         error(msprintf(msg, "mean", 1, 2));
     else
-        if type(x) <> 1 then
+        tox = typeof(x);
+        if type(x) <> 1 | (tox=="hypermat" & type(x(1))~=1) then
             if v(1)==5
-                oc = ["s" "p" "" "b" "sp" "spb" "msp" "i" "h" "c" "" "" ..
-                      "mc" "f" "l" typeof(x) typeof(x)];
-                ovname = "%" + oc(type(x)) + "_mean";
+                if tox=="hypermat"
+                    tox = "hm"
+                end
+                oc = ["s" "p" "" "b" "sp" "spb" "msp" "i" "h" ..
+                      "c" "" "" "mc" "f" "l" tox tox];
             else
                 ovname = "%" + typeof(x,"overload") + "_mean";
             end    
