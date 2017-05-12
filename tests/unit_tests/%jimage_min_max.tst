@@ -32,7 +32,7 @@ assert_checkequal(k,[1 1]);
 // RGB image
 // =========
 jimage = jimread(path + "lena_color.gif");
-itype = inttype(jimage.image);
+itype = inttype(jimage.image(1));
 // min
 [r, k] = min(jimage);
 assert_checkequal(min(jimage), iconvert(cat(3,64,4,48), itype));
@@ -46,7 +46,7 @@ assert_checkequal(k, cat(3, [399 65],[401 65],[408 65]));
 // RGBA image
 // ==========
 jimage = jimread(path+"noError/rgba.png");
-itype = inttype(jimage.image);
+itype = inttype(jimage.image(1));
 // min
 [r, k] = min(jimage);
 assert_checkequal(min(jimage), iconvert(cat(3,54,0,0), itype));
