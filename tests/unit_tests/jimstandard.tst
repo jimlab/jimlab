@@ -37,11 +37,22 @@ int8Mat = int8(grand(10, 10, "uin", -128, 127))
 //uint8 aléatoire
 uint8Mat = uint8(grand(10, 10, "uin", 0, 255))
 
-//int16 aléatoire
+//uint16 aléatoire
 uint16Mat = uint16(grand(10, 10, "uin", 0, 65535))
+Matplot(uint16Mat)
+c = gce();
+c.image_type="rgb444"
+figure()
+test = jimstandard(uint16Mat)
+Matplot(test)
 
-
-jimdisp(doubleMat)
+         
+//uint32 aléatoire
+uint32Mat = uint32(grand(10, 10, "uin", 0, 42949672))
+Matplot(uint32Mat)
+figure()
+test = jimstandard(uint32Mat)
+Matplot(uint8(test))
 
 
 
