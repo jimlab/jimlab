@@ -27,16 +27,6 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
     else
         argb = %f;
     end
-    
-    if(isdef(["Type"],"l")&(type(Type) ~= 0))
-         argb = %f;
-         stdr_Type = strstr(["444","555","4444","5551"],Type);
-         if(stdr_Type == "")
-             Type = -1;
-         end
-     else
-         Type = %f;
-     end
      
 
     if (isdef(["colormap"],'l')&(type(colormap) ~= 0)) then
@@ -91,9 +81,31 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
                 convertedMat = imageMat;
                 originalType = "uint8";
             elseif(tmp == 12.) then
+                if(isdef(["Type"],"l")&(type(Type) ~= 0))
+                    argb = %f;
+                    stdr_Type = strstr(["444","555","4444","5551"],Type);
+                    if(stdr_Type == "")
+                        Type = '444';
+                        warning('The type of enconing is not given. By default, the type rgb444 is used');
+                    end
+                else
+                    Type = '444';
+                    warning('The type of enconing is not given. By default, the type rgb444 is used');
+                end
                 convertedMat = jimstandard_uint16(imageMat,Type);
                 originalType = "uint16";
             elseif(tmp == 2.) then
+                if(isdef(["Type"],"l")&(type(Type) ~= 0))
+                    argb = %f;
+                    stdr_Type = strstr(["444","555","4444","5551"],Type);
+                    if(stdr_Type == "")
+                        Type = '444';
+                        warning('The type of enconing is not given. By default, the type rgb444 is used');
+                    end
+                else
+                    Type = '444';
+                    warning('The type of enconing is not given. By default, the type rgb444 is used');
+                end
                 tmp = imageMat + 32768;
                 convertedMat = jimstandard_uint16(imageMat,Type);
                 originalType = "int16";
@@ -128,7 +140,7 @@ endfunction
      //argb : a boolean. True if the image is encoded in ARGB and false if the image is encoded in RGBA
      //convertedMat : a hypermatrix of uint8 with 4 layers. The value of each layer corresponds to one byte of the uint32. 
      
-     if (~isdef(argb) | type(argb) == 0) then
+     if (~isdef('argb', "l") | type(argb) == 0) then
          argb = %f;
      elseif (type(argb) ~= 4) then
          msg = _("%s: Argument #%d: Boolean expected.\n");
@@ -145,12 +157,13 @@ endfunction
      elseif (argb == %f) then
          convertedMat(:,:,1) = floor(image./uint32(16^6));
          g = modulo(image,uint32(16^6));
-         convertedMat(:,:,2) = floor(r./uint32(16^4));
+         convertedMat(:,:,2) = floor(g./uint32(16^4));
          b = modulo(image,uint32(16^4));
          convertedMat(:,:,3) = floor(g./uint32(16^2));
          convertedMat(:,:,4) = modulo(image,uint32(16^2))
      end
-
+     
+     convertedMat = uint8(convertedMat);
     
  endfunction
  
@@ -161,28 +174,31 @@ endfunction
      //Type : a string. '444', '555', '4444' or '5551'. This arguments enable to know the number of bits used by each components.
      //convertedMat : a hypermatrix of uint8 with 3 or 4 layers. The value of each layer corresponds to one components of the uint16 value. 
      
-     if (~isdef(Type) | type(Type) == 0) then
+     if (~isdef('Type', "l") | type(Type) == 0) then
          Type = '444';
          warning('The type of enconing is not given. By default, the type rgb444 is used');
-     elseif (type(argb) ~= 10) then
+     elseif (type(Type) ~= 10) then
          msg = _("%s: Argument #%d: String expected.\n");
          error(msprintf(msg,"jimstandard_uint16", 2));
      end
      
      if (Type == '444') then
          //This case correspond to image_type "rgb444" in Matplot_properties
-         convertedMat(:,:,1) = floor(image./uint16(2^12));
-         g = modulo(image,uint16(2^12));
-         convertedMat(:,:,2) = floor(g./uint16(2^8));
-         convertedMat(:,:,3) = modulo(image,uint16(2^4))
+         convertedMat(:,:,1) = floor(image./uint16(16^3));
+         g = modulo(image,uint16(16^3));
+         convertedMat(:,:,2) = floor(g./uint16(16^2));
+         b = modulo(image,uint16(16^2));
+         convertedMat(:,:,3) = floor(b./uint16(16));
+         convertedMat = convertedMat * 255/15;
+         convertedMat = uint8(convertedMat);
      elseif (Type == '555') then
          convertedMat(:,:,1) = floor(image./uint16(2^15));
          g = modulo(image,uint16(2^15));
          convertedMat(:,:,2) = floor(g./uint16(2^10));
          convertedMat(:,:,3) = modulo(image,uint16(2^5))
      elseif (Type == '4444') then
-         convertedMat(:,:,1) = floor(image./uint16(2^16));
-         g = modulo(image,uint16(2^16));
+         convertedMat(:,:,1) = floor(image./uint32(16^4));
+         g = modulo(image,uint16(16^4));
          convertedMat(:,:,2) = floor(g./uint16(2^12));
          b = modulo(image,uint16(2^12));
          convertedMat(:,:,3) = floor(b./uint16(2^8));
