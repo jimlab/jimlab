@@ -183,14 +183,14 @@ endfunction
      end
      
      if (Type == '444') then
-         //This case correspond to image_type "rgb444" in Matplot_properties
-         convertedMat(:,:,1) = floor(image./uint16(16^3));
-         g = modulo(image,uint16(16^3));
-         convertedMat(:,:,2) = floor(g./uint16(16^2));
-         b = modulo(image,uint16(16^2));
-         convertedMat(:,:,3) = floor(b./uint16(16));
-         convertedMat = convertedMat * 255/15;
-         convertedMat = uint8(convertedMat);
+         //This case corresponds to image_type "rgb444" in Matplot_properties
+        r = modulo(image,uint16(16^3));
+        convertedMat(:,:,1) = floor(r./uint16(16^2));
+        g = modulo(image,uint16(16^2));
+        convertedMat(:,:,2) = floor(g./uint16(16));
+        convertedMat(:,:,3) = modulo(image,uint16(16));
+        convertedMat = double(convertedMat) * 255/15;
+        convertedMat = uint8(convertedMat);
      elseif (Type == '555') then
          convertedMat(:,:,1) = floor(image./uint16(2^15));
          g = modulo(image,uint16(2^15));
