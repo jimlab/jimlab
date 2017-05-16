@@ -37,7 +37,7 @@ int8Mat = int8(grand(10, 10, "uin", -128, 127))
 //uint8 aléatoire
 uint8Mat = uint8(grand(10, 10, "uin", 0, 255))
 
-//uint16 aléatoire
+//uint16 aléatoire "444"
 uint16Mat = uint16(grand(10, 10, "uin", 0, 65535))
 Matplot(uint16Mat)
 c = gce();
@@ -46,6 +46,32 @@ figure()
 test = jimstandard(uint16Mat)
 Matplot(test)
 
+//uint16 aléatoire "4444"
+uint16Mat = uint16(grand(10, 10, "uin", 0, 65535))
+Matplot(uint16Mat)
+c = gce();
+c.image_type="rgba444"
+figure()
+test = jimstandard(uint16Mat)
+Matplot(test)
+
+//uint16 aléatoire "555"
+uint16Mat = uint16(grand(10, 10, "uin", 0, 65535))
+Matplot(uint16Mat)
+c = gce();
+c.image_type="rgb555"
+figure()
+test = jimstandard(uint16Mat,,,"555")
+Matplot(test)
+
+//uint16 aléatoire "5551"
+uint16Mat = uint16(grand(10, 10, "uin", 0, 65535))
+Matplot(uint16Mat)
+c = gce();
+c.image_type="rgba5551"
+figure()
+test = jimstandard(uint16Mat,,,"5551")
+Matplot(test)
          
 //uint32 aléatoire
 uint32Mat = uint32(grand(10, 10, "uin", 0, 42949672))
