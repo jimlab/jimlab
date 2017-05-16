@@ -85,11 +85,11 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
                     argb = %f;
                     stdr_Type = strstr(["444","555","4444","5551"],Type);
                     if(stdr_Type == "")
-                        Type = '444';
+                        Type = '4444';
                         warning('The type of enconing is not given. By default, the type rgb444 is used');
                     end
                 else
-                    Type = '444';
+                    Type = '4444';
                     warning('The type of enconing is not given. By default, the type rgb444 is used');
                 end
                 convertedMat = jimstandard_uint16(imageMat,Type);
@@ -99,11 +99,11 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
                     argb = %f;
                     stdr_Type = strstr(["444","555","4444","5551"],Type);
                     if(stdr_Type == "")
-                        Type = '444';
+                        Type = '4444';
                         warning('The type of enconing is not given. By default, the type rgb444 is used');
                     end
                 else
-                    Type = '444';
+                    Type = '4444';
                     warning('The type of enconing is not given. By default, the type rgb444 is used');
                 end
                 tmp = imageMat + 32768;
@@ -175,7 +175,7 @@ endfunction
      //convertedMat : a hypermatrix of uint8 with 3 or 4 layers. The value of each layer corresponds to one components of the uint16 value. 
      
      if (~isdef('Type', "l") | type(Type) == 0) then
-         Type = '444';
+         Type = '4444';
          warning('The type of enconing is not given. By default, the type rgb444 is used');
      elseif (type(Type) ~= 10) then
          msg = _("%s: Argument #%d: String expected.\n");
@@ -192,24 +192,31 @@ endfunction
         convertedMat = double(convertedMat) * 255/15;
         convertedMat = uint8(convertedMat);
      elseif (Type == '555') then
-         convertedMat(:,:,1) = floor(image./uint16(2^15));
-         g = modulo(image,uint16(2^15));
-         convertedMat(:,:,2) = floor(g./uint16(2^10));
+         r = modulo(image,uint16(2^15));
+         convertedMat(:,:,1) = floor(r./uint16(2^10));
+         g = modulo(image,uint16(2^10));
+         convertedMat(:,:,2) = floor(g./uint16(2^5));
          convertedMat(:,:,3) = modulo(image,uint16(2^5))
+         convertedMat = double(convertedMat) * 255/31;
+         convertedMat = uint8(convertedMat);
      elseif (Type == '4444') then
-         convertedMat(:,:,1) = floor(image./uint32(16^4));
-         g = modulo(image,uint16(16^4));
-         convertedMat(:,:,2) = floor(g./uint16(2^12));
-         b = modulo(image,uint16(2^12));
-         convertedMat(:,:,3) = floor(b./uint16(2^8));
-         convertedMat(:,:,4) = modulo(image,uint16(2^4))
+        convertedMat(:,:,1) = floor(image./uint16(16^3));
+        g = modulo(image,uint16(16^3));
+        convertedMat(:,:,2) = floor(g./uint16(16^2));
+        b = modulo(image,uint16(16^2));
+        convertedMat(:,:,3) = floor(b./uint16(16));
+        convertedMat(:,:,4) = modulo(image,uint16(16));
+        convertedMat = double(convertedMat) * 255/15;
+        convertedMat = uint8(convertedMat);
      elseif (Type == '5551') then
-         convertedMat(:,:,1) = floor(image./uint16(2^16));
-         g = modulo(image,uint16(2^16));
-         convertedMat(:,:,2) = floor(g./uint16(2^11));
-         b = modulo(image,uint16(2^11));
-         convertedMat(:,:,3) = floor(b./uint16(2^6));
-         convertedMat(:,:,4) = modulo(image,uint16(2))
+         convertedMat(:,:,1) = floor(image./uint32(2^11));
+         g = modulo(image,uint32(2^11));
+         convertedMat(:,:,2) = floor(g./uint16(2^6));
+         b = modulo(image,uint16(2^6));
+         convertedMat(:,:,3) = floor(b./uint16(2));
+         convertedMat(:,:,4) = modulo(image,uint16(2)) * 255;
+         convertedMat(:,:,1:3) = double(convertedMat(:,:,1:3)) * 255/31;
+         convertedMat = uint8(convertedMat);
      else
          msg = _("%s: Argument #%d: Wrong type of encoding.\n");
          error(msprintf(msg,"jimstandard_uint16", 2));
