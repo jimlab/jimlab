@@ -12,9 +12,9 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
     //If the type is not supported by jimstandard(), the function returns false
     convertedMat = %f;
     originalType = 0;
+    layers = size(imageMat, 3);
     if(isdef(["argb"],"l")&(type(argb) ~= 0)) then
         // If an hypermatrix is define as ARGB or RGBA
-       
         if((argb == 1)|(argb == %t)) then
             argb = %t;
         elseif((argb == 0)|(argb == %f)) then
@@ -54,7 +54,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
         t = type(imageMat(:,:,1));
         select(t)
         case 1. then     // Converts a real matrix of real arguments
-            if((max(imageMat) == 1.) & (min(imageMat) == 0.)) then
+            if((max(imageMat) <= 1.) & (min(imageMat) >= 0.)) then
                 convertedMat = uint8(255*imageMat);
                 originalType = ["double";"0";"1"];
             else
@@ -120,11 +120,11 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
         end
     end
     
-    if(argb) then // If argb standard is used, convertion in rgba standard
+    if(argb & layers = 4) then // If argb standard is used, convertion in rgba standard
         test = ["int16","uint16","int32","uint32"];
-        if(strstr(test,originalType) == "")
+        if(strstr(test,originalType(1)) == "")
            tmp = convertedMat(:,:,1);
-           convertedMat(:,:,1) = convertedMat(:,:,4);
+           convertedMat(:,:,1:3) = convertedMat(:,:,2:4);
            convertedMat(:,:,4) = tmp;
        end
        originalType = [originalType;"argb"];
