@@ -68,7 +68,7 @@
 								<listitem>
 									<para>
 									une matrice d'entiers sur 16 bits (int16 ou uint16) qui donne les couleurs des pixels en RGB ou RGBA.
-									<warning>Par défaut,  l'encodage binaire <literal>colorsBits</literal> utilisé est "444"</warning>
+									<warning>Par défaut,  l'encodage binaire <literal>colorsBits</literal> utilisé est "4444"</warning>
 									</para>
 								</listitem>
 								<listitem>
