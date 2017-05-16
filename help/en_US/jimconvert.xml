@@ -68,7 +68,7 @@
 								<listitem>
 									<para>
 									a matrix of 16 bits integers (int16 or uint16) which gives the color of each pixel in RGB or RGBA
-									<warning>By default,  binary encoding <literal>colorsBits</literal> used is "444"</warning>
+									<warning>By default,  binary encoding <literal>colorsBits</literal> used is "4444"</warning>
 									</para>
 								</listitem>
 								<listitem>
