@@ -8,29 +8,66 @@
  
 // <-- NO CHECK REF -->
 
-    //Conversion of a RGBA encoded image
-    
+    //Conversion of a RGBA encoded image 
+path = jimlabPath("/") + 'tests/images/logoEnsim.png';
+jimage = jimread(path);
+image = jimage.image;
+//in rgb without transparencyColor 
+jrgb = jimconvert(jimage, 'rgb');
+assert_checkequal(jrgb.transparencyColor, int16(cat(3, 255, 255, 255)))
+rgb = jimconvert(image, 'rgb');
+jimage.transparencyColor = cat(3, 200, 200, 200);
+jrgb = jimconvert(jimage, 'rgb')
+assert_checkequal(jrgb.transparencyColor, int16(jimage.transparencyColor))
+//in rgb with a transparencyColor
+tColor = cat(3, 200, 200, 200);
+jrgb = jimconvert(jimage, 'rgb', tColor);
+assert_checkequal(jrgb.transparencyColor, int16(tColor))
+rgb = jimconvert(image, 'rgb', tColor);
+//in gray without transparencyColor
+jimage.transparencyColor = -1;
+jgray = jimconvert(jimage, 'gray');
+assert_checkequal(jgray.transparencyColor, int16(255))
+gray = jimconvert(image, 'gray');
+jimage.transparencyColor = cat(3, 200, 200, 200);
+jgray = jimconvert(jimage, 'gray')
+assert_checkequal(jgray.transparencyColor, int16(200))
+//in gray with a transparencyColor
+tColor = cat(3, 200, 200, 200);
+jgray = jimconvert(jimage, 'gray', tColor);
+gray = jimconvert(image, 'gray', tColor);
+assert_checkequal(jgray.transparencyColor, int16(200))
+
+
+//RGBA image with no 0 on the alpha channel
 path = jimlabPath("/") + 'tests/images/noError/rgba.png';
 jimage = jimread(path);
 image = jimage.image;
 //in rgb without transparencyColor 
 jrgb = jimconvert(jimage, 'rgb');
+assert_checkequal(jrgb.transparencyColor, int16(-1))
 rgb = jimconvert(image, 'rgb');
 jimage.transparencyColor = cat(3, 200, 200, 200);
 jrgb = jimconvert(jimage, 'rgb')
+assert_checkequal(jrgb.transparencyColor, int16(-1))
 //in rgb with a transparencyColor
 tColor = cat(3, 200, 200, 200);
 jrgb = jimconvert(jimage, 'rgb', tColor);
+assert_checkequal(jrgb.transparencyColor, int16(-1))
 rgb = jimconvert(image, 'rgb', tColor);
 //in gray without transparencyColor
+jimage.transparencyColor = -1;
 jgray = jimconvert(jimage, 'gray');
+assert_checkequal(jgray.transparencyColor, int16(-1))
 gray = jimconvert(image, 'gray');
 jimage.transparencyColor = cat(3, 200, 200, 200);
 jgray = jimconvert(jimage, 'gray')
+assert_checkequal(jgray.transparencyColor, int16(200))
 //in gray with a transparencyColor
 tColor = cat(3, 200, 200, 200);
 jgray = jimconvert(jimage, 'gray', tColor);
 gray = jimconvert(image, 'gray', tColor);
+assert_checkequal(jgray.transparencyColor, int16(200))
 
 
     //Conversion of a RGB encoded image
@@ -109,6 +146,5 @@ msg = "%s: %s cannot be converted into rgb encoding.\n";
 name = 'your image';
 msg = msprintf(msg, "jimconvert", name)
 assert_checkerror("gray = jimconvert(jimage.image , ""rgb"")", msg);
-
 
 
