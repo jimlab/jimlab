@@ -1,4 +1,4 @@
-  //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+ //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  //
  //This file must be used under the terms of the CeCILL.
  //This source file is licensed as described in the file COPYING, which
@@ -36,7 +36,7 @@
          if (~isdef('transparencyColor', 'l') | type(transparencyColor) == 0)
             transparencyColor = jimage.transparencyColor;
             //If there is no transparencyColor, white is choosen by default
-            if (transparencyColor(1) == -1 & jimage.encoding == 'rgba')
+            if (transparencyColor(1) == -1 & jimage.encoding == 'rgba' & encoding == 'rgb')
                 transparencyColor = cat(3, 255, 255, 255);
             end
          end
@@ -78,9 +78,17 @@
        case 'gray' then
            if (size(jimage,3) == 4)
                if (~isdef('varargin', 'l') | type(varargin) == 0)
-                   jimage = jimconvert(jimage, 'rgb', transparencyColor)
-                   transparencyColor = 0.299 .* transparencyColor(:,:,1) + ..
+                   if ( transparencyColor(1) == -1 )
+                       transparency = jimage(:,:,4) == 0;
+                       if (find(transparency) ~= [])
+                           transparencyColor = cat(3, 255, 255, 255);
+                       end
+                       jimage = jimconvert(jimage, 'rgb')
+                   else
+                       jimage = jimconvert(jimage, 'rgb', transparencyColor);
+                       transparencyColor = 0.299 .* transparencyColor(:,:,1) + ..
         0.587 .* transparencyColor(:,:,2) + 0.114 .* transparencyColor(:,:,3);
+                   end
                else
                    jimage = jimconvert(jimage,'rgb', transparencyColor, ..
                                                             varargin(:));
