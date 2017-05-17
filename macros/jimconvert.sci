@@ -1,4 +1,4 @@
- //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+  //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  //
  //This file must be used under the terms of the CeCILL.
  //This source file is licensed as described in the file COPYING, which
@@ -118,6 +118,9 @@
                convertedMat(:,:,2) = jimage(:,:,2) .* uint8(~transparency);
                convertedMat(:,:,3) = jimage(:,:,3) .* uint8(~transparency);
                convertedJimage = transparencyMat + convertedMat;
+               if (find(transparency) == [])
+                   transparencyColor = -1;
+               end
            else
                msg = _("%s: %s cannot be converted into rgb encoding.\n");
                error(msprintf(msg,"jimconvert", name + ext));
