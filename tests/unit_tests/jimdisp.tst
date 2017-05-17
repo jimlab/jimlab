@@ -12,7 +12,7 @@
 //[m, mp] = libraryinfo('jimlablib');
 //imagePath = getlongpathname(mp +'tests\images\noError\rgb.jpg');
 //disp(imagePath);
-imagePath = jimlabPath +'\tests\images\noError\rgb.jpg';
+imagePath = jimlabPath() +'\tests\images\noError\rgb.jpg';
 jimage1 = jimread(imagePath);
 
 jimdisp(jimage1);
