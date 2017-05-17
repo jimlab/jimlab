@@ -1,4 +1,4 @@
- //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+  //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  
  //This file must be used under the terms of the CeCILL.
  //This source file is licensed as described in the file COPYING, which
@@ -8,7 +8,12 @@
  
 // <-- NO CHECK REF -->
 
-root = jimlabPath("/") + 'tests/images/noError';
+// Objet jimage RGBA
+
+path = jimlabPath("/") + 'tests/images/noError/rgba.png';
+jim = jimread(path);
+equalizedJimage = jimhistEqual(jim);
+
 fileList = dir(root)
 nameList = fileList.name
 fileNumber = size(nameList)
