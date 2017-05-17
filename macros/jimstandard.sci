@@ -120,7 +120,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
         end
     end
     
-    if(argb & layers = 4) then // If argb standard is used, convertion in rgba standard
+    if(argb & layers == 4) then // If argb standard is used, convertion in rgba standard
         test = ["int16","uint16","int32","uint32"];
         if(strstr(test,originalType(1)) == "")
            tmp = convertedMat(:,:,1);
