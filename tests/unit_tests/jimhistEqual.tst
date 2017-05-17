@@ -9,10 +9,27 @@
 // <-- NO CHECK REF -->
 
 // Objet jimage RGBA
-
 path = jimlabPath("/") + 'tests/images/noError/rgba.png';
 jim = jimread(path);
 equalizedJimage = jimhistEqual(jim);
+
+// Matrice RGBA
+im = jim.image;
+equalizedImage = jimhistEqual(im);
+assert_checkequal(equalizedJimage.image, equalizedImage)
+
+// Objet jimage RGBA avec couleur de transparence à ignorer
+path = jimlabPath("/") + 'tests/images/logoEnsim.png';
+jim = jimread(path);
+jim.transparencyColor = cat(3,0,0,255);
+equalizedJimage = jimhistEqual(jim);
+
+// Matrice RGBA avec couleur de transparence à ignorer
+im = jim.image;
+equalizedImage = jimhistEqual(im, cat(3,0,0,255));
+assert_checkequal(equalizedJimage.image, equalizedImage)
+
+
 
 fileList = dir(root)
 nameList = fileList.name
