@@ -11,15 +11,12 @@
      //test of transparencyColor argument
      //must in the intervalle [0:255]
      if (isdef('transparencyColor',"l") & type(transparencyColor) ~= 0) then
-         if (size(transparencyColor, 3) ~= 3. & size(transparencyColor) ~= 1.)
+         if (length(transparencyColor) ~= 3. & length(transparencyColor) ~= 1.)
              msg = _("%s: Argument #%d: Scalar or hypermatrix with 3 components expected.\n");
              error(msprintf(msg,"jimconvert", 3));
          end
-         if (size(transparencyColor, 3) == 3.)
-             transparencyColor = 0.299 .* transparencyColor(:,:,1) + ..
-        0.587 .* transparencyColor(:,:,2) + 0.114 .* transparencyColor(:,:,3);
-         end
-         if (transparencyColor > 255 | transparencyColor < 0)
+         i = [1:length(transparencyColor)]
+         if (transparencyColor(i) > 255 | transparencyColor(i) < 0)
              msg = _("%s: Argument #%d: Components of transparencyColor must be in the intervalle [0:255].\n");
              error(msprintf(msg,"jimconvert", 3));
          end
@@ -39,7 +36,11 @@
            jimage = jimage.image;
            jim = %t;
      else 
-         [jimage, originalType] = jimstandard(jimage, varargin(:));
+         if (isdef("varargin" ,"l") & type(varargin) ~= 0)
+            [jimage, originalType] = jimstandard(jimage, varargin(:));
+        else
+            [jimage, originalType] = jimstandard(jimage);
+        end
          name = 'your ';
          ext = 'image';
          jim = %f;
@@ -49,17 +50,30 @@
                 error(msprintf(msg,"jimhistEqual", 1));
             end
          end
-         dim = size(jimage);
-         gray = length(dim) == 2
-        
-         //'rgb' and 'rgba' encoded images must be converted into 'gray' encoded images
-         if ~gray 
-             jimage = jimconvert(jimage, 'gray', transparencyColor);
-         end
+     end
+     
+     dim = size(jimage);
+     gray = length(dim) == 2
+    
+     //'rgb' and 'rgba' encoded images must be converted into 'gray' encoded images
+    if ~gray 
+         if (transparencyColor(1) ~= -1)
+            jimage = jimconvert(jimage, 'gray', transparencyColor);
+            transparencyColor = 0.299 .* transparencyColor(1) + ..
+        0.587 .* transparencyColor(2) + 0.114 .* transparencyColor(3);
+        else
+            jimage = jimconvert(jimage, 'gray');
+        end
+    else
+        if (length(transparencyColor) == 3.)
+             transparencyColor = 0.299 .* transparencyColor(1) + ..
+        0.587 .* transparencyColor(2) + 0.114 .* transparencyColor(3);
+        end
      end
 
+    transparencyColor = int16(transparencyColor);
     
-    if transparencyColor == -1 then
+    if transparencyColor(1) == -1 then
         [newLevel, ind] = jimhistEqual_level(jimage);
     else
         [newLevel, ind] = jimhistEqual_level(jimage, transparencyColor);
@@ -68,9 +82,9 @@
     //each pixel is assiciated with its new level
     equalizedJimage = newLevel(ind);
     //convertion into 8-bits unsigned intergers
-    equalizedJimage = uint8(equalizedJimage)
+    equalizedJimage = uint8(equalizedJimage);
     //formatting the data
-    equalizedJimage = matrix(equalizedJimage, dim(1), dim(2))
+    equalizedJimage = matrix(equalizedJimage, dim(1), dim(2));
         
     if jim
         equalizedJimage = mlist(['jimage','image','encoding',..
@@ -85,27 +99,30 @@ function [newLevel, ind] = jimhistEqual_level(im, transparencyColor)
 //newLevel : an array with the new levels
 //ind : The indice of each pixel
 //im : a 2D matrix with the level of each pixel of an image from 0 to 255
-//transparencyColor : a scalar which habe to be ignored in the algorithm
+//transparencyColor : a scalar which have to be ignored in the algorithm
 
-    x = [0:1:256]
+    x = [0:1:255]
     data = double(im)
-    [cf, ind] = histc(x, data, normalization = %t)
+    [cf, ind] = histc(x, data, normalization = %f)
     tmp = 0
     if (isdef('transparencyColor',"l") & type(transparencyColor) ~= 0) then
         transparencyColor = double(transparencyColor)
+        // Ignoring the transparent pixels
+        nPixels = length(find(ind ~= transparencyColor));
         for i = 1:length(cf)
             if i ~= transparencyColor
                 tmp = tmp + cf(i)
-                newLevel(i) = tmp*255
+                newLevel(i) = tmp*255 / nPixels;
+            else
+                newLevel(i) = transparencyColor;
             end
         end
     else
         for i = 1:length(cf)
             tmp = tmp + cf(i)
-            newLevel(i) = tmp*255
+            newLevel(i) = tmp*255 / (size(ind,1)*size(ind,2));
         end
     end
         
 endfunction
-
 
