@@ -69,7 +69,8 @@ function jimdisp_mat(image)
     ax.tight_limits = "on";
     ax.title.text = '';
     ax.margins = [0.05 0.05 0.125 0.08];
-
+    ax.background = -2; // Forcing the background to remain white
+    fig.background = -2; // Forcing the background to remain white
 endfunction
 
 function withbox()
@@ -94,7 +95,7 @@ function withinfo(image)
     height = dim(1);
     width = dim(2);
     
-    ax.title.text = image.title + '.' + image.mime + "  -  " + ..
-    image.encoding + "  -  "  + string(height) + " x " + string(width);
+    ax.title.text = image.title + '.' + image.mime + " - " + ..
+    image.encoding + " - "  + string(height) + " x " + string(width);
 
 endfunction
