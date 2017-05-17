@@ -22,16 +22,13 @@ function jimdisp(image,box,info)
     // loaded with jimread.
     if type(image) == 10 then
         jimage1 = jimread(image);
-        jimreset(jimage1);
         jimdisp_mat(jimage1);
-        
         if info == 'info' then
             withinfo(jimage1)
         end
 
     // Case where a 2D, 3D matrix or a jimage object is given
     else
-        jimreset(image);
         jimdisp_mat(image);
         
         if info == 'info' then
@@ -71,27 +68,7 @@ function jimdisp_mat(image)
     ax.auto_scale = "on";
     ax.tight_limits = "on";
     ax.title.text = '';
-    ax.background = -2; // Forcing the background to remain white
-    fig.background = -2; // Forcing the background to remain white
-
-    
-    // Centering of the displayed image (depends on the size)
-    
-    h_min = -3;
-    w_min = -3;
-    h_max = 4;
-    w_max = 4;
-    
-    if (height > 100 | width > 100) then
-        
-       h_min = -10 ;
-       h_max = 11 ;
-       w_min = -10 ;
-       w_max = 11 ;
-       
-    end
-
-    ax.data_bounds = [w_min, width + w_max, h_min, height + h_max];
+    ax.margins = [0.05 0.05 0.125 0.08];
 
 endfunction
 
@@ -117,19 +94,7 @@ function withinfo(image)
     height = dim(1);
     width = dim(2);
     
-    ax.title.text = image.title + '.' + image.mime + "  - " ..
-    + image.encoding + " - " + string(height) + " x " + string(width);
+    ax.title.text = image.title + '.' + image.mime + "  -  " + ..
+    image.encoding + "  -  "  + string(height) + " x " + string(width);
 
-endfunction
-
-function jimreset(image)
-    // This subfonction clears the figure by resetting some
-    // parameters of the graphic environment and plotting a white
-    // box the size of the image.
-    
-    dim = size(image);
-    height = dim(1);
-    width = dim(2);
-    Matplot(8*ones(height+10,width+10));
-    
 endfunction
