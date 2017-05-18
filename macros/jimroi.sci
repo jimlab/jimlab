@@ -5,12 +5,7 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-function [mask, out_image, polygon, ijTopLeft] = jimroi(image, polygon, crop2polygon)
-
-// WIP --- Left to do :
-// output polygon
-// ijTopLeft
-
+function [mask, out_image, polygon, ijTopLeft] = jimroi(image, input_polygon, crop2polygon)
 
 // INPUT ARGUMENTS
 // image : jimage object, single layered matrix, 3-layered or
@@ -28,8 +23,8 @@ function [mask, out_image, polygon, ijTopLeft] = jimroi(image, polygon, crop2pol
 // %T inside the polygon and %F outside the polygon.
 // ~mask can be used to return the opposite mask.
 // polygon : returns the same matrix as the input argument.
-// ijTopLeft : coordinates of the top left point of the polygon
-// within the whole matrix of the image.
+// ijTopLeft : number of lines and columns deleted if the output image is
+// cropped.
 
 
     // Testing input arguments
@@ -46,11 +41,11 @@ function [mask, out_image, polygon, ijTopLeft] = jimroi(image, polygon, crop2pol
     end
 
     // Checking the type of the matrix of the summits
-    if ~type(polygon) == 1 then
+    if ~type(input_polygon) == 1 then
         error('This argument must be a [N ; 2] matrix of integers.')
     end
     
-    if ~size(polygon,2) == 2 then
+    if ~size(input_polygon,2) == 2 then
         error('This argument must be a [N ; 2] matrix of integers describing the N summits of (x,y) coordinates')
     end
 
@@ -63,33 +58,38 @@ function [mask, out_image, polygon, ijTopLeft] = jimroi(image, polygon, crop2pol
     end
 
     // Creation of the mask
-    [mask,poly_out] = jimcreateMask(polygon,Matrix);
+    [mask,poly_out] = jimcreateMask(input_polygon,Matrix);
     
     // Returning the output image
-    output_image = jimselectOutputImage(mask, Matrix, poly_out, crop2polygon);
+    [output_image, ijTopLeft] = jimselectOutputImage(mask, Matrix, poly_out, crop2polygon);
     
     // In the same format as the input
     
     if typeof(image) == 'jimage' then
-        tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
-        out_image = mlist(tmp, output_image, image.encoding, image.title, image.mime, image.transparencyColor);
+        out_image = jimage(output_image, image.encoding, image.title, image.mime, image.transparencyColor);
     else
         out_image = output_image;
     end
+
+    // Returning the polygon
+    // After potential modifications (mouse interaction)
+    polygon = input_polygon;
+
+
 
 endfunction
 
 
 
-function [mask,out_polygon] = jimcreateMask(polygon,mat_image)
+function [mask,out_polygon] = jimcreateMask(input_polygon,mat_image)
 // This subfonction creates the boolean mask which describes the zone being
 // selected.
 // polygon : a [N ; 2] matrix containing the summits of the
 // polygon (correctly sorted for the polygone to avoid any
 // intersection)
 
-    x_poly = polygon(:,1);
-    y_poly = polygon(:,2);
+    x_poly = input_polygon(:,1);
+    y_poly = input_polygon(:,2);
 
     // Displaying the polygon
     // (0.5 offsets are here to align with Matplot figures)
@@ -103,7 +103,7 @@ function [mask,out_polygon] = jimcreateMask(polygon,mat_image)
     // function point_in_polygon seems to have the origin on the top left.
     // This function needs to be reworked
 
-    poly_out = polygon;
+    poly_out = input_polygon;
     poly_out(:,1) = h;
     poly_out(:,2) = w;
     y_poly_out = x_poly;
@@ -125,7 +125,7 @@ function [mask,out_polygon] = jimcreateMask(polygon,mat_image)
 endfunction
 
 
-function out_image = jimselectOutputImage(mask,mat_image,polygon,crop2polygon)
+function [out_image, ijTopLeft] = jimselectOutputImage(mask,mat_image,input_polygon,crop2polygon)
 // This subfunction returns the output image once the mask has been applied.
 // The user chooses to crop this output image to the minimal sized
 // rectangle containing the polygon, or not.
@@ -139,11 +139,13 @@ function out_image = jimselectOutputImage(mask,mat_image,polygon,crop2polygon)
     n_layers = size(mat_image,3)
     
     // Summits of the minimal rectangle surrounding the polygon
-    poly_top = max(polygon(:,2));
-    poly_bot = min(polygon(:,1));
-    poly_left = min(polygon(:,1));
-    poly_right = max(polygon(:,2));
+    poly_top = max(input_polygon(:,2));
+    poly_bot = min(input_polygon(:,1));
+    poly_left = min(input_polygon(:,1));
+    poly_right = max(input_polygon(:,2));
 
+    ijTopLeft = [poly_top-1,poly_left-1];
+    
     // Case for RGBA images
     if (n_layers == 4) then
         if crop2polygon == 'no' then
@@ -175,6 +177,5 @@ function out_image = jimselectOutputImage(mask,mat_image,polygon,crop2polygon)
             end
         end
     end
-
 
 endfunction
