@@ -5,27 +5,29 @@
 //are also available at
 //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-function [IMB] =jimsmooth(im, type_filter, varargin)
+function [IMB] =jimsmooth(Image, fogType, varargin)
     //test arguments
     if( argn(2) <2) then
-        error('Invalid number of arguments.' ) ;
+	fogType="gaussian";
+	fogWidth=3;
+      mat_filter = jimsmooth_mask(fogType,fogWidth) ;
     end
 
     if( argn(2) <3) then
-        width=3;
-        mat_filter = jimsmooth_mask(type_filter,width) ;
+        fogWidth=3;
+        mat_filter = jimsmooth_mask(fogType,fogWidth) ;
     end
 
     if(argn(2) >=3 ) then
         if(length(varargin) ==1) then
-            width=varargin(1) ;
-            mat_filter = jimsmooth_mask(type_filter,width) ;
+            fogWidth=varargin(1) ;
+            mat_filter = jimsmooth_mask(fogType,fogWidth) ;
         end
         if(length(varargin) ==2) then
-            if(~( isequal(type_filter, 'customize' ))) then
+            if(~( isequal(fogType, 'customize' ))) then
                 warning('The filter type should be customize' ) ;
             end
-            width=varargin(1) ;
+            fogWidth=varargin(1) ;
             if(~ modulo(length(varargin(2)) , 3) )
                 mat_filter=varargin(2);
             else 
@@ -40,11 +42,11 @@ function [IMB] =jimsmooth(im, type_filter, varargin)
 
 
     // Testing arguments's typetype_filter
-    if(typeof(im) == 'hypermat' ) then
-        mat_image = im;
-    elseif(typeof(im) == 'jimage' ) then
+    if(typeof(Image) == 'hypermat' ) then
+        mat_image = Image;
+    elseif(typeof(Image) == 'jimage' ) then
         jimage=1;
-        mat_image = im. image;
+        mat_image = Image. image;
     else
         error('Not any jimage or matrix argument have been defined' );
     end
@@ -77,32 +79,32 @@ function [IMB] =jimsmooth(im, type_filter, varargin)
 endfunction
 
 //Function returning the specified input mask
-function [matMask] =jimsmooth_mask(type_filter, width)
+function [matMask] =jimsmooth_mask(fogType, fogwidth)
 
     order=2;
-    //testing the parity of Width mask
+    //testing the parity of fogwidth mask
 
-    if(modulo(width, 3) <>0 | width<3 ) error('the width must be odd' ) ; end;
-    // mat =mask(width);//the mask of filter
-    select type_filter
+    if(modulo(fogwidth, 3) <>0 | fogwidth<3 ) error('the fogwidth must be odd' ) ; end;
+    // mat =mask(fogwidth);//the mask of filter
+    select fogType
 
 
     case "gaussian" then
-        ic = int(width/2) +1; // index of the center
-        sigma = (width/2) /order;
+        ic = int(fogwidth/2) +1; // index of the center
+        sigma = (fogwidth/2) /order;
         // Matrix of distances to the mask's center:
-        [X,Y] = meshgrid(1: width) ;
+        [X,Y] = meshgrid(1: fogwidth) ;
         // Creation of the 2D gaussian profile/weights
         matMask = exp(-((X-ic) .^2 + (Y-ic) .^2) /2/sigma^2) ;
         // Normalization:
         matMask = matMask/sum(matMask) ;
     case "rectangular" then
-        matMask = (1/width^2) *ones(width,width) ;
-        // case "uniform" then matMask = (1/width^2) *ones(width,width) ;
+        matMask = (1/fogwidth^2) *ones(fogwidth,fogwidth) ;
+        // case "uniform" then matMask = (1/fogwidth^2) *ones(fogwidth,fogwidth) ;
     case "triangular" then
 
-        if(width > 3) then
-            mat=(1/width^2) *ones(width,width) ;
+        if(fogwidth > 3) then
+            mat=(1/fogwidth^2) *ones(fogwidth,fogwidth) ;
             matMask = conv2(mat,mat) ;
         else
             error('the size of this filter musb be bigger than 3' ) ;
@@ -113,7 +115,5 @@ function [matMask] =jimsmooth_mask(type_filter, width)
     end
 
 endfunction
-
-
 
 
