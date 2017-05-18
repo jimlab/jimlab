@@ -74,8 +74,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
         case 8. then     //matrix of integer
             tmp = inttype(imageMat(:,:,1));
             if (tmp == 1.) then
-                convertedMat = double(imageMat) + 128;
-                convertedMat = uint8(convertedMat)
+                convertedMat = uint8(imageMat)
                 originalType = "int8";
             elseif(tmp == 11.)
                 convertedMat = imageMat;
@@ -86,34 +85,34 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
                     stdr_Type = strstr(["444","555","4444","5551"],Type);
                     if(stdr_Type == "")
                         Type = '4444';
-                        warning('The type of enconing is not given. By default, the type rgb444 is used');
+                        warning('The type of enconing is not given. By default, the type rgba4444 is used');
                     end
                 else
                     Type = '4444';
-                    warning('The type of enconing is not given. By default, the type rgb444 is used');
+                    warning('The type of enconing is not given. By default, the type rgba4444 is used');
                 end
                 convertedMat = jimstandard_uint16(imageMat,Type);
-                originalType = "uint16";
+                originalType = ["uint16", Type];
             elseif(tmp == 2.) then
                 if(isdef(["Type"],"l")&(type(Type) ~= 0))
                     argb = %f;
                     stdr_Type = strstr(["444","555","4444","5551"],Type);
                     if(stdr_Type == "")
                         Type = '4444';
-                        warning('The type of enconing is not given. By default, the type rgb444 is used');
+                        warning('The type of enconing is not given. By default, the type rgba4444 is used');
                     end
                 else
                     Type = '4444';
                     warning('The type of enconing is not given. By default, the type rgb444 is used');
                 end
-                tmp = imageMat + 32768;
+                tmp = uint16(imageMat);
                 convertedMat = jimstandard_uint16(imageMat,Type);
                 originalType = "int16";
             elseif (tmp == 14.) then
                  convertedMat = jimstandard_uint32(imageMat,argb);
                  originalType = "uint32";
            elseif(tmp == 4.) then
-                 tmp = imageMat + 2147483648; 
+                 tmp = uint32(imageMat); 
                  convertedMat = jimstandard_uint32(tmp,argb);
                  originalType = "int32";
             end
