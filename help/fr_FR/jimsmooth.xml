@@ -2,16 +2,16 @@
 <!--
  * This file is part of the Jimlab module made for Scilab
  * Copyright (C) 2017 - ENSIM, Université du Maine - Alix Melaine Mnoubue
- * 
+ *
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
  * you should have received as part of this distribution.  The terms
- * are also available at    
+ * are also available at
  * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 -->
-<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
-		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
 		xml:lang="fr" xml:id="jimsmooth">
     <refnamediv>
         <refname>jimsmooth</refname>
@@ -20,48 +20,49 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            smoothimage = jimsmooth(image,filterType)
+            blured = jimsmooth(Image,fogType)
+			blured= jimsmooth(Image,fogType)
+			blured=	 jimsmooth(Image,fogType,fogWidth)
+			blured=	 jimsmooth(Image,fogMatrix)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
         <title>Arguments</title>
         <variablelist>
-		<listitem>
+		
             <varlistentry>
-                <term>image</term>
-				 
+                <term>Image</term>
+
                     <para>
-			Un objet de type jimage, une matrice de niveaux de gris ou une hypermatrice. 		
+			Un objet de type jimage, une matrice de niveaux de gris ou en couleur RVB.
 					</para>
 				</varlistentry>
 				<varlistentry>
-				<term>type_filter</term>
+				<term>fogType</term>
 				 <para>
-			Une chaine de caractères spécifiant le filtre à appliquer à l'image pouvant prendre les valeurs : "gaussian" ,"uniform" ou "triangular". 		
+			Mot "gaussian" ,"uniform" ou "triangular" :forme du profil symétrique du filtre local appliquer aux pixels.La valeur par défaut est "gaussian".
 				</para>
 				</varlistentry>
-				</listitem>
-			
-				
-		    <para>
-			Donc les syntaxes admises seront:
-			<synopsis>
-			blured= jimsmooth(Image,fogType)
-			blured=	 jimsmooth(Image,fogType,fogWidth) 
-			blured=	 jimsmooth(Image,fogMatrix)
-			</synopsis>
-		    </para>	
-			
-			<para>
-				fogWidth est un nombre entier positif impair et fogMatrix est une matrice 
-			</para>	
-		    
-            
+		
 			<varlistentry>
-				<term>jimsmooth</term> 
+			<term>fogWidth</term>
+			<para>
+			nombre entier positif impair.La valeur par défaut est 3.
+			</para>
+			</varlistentry>
+			
+			<varlistentry>
+			<term>fogMatrix</term>
+			<para>
+			 matrice
+			</para>
+			</varlistentry>
+
+			<varlistentry>
+				<term>blured</term>
                 <listitem>
                     <para>
-			Un objet de type jimage ou une matrice de niveaux de gris et de même taille que l'image.
+			Un objet de type jimage ou une matrice de niveaux de gris et de même taille que <code>Image</code>.
 					</para>
                 </listitem>
 			</varlistentry>
@@ -70,33 +71,46 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet de flouter une image à l'aide des profils prédéfinis de floutage suivant: uniforme ou triangulaire ou gaussien(sigma =flogWidth/4), à l'aide d'une matrice de floutage explicite <literal> flogMatrix </literal> peut alternativement être fournie.
+            Cette fonction permet de flouter une image à l'aide des profils prédéfinis de floutage suivant: uniforme ou triangulaire ou gaussien(sigma =flogWidth/4).Une matrice de floutage explicite <literal> flogMatrix </literal> peut alternativement être fournie.
 	</para>
 		<para>
-			<function>jimsmooth</function>() renvoie une matrice correspondant à la matrice d'une image modifiée à l'aide d'un filtre gaussien . Si un objet <code>jimage</code> est donné en entrée, les champs <code>.title</code> et <code>.format</code> sont conservés pour l'objet en sortie, seul le champ <code> .image </code> est modifié.
+			 Si un objet <code>jimage</code> est donné en entrée, les champs <code>.title</code> et <code>.format</code> sont conservés pour l'objet en sortie, seul le champ <code> .image </code> est modifié.
                </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
-        <programlisting role="example"><![CDATA[ 
+        <programlisting role="example"><![CDATA[
 		//Objet de type jimage(gray image)
-	
-		jimage1 = jimread(jimlabPath("/") + 'tests/images/noError/gray.jpg');
-		smoothimage1 = jimsmooth(jimage1,"gaussian",9);
-		subplot(2,2,1)
-		jimdisp(jimage1)
-		subplot(2,2,2)
-		jimdisp(smoothimage1)
-		
+		path=jimlabPath("/") + 'tests/images/noError/";
+		jimage1 = jimread(path + 'gray.jpg');
+		blured1 = jimsmooth(jimage1,"gaussian",9);
+		subplot(2,2,1),jimdisp(jimage1)
+		subplot(2,2,2),jimdisp(blured1)
+
 		//Objet de type jimage(RGB image)
-	
+
 		jimage2 = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
-		smoothimage2 = jimsmooth(jimage2,"gaussian",9);
-		subplot(2,2,1)
-		jimdisp(jimage2)
-		subplot(2,2,2)
-		jimdisp(smoothimage2)
+		blured2 = jimsmooth(jimage2,"gaussian",9);
+		subplot(2,2,3),jimdisp(jimage2)
+		subplot(2,2,4),jimdisp(blured2)
  ]]></programlisting>
+  <scilab:image>
+  <!--
+//Objet de type jimage(gray image)
+		path=jimlabPath("/") + 'tests/images/noError/";
+		jimage1 = jimread(path + 'gray.jpg');
+		blured1 = jimsmooth(jimage1,"gaussian",9);
+		subplot(2,2,1),jimdisp(jimage1)
+		subplot(2,2,2),jimdisp(blured1)
+
+		//Objet de type jimage(RGB image)
+
+		jimage2 = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
+		blured2 = jimsmooth(jimage2,"gaussian",9);
+		subplot(2,2,3),jimdisp(jimage2)
+		subplot(2,2,4),jimdisp(blured2)
+	-->
+   </scilab:image>
 	</refsection>
     <refsection role="see also">
         <title>Voir Aussi</title>
