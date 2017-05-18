@@ -5,30 +5,33 @@
 //are also available at
 //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-function [IMB] =jimsmooth(Image, fogType, varargin)
+function [IMB] =jimsmooth(Image, varargin)
     //test arguments
     if( argn(2) <2) then
 	fogType="gaussian";
 	fogWidth=3;
       mat_filter = jimsmooth_mask(fogType,fogWidth) ;
     end
-
-    if( argn(2) <3) then
+    //number of arguments is two and the width of the filter is 3
+    if( argn(2) <3 & (length(varargin) ==1) & (type(varargin(1))==10)) then
+        fogType=varargin(1);
         fogWidth=3;
         mat_filter = jimsmooth_mask(fogType,fogWidth) ;
     end
 
-    if(argn(2) >=3 ) then
-        if(length(varargin) ==1) then
+    if(argn(2) >=3) then
+        if(length(varargin) ==2) then
+            fogType=varargin(2);
             fogWidth=varargin(1) ;
             mat_filter = jimsmooth_mask(fogType,fogWidth) ;
         end
-        if(length(varargin) ==2) then
+        if(length(varargin) ==3) then
             if(~( isequal(fogType, 'customize' ))) then
                 warning('The filter type should be customize' ) ;
             end
             fogWidth=varargin(1) ;
-            if(~ modulo(length(varargin(2)) , 3) )
+            //test for parity of matrix customize
+            if(~ modulo(length(varargin(2)) , 2) )
                 mat_filter=varargin(2);
             else 
                 error('the length of the matrix must be odd and bigger than 1' ) ;
