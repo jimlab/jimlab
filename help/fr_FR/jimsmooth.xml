@@ -47,14 +47,14 @@
 			<varlistentry>
 			<term>fogWidth</term>
 			<para>
-			nombre entier positif impair.La valeur par défaut est 3.
+			Un nombre entier positif impair.La valeur par défaut est 3.
 			</para>
 			</varlistentry>
 			
 			<varlistentry>
 			<term>fogMatrix</term>
 			<para>
-			 matrice
+			Une matrice 
 			</para>
 			</varlistentry>
 
