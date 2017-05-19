@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of the Jimlab module made for Scilab
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Gael SENEE
+ *
+ * This file must be used under the terms of the CeCILL.
+ * This source file is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution.  The terms
+ * are also available at    
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ *
+ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
+		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+		xml:lang="fr" xml:id="jimage">
+    <refnamediv>
+        <refname>jimage</refname>
+        <refpurpose>Fonction de création ou d'édition d'un objet <literal>jimage</literal></refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Syntaxes</title>
+        <synopsis>
+            jimage_out = jimage (image, [encoding, mime, transparencyColor])
+        </synopsis>
+    </refsynopsisdiv>
+    <refsection>
+        <title>Arguments</title>
+        <variablelist>
+            <varlistentry>
+                <term>image</term> 
+                <listitem>
+                <para>
+                    Objet <literal>jimage</literal>, matrice à une couche, ou hypermatrice à trois ou quatre couches.
+		</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>encoding</term> 
+                <listitem>
+                <para>
+                    Une chaîne de caractères décrivant le type d'encodage de l'image : 'gray', 'rgb' ou 'rgba'.
+		</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>mime</term> 
+                <listitem>
+                <para>
+                    Une chaîne de caractères contenant le type MIME de l'image : 'png', 'bmp', 'gif' ou 'jpg'.
+		</para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>jimage_out</term>
+                <listitem>
+                    <para>
+                        Objet de type <literal>jimage</literal>.
+                    </para>					
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Description</title>
+        <para>
+            Cette fonction permet de créer ou d'éditer un objet <literal>jimage</literal>.
+            <itemizedlist>
+                <listitem>
+                    <para>
+                        Dans le cas de la création :
+                        Une matrice à une couche (correspondant à une image en niveaux de gris), ou une hypermatrice à trois ou quatre couches (correspondant à une image en RGB ou RGBA) est donnée en entrée. Cette matrice est convertie en uint8 par la fonction <function>jimstandard</function>().
+                        Les trois champs <literal>.encoding</literal>, <literal>.mime</literal> et <literal>.transparencyColor</literal> doivent être renseignés obligatoirement. Le champ <literal>.filename</literal> de l'objet <literal>jimage</literal> prend la valeur par défaut 'user'.
+                    </para>
+                </listitem>
+                <listitem>
+                    <para>
+                        Dans le cas de l'édition :
+                        Un objet <literal>jimage</literal> est donné en entrée.
+                        Les autres paramètres sont optionnels : seuls les champs renseignés seront modifiés dans le nouvel objet jimage.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </refsection>
+    <refsection>
+        <title>Exemples</title>
+        <programlisting role="example"><![CDATA[
+// Création à partir d'une matrice
+
+uint8rgba = uint8(grand(10,10,4,"uin",0,255));
+jim = jimage2 (uint8rgba, 'rgba', 'png', -1);
+
+// Modification d'un objet jimage existant
+
+jim2 = jimage2 (jim,'jpg');
+ ]]></programlisting>
+	</refsection>
+    <refsection role="see also">
+        <title>Voir Aussi</title>
+        <simplelist type="inline">
+            <member>
+                <link linkend="jimage_properties">Propriétés jimage</link>
+            </member>
+            <member>
+                <link linkend="jimstandard">jimstandard</link>
+            </member>
+        </simplelist>
+    </refsection>
+    <refsection>
+        <title>Historique</title>
+        <revhistory>
+            <revision>
+                <revnumber>0.1 - 2017-05</revnumber>
+                <revremark>Publication initiale du module Jimlab</revremark>
+            </revision>
+        </revhistory>
+    </refsection>
+</refentry>
