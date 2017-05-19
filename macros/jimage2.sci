@@ -7,80 +7,36 @@
 
 
 function jim = jimage2(image, varargin)
+// This function creates a jimage object from a matrix or hypermatrix and
+// specific fields.
+// It can also set new values to the fields of an already existing jimage object.
+// image : a single-layered matrix, or a three- or four-layered hypermatrix.
+// This matrix is converted in uint8.
+// The following fields are configurable (varargin entries) :
+// MIME type : A specific string of characters ('png', 'jpg', 'bmp' or 'gif').
+// Encoding : A specific string of characters ('rgb', 'rgba' or 'gray').
+// TransparencyColor : A value or vector.
+// All of these three fields are required in order to create a new jimage oject.
+// Only one entry can be filled in order to replace an existing field.
+// The field filename has a default value 'user' when a new jimage object is created.
 
-// Known errors :
-// filename is set by default on 'user'.
+// WIP.
+// • Transparency Color types are to be checked.
+// • Missing : Checking whether the encoding corresponds to the dimensions of the
+// matrix or hypermatrix.
+
+
 
     if argn(2) > 5 then
         error('Too many input arguments : five fields describe jimage objects, four of them being configurable by users')
     end
     
-    if typeof(image) == 'jimage' then
-        jim = jimageSet(image, varargin)
-    
-    else
-        jim = jimageCreate (image, varargin)
-        
-    end
-    
-endfunction
 
-function jim = jimageSet (image, varargin)
-// This subfunction allows the user to replace any field of a jimage object.
-// varargin takes specific strings of characters to set the MIME type and the
-// encoding fields, any string of character to set the filename field and
-// a value or vector to set the transparency color field.
+    for i = 1:length(varargin)
 
+        select varargin(i)
 
-    for i = 1:length(varargin(1))
-
-        select varargin(1)(i)
-
-            // MIME type
-            case 'png' then
-                image.mime = 'png'
-            case 'jpg' then
-                image.mime = 'jpg'
-            case 'gif' then
-                image.mime = 'gif'
-            case 'bmp' then
-                image.mime = 'bmp'
-                
-            // Encoding
-            case 'gray' then
-                image.encoding = 'gray'
-            case 'rgb' then
-                image.encoding = 'rgb'
-            case 'rgba' then
-                image.encoding = 'rgba'
-        end
-
-        // Transparency Color
-        if type(varargin(1)(i)) == 8 | type(varargin(1)(i)) == 1 then
-            image.transparencyColor = varargin(1)(i);
-        end
-
-    end
-
-    jim = image;
-
-endfunction
-    
-    
-function jim = jimageCreate (image, varargin)
-// This subfunction creates a jimage object from a matrix and specified fields.
-// The input arguments are affected to the fields depending on their type.
-// Some specific strings of characters are dedicated to particular fields.
-
-    for i = 1:length(varargin(1))
-        
-        // Matrix
-        mat_image = image;
-        
-
-        select varargin(1)(i)
-
-            // MIME type
+            // MIME type field
             case 'png' then
                 mime = 'png'
             case 'jpg' then
@@ -90,7 +46,7 @@ function jim = jimageCreate (image, varargin)
             case 'bmp' then
                 mime = 'bmp'
                 
-            // Encoding
+            // Encoding field
             case 'gray' then
                 encoding = 'gray'
             case 'rgb' then
@@ -100,15 +56,46 @@ function jim = jimageCreate (image, varargin)
                 
         end
         
-        // Transparency Color
-        if type(varargin(1)(i)) == 8 | type(varargin(1)(i)) == 1 then
-            transparencyColor = varargin(1)(i);
+        // Transparency Color field
+        if type(varargin(i)) == 8 | type(varargin(i)) == 1 then
+            transparencyColor = varargin(i);
         end
        
     end
     
-    filename = 'user';
-    fields = ['jimage','image','encoding','filename','mime','transparencyColor'];
-    jim = mlist(fields, mat_image, encoding, filename, mime, transparencyColor);
+    // Case of a jimage object : fields have to be replaced by the new values.
+    
+    if typeof(image) == 'jimage' then
+        
+        if isdef('encoding','l') then
+            image.encoding = encoding ;
+        end
+        
+        if isdef('mime','l') then
+            image.mime = mime ;
+        end
+    
+        if isdef('transparencyColor','l') then
+            image.transparencyColor = transparencyColor ;
+        end
 
+        jim = image ;
+        
+        
+    // Case of a new jimage object : values have to be set on all the fields.
+    
+    else
+        
+        // Conversion in Jimlab standard format : uint8
+        // mat_image = jimstandard(image)
+        mat_image = image;
+        
+        // Setting the default file name
+        filename = 'user';
+        
+        // Creating the jimage object
+        fields = ['jimage','image','encoding','filename','mime','transparencyColor'];
+        jim = mlist(fields, mat_image, encoding, filename, mime, transparencyColor);
+    end
+    
 endfunction
