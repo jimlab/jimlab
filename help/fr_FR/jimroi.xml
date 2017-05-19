@@ -22,7 +22,7 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            [mask, out_image, [polygon, ijTopLeft]] = jimroi(input_image, polygon, [crop2polygon])     
+            [mask, [, polygon [, ijTopLeft]]] = jimroi(input_image, polygon [, crop2polygon])
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -32,16 +32,16 @@
                 <term>input_image</term> 
                 <listitem>
                 <para>
-                    Objet <literal>jimage</literal>, matrice d'entiers à une couche, ou hypermatrice d'entiers à trois ou quatre couches.
-		</para>
+                    Objet <literal>jimage</literal>, matrice à une couche, ou hypermatrice à trois ou quatre couches.
+				</para>
                 </listitem>
             </varlistentry>
             <varlistentry>
                 <term>polygon</term> 
                 <listitem>
                 <para>
-                    Matrice de taille [N;2] des sommets de la zone polygonale d'intérêt. Les N sommets ont pour coordonnées une couple (x,y).
-		</para>
+                    Matrice de taille [N;2] des sommets de la zone polygonale d'intérêt. Les N sommets ont pour coordonnées un couple (x,y).
+				</para>
                 </listitem>
             </varlistentry>
             <varlistentry>
@@ -49,7 +49,7 @@
                 <listitem>
                 <para>
                     Chaîne de caractères. 'cropped' réduit la taille de l'objet de sortie aux dimensions minimales entourant le polygone de sélection. Par défaut, 'no'.
-		</para>
+				</para>
                 </listitem>
             </varlistentry>
             <varlistentry>
@@ -61,19 +61,11 @@
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term>out_image</term> 
-                <listitem>
-                <para>
-                    L'objet retourné est du même type que l'objet d'entrée.
-		</para>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
                 <term>ijTopLeft</term> 
                 <listitem>
                 <para>
                     Couple (x,y) du nombre de lignes et de colonnes supprimées, lorsque l'objet de sortie est rogné. L'origine est considérée dans le coin inférieur gauche.
-		</para>
+				</para>
                 </listitem>
             </varlistentry>
         </variablelist>
@@ -81,30 +73,27 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction applique une zone de sélection sur une image.
+            Cette fonction applique une zone de sélection sur une image. Cette zone est un polygone, défini par une matrice de taille [N;2] correspondant à ses sommets.
+			Ce polygone peut être modifié interactivement avec la souris. Il est possible d'ajouter des points, d'en déplacer et d'en supprimer.
         </para>
-		<para>
-		
-		</para>
-
-
     </refsection>
     <refsection>
         <title>Exemples</title>
-        <programlisting role="example"><![CDATA[ 
- ]]></programlisting>
+        <programlisting role="example"><![CDATA[
+// Creating a jimage object from an image file
+path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+jimage1 = jimread(path);
+
+// 
+Summits = [10 10 ; 10 30 ; 30 40 ; 30 10];
+[mask, polygon, ij] = jimroi (jimage1, Summits);
+]]></programlisting>
 	</refsection>
     <refsection role="see also">
         <title>Voir Aussi</title>
         <simplelist type="inline">
-            <member>
-                <link linkend="jimdisp">jimdisp</link>
-            </member>
-            <member>
-                <link linkend="jimwrite">jimwrite</link>
-            </member>
 			<member>
-                <link linkend="jimage_properties">jimage_properties</link>
+                <link linkend="edit_curves">edit_curves</link>
             </member>
         </simplelist>
     </refsection>
