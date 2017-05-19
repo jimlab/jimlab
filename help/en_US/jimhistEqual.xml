@@ -16,30 +16,108 @@
 		xml:lang="en" xml:id="jimhistEqual">
     <refnamediv>
         <refname>jimhistEqual</refname>
-        <refpurpose>Égalisation d'histogramme d'une image</refpurpose>
+        <refpurpose>Amélioration d'une image par égalisation d'histogramme</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            equalizedJimage = jimhistEqual(jimage)
+            equalizedImage = jimhistEqual(image)
+			equalizedImage = jimhistEqual(image, transparencyColor)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
         <title>Arguments</title>
         <variablelist>
             <varlistentry>
-                <term>jimage</term>
+                <term>image</term>
                 <listitem>
                     <para>
-						Un objet de type jimage, une matrice de niveaux de gris ou une hypermatrice. 		
+						<itemizedlist>
+							<listitem>
+								<para>
+								<emphasis role="bold">objet <literal>jimage</literal> </emphasis>
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+								<emphasis role="bold">image en couleurs</emphasis>
+									<itemizedlist>
+										<listitem>
+											<para>
+												hypermatrice RGB ou RGBA
+													<itemizedlist>
+														<listitem>
+															<para>
+															d'entiers int8 ou uint8, ou de décimaux équivalents sur [0, 255] ou sur [-128, 127].
+															</para>
+														</listitem>
+														<listitem>
+															<para>
+															de décimaux normalisés dans l'intervalle [0, 1].
+															</para>
+														</listitem>		
+													</itemizedlist>
+											</para>
+										</listitem>
+										<listitem>
+											<para>
+												matrice
+													<itemizedlist>
+														<listitem>
+															<para>
+															d'entiers uint16 ou int16 sous découpage binaire "rgba4444", ou de décimaux équivalents sur [0, 2<superscript>16</superscript>-1] ou sur [-2<superscript>15</superscript>; 2<superscript>15</superscript>-1].
+															</para>
+														</listitem>
+														<listitem>
+															<para>
+															d'entiers uint32 ou int32 sous découpage binaire "rgba8888", ou de décimaux équivalents sur [0, 2<superscript>32</superscript>-1] ou sur [-2<superscript>31</superscript>, 2<superscript>32</superscript>-1]
+															</para>
+														</listitem>		
+													</itemizedlist>
+											</para>
+										</listitem>
+									</itemizedlist>
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis role="bold">image en niveaux de gris</emphasis> : matrice d'entiers uint8 ou int8, ou de décimaux équivalents sur [0, 255], sur [-128, 127] ou normalisés dans l'intervalle [0, 1].
+								</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>
+						Si l'image d'entrée a un autre encodage, on lui appliquera <function>jimstandard</function>() avant de la fournir à <function>jimhistEqual</function>().
 					</para>					
                 </listitem>
 			</varlistentry>
 			<varlistentry>
-				<term>equalizedJimage</term> 
+				<term>transparencyColor</term> 
                 <listitem>
                     <para>
-						Un objet de type jimage ou  une matrice de niveaux de gris.
+						<itemizedlist>
+							<listitem>
+								<para>
+									Un vecteur ou une hypermatrice à trois composantes dans l'intervalle [0, 255]
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Un scalaire dans l'intervalle [0, 255]
+								</para>
+							</listitem>
+						</itemizedlist>
+					</para>
+					<para>
+					Cet argument correspond à une nuance de couleur à ignorer lors de l'application de l'algorithme d'égalisation d'histogramme. Si il n'est pas renseigné, toutes les nuances de couleurs sont prises en compte dans l'algorithme.
+					</para>
+                </listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>equalizedImage</term> 
+                <listitem>
+                    <para>
+						Un objet de type <literal>jimage</literal> dont le champ <literal>.image</literal> est encodé en niveaux de gris ou une matrice d'uint8 encodée en niveaux de gris.
 					</para>
                 </listitem>
 			</varlistentry>
@@ -48,35 +126,104 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet d'ajuster le contraste d'une image par la méthode d'égalisation d'histogramme. 
+            Cette fonction permet d'ajuster automatiquement le contraste d'une image par la méthode d'égalisation d'histogramme. 
 		</para>
 		<para>
-			<function>jimhistEqual</function>() renvoie un objet du même type que l'objet en entrée. Si un objet <code>jimage</code> est donné en entrée, les champs title et format sont conservés pour l'objet en sortie. Si l'image d'entrée est encodée sur 3 ou 4 couches, elle sera convertie en niveaux de gris.
+			Si un objet <code>jimage</code> est donné en entrée, les champs <code>.title</code> et <code>.format</code> sont conservés pour l'objet en sortie. Dans le cas où le champ <literal>.transparencyColor</literal> est différent de -1, la couleur de transparence n'est pas prise en compte dans l'algorithme d'égalisation d'histogramme.
+        </para>
+		<para>
+			Si l'image d'entrée est encodée en couleurs, elle sera convertie en niveaux de gris.
         </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
-//Objet de type jimage
-s = filesep()
-path = jimlabPath + 'tests' + s + 'images' + s + 'noError' + s + 'rgb.bmp';
+//Objet de type jimage avec transparence
+path = jimlabPath("/") + 'tests/images/logoEnsim.png';
 jimage = jimread(path);
+jimage.transparencyColor = cat(3,140,140,140);
 equalizedJimage = jimhistEqual(jimage);
 subplot(2,2,1)
 jimdisp(jimage)
 subplot(2,2,2)
 jimdisp(equalizedJimage)
 
-//Matrice en niveaux de gris
-path = jimlabPath + 'tests' + s + 'images' + s + 'noError' + s + 'gray.jpg';
-jimage = jimread(path);
+//Même image sans transparence
+jimage.transparencyColor = -1;
+jimage = jimconvert(jimage, "gray")
 image = jimage.image;
 equalizedImage = jimhistEqual(image);
 subplot(2,2,3)
-jimdisp(jimage)
+jimdisp(image)
+subplot(2,2,4)
+jimdisp(equalizedImage)
+
+ ]]></programlisting>
+	<scilab:image>
+	//Objet de type jimage avec transparence
+	path = jimlabPath("/") + 'tests/images/logoEnsim.png';
+	jimage = jimread(path);
+	jimage.transparencyColor = cat(3,140,140,140);
+	equalizedJimage = jimhistEqual(jimage);
+	subplot(2,2,1)
+	jimdisp(jimage)
+	subplot(2,2,2)
+	jimdisp(equalizedJimage)
+
+	//Même image sans transparence
+	jimage.transparencyColor = -1;
+	jimage = jimconvert(jimage, "gray")
+	image = jimage.image;
+	equalizedImage = jimhistEqual(image);
+	subplot(2,2,3)
+	jimdisp(image)
+	subplot(2,2,4)
+	jimdisp(equalizedImage)
+	</scilab:image>
+    <programlisting role="example"><![CDATA[ 
+//Matrice en niveaux de gris sans transparence
+//path = jimlabPath("/") + 'tests/images/lena512.jpg';
+path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+jimage = jimread(path);
+image = jimage.image;
+equalizedImage = jimhistEqual(image);
+subplot(2,2,1)
+jimdisp(image)
+subplot(2,2,2)
+jimdisp(equalizedImage)
+
+//Matrice en niveaux de gris avec couleur de transparence
+path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+jimage = jimread(path);
+image = jimage.image;
+equalizedImage = jimhistEqual(image, 255);
+subplot(2,2,3)
+jimdisp(image)
 subplot(2,2,4)
 jimdisp(equalizedImage)
  ]]></programlisting>
+	<scilab:image>
+	//Matrice en niveaux de gris sans transparence
+	//path = jimlabPath("/") + 'tests/images/lena512.jpg';
+	path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+	jimage = jimread(path);
+	image = jimage.image;
+	equalizedImage = jimhistEqual(image);
+	subplot(2,2,1)
+	jimdisp(image)
+	subplot(2,2,2)
+	jimdisp(equalizedImage)
+
+	//Matrice en niveaux de gris avec couleur de transparence
+	path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+	jimage = jimread(path);
+	image = jimage.image;
+	equalizedImage = jimhistEqual(image, 255);
+	subplot(2,2,3)
+	jimdisp(image)
+	subplot(2,2,4)
+	jimdisp(equalizedImage)
+	</scilab:image>
 	</refsection>
     <refsection role="see also">
         <title>Voir Aussi</title>
@@ -84,15 +231,19 @@ jimdisp(equalizedImage)
 			<member>
                 <link linkend="jimage_properties">jimage</link>
             </member>
+			<member>
+                <link linkend="jimstandard">jimstandard</link>
+            </member>
         </simplelist>
     </refsection>
     <refsection>
         <title>Historique</title>
         <revhistory>
             <revision>
-                <revnumber>2017-05</revnumber>
+                <revnumber>0.1 - 2017-05</revnumber>
                 <revremark>Publication initiale du module Jimlab</revremark>
             </revision>
         </revhistory>
     </refsection>
 </refentry>
+
