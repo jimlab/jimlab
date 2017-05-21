@@ -6,64 +6,35 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
- function [convertedJimage] = jimconvert(jimage, encoding, ..
-                                        transparencyColor, varargin)
+ function [convertedJimage] = jimconvert(jimage, encoding, transparencyColor)
                                         
-     //test of transparencyColor argument
-     //must be a hypermatrix with three components in the intervalle [0:255]
-     if (isdef('transparencyColor',"l") & type(transparencyColor) ~= 0) then
-         if (length(transparencyColor) == 3.) 
-             for i = 1:3
-                 if (transparencyColor(i) > 255 | transparencyColor(i) < 0)
-                     msg = _("%s: Argument #%d: Components of transparencyColor" ..
-                     + " must be in the intervalle [0:255].\n");
-                     error(msprintf(msg,"jimconvert", 3));
-                 end
-             end
-             transparencyColor = cat(3, transparencyColor(1), transparencyColor(2)..
-             , transparencyColor(3));
-         else
-             msg = _("%s: Argument #%d: hypermatrix with 3 components expected.\n");
-             error(msprintf(msg,"jimconvert", 3));
-         end
-     end
-     
-     // test of the first argument and convertion in uint8 if necessary
+     // test of the first argument
      if (typeof(jimage) == "jimage") then
+         //extraction of metadata from jimage object
          mime = jimage.mime;
          name = jimage.title;
-         //Priority for the intput argument 
-         if (~isdef('transparencyColor', 'l') | type(transparencyColor) == 0)
-            transparencyColor = jimage.transparencyColor;
-            //If there is no transparencyColor, white is choosen by default
-            if (transparencyColor(1) == -1 & jimage.encoding == 'rgba' & encoding == 'rgb')
-                transparencyColor = cat(3, 255, 255, 255);
-            end
-         end
          ext = '.' + mime;
+         // Priority for a transparencyColor explicitely given
+         if (~isdef("transparencyColor", "l") | type(transparencyColor) == 0.)
+            transparencyColor = jimage.transparencyColor;
+         end
          jimage = jimage.image;
          jim = %t;
          bw = %f;
      elseif (type(jimage) == 4) 
          jim = %f;
          bw = %t; 
-         name = 'your ';
-         ext = 'image';
+         convertedJimage = uint8(jimage) * 255;
+         if (encoding ~= "gray")
+             warning("Your image has been converted into gray encoding")
+         end
      else 
-         if (~isdef('varargin', 'l') | type(varargin) == 0)
-             [jimage, originalType] = jimstandard(jimage);
-         else
-            [jimage, originalType] = jimstandard(jimage, varargin(:));
-         end
+         //conversion in uint8 if necessary, jimstandard() default values are used
+         [jimage, originalType] = jimstandard(jimage);
          name = 'your ';
          ext = 'image';
-         if (~isdef('transparencyColor', 'l') | type(transparencyColor) == 0)
-             //If there is no transparencyColor, white is choosen by default
-            transparencyColor = cat(3, 255, 255, 255);
-         end
          jim = %f;
          bw = %f;
-         //jimstandard() return %f if the (hyper)matrix encoding is not supported by jimlab
          if (type(jimage) == 4) then
              if (jimage == %f) then
                 msg = _("%s: Argument #%d: Wrong type of input argument.\n");
@@ -72,10 +43,31 @@
          end
      end
      
+     //test of transparencyColor argument
+     //must be a scalar or a vector/hypermatrix with 3 components
+     //must in the intervalle [0:255]
+     if (isdef("transparencyColor","l") & type(transparencyColor) ~= 0) then
+         l = length(transparencyColor);
+         i = 1:l;
+         if (l ~= 3. & l ~= 1.)
+             msg1 = _("%s: Argument #%d: Scalar or hypermatrix with 3 components expected.\n");
+             error(msprintf(msg1,"jimconvert", 3));
+         elseif (find(transparencyColor(i) > 255) ~= [] | find(transparencyColor(i) < 0) ~= [])
+             msg2 = _("%s: Argument #%d: Components of transparencyColor must be in the intervalle [0:255].\n");
+             error(msprintf(msg2,"jimconvert", 3));
+         end
+     else
+         transparencyColor = -1;
+     end
+     
+     //        transparencyColor = cat(3, transparencyColor(1), transparencyColor(2)..
+     //      , transparencyColor(3));
+     
      if (type(encoding) == 10)
 
        select encoding
        case 'gray' then
+           if l == 3.
            if (size(jimage,3) == 4)
                if (~isdef('varargin', 'l') | type(varargin) == 0)
                    if ( transparencyColor(1) == -1 )
