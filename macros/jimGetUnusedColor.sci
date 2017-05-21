@@ -6,11 +6,11 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
- function [Color] = jimGetUnusedColor(image, targetColor, varargin)
+ function [Color] = jimGetUnusedColor(image, targetColor)
      
      // test of the first argument and convertion in uint8 if necessary
      if (typeof(jimage) ~= "jimage") then
-         [image, originalType] = jimstandard(image, varargin(:));
+         [image, originalType] = jimstandard(image);
          if (type(image) == 4)
             if (image == %f) then
                 msg = _("%s: Argument #%d: Wrong type of input argument.\n");
