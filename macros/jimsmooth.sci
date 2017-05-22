@@ -7,7 +7,7 @@
 
 function [IMB] =jimsmooth(Image, varargin)
     //test arguments
-    if( argn(2) <2) then
+    if( argn(2) ==1) then
 	fogType="gaussian";
 	fogWidth=3;
       mat_filter = jimsmooth_mask(fogType,fogWidth) ;
@@ -21,8 +21,8 @@ function [IMB] =jimsmooth(Image, varargin)
 
     if(argn(2) >=3) then
         if(length(varargin) ==2) then
-            fogType=varargin(2);
-            fogWidth=varargin(1) ;
+            fogType=varargin(1);
+            fogWidth=varargin(2) ;
             mat_filter = jimsmooth_mask(fogType,fogWidth) ;
         end
         if(length(varargin) ==3) then
@@ -40,20 +40,15 @@ function [IMB] =jimsmooth(Image, varargin)
 
         end
     end
-
-
-
-
     // Testing arguments's typetype_filter
     if(typeof(Image) == 'hypermat' ) then
         mat_image = Image;
     elseif(typeof(Image) == 'jimage' ) then
-        jimage=1;
         mat_image = Image. image;
     else
         error('Not any jimage or matrix argument have been defined' );
     end
-
+disp(ndims(mat_image));
     if((ndims(mat_image) == 4) | (ndims(mat_image) == 3)) // Verify if Mat is a 2D
         type_image = "rgb"; // Alpha channel isn't modified
     elseif(ndims(mat_image) == 2) // For 2D matrix
@@ -64,7 +59,7 @@ function [IMB] =jimsmooth(Image, varargin)
 
     select type_image,
     case "gray" then
-        result= uint8(conv2(mat_filter, double( mat_image))) ;
+        IMB= uint8(conv2(mat_filter, double( mat_image))) ;
     case "rgb" then
         // Convolve the three separate color .
         mat_image(:,:,1)=conv2(double(mat_image(:,:,1)),mat_filter,'same');
@@ -72,12 +67,12 @@ function [IMB] =jimsmooth(Image, varargin)
         mat_image(:,:,3)=conv2(double(mat_image(:,:,3)),mat_filter,'same');
 
         //Recombine separate color channels into a single
-        result = cat(3, uint8( mat_image(:,:,1)), uint8( mat_image(:,:,2)), uint8( mat_image(:,:,3)));
-
+       
+        IMB=uint8( mat_image);
 
     end
     
-        IMB =  result;
+       
   
 endfunction
 
@@ -86,8 +81,8 @@ function [matMask] =jimsmooth_mask(fogType, fogwidth)
 
     order=2;
     //testing the parity of fogwidth mask
-
-    if(modulo(fogwidth, 3) <>0 | fogwidth<3 ) error('the fogwidth must be odd' ) ; end;
+disp(fogwidth);
+    if((modulo(fogwidth, 2)) ==0 | fogwidth<3 ) then error('the fogwidth must be  odd' ) ; end;
     // mat =mask(fogwidth);//the mask of filter
     select fogType
 
@@ -101,9 +96,8 @@ function [matMask] =jimsmooth_mask(fogType, fogwidth)
         matMask = exp(-((X-ic) .^2 + (Y-ic) .^2) /2/sigma^2) ;
         // Normalization:
         matMask = matMask/sum(matMask) ;
-    case "rectangular" then
+    case "uniform" then
         matMask = (1/fogwidth^2) *ones(fogwidth,fogwidth) ;
-        // case "uniform" then matMask = (1/fogwidth^2) *ones(fogwidth,fogwidth) ;
     case "triangular" then
 
         if(fogwidth > 3) then
