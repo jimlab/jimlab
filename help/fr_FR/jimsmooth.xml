@@ -20,7 +20,6 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            blured = jimsmooth(Image,fogType)
 			blured= jimsmooth(Image,fogType)
 			blured=	 jimsmooth(Image,fogType,fogWidth)
 			blured=	 jimsmooth(Image,fogMatrix)
@@ -74,14 +73,14 @@
             Cette fonction permet de flouter une image à l'aide des profils prédéfinis de floutage suivant: uniforme ou triangulaire ou gaussien(sigma =flogWidth/4).Une matrice de floutage explicite <literal> flogMatrix </literal> peut alternativement être fournie.
 	</para>
 		<para>
-			 Si un objet <code>jimage</code> est donné en entrée, les champs <code>.title</code> et <code>.format</code> sont conservés pour l'objet en sortie, seul le champ <code> .image </code> est modifié.
+			 Si un objet <code>jimage</code> est donné en entrée, seul le champ <code> .image </code> est modifié.
                </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
 		//Objet de type jimage(gray image)
-		path=jimlabPath("/") + 'tests/images/noError/";
+		path=jimlabPath("/") + 'tests/images/noError/';
 		jimage1 = jimread(path + 'gray.jpg');
 		blured1 = jimsmooth(jimage1,"gaussian",9);
 		subplot(2,2,1),jimdisp(jimage1)
@@ -95,7 +94,7 @@
 		subplot(2,2,4),jimdisp(blured2)
  ]]></programlisting>
   <scilab:image>
-  <!--
+  
 //Objet de type jimage(gray image)
 		path=jimlabPath("/") + 'tests/images/noError/";
 		jimage1 = jimread(path + 'gray.jpg');
@@ -109,7 +108,7 @@
 		blured2 = jimsmooth(jimage2,"gaussian",9);
 		subplot(2,2,3),jimdisp(jimage2)
 		subplot(2,2,4),jimdisp(blured2)
-	-->
+
    </scilab:image>
 	</refsection>
     <refsection role="see also">
