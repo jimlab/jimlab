@@ -12,16 +12,15 @@
 <refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
 		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
 		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
-		xml:lang="fr" xml:id="jimsmooth">
+		xml:lang="fr" xml:id="jimpixelised">
     <refnamediv>
-        <refname>jimpixelise</refname>
+        <refname>jimpixelised</refname>
         <refpurpose>pixelisation d'une image</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-			impixeled= jimpixelise(Image,size)
-			impixeled= jimpixelise(Image,picHeigth,picWidth)
+			impixeled= jimpixelised(Image,boxSize)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -36,26 +35,11 @@
 					</para>
 				</varlistentry>
 				<varlistentry>
-				<term>size</term>
+				<term>boxSize</term>
 				 <para>
-			Un nombre entier positif correspondant à la taille du carré(nombre de pixels) avec laquelle Image serait divisé.La valeur par défaut est 10.
+			soit un scalaire correspondant à la taille du carré(nombre de pixels) avec laquelle Image serait divisé.La valeur par défaut est 10; Soit un  vecteur à 2 composantes [picHeigth,picWidth](picHeigth,picWidth deux nombres entiers positifs correspondant respectivement  à la longueur ,largeur du rectangle.)
 				</para>
 				</varlistentry>
-		
-			<varlistentry>
-			<term>picHeigth</term>
-			<para>
-			Un nombre entier positif correspondant à la longueur du rectangle(Image est divisée en rectangle).
-			</para>
-			</varlistentry>
-			
-			<varlistentry>
-			<term>picWidth</term>
-			<para>
-				Un nombre entier positif correspondant à la largeur du rectangle.
-			</para>
-			</varlistentry>
-
 			<varlistentry>
 				<term>impixeled</term>
                 <listitem>
@@ -69,7 +53,7 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet de flouter une image en partie ou dans sa totalité.la partie pixelisée fait apparaitre des zones de n*m pixels de couleurs uniformes.
+            Cette fonction permet de flouter une image.la zone  pixelisée fait apparaitre des blocs de n*m pixels de couleurs uniformes.
 	</para>
 		<para>
 			 Si un objet <code>jimage</code> est donné en entrée, seul le champ <code> .image </code> est modifié.
