@@ -46,7 +46,7 @@
              transparencyColor = 0.299 .* transparencyColor(1) + ..
                 0.587 .* transparencyColor(2) + 0.114 .* transparencyColor(3);
          end
-         if (transparencyColor > 255 | transparencyColor < 0)
+         if (transparencyColor > 255 | transparencyColor < -1)
              msg2 = _("%s: Argument #%d: Components of transparencyColor must be in the intervalle [0:255].\n");
              error(msprintf(msg2,"jimhistEqual", 2));
          end
