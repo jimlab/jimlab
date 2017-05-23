@@ -23,11 +23,6 @@
         <synopsis>
             convertedImage = jimconvert(image, encoding)
 			convertedImage = jimconvert(image, encoding, transparencyColor)
-			convertedImage = jimconvert(image, encoding, , , argb?)
-			convertedImage = jimconvert(image, encoding, , , , colorsBits)
-			convertedImage = jimconvert(image, encoding, , colormap)
-			convertedImage = jimconvert(image, encoding, transparencyColor, , argb?)
-			convertedImage = jimconvert(image, encoding, transparencyColor, , , colorsBits)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -37,48 +32,43 @@
                 <term>image</term>
                 <listitem>
                     <para>
-						Cet argument d'entrée peut prendre les formes suivantes :
-							<itemizedlist>
-								<listitem>
-									<para>
-									un objet <literal>jimage</literal>
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									une matrice ou une hypermatrice de doubles normalisés entre 0 et 1 ou non
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									une matrice d'entiers sur 32 bits (int32 ou uint32) qui donne les couleurs d'un pixels en RGBA ou en ARGB (voir Matplot_properties)
-									<warning>Par défaut l'argument <literal>argb?</literal> est <literal>%f</literal></warning>
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									une matrice de numéros de couleurs telles que répertoriées dans la table de couleur définie par l'argument <literal>colormap</literal> alors obligatoire. 
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									une hypermatrice RGB, RGBA ou ARGB d'entiers sur 8 bits (int8 ou uint8)
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									une matrice d'entiers sur 16 bits (int16 ou uint16) qui donne les couleurs des pixels en RGB ou RGBA.
-									<warning>Par défaut,  l'encodage binaire <literal>colorsBits</literal> utilisé est "4444"</warning>
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									une matrice booléenne
-									</para>
-								</listitem>
+						<itemizedlist>
+							<listitem>
+								<para>
+								<emphasis role="bold">objet jimage</emphasis> : dont le champ <literal>.image</literal> est encodé en RGB ou en RGBA.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis role="bold">hypermatrice</emphasis> : RGB ou RGBA d'entiers int8 ou uint8, ou de décimaux équivalents sur [0, 255], sur [-128, 127] ou normalisés dans l'intervalle [0, 1].
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis role="bold">matrice</emphasis>
+									<itemizedlist>
+										<listitem>
+										<para>
+											d'entiers uint16 ou int16 sous découpage binaire "rgba4444" ou de décimaux équivalents sur [0, 2<superscript>16</superscript>-1] ou sur [-2<superscript>15</superscript>; 2<superscript>15</superscript>-1].
+										</para>
+										</listitem>
+										<listitem>
+										<para>
+											d'entiers uint32 ou int32 sous découpage binaire "rgba8888", ou de décimaux équivalents sur [0, 2<superscript>32</superscript>-1] ou sur [-2<superscript>31</superscript>, 2<superscript>32</superscript>-1]
+										</para>
+										</listitem>	
+										<listitem>
+										<para>
+											de booléens
+										</para>
+										</listitem>
+									</itemizedlist>
+								</para>
+							</listitem>
 						</itemizedlist>
-					</para>					
-                </listitem>
+						Si l'image d'entrée a un autre encodage, on lui appliquera <function>jimstandard</function>() avant de la fournir à <function>jimconvert</function>().
+					</para>
+				</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term>encoding</term> 
@@ -92,60 +82,19 @@
 				<term>transparencyColor</term> 
                 <listitem>
                     <para>
-						Un vecteur à trois composantes dans l'intervalle [0;255]. Il correspond à la nuance de couleur qui sera utilisée pour tous les pixels ayant leur transparence au maximum. Par défaut, le blanc est choisi comme couleur de transparence. 
-					</para>
-                </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>argb?</term> 
-                <listitem>
-                    <para>
-						Un booléen : <literal>%t</literal> si l'image d'entrée est encodée en ARGB, <literal>%f</literal> si l'image est encodée en RGBA. Par défaut, la valeur de cet argument est <literal>%f</literal>.
-					</para>
-                </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>colorsBits</term> 
-                <listitem>
-                    <para>
-						Une chaîne de caractère donnant le type d'encodage pour une matrice en entrée codée en uint16 : 
-						<itemizedlist>
-								<listitem>
-									<para>
-									'444' indique que chaque couleur est codée sur 4 bits
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									'555' indique que chaque couleur est codée sur 5 bits
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									'4444' indique que chaque couleur ainsi que la transparence est codée sur 4 bits
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									'5551' indique que chaque couleur est codé sur 5 bits et la transparence sur 1 bit. 
-									</para>
-								</listitem>
-						</itemizedlist>
-					</para>
-                </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>colormap</term> 
-                <listitem>
-                    <para>
 						<itemizedlist>
 							<listitem>
-								Une matrice de dimensions M x 3. M est le nombre de couleurs de la colormap. Pour chaque ligne, les trois coefficients définissent l'intensité du rouge, du vert et du bleu normalisée entre 0 et 1. 
+								<para>
+									Un vecteur ou une hypermatrice à trois composantes dans l'intervalle [0, 255]
+								</para>
 							</listitem>
 							<listitem>
-								Un identifiant de figure.
+								<para>
+									Un scalaire dans l'intervalle [0, 255] si l'argument <literal>encoding</literal> est <literal>"gray"</literal>.
+								</para>
 							</listitem>
 						</itemizedlist>
+						Il correspond à la nuance de couleur affectée à tous les pixels ayant leur transparence au maximum. Par défaut, le blanc est choisi comme couleur de transparence. Cet argument est utilisé seulement si l'image d'entrée est encodée en RGBA.
 					</para>
                 </listitem>
 			</varlistentry>
@@ -153,17 +102,8 @@
 				<term>convertedImage</term> 
                 <listitem>
                     <para>
-						<itemizedlist>
-							<listitem>
-							Un objet de type <literal>jimage</literal> dont le champ <literal>.image</literal> a l'encodage correspondant à l'argument <literal>encoding</literal>
-							</listitem>
-							<listitem>
-							une matrice de niveaux de gris encodée en uint8
-							</listitem>
-							<listitem>
-							une hypermatrice à 3 couches encodée en uint8
-							</listitem>
-						</itemizedlist>
+						Un objet de type <literal>jimage</literal> dont le champ <literal>.image</literal> a l'encodage correspondant à l'argument <literal>encoding</literal>, une matrice de niveaux de gris encodée en uint8 ou une hypermatrice RGB encodée en uint8
+
 					</para>
                 </listitem>
 			</varlistentry>
@@ -241,13 +181,7 @@ jimdisp(jrgb,,'info')
                 <link linkend="jimage_properties">jimage_properties</link>
             </member>
 			<member>
-                <link linkend="colormap">colormap</link>
-            </member>
-			<member>
-                <link linkend="Matplot_properties">Matplot_properties</link>
-            </member>
-			<member>
-                <link linkend="gcf">gcf</link>
+                <link linkend="jimstandard">jimstandard</link>
             </member>
         </simplelist>
     </refsection>
@@ -255,7 +189,7 @@ jimdisp(jrgb,,'info')
         <title>Historique</title>
         <revhistory>
             <revision>
-                <revnumber>0.1 - 2017-05</revnumber>
+                <revnumber>0.1 - 2017-06</revnumber>
                 <revremark>Publication initiale du module Jimlab</revremark>
             </revision>
         </revhistory>
