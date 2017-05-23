@@ -23,11 +23,6 @@
         <synopsis>
             convertedImage = jimconvert(image, encoding)
 			convertedImage = jimconvert(image, encoding, transparencyColor)
-			convertedImage = jimconvert(image, encoding, , , argb?)
-			convertedImage = jimconvert(image, encoding, , , , colorsBits)
-			convertedImage = jimconvert(image, encoding, , colormap)
-			convertedImage = jimconvert(image, encoding, transparencyColor, , argb?)
-			convertedImage = jimconvert(image, encoding, transparencyColor, , , colorsBits)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -37,48 +32,43 @@
                 <term>image</term>
                 <listitem>
                     <para>
-						This argument can be :
-							<itemizedlist>
-								<listitem>
-									<para>
-									a <literal>jimage</literal> object
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									a matrix of doubles normalized between 0 and 1 or not
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									a matrix of 32 bits integers (int32 or uint32) which gives the colors of a pixel in RGBA or ARGB (see Matplot_properties)
-									<warning>By default, the argument <literal>argb?</literal> is <literal>%f</literal></warning>
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									a matrix of color numbers as indexed in the table color defined by <literal>colormap</literal> which is in this case necessary
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									a hypermatrix RGB, RGBA or ARGB of 8 bits integers (int8 or uint8)
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									a matrix of 16 bits integers (int16 or uint16) which gives the color of each pixel in RGB or RGBA
-									<warning>By default,  binary encoding <literal>colorsBits</literal> used is "4444"</warning>
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									a matrix of boolean
-									</para>
-								</listitem>
+						<itemizedlist>
+							<listitem>
+								<para>
+								<emphasis role="bold">jimage object</emphasis> : with RGB or RGBA encoded field <literal>.image</literal>.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis role="bold">hypermatrix</emphasis> : RGB or RGBA of int8 or uint8, or of equivalent decimal numbers in [0, 255], in [-128, 127] or normalized in the intervalle [0, 1].
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									<emphasis role="bold">matrix</emphasis>
+									<itemizedlist>
+										<listitem>
+										<para>
+											of uint16 or int16 with binary segmentation "rgba4444" or of equivalent decimal numbers in [0, 2<superscript>16</superscript>-1] or in [-2<superscript>15</superscript>; 2<superscript>15</superscript>-1].
+										</para>
+										</listitem>
+										<listitem>
+										<para>
+											of uint32 or int32 with binary segmentation "rgba8888", or of equivalent decimal numbers in [0, 2<superscript>32</superscript>-1] or in [-2<superscript>31</superscript>, 2<superscript>32</superscript>-1]
+										</para>
+										</listitem>	
+										<listitem>
+										<para>
+											of booleans
+										</para>
+										</listitem>
+									</itemizedlist>
+								</para>
+							</listitem>
 						</itemizedlist>
-					</para>					
-                </listitem>
+						If the input image has a differenct encoding, <function>jimstandard</function>() should be used before <function>jimconvert</function>().
+					</para>
+				</listitem>
 			</varlistentry>
 			<varlistentry>
 				<term>encoding</term> 
@@ -92,60 +82,19 @@
 				<term>transparencyColor</term> 
                 <listitem>
                     <para>
-						A vector with three components in the intervalle [0;255]. It defines the color shade used for all transparent pixels. By default, white is used a transparency color.
-					</para>
-                </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>argb?</term> 
-                <listitem>
-                    <para>
-						a boolean : <literal>%t</literal> it the input image is encoded in ARGB, <literal>%f</literal> if the input image is encoded in RGBA. By default, the value of this argument is <literal>%f</literal>.
-					</para>
-                </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>colorsBits</term> 
-                <listitem>
-                    <para>
-						A string which gives the binary encoding for an input matrix of uint16 : 
-						<itemizedlist>
-								<listitem>
-									<para>
-									'444' indicates that each color is encoded on 4 bits
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									'555' indicates that each color is encoded on 5 bits
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									'4444' indicates that each color and the transparency are encoded on 4 bits
-									</para>
-								</listitem>
-								<listitem>
-									<para>
-									'5551' indicates that each color is encoded on 5 bits and the transparency on 1 bits
-									</para>
-								</listitem>
-						</itemizedlist>
-					</para>
-                </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>colormap</term> 
-                <listitem>
-                    <para>
-						<itemizedlist>
+					<itemizedlist>
 							<listitem>
-								A M x 3 matrix. M is the number of colors in the colormap. In each line, the three components define the intensity of red, green and blue normalized between 0 and 1.
+								<para>
+									A vector or a hypermatrix with three components in the intervalle [0;255].
+								</para>
 							</listitem>
 							<listitem>
-								A figure handle.
+								<para>
+									A scalar in the intervalle [0, 255] if the argument <literal>encoding</literal> is <literal>"gray"</literal>.
+								</para>
 							</listitem>
 						</itemizedlist>
+						 It defines the color shade allocated to all transparent pixels. By default, white is used a transparency color. It is only used when the input image is encoded in RGBA.
 					</para>
                 </listitem>
 			</varlistentry>
@@ -153,17 +102,7 @@
 				<term>convertedImage</term> 
                 <listitem>
                     <para>
-						<itemizedlist>
-							<listitem>
-							An object <literal>jimage</literal> whose <literal>.image</literal> field has the encoding given by the input argument <literal>encoding</literal>
-							</listitem>
-							<listitem>
-							A matrix of gray levels encoded in uint8
-							</listitem>
-							<listitem>
-							A hypermatrix with three layers encoded in uint8
-							</listitem>
-						</itemizedlist>
+						An object <literal>jimage</literal> whose <literal>.image</literal> field has the encoding given by the input argument <literal>encoding</literal>, a matrix of gray levels encoded in uint8 or a hypermatrix RGB encoded in uint8.
 					</para>
                 </listitem>
 			</varlistentry>
@@ -241,13 +180,7 @@ jimdisp(jrgb,,'info')
                 <link linkend="jimage_properties">jimage_properties</link>
             </member>
 			<member>
-                <link linkend="colormap">colormap</link>
-            </member>
-			<member>
-                <link linkend="Matplot_properties">Matplot_properties</link>
-            </member>
-			<member>
-                <link linkend="gcf">gcf</link>
+                <link linkend="jimstandard">jimstandard</link>
             </member>
         </simplelist>
     </refsection>
@@ -255,7 +188,7 @@ jimdisp(jrgb,,'info')
         <title>History</title>
         <revhistory>
             <revision>
-                <revnumber>0.1 - 2017-05</revnumber>
+                <revnumber>0.1 - 2017-06</revnumber>
                 <revremark>First release of Jimlab</revremark>
             </revision>
         </revhistory>
