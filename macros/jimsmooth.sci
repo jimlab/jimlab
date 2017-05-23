@@ -48,7 +48,7 @@ function [IMB] =jimsmooth(Image, varargin)
     else
         error('Not any jimage or matrix argument have been defined' );
     end
-disp(ndims(mat_image));
+
     if((ndims(mat_image) == 4) | (ndims(mat_image) == 3)) // Verify if Mat is a 2D
         type_image = "rgb"; // Alpha channel isn't modified
     elseif(ndims(mat_image) == 2) // For 2D matrix
@@ -59,7 +59,7 @@ disp(ndims(mat_image));
 
     select type_image,
     case "gray" then
-        IMB= uint8(conv2(mat_filter, double( mat_image))) ;
+        IMB= uint8(conv2( double( mat_image),mat_filter,'same')) ;
     case "rgb" then
         // Convolve the three separate color .
         mat_image(:,:,1)=conv2(double(mat_image(:,:,1)),mat_filter,'same');
@@ -81,8 +81,7 @@ function [matMask] =jimsmooth_mask(fogType, fogwidth)
 
     order=2;
     //testing the parity of fogwidth mask
-disp(fogwidth);
-    if((modulo(fogwidth, 2)) ==0 | fogwidth<3 ) then error('the fogwidth must be  odd' ) ; end;
+        if((modulo(fogwidth, 2)) ==0 | fogwidth<3 ) then error('the fogwidth must be  odd' ) ; end;
     // mat =mask(fogwidth);//the mask of filter
     select fogType
 
