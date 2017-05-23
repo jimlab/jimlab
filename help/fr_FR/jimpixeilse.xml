@@ -21,9 +21,7 @@
         <title>Syntaxes</title>
         <synopsis>
 			impixeled= jimpixelise(Image,size)
-			impixeled=	 jimpixelise(Image,picHeigth,picWidth)
-			
-			:
+			impixeled= jimpixelise(Image,picHeigth,picWidth)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
