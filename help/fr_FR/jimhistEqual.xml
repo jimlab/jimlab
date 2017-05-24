@@ -182,8 +182,7 @@ jimdisp(equalizedImage)
 	</scilab:image>
     <programlisting role="example"><![CDATA[ 
 //Matrice en niveaux de gris sans transparence
-//path = jimlabPath("/") + 'tests/images/lena512.jpg';
-path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+path = jimlabPath("/") + 'tests/images/lena_lowcontrast.jpg';
 jimage = jimread(path);
 image = jimage.image;
 equalizedImage = jimhistEqual(image);
@@ -204,8 +203,7 @@ jimdisp(equalizedImage)
  ]]></programlisting>
 	<scilab:image>
 	//Matrice en niveaux de gris sans transparence
-	//path = jimlabPath("/") + 'tests/images/lena512.jpg';
-	path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+	path = jimlabPath("/") + 'tests/images/lena_lowcontrast.jpg';
 	jimage = jimread(path);
 	image = jimage.image;
 	equalizedImage = jimhistEqual(image);
@@ -240,7 +238,7 @@ jimdisp(equalizedImage)
         <title>Historique</title>
         <revhistory>
             <revision>
-                <revnumber>0.1 - 2017-05</revnumber>
+                <revnumber>0.1 - 2017-06</revnumber>
                 <revremark>Publication initiale du module Jimlab</revremark>
             </revision>
         </revhistory>
