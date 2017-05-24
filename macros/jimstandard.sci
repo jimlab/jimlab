@@ -7,25 +7,54 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
+function [convertedMat, originalType] = jimstandard(imageMat,opt)
+    
+    t = type(imageMat(:,:,1));
+    
+    //Optionnal argument
+    if (isdef("opt") & type(opt) ~= 0) then
+        if type(opt) == 4
+            argb? = opt;
+        elseif type(opt) == 10
+            argb? = %f;
+            stdr_colorsBits = strstr(["444","555","4444","5551","332"], opt);
+            if(stdr_colorsBits ~= "")
+                colorsBits = opt;
+            end
+        elseif opt == 1.
+            argb? = %t;
+        elseif opt == 0.
+            argb? = %f;
+        elseif size(opt, 3) == 3.
+            colormap = opt;
+        elseif opt == gcf()
+            // opt can be a graphic handle , the current colormap will be used
+            f = gcf();
+            colormap = f.colormap;
+        else
+            msg = _("%s: Argument #%d: Wrong type of input argument.\n");
+            error(msprintf(msg,"jimstandard", 2));
+        end
+    end
+    
     
     //If the type is not supported by jimstandard(), the function returns false
     convertedMat = %f;
     originalType = 0;
     layers = size(imageMat, 3);
-    if(isdef(["argb"],"l")&(type(argb) ~= 0)) then
-        // If an hypermatrix is define as ARGB or RGBA
-        if((argb == 1)|(argb == %t)) then
-            argb = %t;
-        elseif((argb == 0)|(argb == %f)) then
-            argb = %f;
+    if(isdef(["argb?"],"l")&(type(argb?) ~= 0)) then
+        // If an hypermatrix is define as argb? or RGBA
+        if((argb? == 1)|(argb? == %t)) then
+            argb? = %t;
+        elseif((argb? == 0)|(argb? == %f)) then
+            argb? = %f;
         else 
-            warning("Bad argument type for argb, rgba standard"..
+            warning("Bad argument type for argb?, rgba standard"..
             +" will be used.");
-            argb = %f;
+            argb? = %f;
         end
     else
-        argb = %f;
+        argb? = %f;
     end
      
 
@@ -51,7 +80,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
         originalType = "ind";
                 
     else 
-        t = type(imageMat(:,:,1));
+        
         select(t)
         case 1. then     // Converts a real matrix of real arguments
             if((max(imageMat) <= 1.) & (min(imageMat) >= 0.)) then
@@ -80,46 +109,46 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
                 convertedMat = imageMat;
                 originalType = "uint8";
             elseif(tmp == 12.) then
-                if(isdef(["Type"],"l")&(type(Type) ~= 0))
+                if(isdef(["colorsBits"],"l")&(type(colorsBits) ~= 0))
                     argb = %f;
-                    stdr_Type = strstr(["444","555","4444","5551"],Type);
-                    if(stdr_Type == "")
-                        Type = '4444';
+                    stdr_colorsBits = strstr(["444","555","4444","5551"],colorsBits);
+                    if(stdr_colorsBits == "")
+                        colorsBits = '4444';
                         warning('The type of enconing is not given. By default, the type rgba4444 is used');
                     end
                 else
-                    Type = '4444';
+                    colorsBits = '4444';
                     warning('The type of enconing is not given. By default, the type rgba4444 is used');
                 end
-                convertedMat = jimstandard_uint16(imageMat,Type);
-                originalType = ["uint16", Type];
+                convertedMat = jimstandard_uint16(imageMat,colorsBits);
+                originalType = ["uint16", colorsBits];
             elseif(tmp == 2.) then
-                if(isdef(["Type"],"l")&(type(Type) ~= 0))
-                    argb = %f;
-                    stdr_Type = strstr(["444","555","4444","5551"],Type);
-                    if(stdr_Type == "")
-                        Type = '4444';
+                if(isdef(["colorsBits"],"l")&(type(colorsBits) ~= 0))
+                    argb? = %f;
+                    stdr_colorsBits = strstr(["444","555","4444","5551"],colorsBits);
+                    if(stdr_colorsBits == "")
+                        colorsBits = '4444';
                         warning('The type of enconing is not given. By default, the type rgba4444 is used');
                     end
                 else
-                    Type = '4444';
+                    colorsBits = '4444';
                     warning('The type of enconing is not given. By default, the type rgb444 is used');
                 end
                 tmp = uint16(imageMat);
-                convertedMat = jimstandard_uint16(imageMat,Type);
+                convertedMat = jimstandard_uint16(imageMat,colorsBits);
                 originalType = "int16";
             elseif (tmp == 14.) then
-                 convertedMat = jimstandard_uint32(imageMat,argb);
+                 convertedMat = jimstandard_uint32(imageMat,argb?);
                  originalType = "uint32";
            elseif(tmp == 4.) then
                  tmp = uint32(imageMat); 
-                 convertedMat = jimstandard_uint32(tmp,argb);
+                 convertedMat = jimstandard_uint32(tmp,argb?);
                  originalType = "int32";
             end
         end
     end
     
-    if(argb & layers == 4) then // If argb standard is used, convertion in rgba standard
+    if(argb? & layers == 4) then // If argb standard is used, convertion in rgba standard
         test = ["int16","uint16","int32","uint32"];
         if(strstr(test,originalType(1)) == "")
            tmp = convertedMat(:,:,1);
@@ -132,28 +161,28 @@ function [convertedMat, originalType] = jimstandard(imageMat,colormap,argb,Type)
 endfunction
 
 
- function [convertedMat] = jimstandard_uint32(image, argb)
+ function [convertedMat] = jimstandard_uint32(image, argb?)
      //This subfunction is called by jimstandard(). 
      //It converts a matrix of uint32 into a hypermatrix of uint8 with 4 layers. 
      //image : a matrix of uint32 
-     //argb : a boolean. True if the image is encoded in ARGB and false if the image is encoded in RGBA
+     //argb? : a boolean. True if the image is encoded in ARGB and false if the image is encoded in RGBA
      //convertedMat : a hypermatrix of uint8 with 4 layers. The value of each layer corresponds to one byte of the uint32. 
      
-     if (~isdef('argb', "l") | type(argb) == 0) then
-         argb = %f;
-     elseif (type(argb) ~= 4) then
+     if (~isdef('argb?', "l") | type(argb?) == 0) then
+         argb? = %f;
+     elseif (type(argb?) ~= 4) then
          msg = _("%s: Argument #%d: Boolean expected.\n");
          error(msprintf(msg,"jimstandard_uint32", 2));
      end
      
-     if (argb == %t) then
+     if (argb? == %t) then
          convertedMat(:,:,4) = floor(image./uint32(16^6));
          r = modulo(image,uint32(16^6));
          convertedMat(:,:,1) = floor(r./uint32(16^4));
          g = modulo(image,uint32(16^4));
          convertedMat(:,:,2) = floor(g./uint32(16^2));
          convertedMat(:,:,3) = modulo(image,uint32(16^2))
-     elseif (argb == %f) then
+     elseif (argb? == %f) then
          convertedMat(:,:,1) = floor(image./uint32(16^6));
          g = modulo(image,uint32(16^6));
          convertedMat(:,:,2) = floor(g./uint32(16^4));
@@ -166,22 +195,22 @@ endfunction
     
  endfunction
  
- function [convertedMat] = jimstandard_uint16(image, Type)
+ function [convertedMat] = jimstandard_uint16(image, colorsBits)
      //This subfunction is called by jimstandard(). 
      //It converts a matrix of uint16 into a hypermatrix of uint8 with 3 or 4 layers. 
      //image : a matrix of uint16 
-     //Type : a string. '444', '555', '4444' or '5551'. This arguments enable to know the number of bits used by each components.
+     //colorsBits : a string. '444', '555', '4444' or '5551'. This arguments enable to know the number of bits used by each components.
      //convertedMat : a hypermatrix of uint8 with 3 or 4 layers. The value of each layer corresponds to one components of the uint16 value. 
      
-     if (~isdef('Type', "l") | type(Type) == 0) then
-         Type = '4444';
+     if (~isdef('colorsBits', "l") | type(colorsBits) == 0) then
+         colorsBits = '4444';
          warning('The type of enconing is not given. By default, the type rgb444 is used');
-     elseif (type(Type) ~= 10) then
+     elseif (type(colorsBits) ~= 10) then
          msg = _("%s: Argument #%d: String expected.\n");
          error(msprintf(msg,"jimstandard_uint16", 2));
      end
      
-     if (Type == '444') then
+     if (colorsBits == '444') then
          //This case corresponds to image_type "rgb444" in Matplot_properties
         r = modulo(image,uint16(16^3));
         convertedMat(:,:,1) = floor(r./uint16(16^2));
@@ -190,7 +219,7 @@ endfunction
         convertedMat(:,:,3) = modulo(image,uint16(16));
         convertedMat = double(convertedMat) * 255/15;
         convertedMat = uint8(convertedMat);
-     elseif (Type == '555') then
+     elseif (colorsBits == '555') then
          r = modulo(image,uint16(2^15));
          convertedMat(:,:,1) = floor(r./uint16(2^10));
          g = modulo(image,uint16(2^10));
@@ -198,7 +227,7 @@ endfunction
          convertedMat(:,:,3) = modulo(image,uint16(2^5))
          convertedMat = double(convertedMat) * 255/31;
          convertedMat = uint8(convertedMat);
-     elseif (Type == '4444') then
+     elseif (colorsBits == '4444') then
         convertedMat(:,:,1) = floor(image./uint16(16^3));
         g = modulo(image,uint16(16^3));
         convertedMat(:,:,2) = floor(g./uint16(16^2));
@@ -207,7 +236,7 @@ endfunction
         convertedMat(:,:,4) = modulo(image,uint16(16));
         convertedMat = double(convertedMat) * 255/15;
         convertedMat = uint8(convertedMat);
-     elseif (Type == '5551') then
+     elseif (colorsBits == '5551') then
          convertedMat(:,:,1) = floor(image./uint32(2^11));
          g = modulo(image,uint32(2^11));
          convertedMat(:,:,2) = floor(g./uint16(2^6));
