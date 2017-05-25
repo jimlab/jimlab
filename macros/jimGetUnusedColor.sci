@@ -9,7 +9,7 @@
  function [Color] = jimGetUnusedColor(image, targetColor)
      
      // test of the first argument and convertion in uint8 if necessary
-     if (typeof(jimage) ~= "jimage") then
+     if (typeof(image) ~= "jimage") then
          [image, originalType] = jimstandard(image);
          if (type(image) == 4)
             if (image == %f) then
