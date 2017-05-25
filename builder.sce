@@ -9,8 +9,7 @@ function main_builder()
 
     TOOLBOX_NAME  = "jimlab";
     TOOLBOX_TITLE = "jimlab";
-    //toolbox_dir = pwd();        // for working out
-    toolbox_dir   = get_absolute_file_path("builder.sce");
+    toolbox_dir = pwd();        // for working out
 
     // Check Scilab's version
     // ======================
@@ -24,7 +23,8 @@ function main_builder()
     toolbox_dir   = get_absolute_file_path("builder.sce");
     // Macros
     mprintf("Building macros...\n-- Creation of [%s] --\n", TOOLBOX_NAME+"lib");
-    genlib(TOOLBOX_NAME+"lib", toolbox_dir+"macros", %t); // to force rebuilding
+    genlib(TOOLBOX_NAME+"lib", toolbox_dir+"macros", %t);   // to force rebuilding
+    genlib("jimagelib", toolbox_dir+"macros/overload", %t); // to force rebuilding
     //tbx_builder_macros(toolbox_dir);
 
     // loader and cleaner
