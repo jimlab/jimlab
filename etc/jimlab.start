@@ -5,7 +5,7 @@
 
 // This file is released under the 3-clause BSD license. See COPYING-BSD.
 
-function jimlablib = startModule()
+function startModule()
 
     TOOLBOX_NAME  = "jimlab";
     TOOLBOX_TITLE = "jimlab";
@@ -21,6 +21,7 @@ function jimlablib = startModule()
     mprintf("\tLoad macros\n");
     pathmacros = pathconvert( root_tlbx ) + "macros" + filesep();
     jimlablib = lib(pathmacros);
+    jimagelib = lib(pathmacros + "overload" + filesep());
 
     // load localization
     //  addlocalizationdomain(TOOLBOX_NAME, root_tlbx + "/locales");
@@ -42,9 +43,11 @@ function jimlablib = startModule()
         pathdemos = pathconvert(root_tlbx+"/demos/jimlab.dem.gateway.sce", %F, %T);
         add_demo(TOOLBOX_TITLE, pathdemos);
     end
+
+    [jimlablib, jimagelib] = return(jimlablib, jimagelib);
 endfunction
 
-jimlablib = startModule();
+startModule();
 
 // In Scilab 6.0.0, all the memory of the computer is available
 v = getversion("scilab");
