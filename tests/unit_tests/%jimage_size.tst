@@ -1,5 +1,5 @@
 // This file is part of the Jimlab module,
-// an external module coded for Scilab and dedicated to image processing.
+// an external module coded for Scilab and dedicated to Jimage processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
 //
@@ -11,39 +11,38 @@
 // <-- TEST WITH GRAPHIC -->
 // <-- NO CHECK REF -->
 
-// Tests of the size(jimage) overload
+// Tests of the size(Jimage) overload
 // ----------------------------------
 path = jimlabPath("/") + "tests/images/";
 
-// RGB image
+// RGB Jimage
 // =========
-jimage = jimread(path + "lena_color.gif");
-assert_checkequal(size(jimage),[500 512]);
-assert_checkequal(size(jimage, 1), 500);
-assert_checkequal(size(jimage, 2), 512);
-assert_checkequal(size(jimage, "r"), 500);
-assert_checkequal(size(jimage, "c"), 512);
-assert_checkequal(size(jimage, "*"), 500*512);
+Jimage = jimread(path + "lena_color.gif");
+assert_checkequal(size(Jimage),[500 512]);
+assert_checkequal(size(Jimage, 1), 500);
+assert_checkequal(size(Jimage, 2), 512);
+assert_checkequal(size(Jimage, "r"), 500);
+assert_checkequal(size(Jimage, "c"), 512);
+assert_checkequal(size(Jimage, "*"), 500*512);
 
 
-// RGBA image
+// RGBA Jimage
 // ==========
-jimage = jimread(path+"noError/rgba.png");
-assert_checkequal(size(jimage),[50 50]);
-assert_checkequal(size(jimage, 1), 50);
-assert_checkequal(size(jimage, 2), 50);
-assert_checkequal(size(jimage, "r"), 50);
-assert_checkequal(size(jimage, "c"), 50);
-assert_checkequal(size(jimage, "*"), 2500);
+Jimage = jimread(path+"noError/rgba.png");
+assert_checkequal(size(Jimage),[50 50]);
+assert_checkequal(size(Jimage, 1), 50);
+assert_checkequal(size(Jimage, 2), 50);
+assert_checkequal(size(Jimage, "r"), 50);
+assert_checkequal(size(Jimage, "c"), 50);
+assert_checkequal(size(Jimage, "*"), 2500);
 
 
-// Gray image
+// Gray Jimage
 // ==========
-jimage = jimread(path+"noError/gray.jpg");
-assert_checkequal(size(jimage),[50 50]);
-assert_checkequal(size(jimage, 1), 50);
-assert_checkequal(size(jimage, 2), 50);
-assert_checkequal(size(jimage, "r"), 50);
-assert_checkequal(size(jimage, "c"), 50);
-assert_checkequal(size(jimage, "*"), 2500);
-
+Jimage = jimread(path+"noError/gray.jpg");
+assert_checkequal(size(Jimage),[50 50]);
+assert_checkequal(size(Jimage, 1), 50);
+assert_checkequal(size(Jimage, 2), 50);
+assert_checkequal(size(Jimage, "r"), 50);
+assert_checkequal(size(Jimage, "c"), 50);
+assert_checkequal(size(Jimage, "*"), 2500);
