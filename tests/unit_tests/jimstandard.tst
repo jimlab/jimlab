@@ -3,7 +3,7 @@
 uint8rgba = uint8(grand(10,10,4,"uin",0,255));
 subplot(2,1,1)
 Matplot(uint8rgba);
-[test, T] = jimstandard(uint8rgba,,%f);
+[test, T] = jimstandard(uint8rgba,%f);
 [test2, T2] = jimstandard(uint8rgba);
 assert_checkequal(uint8rgba,test)
 assert_checkequal(test,test2) 
@@ -19,7 +19,7 @@ subplot(2,1,1)
 Matplot(uint8argb);
 f = gce();
 f.image_type = "argb";
-[test, T] = jimstandard(uint8argb,,%t);
+[test, T] = jimstandard(uint8argb,%t);
 assert_checkequal(T, ["uint8"; "argb"])
 assert_checkequal(type(test(1,1,1)), 8.)
 subplot(2,1,2)
@@ -27,10 +27,23 @@ Matplot(test);
 
 //uint8 rgb 
 uint8rgb = uint8rgba(:,:,1:3);
+subplot(2,1,1)
 Matplot(uint8rgb);
 [test, T] = jimstandard(uint8rgb);
 assert_checkequal(uint8rgb,test)
 assert_checkequal(T, ["uint8"])
+assert_checkequal(type(test(1,1,1)), 8.)
+subplot(2,1,2)
+Matplot(test);
+
+//uint8 rgb332
+uint8rgb332 = uint8rgba(:,:,1);
+subplot(2,1,1)
+Matplot(uint8rgb332);
+f = gce();
+f.image_type = "rgb332";
+[test, T] = jimstandard(uint8rgb332, "332");
+assert_checkequal(T, ["uint8", "332"])
 assert_checkequal(type(test(1,1,1)), 8.)
 subplot(2,1,2)
 Matplot(test);
@@ -50,7 +63,7 @@ Matplot(test);
 int8rgba = int8(grand(10, 10, 4,"uin", -128, 127));
 subplot(2,1,1)
 Matplot(int8rgba);
-[test, T] = jimstandard(int8rgba,,%f);
+[test, T] = jimstandard(int8rgba,%f);
 [test2, T2] = jimstandard(int8rgba);
 assert_checkequal(uint8(int8rgba),test)
 assert_checkequal(test,test2) 
@@ -61,12 +74,12 @@ subplot(2,1,2)
 Matplot(test);
 
 //int8 argb
-int8rgba = int8argb;
+int8argb = int8rgba;
 subplot(2,1,1)
-Matplot(int8rgba);
+Matplot(int8argb);
 f = gce();
 f.image_type = "argb";
-[test, T] = jimstandard(int8argb,,%t);
+[test, T] = jimstandard(int8argb,%t);
 assert_checkequal(T, ["int8"; "argb"])
 assert_checkequal(type(test(1,1,1)), 8.)
 subplot(2,1,2)
@@ -79,6 +92,18 @@ Matplot(int8rgb);
 [test, T] = jimstandard(int8rgb);
 assert_checkequal(uint8(int8rgb),test)
 assert_checkequal(T, ["int8"])
+assert_checkequal(type(test(1,1,1)), 8.)
+subplot(2,1,2)
+Matplot(test);
+
+//int8 rgb332
+int8rgb332 = int8rgba(:,:,1);
+subplot(2,1,1)
+Matplot(int8rgb332);
+f = gce();
+f.image_type = "rgb332";
+[test, T] = jimstandard(int8rgb332, "332");
+assert_checkequal(T, ["int8", "332"])
 assert_checkequal(type(test(1,1,1)), 8.)
 subplot(2,1,2)
 Matplot(test);
@@ -101,9 +126,9 @@ uint164444 = uint16(grand(10, 10, "uin", 0, 65535));
 subplot(2,1,1)
 Matplot(uint164444);
 c = gce();
-c.image_type="rgba444";
+c.image_type="rgb4444";
 [test, T] = jimstandard(uint164444);
-[test2, T2] = jimstandard(uint164444, , ,"4444");
+[test2, T2] = jimstandard(uint164444,"4444");
 assert_checkequal(test,test2) 
 assert_checkequal(T,T2) 
 assert_checkequal(T, ["uint16", "4444"])
@@ -117,7 +142,7 @@ subplot(2,1,1)
 Matplot(uint16555);
 c = gce();
 c.image_type="rgb555";
-[test, T] = jimstandard(uint16555,,,"555");
+[test, T] = jimstandard(uint16555,"555");
 assert_checkequal(T, ["uint16", "555"])
 assert_checkequal(type(test(1,1,1)), 8.)
 subplot(2,1,2)
@@ -129,7 +154,7 @@ subplot(2,1,1)
 Matplot(uint165551);
 c = gce();
 c.image_type="rgba5551"
-[test, T] = jimstandard(uint165551,,,"5551");
+[test, T] = jimstandard(uint165551,"5551");
 assert_checkequal(T, ["uint16", "5551"])
 assert_checkequal(type(test(1,1,1)), 8.)
 subplot(2,1,2)
@@ -141,7 +166,7 @@ subplot(2,1,1)
 Matplot(uint16444);
 c = gce();
 c.image_type="rgb444";
-[test, T] = jimstandard(uint16444,,,"444");
+[test, T] = jimstandard(uint16444,"444");
 assert_checkequal(T, ["uint16", "444"])
 assert_checkequal(type(test(1,1,1)), 8.)
 subplot(2,1,2)
@@ -168,7 +193,7 @@ subplot(2,1,1)
 Matplot(int16555);
 c = gce();
 c.image_type="rgb555";
-[test, T] = jimstandard(int16555,,,"555");
+[test, T] = jimstandard(int16555,"555");
 assert_checkequal(T, ["int16", "555"])
 assert_checkequal(type(test(1,1,1)), 8.)
 subplot(2,1,2)
@@ -180,7 +205,7 @@ subplot(2,1,1)
 Matplot(int165551);
 c = gce();
 c.image_type="rgba5551"
-[test, T] = jimstandard(int165551,,,"5551");
+[test, T] = jimstandard(int165551,"5551");
 assert_checkequal(T, ["int16", "5551"])
 assert_checkequal(type(test(1,1,1)), 8.)
 subplot(2,1,2)
@@ -192,7 +217,7 @@ subplot(2,1,1)
 Matplot(int16444);
 c = gce();
 c.image_type="rgb444";
-[test, T] = jimstandard(int16444,,,"444");
+[test, T] = jimstandard(int16444,"444");
 assert_checkequal(T, ["int16", "444"])
 assert_checkequal(type(test(1,1,1)), 8.)
 subplot(2,1,2)
@@ -204,7 +229,7 @@ Matplot(test);
 doublenMat = rand(10,10,4)
 subplot(2,1,1)
 Matplot(doublenMat);
-[test, T] = jimstandard(doublenMat,,%f);
+[test, T] = jimstandard(doublenMat,%f);
 [test2, T2] = jimstandard(doublenMat);
 assert_checkequal(test2,test)
 assert_checkequal(T2,T)
@@ -214,10 +239,11 @@ subplot(2,1,2)
 Matplot(test);
 
 //doubles normalisés argb
+subplot(2,1,1)
 Matplot(doublenMat);
 f = gce();
 f.image_type = "argb";
-[test, T] = jimstandard(doublenMat,,%t);
+[test, T] = jimstandard(doublenMat,%t);
 assert_checkequal(T, ["double"; "0"; "1"; "argb"])
 assert_checkequal(type(test(1,1,1)), 8.)
 subplot(2,1,2)
@@ -240,10 +266,6 @@ assert_checkequal(T, ["double"; "0"; "1"])
 assert_checkequal(type(test(1,1,1)), 8.)
 assert_checkequal(test, uint8(doubleNgray * 255))
 Matplot(test);
-
-
-//doubles non normalisés
-
 
 //booleens
 boolMat = round(rand(10,10)) == 0
