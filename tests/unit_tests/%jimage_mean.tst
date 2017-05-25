@@ -18,8 +18,8 @@ Files = path + ["noError/gray.jpg" "lena_color.gif" "noError/rgba.png"];
 v = getversion("scilab");
 if v(1)==5 | v(2)>0 | v(3)>0  // mean() is actually overloadable
     for f = Files
-        jimage = jimread(f);
-        image = double(jimage.image);
+        Jimage = jimread(f);
+        image = double(Jimage.image);
         // Conditionning the reference
         if ndims(image)>2 & size(image,3)>3
             image = image(:,:,1:3);
@@ -29,11 +29,11 @@ if v(1)==5 | v(2)>0 | v(3)>0  // mean() is actually overloadable
         else
             ref = mean(image)
         end
-        assert_checkalmostequal(mean(jimage), ref);
-        assert_checkalmostequal(mean(jimage,1), mean(image,1));
-        assert_checkalmostequal(mean(jimage,2), mean(image,2));
-        assert_checkalmostequal(mean(jimage,"r"), mean(image,1));
-        assert_checkalmostequal(mean(jimage,"c"), mean(image,2));
-        assert_checkalmostequal(mean(jimage,"m"), mean(image,1));
+        assert_checkalmostequal(mean(Jimage), ref);
+        assert_checkalmostequal(mean(Jimage,1), mean(image,1));
+        assert_checkalmostequal(mean(Jimage,2), mean(image,2));
+        assert_checkalmostequal(mean(Jimage,"r"), mean(image,1));
+        assert_checkalmostequal(mean(Jimage,"c"), mean(image,2));
+        assert_checkalmostequal(mean(Jimage,"m"), mean(image,1));
     end
 end
