@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
- * Copyright (C) 2017 - ENSIM, Université du Maine - Gaël Senée
- * 
+ * This file is part of Jimlab, an external module coded for Scilab
+ * and dedicated to image processing.
+ *
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Gaël SENÉE
+ *
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms
- * are also available at    
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * you should have received as part of this distribution.  The terms are also
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
-<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
-		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
-		xml:lang="fr" xml:id="jimresize">
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+        xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
+        xml:lang="fr" xml:id="jimresize">
     <refnamediv>
         <refname>jimresize</refname>
         <refpurpose>Redimensionne une image à partir d'un objet jimage, d'une matrice ou d'une hypermatrice.</refpurpose>
@@ -32,14 +33,14 @@
                 <listitem>
                     <para>
                         Objet <link linkend="jimage">jimage</link>, matrice ou hypermatrice d'une image.
-                    </para>					
+                    </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
                 <term>out_height</term>
                 <listitem>
                     <para>
-						Hauteur de l'image de sortie.
+                        Hauteur de l'image de sortie.
                     </para>
                 </listitem>
             </varlistentry>
@@ -47,8 +48,8 @@
                 <term>out_width</term>
                 <listitem>
                     <para>
-						Largeur de l'image de sortie.
-                    </para>					
+                        Largeur de l'image de sortie.
+                    </para>
                 </listitem>
             </varlistentry>
         </variablelist>
@@ -64,19 +65,18 @@
     </refsection>
     <refsection>
         <title>Exemples</title>
-        <programlisting role="example"><![CDATA[ 
+        <programlisting role="example"><![CDATA[
 // A partir d'une image pré-chargée
 path = jimlabPath + '/help/images/logoEnsim.png';
-jimage = jimread(path);
+Jimage = jimread(path)
 
-dim=size(jimage);
-height=dim(1);
-width=dim(2)
+dim = size(Jimage);
+height = dim(1);
+width = dim(2)
 
-new_image = (jimage,2*height,2*width);
-
- ]]></programlisting>
-	</refsection>
+jimresize(Jimage, 2*height, 2*width)
+]]></programlisting>
+    </refsection>
     <refsection role="see also">
         <title>Voir Aussi</title>
         <simplelist type="inline">
