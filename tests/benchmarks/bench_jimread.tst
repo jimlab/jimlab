@@ -10,8 +10,8 @@
 
 root = jimlabPath();
 path = root + '/tests/images/logoEnsim.png';
-jimage = jimread(path);
+Jimage = jimread(path);
 
 // <-- BENCH START -->
-jimage = jimread(path);
+Jimage = jimread(path);
 // <-- BENCH END -->
