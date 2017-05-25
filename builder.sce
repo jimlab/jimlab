@@ -9,7 +9,8 @@ function main_builder()
 
     TOOLBOX_NAME  = "jimlab";
     TOOLBOX_TITLE = "jimlab";
-    toolbox_dir = pwd();        // for working out
+    //toolbox_dir = pwd();        // for working out
+    toolbox_dir   = get_absolute_file_path("builder.sce");
 
     // Check Scilab's version
     // ======================
