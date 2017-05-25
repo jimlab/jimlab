@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
+ * This file is part of Jimlab, an external module coded for Scilab
+ * and dedicated to image processing.
+ *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
- * 
+ *
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms
- * are also available at    
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * you should have received as part of this distribution.  The terms are also
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
-<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
-		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
-		xml:lang="en" xml:id="jimhistEqual">
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+        xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
+        xml:lang="en" xml:id="jimhistEqual">
     <refnamediv>
         <refname>jimhistEqual</refname>
         <refpurpose>Image improvement using histogram equalization</refpurpose>
@@ -22,7 +23,7 @@
         <title>Syntax</title>
         <synopsis>
             equalizedImage = jimhistEqual(image)
-			equalizedImage = jimhistEqual(image, transparencyColor)
+            equalizedImage = jimhistEqual(image, transparencyColor)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -32,126 +33,151 @@
                 <term>image</term>
                 <listitem>
                     <para>
-						<itemizedlist>
-							<listitem>
-								<para>
-								<emphasis role="bold">object <literal>jimage</literal> </emphasis>
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-								<emphasis role="bold">color image</emphasis>
-									<itemizedlist>
-										<listitem>
-											<para>
-												hypermatrix RGB or RGBA
-													<itemizedlist>
-														<listitem>
-															<para>
-															of int8 or uint8, or of equivalent decimal numbers in [0, 255] or in [-128, 127].
-															</para>
-														</listitem>
-														<listitem>
-															<para>
-															of decimal numbers normalized in the intervalle [0, 1].
-															</para>
-														</listitem>		
-													</itemizedlist>
-											</para>
-										</listitem>
-										<listitem>
-											<para>
-												matrix
-													<itemizedlist>
-														<listitem>
-															<para>
-															of int16 or uint16 with binary segmentation "rgba4444", or of equivalent decimal numbers in [0, 2<superscript>16</superscript>-1] or in [-2<superscript>15</superscript>; 2<superscript>15</superscript>-1].
-															</para>
-														</listitem>
-														<listitem>
-															<para>
-															of int32 or uint32 with binary segmentation "rgba8888", or of equivalent decimal numbers in [0, 2<superscript>32</superscript>-1] or in [-2<superscript>31</superscript>, 2<superscript>32</superscript>-1]
-															</para>
-														</listitem>		
-													</itemizedlist>
-											</para>
-										</listitem>
-									</itemizedlist>
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									<emphasis role="bold">grayscale image</emphasis> : matrix of int8 or uint8, or of equivalent decimal numbers in [0, 255], in [-128, 127] or normalized in the intervalle [0, 1].
-								</para>
-							</listitem>
-						</itemizedlist>
-					</para>
-					<para>
-						If the input image has a differenct encoding, <function>jimstandard</function>() should be used before <function>jimhistEqual</function>().
-					</para>					
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">object <literal>jimage</literal></emphasis>
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">color image</emphasis>
+                                    <itemizedlist>
+                                        <listitem>
+                                            <para>
+                                                hypermatrix RGB or RGBA
+                                                <itemizedlist>
+                                                    <listitem>
+                                                        <para>
+                                                            of int8 or uint8, or of equivalent
+                                                            decimal numbers in [0, 255] or in
+                                                            [-128, 127].
+                                                        </para>
+                                                    </listitem>
+                                                    <listitem>
+                                                        <para>
+                                                            of decimal numbers normalized in the
+                                                            interval [0, 1].
+                                                        </para>
+                                                    </listitem>
+                                                </itemizedlist>
+                                            </para>
+                                        </listitem>
+                                        <listitem>
+                                            <para>
+                                                matrix
+                                                <itemizedlist>
+                                                    <listitem>
+                                                        <para>
+                                                            of int16 or uint16 with binary
+                                                            segmentation "rgba4444", or of equivalent
+                                                            decimal numbers in [0,
+                                                            2<superscript>16</superscript>-1] or in
+                                                            [-2<superscript>15</superscript>;
+                                                            2<superscript>15</superscript>-1].
+                                                        </para>
+                                                    </listitem>
+                                                    <listitem>
+                                                        <para>
+                                                            of int32 or uint32 with binary
+                                                            segmentation "rgba8888", or of equivalent
+                                                            decimal numbers in [0,
+                                                            2<superscript>32</superscript>-1] or in
+                                                            [-2<superscript>31</superscript>,
+                                                            2<superscript>32</superscript>-1]
+                                                        </para>
+                                                    </listitem>
+                                                </itemizedlist>
+                                            </para>
+                                        </listitem>
+                                    </itemizedlist>
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">grayscale image</emphasis> : matrix of
+                                    int8 or uint8, or of equivalent decimal numbers in [0, 255],
+                                    in [-128, 127] or normalized in the interval [0, 1].
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                    <para>
+                        If the input image has a differenct encoding,
+                        <function>jimstandard</function>() should be used before
+                        <function>jimhistEqual</function>().
+                    </para>
                 </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>transparencyColor</term> 
+            </varlistentry>
+            <varlistentry>
+                <term>transparencyColor</term>
                 <listitem>
                     <para>
-						<itemizedlist>
-							<listitem>
-								<para>
-									A vector or a hypermatrix with three components in the intervalle [0,255].
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									A scalar in the intervalle [0, 255]
-								</para>
-							</listitem>
-						</itemizedlist>
-					</para>
-					<para>
-					This argument corresponds to a color shade which must be ignored during the algorithm of histogram equalization. If it is no given, every color shade used of the input image is included in the algorithm.
-					</para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    A vector or a hypermatrix with three components in the interval
+                                    [0,255].
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    A scalar in the interval [0, 255]
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                    <para>
+                        This argument corresponds to a color shade which must be ignored during the
+                        algorithm of histogram equalization. If it is no given, every color shade
+                        used of the input image is included in the algorithm.
+                    </para>
                 </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>equalizedImage</term> 
+            </varlistentry>
+            <varlistentry>
+                <term>equalizedImage</term>
                 <listitem>
                     <para>
-						An object <literal>jimage</literal> whose <literal>.image</literal> field is encoded in gray levels or a matrix of uint8 encoded in gray levels. 
-					</para>
+                        An object <literal>jimage</literal> whose <literal>.image</literal> field
+                        is encoded in gray levels or a matrix of uint8 encoded in gray levels.
+                    </para>
                 </listitem>
-			</varlistentry>
+            </varlistentry>
         </variablelist>
     </refsection>
     <refsection>
         <title>Description</title>
         <para>
-            This function automatically adjusts the contrast of an image using the method of histogram equalization.
-		</para>
-		<para>
-			If the input image is a <code>jimage</code> object, the fields <code>.title</code> and <code>.format</code> are kept for the output object. If the field <literal>.transparencyColor</literal> is different from -1, the transparency color is ignored by the algorithm.
+            This function automatically adjusts the contrast of an image using the method of
+            histogram equalization.
         </para>
-		<para>
-			If the input image is a color image, it is converted into gray levels.
+        <para>
+            If the input image is a <literal>jimage</literal> object, the fields
+            <literal>.title</literal> and <literal>.format</literal> are kept for the output object.
+            If the field <literal>.transparencyColor</literal> is different from -1, the
+            transparency color is ignored by the algorithm.
+        </para>
+        <para>
+            If the input image is a color image, it is converted into gray levels.
         </para>
     </refsection>
     <refsection>
         <title>Examples</title>
-        <programlisting role="example"><![CDATA[ 
-//Jimage objet with transparency 
+        <programlisting role="example"><![CDATA[
+// Jimage objet with transparency
 path = jimlabPath("/") + 'tests/images/logoEnsim.png';
-jimage = jimread(path);
-jimage.transparencyColor = cat(3,140,140,140);
-equalizedJimage = jimhistEqual(jimage);
+Jimage = jimread(path);
+Jimage.transparencyColor = cat(3,140,140,140);
+equalizedJimage = jimhistEqual(Jimage);
 subplot(2,2,1)
-jimdisp(jimage)
+jimdisp(Jimage)
 subplot(2,2,2)
 jimdisp(equalizedJimage)
 
 //Same image without transparency
-jimage.transparencyColor = -1;
-jimage = jimconvert(jimage, "gray")
-image = jimage.image;
+Jimage.transparencyColor = -1;
+Jimage = jimconvert(Jimage, "gray")
+image = Jimage.image;
 equalizedImage = jimhistEqual(image);
 subplot(2,2,3)
 jimdisp(image)
@@ -159,32 +185,32 @@ subplot(2,2,4)
 jimdisp(equalizedImage)
 
  ]]></programlisting>
-	<scilab:image>
-	//Objet de type jimage avec transparence
-	path = jimlabPath("/") + 'tests/images/logoEnsim.png';
-	jimage = jimread(path);
-	jimage.transparencyColor = cat(3,140,140,140);
-	equalizedJimage = jimhistEqual(jimage);
-	subplot(2,2,1)
-	jimdisp(jimage)
-	subplot(2,2,2)
-	jimdisp(equalizedJimage)
+        <scilab:image>
+            //Objet de type jimage avec transparence
+            path = jimlabPath("/") + 'tests/images/logoEnsim.png';
+            Jimage = jimread(path);
+            Jimage.transparencyColor = cat(3,140,140,140);
+            equalizedJimage = jimhistEqual(Jimage);
+            subplot(2,2,1)
+            jimdisp(Jimage)
+            subplot(2,2,2)
+            jimdisp(equalizedJimage)
 
-	//Même image sans transparence
-	jimage.transparencyColor = -1;
-	jimage = jimconvert(jimage, "gray")
-	image = jimage.image;
-	equalizedImage = jimhistEqual(image);
-	subplot(2,2,3)
-	jimdisp(image)
-	subplot(2,2,4)
-	jimdisp(equalizedImage)
-	</scilab:image>
-    <programlisting role="example"><![CDATA[ 
+            //Même image sans transparence
+            Jimage.transparencyColor = -1;
+            Jimage = jimconvert(Jimage, "gray")
+            image = Jimage.image;
+            equalizedImage = jimhistEqual(image);
+            subplot(2,2,3)
+            jimdisp(image)
+            subplot(2,2,4)
+            jimdisp(equalizedImage)
+        </scilab:image>
+        <programlisting role="example"><![CDATA[
 //Matrix of gray levels without transparency
 path = jimlabPath("/") + 'tests/images/lena_lowcontrast.jpg';
-jimage = jimread(path);
-image = jimage.image;
+Jimage = jimread(path);
+image = Jimage.image;
 equalizedImage = jimhistEqual(image);
 subplot(2,2,1)
 jimdisp(image)
@@ -193,46 +219,46 @@ jimdisp(equalizedImage)
 
 //Matrix of gray levels with transparency
 path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
-jimage = jimread(path);
-image = jimage.image;
+Jimage = jimread(path);
+image = Jimage.image;
 equalizedImage = jimhistEqual(image, 255);
 subplot(2,2,3)
 jimdisp(image)
 subplot(2,2,4)
 jimdisp(equalizedImage)
  ]]></programlisting>
-	<scilab:image>
-	//Matrice en niveaux de gris sans transparence
-	path = jimlabPath("/") + 'tests/images/lena_lowcontrast.jpg';
-	jimage = jimread(path);
-	image = jimage.image;
-	equalizedImage = jimhistEqual(image);
-	subplot(2,2,1)
-	jimdisp(image)
-	subplot(2,2,2)
-	jimdisp(equalizedImage)
+        <scilab:image>
+            //Matrice en niveaux de gris sans transparence
+            path = jimlabPath("/") + 'tests/images/lena_lowcontrast.jpg';
+            Jimage = jimread(path);
+            image = Jimage.image;
+            equalizedImage = jimhistEqual(image);
+            subplot(2,2,1)
+            jimdisp(image)
+            subplot(2,2,2)
+            jimdisp(equalizedImage)
 
-	//Matrice en niveaux de gris avec couleur de transparence
-	path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
-	jimage = jimread(path);
-	image = jimage.image;
-	equalizedImage = jimhistEqual(image, 255);
-	subplot(2,2,3)
-	jimdisp(image)
-	subplot(2,2,4)
-	jimdisp(equalizedImage)
-	</scilab:image>
-	</refsection>
+            //Matrice en niveaux de gris avec couleur de transparence
+            path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+            Jimage = jimread(path);
+            image = Jimage.image;
+            equalizedImage = jimhistEqual(image, 255);
+            subplot(2,2,3)
+            jimdisp(image)
+            subplot(2,2,4)
+            jimdisp(equalizedImage)
+        </scilab:image>
+    </refsection>
     <refsection role="see also">
         <title>See Also</title>
         <simplelist type="inline">
-			<member>
+            <member>
                 <link linkend="jimage_properties">jimage</link>
             </member>
-			<member>
+            <member>
                 <link linkend="jimstandard">jimstandard</link>
             </member>
-			<member>
+            <member>
                 <link linkend="jimconvert">jimconvert</link>
             </member>
         </simplelist>
@@ -247,4 +273,3 @@ jimdisp(equalizedImage)
         </revhistory>
     </refsection>
 </refentry>
-
