@@ -1,5 +1,5 @@
 // This file is part of the Jimlab module,
-// an external module coded for Scilab and dedicated to Jimage processing.
+// an external module coded for Scilab and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
 //
@@ -11,7 +11,7 @@
 // <-- TEST WITH GRAPHIC -->
 // <-- NO CHECK REF -->
 
-// Tests of the size(Jimage) overload
+// Tests of the size(jimage) overload
 // ----------------------------------
 path = jimlabPath("/") + "tests/images/";
 
