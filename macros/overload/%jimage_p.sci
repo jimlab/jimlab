@@ -8,22 +8,22 @@
 // This source file is licensed as described in the file COPYING, which
 // you should have received as part of this distribution.  The terms are also
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
- 
-function [] = %jimage_p(jimage)
+
+function [] = %jimage_p(Jimage)
     // This function overloads disp() for jimage objects.
     // Displayed infos: Title, encoding, mime type, 2D size, transparency color.
-    
-    image = jimage.image;
+
+    image = Jimage.image;
     dim = size(image);
-    tColor = jimage.transparencyColor;
+    tColor = Jimage.transparencyColor;
     if size(tColor, 3) == 3 then
         tColor = msprintf("[%d %d %d]\n", tColor(1), tColor(2), tColor(3));
     else
         tColor = msprintf("%d\n", tColor);
     end
-    t = [ 'Title      : ' + jimage.title 
-          'Encoding   : ' + jimage.encoding
-          'MIME type  : ' + jimage.mime
+    t = [ 'Title      : ' + Jimage.title
+          'Encoding   : ' + Jimage.encoding
+          'MIME type  : ' + Jimage.mime
           msprintf('Size       : %d x %d\n', dim(1), dim(2))
           msprintf("Transparent: %s\n", tColor)
           ];
