@@ -8,8 +8,8 @@
 // you should have received as part of this distribution.  The terms are also
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  
-function [m, k] = %jimage_max(jimage)
-    i = jimage.image;
+function [m, k] = %jimage_max(Jimage)
+    i = Jimage.image;
     if ndims(i)<3 then
         [m, k] = max(i);
     else
