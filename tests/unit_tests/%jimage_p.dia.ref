@@ -12,24 +12,24 @@
 // ----------------------------------
 path = jimlabPath("/") + "tests/images/";
 // RGB image
-jimage = jimread(path + "lena_color.gif")
- jimage  = 
+image = jimread(path + "lena_color.gif")
+ image  = 
 Title      : lena_color
 Encoding   : rgba
 MIME type  : gif
 Size       : 500 x 512
 Transparent: -1
 // RGBA image
-jimage = jimread(path+"noError/rgba.png")
- jimage  = 
+image = jimread(path+"noError/rgba.png")
+ image  = 
 Title      : rgba
 Encoding   : rgba
 MIME type  : png
 Size       : 50 x 50
 Transparent: -1
 // Gray image
-jimage = jimread(path+"noError/gray.jpg")
- jimage  = 
+image = jimread(path+"noError/gray.jpg")
+ image  = 
 Title      : gray
 Encoding   : gray
 MIME type  : jpg
