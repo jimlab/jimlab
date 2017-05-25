@@ -15,10 +15,10 @@
 path = jimlabPath("/") + "tests/images/";
 
 // RGB image
-jimage = jimread(path + "lena_color.gif")
+image = jimread(path + "lena_color.gif")
 
 // RGBA image
-jimage = jimread(path+"noError/rgba.png")
+image = jimread(path+"noError/rgba.png")
 
 // Gray image
-jimage = jimread(path+"noError/gray.jpg")
+image = jimread(path+"noError/gray.jpg")
