@@ -152,8 +152,9 @@
             d'égalisation d'histogramme.
         </para>
         <para>
-            Si un objet <code>jimage</code> est donné en entrée, les champs <code>.title</code> et
-            <code>.format</code> sont conservés pour l'objet en sortie. Dans le cas où le champ
+            Si un objet <literal>jimage</literal> est donné en entrée, les champs
+            <literal>.title</literal> et <literal>.format</literal> sont conservés pour l'objet en
+            sortie. Dans le cas où le champ
             <literal>.transparencyColor</literal> est différent de -1, la couleur de transparence
             n'est pas prise en compte dans l'algorithme d'égalisation d'histogramme.
         </para>
