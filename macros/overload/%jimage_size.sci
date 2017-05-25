@@ -10,8 +10,8 @@
 // should have received as part of this distribution.  The terms are also
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-function [h,w] = %jimage_size(jimage, side)
-    image = jimage.image(:,:,1);
+function [h,w] = %jimage_size(Jimage, side)
+    image = Jimage.image(:,:,1);
     if ~isdef("side", "l") | type(side)==0 then
         dims = size(image)
         if argn(1)==1
