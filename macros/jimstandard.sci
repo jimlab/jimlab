@@ -9,16 +9,13 @@
 
 function [convertedMat, originalType] = jimstandard(imageMat,opt)
     
-    t = type(imageMat(:,:,1));
-    
-    //Optionnal argument
-    if (isdef("opt") & type(opt) ~= 0) then
+    //Detection of the optionnal input argument
+    if (isdef("opt", "l") & type(opt) ~= 0) then
         if type(opt) == 4
             argb? = opt;
         elseif type(opt) == 10
-            argb? = %f;
             stdr_colorsBits = strstr(["444","555","4444","5551","332"], opt);
-            if(stdr_colorsBits ~= "")
+            if(stdr_colorsBits ~= [])
                 colorsBits = opt;
             end
         elseif opt == 1.
@@ -26,11 +23,16 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
         elseif opt == 0.
             argb? = %f;
         elseif size(opt, 3) == 3.
-            colormap = opt;
+            if(max(opt) > 1. & min(opt) < 0)
+                msg = _("%s: Argument #%d: coefficients of the colormap must be in the intervalle[0,1].\n");
+                error(msprintf(msg,"jimstandard", 2));
+            else
+                colormap = opt;
+            end
         elseif opt == gcf()
             // opt can be a graphic handle , the current colormap will be used
             f = gcf();
-            colormap = f.colormap;
+            colormap = f.color_map;
         else
             msg = _("%s: Argument #%d: Wrong type of input argument.\n");
             error(msprintf(msg,"jimstandard", 2));
@@ -42,114 +44,107 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
     convertedMat = %f;
     originalType = 0;
     layers = size(imageMat, 3);
-    if(isdef(["argb?"],"l")&(type(argb?) ~= 0)) then
-        // If an hypermatrix is define as argb? or RGBA
-        if((argb? == 1)|(argb? == %t)) then
-            argb? = %t;
-        elseif((argb? == 0)|(argb? == %f)) then
-            argb? = %f;
-        else 
-            warning("Bad argument type for argb?, rgba standard"..
-            +" will be used.");
-            argb? = %f;
-        end
-    else
-        argb? = %f;
-    end
-     
-
-    if (isdef(["colormap"],'l')&(type(colormap) ~= 0)) then
-        //If a colormap is given, the image is indexed
-        if (type(colormap) == 1.)
-            if(max(colormap) > 1. & min(colormap) < 0)
-                msg = _("%s: Argument #%d: coefficients of the colormap must be in the intervalle[0,1].\n");
-                error(msprintf(msg,"jimstandard", 3));
-            end
-        elseif colormap == gcf()
-            //colormap of the current graphic handle can be used
-            f = gcf()
-            colormap = f.color_map
-        else
-            msg = _("%s: Argument #%d: M x 3 matrix or graphic handle expected.\n");
-            error(msprintf(msg,"jimstandard", 3));
-        end
+    
+    if (isdef("colormap", "l"))
+        //If a colormap is given, the image is considered as indexed
         dim = size(imageMat)
         imageDouble = colormap(imageMat,:)
         convertedMat = matrix(imageDouble, dim(1), dim(2), -1)
         convertedMat = uint8(255*convertedMat);
         originalType = "ind";
-                
-    else 
-        
-        select(t)
-        case 1. then     // Converts a real matrix of real arguments
+    else
+        //If the image is not indexed, the conversion depends on the type of the input matrix/hypermatrix
+        if (type(imageMat(1,1,1)) == 1.)     
+            // real matrix or hypermatrix can be an equivalent matrix of integers
             if((max(imageMat) <= 1.) & (min(imageMat) >= 0.)) then
                 convertedMat = uint8(255*imageMat);
-                originalType = ["double";"0";"1"];
-            else
-                //If the coefficients are not normalized
-                m = min(imageMat);
-                M = max(imageMat);
-                if(M == 255)
-                    m = 0;
-                end
-                tmp = (imageMat - m)/(M - m);
-                convertedMat = uint8(255*tmp);
-                originalType = ["double";string(m);string(M)];
+                originalType = ["double"];
+            elseif ((max(imageMat) <= 255.) & (min(imageMat) >= 0.))
+                imageMat = uint8(imageMat);
+            elseif ((max(imageMat) <= 127.) & (min(imageMat) >= -127.))
+                imageMat = int8(imageMat);
+            elseif ((max(imageMat) <= 2^16-1) & (min(imageMat) >= 0.))
+                imageMat = uint16(imageMat);
+            elseif ((max(imageMat) <= 2^15-1) & (min(imageMat) >= -(2^15)))
+                imageMat = int16(imageMat);
+            elseif ((max(imageMat) <= 2^32-1) & (min(imageMat) >= 0.))
+                imageMat = uint32(imageMat);
+            elseif ((max(imageMat) <= 2^31-1) & (min(imageMat) >= -(2^31)))
+                imageMat = int32(imageMat);
             end
+        end
+        
+        t = type(imageMat(1,1,1));
+        select(t)
         case 4. then     //boolean matrix
             convertedMat = uint8(255*imageMat);
             originalType = "bool";
         case 8. then     //matrix of integer
             tmp = inttype(imageMat(:,:,1));
             if (tmp == 1.) then
-                convertedMat = uint8(imageMat)
+                convertedMat = uint8(imageMat)                                    
                 originalType = "int8";
+                if isdef("colorsBits", "l") & colorsBits == "332"
+                    image = uint16(convertedMat);
+                    r = modulo(image,uint16(2^8));
+                    convertedMat(:,:,1) = floor(r./uint16(2^5));
+                    g = modulo(image,uint16(2^5));
+                    convertedMat(:,:,2) = floor(g./uint16(2^2));
+                    convertedMat(:,:,3) = modulo(image,uint16(2^2));
+                    convertedMat(:,:,1:2) = double(convertedMat(:,:,1:2)) * 255/7;
+                    convertedMat(:,:,3) = double(convertedMat(:,:,3)) * 255/3;
+                    convertedMat = uint8(convertedMat);
+                    originalType = [originalType, "332"];
+                end
             elseif(tmp == 11.)
                 convertedMat = imageMat;
                 originalType = "uint8";
+                if isdef("colorsBits", "l") & colorsBits == "332"
+                    image = uint16(convertedMat);
+                    r = modulo(image,uint16(2^8));
+                    convertedMat(:,:,1) = floor(r./uint16(2^5));
+                    g = modulo(image,uint16(2^5));
+                    convertedMat(:,:,2) = floor(g./uint16(2^2));
+                    convertedMat(:,:,3) = modulo(image,uint16(2^2));
+                    convertedMat(:,:,1:2) = double(convertedMat(:,:,1:2)) * 255/7;
+                    convertedMat(:,:,3) = double(convertedMat(:,:,3)) * 255/3;
+                    convertedMat = uint8(convertedMat);
+                    originalType = [originalType, "332"];
+                end
             elseif(tmp == 12.) then
-                if(isdef(["colorsBits"],"l")&(type(colorsBits) ~= 0))
-                    argb = %f;
-                    stdr_colorsBits = strstr(["444","555","4444","5551"],colorsBits);
-                    if(stdr_colorsBits == "")
-                        colorsBits = '4444';
-                        warning('The type of enconing is not given. By default, the type rgba4444 is used');
-                    end
-                else
+                // matrix of uint16
+                if (~isdef('colorsBits', "l") | type(colorsBits) == 0) then
                     colorsBits = '4444';
                     warning('The type of enconing is not given. By default, the type rgba4444 is used');
+                elseif (colorsBits == "332") then
+                    warning('Wrong binary encoding. By default, the type rgba4444 is used');
                 end
                 convertedMat = jimstandard_uint16(imageMat,colorsBits);
                 originalType = ["uint16", colorsBits];
             elseif(tmp == 2.) then
-                if(isdef(["colorsBits"],"l")&(type(colorsBits) ~= 0))
-                    argb? = %f;
-                    stdr_colorsBits = strstr(["444","555","4444","5551"],colorsBits);
-                    if(stdr_colorsBits == "")
-                        colorsBits = '4444';
-                        warning('The type of enconing is not given. By default, the type rgba4444 is used');
-                    end
-                else
+                // matrix of int16
+                if (~isdef('colorsBits', "l") | type(colorsBits) == 0) then
                     colorsBits = '4444';
-                    warning('The type of enconing is not given. By default, the type rgb444 is used');
+                    warning('The type of enconing is not given. By default, the type rgba4444 is used');
+                elseif (colorsBits == "332") then
+                    warning('Wrong binary encoding. By default, the type rgba4444 is used');
                 end
                 tmp = uint16(imageMat);
                 convertedMat = jimstandard_uint16(imageMat,colorsBits);
                 originalType = "int16";
             elseif (tmp == 14.) then
-                 convertedMat = jimstandard_uint32(imageMat,argb?);
+                 convertedMat = jimstandard_uint32(imageMat)//,argb?);
                  originalType = "uint32";
            elseif(tmp == 4.) then
                  tmp = uint32(imageMat); 
-                 convertedMat = jimstandard_uint32(tmp,argb?);
+                 convertedMat = jimstandard_uint32(tmp)//,argb?);
                  originalType = "int32";
             end
         end
     end
     
-    if(argb? & layers == 4) then // If argb standard is used, convertion in rgba standard
-        test = ["int16","uint16","int32","uint32"];
+    if(isdef("argb?","l") & argb? & layers == 4) then // If argb standard is used, convertion in rgba standard
+        test = ["int16","uint16"];
         if(strstr(test,originalType(1)) == "")
            tmp = convertedMat(:,:,1);
            convertedMat(:,:,1:3) = convertedMat(:,:,2:4);
@@ -161,35 +156,19 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
 endfunction
 
 
- function [convertedMat] = jimstandard_uint32(image, argb?)
+ function [convertedMat] = jimstandard_uint32(image))
      //This subfunction is called by jimstandard(). 
      //It converts a matrix of uint32 into a hypermatrix of uint8 with 4 layers. 
      //image : a matrix of uint32 
-     //argb? : a boolean. True if the image is encoded in ARGB and false if the image is encoded in RGBA
      //convertedMat : a hypermatrix of uint8 with 4 layers. The value of each layer corresponds to one byte of the uint32. 
      
-     if (~isdef('argb?', "l") | type(argb?) == 0) then
-         argb? = %f;
-     elseif (type(argb?) ~= 4) then
-         msg = _("%s: Argument #%d: Boolean expected.\n");
-         error(msprintf(msg,"jimstandard_uint32", 2));
-     end
-     
-     if (argb? == %t) then
-         convertedMat(:,:,4) = floor(image./uint32(16^6));
-         r = modulo(image,uint32(16^6));
-         convertedMat(:,:,1) = floor(r./uint32(16^4));
-         g = modulo(image,uint32(16^4));
-         convertedMat(:,:,2) = floor(g./uint32(16^2));
-         convertedMat(:,:,3) = modulo(image,uint32(16^2))
-     elseif (argb? == %f) then
-         convertedMat(:,:,1) = floor(image./uint32(16^6));
-         g = modulo(image,uint32(16^6));
-         convertedMat(:,:,2) = floor(g./uint32(16^4));
-         b = modulo(image,uint32(16^4));
-         convertedMat(:,:,3) = floor(g./uint32(16^2));
-         convertedMat(:,:,4) = modulo(image,uint32(16^2))
-     end
+
+     convertedMat(:,:,4) = floor(image./uint32(16^6));
+     r = modulo(image,uint32(16^6));
+     convertedMat(:,:,1) = floor(r./uint32(16^4));
+     g = modulo(image,uint32(16^4));
+     convertedMat(:,:,2) = floor(g./uint32(16^2));
+     convertedMat(:,:,3) = modulo(image,uint32(16^2))
      
      convertedMat = uint8(convertedMat);
     
@@ -198,19 +177,13 @@ endfunction
  function [convertedMat] = jimstandard_uint16(image, colorsBits)
      //This subfunction is called by jimstandard(). 
      //It converts a matrix of uint16 into a hypermatrix of uint8 with 3 or 4 layers. 
+
      //image : a matrix of uint16 
      //colorsBits : a string. '444', '555', '4444' or '5551'. This arguments enable to know the number of bits used by each components.
      //convertedMat : a hypermatrix of uint8 with 3 or 4 layers. The value of each layer corresponds to one components of the uint16 value. 
      
-     if (~isdef('colorsBits', "l") | type(colorsBits) == 0) then
-         colorsBits = '4444';
-         warning('The type of enconing is not given. By default, the type rgb444 is used');
-     elseif (type(colorsBits) ~= 10) then
-         msg = _("%s: Argument #%d: String expected.\n");
-         error(msprintf(msg,"jimstandard_uint16", 2));
-     end
-     
-     if (colorsBits == '444') then
+     select(colorsBits)
+     case '444' then
          //This case corresponds to image_type "rgb444" in Matplot_properties
         r = modulo(image,uint16(16^3));
         convertedMat(:,:,1) = floor(r./uint16(16^2));
@@ -219,7 +192,8 @@ endfunction
         convertedMat(:,:,3) = modulo(image,uint16(16));
         convertedMat = double(convertedMat) * 255/15;
         convertedMat = uint8(convertedMat);
-     elseif (colorsBits == '555') then
+     case '555' then
+         //This case corresponds to image_type "rgb555" in Matplot_properties
          r = modulo(image,uint16(2^15));
          convertedMat(:,:,1) = floor(r./uint16(2^10));
          g = modulo(image,uint16(2^10));
@@ -227,7 +201,8 @@ endfunction
          convertedMat(:,:,3) = modulo(image,uint16(2^5))
          convertedMat = double(convertedMat) * 255/31;
          convertedMat = uint8(convertedMat);
-     elseif (colorsBits == '4444') then
+     case '4444' then
+        //This case corresponds to image_type "rgb4444" in Matplot_properties
         convertedMat(:,:,1) = floor(image./uint16(16^3));
         g = modulo(image,uint16(16^3));
         convertedMat(:,:,2) = floor(g./uint16(16^2));
@@ -236,7 +211,8 @@ endfunction
         convertedMat(:,:,4) = modulo(image,uint16(16));
         convertedMat = double(convertedMat) * 255/15;
         convertedMat = uint8(convertedMat);
-     elseif (colorsBits == '5551') then
+     case '5551' then
+         //This case corresponds to image_type "rgba5551" in Matplot_properties
          convertedMat(:,:,1) = floor(image./uint32(2^11));
          g = modulo(image,uint32(2^11));
          convertedMat(:,:,2) = floor(g./uint16(2^6));
@@ -245,10 +221,6 @@ endfunction
          convertedMat(:,:,4) = modulo(image,uint16(2)) * 255;
          convertedMat(:,:,1:3) = double(convertedMat(:,:,1:3)) * 255/31;
          convertedMat = uint8(convertedMat);
-     else
-         msg = _("%s: Argument #%d: Wrong type of encoding.\n");
-         error(msprintf(msg,"jimstandard_uint16", 2));
      end
-
     
 endfunction
