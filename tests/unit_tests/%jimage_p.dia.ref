@@ -17,7 +17,7 @@ image = jimread(path + "lena_color.gif")
 Title      : lena_color
 Encoding   : rgba
 MIME type  : gif
-Size       : 512 x 512
+Size       : 510 x 512
 Transparent: -1
 // RGBA image
 image = jimread(path+"noError/rgba.png")
