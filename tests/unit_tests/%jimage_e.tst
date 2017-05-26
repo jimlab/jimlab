@@ -43,6 +43,16 @@ subplot(2,2,4), jimdisp(Jimage(:,:,4), "box"), title("A layer")
 
 // ADD some examples with alpha and transparency set...
 
+// Flipping jimages
+f = scf();
+f.axes_size = [550 600];
+JimageE = jimhistEqual(Jimage);
+subplot(2,2,1), jimdisp(JimageE), title("Léna as is")
+subplot(2,2,2), jimdisp(JimageE(:,$:-1:1)), title("flipped Left-Right")
+subplot(2,2,3), jimdisp(JimageE($:-1:1,:)), title("flipped Up-Down")
+subplot(2,2,4), jimdisp(JimageE($:-1:1,$:-1:1)), title("double flipped = rot(180°)")
+
+
 // Lena histequalized in color: (A DEPLACER en exemple de jimhistEqual() )
 image = Jimage.image;
 image(:,:,1) = jimhistEqual(image(:,:,1));
