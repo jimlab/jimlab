@@ -1,98 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
- * Copyright (C) 2017 - ENSIM, Université du Maine - Gaël Senée
- * 
+ * This file is part of Jimlab, an external module coded for Scilab
+ * and dedicated to image processing.
+ *
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Gaël SENÉE
+ *
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms
- * are also available at    
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * you should have received as part of this distribution.  The terms are also
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
-<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
-		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
 		xml:lang="en" xml:id="jimresize">
-    <refnamediv>
-        <refname>jimresize</refname>
-        <refpurpose>Resize an image from a jimage object, a matrix or an hypermatrix.</refpurpose>
-    </refnamediv>
-    <refsynopsisdiv>
-        <title>Calling Sequence</title>
-        <synopsis>
-            resized_image = jimresize(source_image,out_height,out_width)
-        </synopsis>
-    </refsynopsisdiv>
-    <refsection>
-        <title>Arguments</title>
-        <variablelist>
-            <varlistentry>
-                <term>source_image</term>
-                <listitem>
-                    <para>
-                        <link linkend="jimage">jimage</link> object, matrix or hypermatrix of an image.
-                    </para>					
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term>out_height</term>
-                <listitem>
-                    <para>
+	<refnamediv>
+		<refname>jimresize</refname>
+		<refpurpose>Resize a jimage, a matrix or an hypermatrix.</refpurpose>
+	</refnamediv>
+	<refsynopsisdiv>
+		<title>Calling Sequence</title>
+		<synopsis>
+			resized_image = jimresize(source_image,out_height,out_width)
+		</synopsis>
+	</refsynopsisdiv>
+	<refsection>
+		<title>Arguments</title>
+		<variablelist>
+			<varlistentry>
+				<term>source_image</term>
+				<listitem>
+					<para>
+						<link linkend="jimage_properties">jimage</link> object, matrix or
+						hypermatrix of an image.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>out_height</term>
+				<listitem>
+					<para>
 						Height of the resized image.
-                    </para>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term>out_width</term>
-                <listitem>
-                    <para>
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>out_width</term>
+				<listitem>
+					<para>
 						Width of the resized image.
-                    </para>					
-                </listitem>
-            </varlistentry>
-        </variablelist>
-    </refsection>
-    <refsection>
-        <title>Description</title>
-        <para>
-            This fonction resizes an image from a jimage object or directly from its (hyper) matrix. The output has the same type as the input.
-        </para>
-        <para>
-            This fonction uses a bilinear interpolation algorithm.
-        </para>
-    </refsection>
-    <refsection>
-        <title>Examples</title>
-        <programlisting role="example"><![CDATA[ 
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsection>
+	<refsection>
+		<title>Description</title>
+		<para>
+			This fonction resizes an image from a jimage object or directly from its (hyper) matrix.
+			The output has the same type as the input.
+		</para>
+		<para>
+			This fonction uses a bilinear interpolation algorithm.
+		</para>
+	</refsection>
+	<refsection>
+		<title>Examples</title>
+		<programlisting role="example"><![CDATA[
 // From a pre-loaded jimage object
 path = jimlabPath + '/help/images/logoEnsim.png';
-jimage = jimread(path);
+Jimage = jimread(path)
 
-dim=size(jimage);
-height=dim(1);
-width=dim(2)
+dim = size(Jimage);
+height = dim(1);
+width = dim(2);
 
 // Doubling the size of the image
-new_image = (jimage,2*height,2*width);
-
+jimresize(Jimage, 2*height, 2*width)
  ]]></programlisting>
 	</refsection>
-    <refsection role="see also">
-        <title>See Also</title>
-        <simplelist type="inline">
-            <member>
-                <link linkend="jimage">jimage</link>
-            </member>
-        </simplelist>
-    </refsection>
-    <refsection>
-        <title>History</title>
-        <revhistory>
-            <revision>
-                <revnumber>2017-05</revnumber>
-                <revremark>Publication initiale du module Jimlab</revremark>
-            </revision>
-        </revhistory>
-    </refsection>
+	<refsection role="see also">
+		<title>See Also</title>
+		<simplelist type="inline">
+			<member>
+				<link linkend="jimage_properties">jimage</link>
+			</member>
+		</simplelist>
+	</refsection>
+	<refsection>
+		<title>History</title>
+		<revhistory>
+			<revision>
+				<revnumber>2017-06</revnumber>
+				<revremark>First Jimlab release</revremark>
+			</revision>
+		</revhistory>
+	</refsection>
 </refentry>
