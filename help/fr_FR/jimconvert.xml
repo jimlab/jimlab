@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
+* This file is part of Jimlab, an external module coded for Scilab
+ * and dedicated to image processing.
+ *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
- * 
+ *
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms
- * are also available at    
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * you should have received as part of this distribution.  The terms are also
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
-<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
-		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
-		xml:lang="fr" xml:id="jimconvert">
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+        xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
+        xml:lang="fr" xml:id="jimconvert">
     <refnamediv>
         <refname>jimconvert</refname>
         <refpurpose>Conversion du type d'encodage d'une image</refpurpose>
@@ -22,7 +23,7 @@
         <title>Syntaxes</title>
         <synopsis>
             convertedImage = jimconvert(image, encoding)
-			convertedImage = jimconvert(image, encoding, transparencyColor)
+            convertedImage = jimconvert(image, encoding, transparencyColor)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -32,155 +33,179 @@
                 <term>image</term>
                 <listitem>
                     <para>
-						<itemizedlist>
-							<listitem>
-								<para>
-								<emphasis role="bold">objet jimage</emphasis> : dont le champ <literal>.image</literal> est encodé en RGB ou en RGBA.
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									<emphasis role="bold">hypermatrice</emphasis> : RGB ou RGBA d'entiers int8 ou uint8, ou de décimaux équivalents sur [0, 255], sur [-128, 127] ou normalisés dans l'intervalle [0, 1].
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									<emphasis role="bold">matrice</emphasis>
-									<itemizedlist>
-										<listitem>
-										<para>
-											d'entiers uint16 ou int16 sous découpage binaire "rgba4444" ou de décimaux équivalents sur [0, 2<superscript>16</superscript>-1] ou sur [-2<superscript>15</superscript>; 2<superscript>15</superscript>-1].
-										</para>
-										</listitem>
-										<listitem>
-										<para>
-											d'entiers uint32 ou int32 sous découpage binaire "rgba8888", ou de décimaux équivalents sur [0, 2<superscript>32</superscript>-1] ou sur [-2<superscript>31</superscript>, 2<superscript>32</superscript>-1]
-										</para>
-										</listitem>	
-										<listitem>
-										<para>
-											de booléens
-										</para>
-										</listitem>
-									</itemizedlist>
-								</para>
-							</listitem>
-						</itemizedlist>
-						Si l'image d'entrée a un autre encodage, on lui appliquera <function>jimstandard</function>() avant de la fournir à <function>jimconvert</function>().
-					</para>
-				</listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>encoding</term> 
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">objet jimage</emphasis> : dont le champ
+                                    <literal>.image</literal> est encodé en RGB ou en RGBA.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">hypermatrice</emphasis> : RGB ou RGBA
+                                    d'entiers int8 ou uint8, ou de décimaux équivalents sur [0, 255],
+                                    sur [-128, 127] ou normalisés dans l'intervalle [0, 1].
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    <emphasis role="bold">matrice</emphasis>
+                                    <itemizedlist>
+                                        <listitem>
+                                            <para>
+                                                d'entiers uint16 ou int16 sous découpage binaire
+                                                "rgba4444" ou de décimaux équivalents sur
+                                                [0, 2<superscript>16</superscript>-1] ou sur
+                                                [-2<superscript>15</superscript>;
+                                                2<superscript>15</superscript>-1].
+                                            </para>
+                                        </listitem>
+                                        <listitem>
+                                            <para>
+                                                d'entiers uint32 ou int32 sous découpage binaire
+                                                "rgba8888", ou de décimaux équivalents sur
+                                                [0, 2<superscript>32</superscript>-1] ou sur
+                                                [-2<superscript>31</superscript>,
+                                                2<superscript>32</superscript>-1]
+                                            </para>
+                                        </listitem>
+                                        <listitem>
+                                            <para>
+                                                de booléens
+                                            </para>
+                                        </listitem>
+                                    </itemizedlist>
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                        Si l'image d'entrée a un autre encodage, on lui appliquera
+                        <function>jimstandard</function>() avant de la fournir à
+                        <function>jimconvert</function>().
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>encoding</term>
                 <listitem>
                     <para>
-						Mot <emphasis role="bold">"gray"</emphasis> ou <emphasis role="bold">"rgb"</emphasis> : encodage souhaité en sortie
-					</para>
+                        Mot <emphasis role="bold">"gray"</emphasis> ou
+                        <emphasis role="bold">"rgb"</emphasis> : encodage souhaité en sortie
+                    </para>
                 </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>transparencyColor</term> 
+            </varlistentry>
+            <varlistentry>
+                <term>transparencyColor</term>
                 <listitem>
                     <para>
-						<itemizedlist>
-							<listitem>
-								<para>
-									Un vecteur ou une hypermatrice à trois composantes dans l'intervalle [0, 255]
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									Un scalaire dans l'intervalle [0, 255] si l'argument <literal>encoding</literal> est <literal>"gray"</literal>.
-								</para>
-							</listitem>
-						</itemizedlist>
-						Il correspond à la nuance de couleur affectée à tous les pixels ayant leur transparence au maximum. Par défaut, le blanc est choisi comme couleur de transparence. Cet argument est utilisé seulement si l'image d'entrée est encodée en RGBA.
-					</para>
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    Un vecteur ou une hypermatrice à trois composantes dans
+                                    l'intervalle [0, 255]
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    Un scalaire dans l'intervalle [0, 255] si l'argument
+                                    <literal>encoding</literal> est <literal>"gray"</literal>.
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                        Il correspond à la nuance de couleur affectée à tous les pixels ayant leur
+                        transparence au maximum. Par défaut, le blanc est choisi comme couleur de
+                        transparence. Cet argument est utilisé seulement si l'image d'entrée est
+                        encodée en RGBA.
+                    </para>
                 </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>convertedImage</term> 
+            </varlistentry>
+            <varlistentry>
+                <term>convertedImage</term>
                 <listitem>
                     <para>
-						Un objet de type <literal>jimage</literal> dont le champ <literal>.image</literal> a l'encodage correspondant à l'argument <literal>encoding</literal>, une matrice de niveaux de gris encodée en uint8 ou une hypermatrice RGB encodée en uint8
-
-					</para>
+                        Un objet de type <literal>jimage</literal> dont le champ
+                        <literal>.image</literal> a l'encodage correspondant à l'argument
+                        <literal>encoding</literal>, une matrice de niveaux de gris encodée en
+                        uint8 ou une hypermatrice RGB encodée en uint8
+                    </para>
                 </listitem>
-			</varlistentry>
+            </varlistentry>
         </variablelist>
     </refsection>
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet de convertir le type d'encodage d'une image. Une image encodée en RGBA peut être convertie en RGB ou en niveaux de gris. Une image encodée en RGB peut être convertie en niveaux de gris. Une image booléenne est traduite en noir (<literal>%f</literal>) et blanc (<literal>%t</literal>). 
-		</para>
-		<para>
-			Si un objet <code>jimage</code> est donné en entrée, l'objet de sortie sera aussi de type <literal>jimage</literal> avec les champs <code>.title</code> et <code>.format</code> conservés et le champ <literal>.transparencyColor</literal> converti. Sinon, l'objet <literal>convertedImage</literal> est une matrice ou une hypermatrice encodée en entiers 8 bits non signés. 
+            Cette fonction permet de convertir le type d'encodage d'une image. Une image encodée
+            en RGBA peut être convertie en RGB ou en niveaux de gris. Une image encodée en RGB peut
+            être convertie en niveaux de gris. Une image booléenne est traduite en noir
+            (<literal>%f</literal>) et blanc (<literal>%t</literal>).
+        </para>
+        <para>
+            Si un objet <literal>jimage</literal> est donné en entrée, l'objet de sortie sera aussi
+            de type <literal>jimage</literal> avec les champs <literal>.title</literal> et
+            <literal>.format</literal> conservés et le champ <literal>.transparencyColor</literal>
+            converti. Sinon, l'objet <literal>convertedImage</literal> est une matrice ou une
+            hypermatrice encodée en entiers 8 bits non signés.
         </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
-        <programlisting role="example"><![CDATA[ 
+        <programlisting role="example"><![CDATA[
 //Chargement de l'image depuis un fichier
 path = jimlabPath("/") + 'tests/images/noError/rgba.png';
-jimage = jimread(path)
-image = jimage.image;
+Jimage = jimread(path)
+image = Jimage.image;
 
 //Conversion en niveaux de gris
-jgray = jimconvert(jimage, 'gray')
+jgray = jimconvert(Jimage, 'gray')
 gray = jimconvert(image, 'gray');
 typeof(gray)
 
 //Conversion en RGB
 path = jimlabPath("/") + 'tests/images/logoEnsim.png';
-jimage2 = jimread(path)
-image2 = jimage2.image;
+Jimage2 = jimread(path)
+image2 = Jimage2.image;
 transparencyColor = uint8(cat(3, 200, 200, 200));
-jrgb = jimconvert(jimage2, 'rgb', transparencyColor)
+jrgb = jimconvert(Jimage2, 'rgb', transparencyColor)
 rgb = jimconvert(image2, 'rgb', transparencyColor);
 typeof(rgb)
 
 //Affichage des images converties
 clf
-subplot(2,2,1), jimdisp(jimage,,'info')
+subplot(2,2,1), jimdisp(Jimage,,'info')
 subplot(2,2,2), jimdisp(jgray,,'info')
-subplot(2,2,3), jimdisp(jimage2,,'info')
+subplot(2,2,3), jimdisp(Jimage2,,'info')
 subplot(2,2,4), jimdisp(jrgb,,'info')
  ]]></programlisting>
- <scilab:image>
-<!--//Chargement de l'image depuis un fichier
+        <scilab:image>
+            <!--//Chargement de l'image depuis un fichier
 path = jimlabPath("/") + 'tests/images/noError/rgba.png';
-jimage = jimread(path)
+Jimage = jimread(path)
 
 //Conversion en niveaux de gris
-jgray = jimconvert(jimage, 'gray')
+jgray = jimconvert(Jimage, 'gray')
 
 //Conversion en RGB
 path = jimlabPath("/") + 'tests/images/logoEnsim.png';
-jimage2 = jimread(path)
+Jimage2 = jimread(path)
 transparencyColor = uint8(cat(3, 200, 200, 200));
-jrgb = jimconvert(jimage2, 'rgb', transparencyColor)
+jrgb = jimconvert(Jimage2, 'rgb', transparencyColor)
 
 //Affichage des images converties
 clf
-subplot(2,2,1)
-jimdisp(jimage,,'info')
-subplot(2,2,2)
-jimdisp(jgray,,'info')
-subplot(2,2,3)
-jimdisp(jimage2,,'info')
-subplot(2,2,4)
-jimdisp(jrgb,,'info')
+subplot(2,2,1), jimdisp(Jimage,,'info')
+subplot(2,2,2), jimdisp(jgray,,'info')
+subplot(2,2,3), jimdisp(Jimage2,,'info')
+subplot(2,2,4), jimdisp(jrgb,,'info')
 -->
- </scilab:image>
-	</refsection>
+        </scilab:image>
+    </refsection>
     <refsection role="see also">
         <title>Voir Aussi</title>
         <simplelist type="inline">
-			<member>
+            <member>
                 <link linkend="jimage_properties">jimage_properties</link>
             </member>
-			<member>
+            <member>
                 <link linkend="jimstandard">jimstandard</link>
             </member>
         </simplelist>
