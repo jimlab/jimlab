@@ -36,11 +36,11 @@ itype = inttype(Jimage.image(1));
 // min
 [r, k] = min(Jimage);
 assert_checkequal(min(Jimage), iconvert(cat(3,64,4,48), itype));
-assert_checkequal(k, cat(3, [417 1], [411 1], [479 1]));
+assert_checkequal(k, cat(3, [420 1], [414 1], [482 1]));
 // max
 [r, k] = max(Jimage);
 assert_checkequal(max(Jimage), iconvert(cat(3,242,214,186), itype));
-assert_checkequal(k, cat(3, [399 65],[401 65],[408 65]));
+assert_checkequal(k, cat(3, [402 65],[404 65],[411 65]));
 
 
 // RGBA image
