@@ -1,131 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
+ * This file is part of Jimlab, an external module coded for Scilab
+ * and dedicated to image processing.
+ *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
- * 
+ *
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms
- * are also available at    
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * you should have received as part of this distribution.  The terms are also
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
-<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
-		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
-		xml:lang="en" xml:id="jimage_properties">
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+        xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
+        xml:lang="en" xml:id="jimage_properties">
     <refnamediv>
         <refname>jimage</refname>
-        <refpurpose>Typed list object (mlist) created for Jimlab and containing data of an image in several fields.</refpurpose>
+        <refpurpose>Typed list object (mlist) created for Jimlab and containing data of an image
+            in several fields.</refpurpose>
     </refnamediv>
     <refsection>
         <title>Description</title>
         <para>
-            Jimlab defines the type <literal>jimage</literal> which describes an image (matrix or hypermatrix of pixels with one, three or four layers). Its fields are : 
+            Jimlab defines the type <literal>jimage</literal> which describes an image (matrix or
+            hypermatrix of pixels with one, three or four layers). Its fields are :
             <variablelist>
                 <varlistentry>
                     <term>.image</term>
                     <listitem>
-                        The matrix or hypermatrix with the values of each pixels. The standard format used in Jimlab is uint8 : values are in the range [0,255].
-					</listitem>
-				</varlistentry>
-				<varlistentry>
+                        The matrix or hypermatrix with the values of each pixels. The standard
+                        format used in Jimlab is uint8 : values are in the range [0,255].
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
                     <term>.encoding</term>
                     <listitem>
                         The encoding type of the image.
-						<itemizedlist>
-							<listitem>
-								<para>
-								'gray' : <literal>jimage.image</literal> is a matrix describing a grayscale image (with 256 gray levels).  
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-								'rgb' : <literal>jimage.image</literal> is a three-layer hypermatrix. Each of these layers gives the pixel values for one color (Red, Green, Blue) on 256 levels.
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-								'rgba' : <literal>jimage.image</literal> is a four-layer hypermatrix. The fourth layer contains the alpha channel.
-								</para>
-							</listitem>
-						</itemizedlist>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    'gray' : <literal>jimage.image</literal> is a matrix describing
+                                    a grayscale image (with 256 gray levels).
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    'rgb' : <literal>jimage.image</literal> is a three-layer
+                                    hypermatrix. Each of these layers gives the pixel values for
+                                    one color (Red, Green, Blue) on 256 levels.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    'rgba' : <literal>jimage.image</literal> is a four-layer
+                                    hypermatrix. The fourth layer contains the alpha channel.
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
                     <term>.title</term>
                     <listitem>
-                        A string of characters containing the title of the image. If the jimage object is created by the fonction <literal>jimread()</literal>,
-					</listitem>
-				</varlistentry>
-				<varlistentry>
+                        A string of characters containing the title of the image. If the jimage
+                        object is created by the fonction <literal>jimread()</literal>,
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
                     <term>.mime</term>
                     <listitem>
-                        A string of characters containing the file extension : 'png', 'bmp', 'gif' ou 'jpg'.
-					</listitem>
-				</varlistentry>
-				<varlistentry>
+                        A string of characters containing the file extension : 'png', 'bmp', 'gif'
+                        or 'jpg'.
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
                     <term>.transparencyColor</term>
                     <listitem>
-						This field contains the transparency color of the image. 
+                        This field contains the transparency color of the image.
                         <itemizedlist>
-							<listitem>
-								<para>
-									-1 : There's no transparency color. It's the default value of this field when the jimage object is cr'eated by the function <function>jimread</function>(),
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									For a grayscale image, an 8-bit unsigned integer is used : gray levels are used for describing a transparent pixel,
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									For a RGB or RGBA image, a three-layer hypermatrix containing three uint8 values is used. The transparency color is separated in three layers : the first layer contains its Red value, the second layer contains its Green value and the third one contains its Blue value.
-								</para>
-							</listitem>
-						</itemizedlist>
-						This transparency color is modified when the function <function>jimroi</function>() is used.  Elle permet la sélection de zone d'une image. Lors de l'exportation d'un objet <literal>jimage</literal> avec la fonction <function>jimwrite</function>(), la couleur de transparence n'est pas écrite dans les métadonnées de l'image.
-					</listitem>
-				</varlistentry>
-            </variablelist>        
+                            <listitem>
+                                <para>
+                                    -1 : There's no transparency color. It's the default value of
+                                    this field when the jimage object is cr'eated by the function
+                                    <function>jimread</function>(),
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    For a grayscale image, an 8-bit unsigned integer is used :
+                                    gray levels are used for describing a transparent pixel,
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    For a RGB or RGBA image, a three-layer hypermatrix containing
+                                    three uint8 values is used. The transparency color is separated
+                                    in three layers : the first layer contains its Red value, the
+                                    second layer contains its Green value and the third one contains
+                                    its Blue value.
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                        This transparency color is modified when the function
+                        <function>jimroi</function>() is used.  It allows to select an area in an
+                        image. When a <literal>jimage</literal> is exported with
+                        <function>jimwrite</function>(), the transparency color is not recorded
+                        in the image metadata.
+                    </listitem>
+                </varlistentry>
+            </variablelist>
         </para>
     </refsection>
     <refsection>
         <title>Examples</title>
-        <programlisting role="example"><![CDATA[ 
+        <programlisting role="example">
+            <![CDATA[
 path = jimlabPath("/") + 'tests/images/noError/rgb.png';
 
 // Loading an image in a jimage object
-jimage = jimread(path);
+Jimage = jimread(path);
 
-// Use of size() et disp()
-dim = size(jimage)
-disp(jimage)
+// Use of size() and disp()
+size(Jimage)
+disp(Jimage)
 
 // Display
-jimdisp(jimage,'box','info')
- ]]></programlisting>
-	</refsection>
+jimdisp(Jimage,'box','info')
+ ]]>
+        </programlisting>
+    </refsection>
     <refsection role="see also">
         <title>See Also</title>
         <simplelist type="inline">
             <member>
                 <link linkend="jimread">jimread</link>
             </member>
-			<member>
+            <member>
                 <link linkend="jimdisp">jimdisp</link>
-			</member>
+            </member>
             <member>
                 <link linkend="jimwrite">jimwrite</link>
             </member>
-			<member>
+            <member>
                 <link linkend="jimroi">jimroi</link>
             </member>
-			<member>
+            <member>
                 <link linkend="Matplot_properties">Matplot_properties</link>
             </member>
-			<member>
+            <member>
                 <link linkend="size">size</link>
             </member>
         </simplelist>
