@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
+ * This file is part of Jimlab, an external module coded for Scilab
+ * and dedicated to image processing.
+ *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
- * 
- * Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
+ *
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms
- * are also available at    
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * you should have received as part of this distribution.  The terms are also
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
-<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
-		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
-		xml:lang="en" xml:id="jimread">
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+        xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
+        xml:lang="en" xml:id="jimread">
     <refnamediv>
         <refname>jimread</refname>
-        <refpurpose>Reads a local or distant image file and returns the image in a Scilab object</refpurpose>
+        <refpurpose>
+            Reads a local or distant image file and returns the image in a Scilab object
+        </refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntax</title>
         <synopsis>
-            jimage = jimread(imagePath)
+            Jimage = jimread(imagePath)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -32,92 +34,96 @@
                 <term>imagePath</term>
                 <listitem>
                     <para>
-						A string containing the relative/complete path of the image file or an URL. The MIME types handled are png, bmp, gif and jpg besides images encoded in CMYK and animated gif. Alpha channel is handled for MIME types png and gif. 
-					</para>					
+                        A string containing the relative/complete path of the image file or an URL.
+                        The MIME types handled are png, bmp, gif and jpg besides images encoded in
+                        CMYK and animated gif. Alpha channel is handled for MIME types png and gif.
+                    </para>
                 </listitem>
-			</varlistentry>
-			<varlistentry>
-				<term>jimage</term> 
+            </varlistentry>
+            <varlistentry>
+                <term>Jimage</term>
                 <listitem>
                     <para>
-						An object of type <literal>jimage</literal> (mlist) with 5 fields : <literal>.image</literal>, <literal>.encoding</literal>, <literal>.title</literal>, <literal>.mime</literal> and <literal>.transparencyColor</literal>.
-					</para>
+                        An object of type <literal>jimage</literal> (mlist) with 5 fields :
+                        <literal>.image</literal>, <literal>.encoding</literal>,
+                        <literal>.title</literal>, <literal>.mime</literal> and
+                        <literal>.transparencyColor</literal>.
+                    </para>
                 </listitem>
-			</varlistentry>
+            </varlistentry>
         </variablelist>
     </refsection>
     <refsection>
         <title>Description</title>
         <para>
-            This function loads in a Scilab object an image and some metadata from a local or a distant file referenced by its path or an URL.
-		</para>
-		<para>
-		The object <literal>jimage</literal> gathers : 
-		</para>
-		<itemizedlist>
-			<listitem>
-				<para>
-					the intensity of each pixel encoded in positive 8-bits integers in the field <literal>.image</literal>,
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					the encoding type ('gray', 'rgb', or 'rgba') in the field <literal>.encoding</literal>,
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					the image title in the field <literal>.title</literal>,
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					the MIME type of the image in the field <literal>.mime</literal>.
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					the transparency color in the field <literal>.transparencyColor</literal>.
-				</para>
-				<warning>		
-					Transparency color is lost during the import in a Scilab object. The default value of <literal>jimage.transparencyColor</literal> is -1. 
-				</warning>
-			</listitem>
-		</itemizedlist>
+            This function loads in a Scilab object an image and some metadata from a local or a
+            distant file referenced by its path or an URL.
+        </para>
+        <para>
+            The object <literal>jimage</literal> gathers :
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>
+                    the intensity of each pixel encoded in positive 8-bits integers in the field
+                    <literal>.image</literal>,
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    the encoding type ('gray', 'rgb', or 'rgba') in the field <literal>.encoding</literal>,
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    the image title in the field <literal>.title</literal>,
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    the MIME type of the image in the field <literal>.mime</literal>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    the transparency color in the field <literal>.transparencyColor</literal>.
+                </para>
+                <warning>
+                    Transparency color is lost during the import in a Scilab object. The default
+                    value of <literal>Jimage.transparencyColor</literal> is -1.
+                </warning>
+            </listitem>
+        </itemizedlist>
     </refsection>
     <refsection>
         <title>Examples</title>
-        <programlisting role="example"><![CDATA[ 
+        <programlisting role="example"><![CDATA[
 //From a local file
 
 //jpg in gray levels
 path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
-jimage1 = jimread(path)
+Jimage1 = jimread(path)
 
 //bmp in RGB
 path = jimlabPath("/") + 'tests/images/noError/rgb.bmp';
-jimage2 = jimread(path)
+Jimage2 = jimread(path)
 
 //png in RGBA
 path = jimlabPath("/") + 'tests/images/noError/rgba.png';
-jimage3 = jimread(path)
+Jimage3 = jimread(path)
 
 //From a distant file
 path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
-jimage4 = jimread(path)
+Jimage4 = jimread(path)
 
 //Display
 clf
-subplot(2,2,1)
-jimdisp(jimage1)
-subplot(2,2,2)
-jimdisp(jimage2)
-subplot(2,2,3)
-jimdisp(jimage3)
-subplot(2,2,4)
-jimdisp(jimage4)
+subplot(2,2,1), jimdisp(Jimage1)
+subplot(2,2,2), jimdisp(Jimage2)
+subplot(2,2,3), jimdisp(Jimage3)
+subplot(2,2,4), jimdisp(Jimage4)
  ]]></programlisting>
-	</refsection>
+    </refsection>
     <refsection role="see also">
         <title>See Also</title>
         <simplelist type="inline">
@@ -127,7 +133,7 @@ jimdisp(jimage4)
             <member>
                 <link linkend="jimwrite">jimwrite</link>
             </member>
-			<member>
+            <member>
                 <link linkend="jimage_properties">jimage_properties</link>
             </member>
         </simplelist>
