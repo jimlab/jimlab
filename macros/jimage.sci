@@ -1,31 +1,31 @@
- //Copyright (C) 2017 - ENSIM, Université du Maine - Gaël SENÉE
- //This file must be used under the terms of the CeCILL.
- //This source file is licensed as described in the file COPYING, which
- //you should have received as part of this distribution.  The terms
- //are also available at    
- //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+// This file is part of Jimlab, an external module coded for Scilab 
+//  and dedicated to image processing.
+//
+// Copyright (C) 2017 - ENSIM, Université du Maine - Gaël SENÉE
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution.  The terms are also
+// available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-
-function jim = jimage2(image, varargin)
-// This function creates a jimage object from a matrix or hypermatrix and
-// specific fields.
-// It can also set new values to the fields of an already existing jimage object.
-// image : a single-layered matrix, or a three- or four-layered hypermatrix.
-// This matrix is converted in uint8.
-// The following fields are configurable (varargin entries) :
-// MIME type : A specific string of characters ('png', 'jpg', 'bmp' or 'gif').
-// Encoding : A specific string of characters ('rgb', 'rgba' or 'gray').
-// TransparencyColor : A value or vector.
-// All of these three fields are required in order to create a new jimage oject.
-// Only one entry can be filled in order to replace an existing field.
-// The field filename has a default value 'user' when a new jimage object is created.
-
-// WIP.
-// • Transparency Color types are to be checked.
-// • Missing : Checking whether the encoding corresponds to the dimensions of the
-// matrix or hypermatrix.
-
-
+function jim = jimage(image, varargin)
+    // This function creates a jimage object from a matrix or hypermatrix and
+    // specific fields.
+    // It can also set new values to the fields of an already existing jimage object.
+    // image : a single-layered matrix, or a three- or four-layered hypermatrix.
+    // This matrix is converted in uint8.
+    // The following fields are configurable (varargin entries) :
+    // MIME type : A specific string of characters ('png', 'jpg', 'bmp' or 'gif').
+    // Encoding : A specific string of characters ('rgb', 'rgba' or 'gray').
+    // TransparencyColor : A value or vector.
+    // All of these three fields are required in order to create a new jimage oject.
+    // Only one entry can be filled in order to replace an existing field.
+    // The field filename has a default value 'user' when a new jimage object is created.
+    
+    // WIP.
+    // • Transparency Color types are to be checked.
+    // • Missing : Checking whether the encoding corresponds to the dimensions of the
+    // matrix or hypermatrix.
 
     if argn(2) > 5 then
         error('Too many input arguments : five fields describe jimage objects, four of them being configurable by users')
