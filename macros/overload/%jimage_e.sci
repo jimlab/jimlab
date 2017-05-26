@@ -32,3 +32,18 @@ function jimageR = %jimage_e(i, varargin)
     end
     jimageR.image = imageR;
 endfunction
+
+//// Examples:
+//path = jimlabPath("/") + "tests/images/";
+//Jimage = jimread(path + "lena_color.gif");
+//Jimage(1:50)   Linearized indices over each layer. column x layers returned.
+//clf
+//ij = grand(1,77,"uin",1,500);
+//jimdisp(Jimage(ij,ij))
+//clf
+//jimdisp(Jimage(100:400,100:300))
+//clf
+//jimdisp(Jimage(:,100:300))
+//clf
+//jimdisp(Jimage(200:$,200:$))
+//
