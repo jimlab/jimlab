@@ -1,4 +1,4 @@
- // This file is part of the Jimlab module,
+// This file is part of the Jimlab module,
 // an external module coded for Scilab and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
@@ -111,8 +111,8 @@ function Jimage = jimread_intrgb(bufferedIm, imPath)
     
     dim = [double(width) double(height) 3];
     try
-        im = matrix(im,dim);      // transpose matrix of the image
-        im = permute(im,[2 1 3]); // formatting the image data 
+        im = matrix(im,dim);           // transpose matrix of the image
+        im = jimread_transpose_hm(im); // formatting the image data 
         im = uint8(im);           // convertion into 8-bits unsigned intergers usable by jimdisp()
     catch
         msg = _("%s: No more memory.\n");
@@ -161,9 +161,9 @@ function Jimage = jimread_intargb(bufferedIm, imPath)
     
     dim = [double(width) double(height) 4];
     try
-        im = matrix(im,dim);        // transpose matrix of the image
-        im = permute(im,[2 1 3]);   // formatting the image data 
-        im = uint8(im);             // convertion into 8-bits unsigned intergers usable by jimdisp()
+        im = matrix(im,dim);           // transpose matrix of the image
+        im = jimread_transpose_hm(im); // formatting the image data 
+        im = uint8(im);                // usable by jimdisp()
     catch
         msg = _("%s: No more memory.\n");
         error(msprintf(msg,"jimread"));
@@ -211,8 +211,8 @@ function Jimage = jimread_intargbpre(bufferedIm, imPath)
     dim = [double(width) double(height) 4];
     im = matrix(im,dim);             //transpose matrix of the image
     try
-        im = permute(im,[2 1 3]); // formatting the image data 
-        im = uint8(im);           // convertion into 8-bits unsigned intergers usable by jimdisp()
+        im = jimread_transpose_hm(im); // formatting the image data 
+        im = uint8(im);                // Usable by jimdisp()
     catch
         msg = _("%s: No more memory.\n");
         error(msprintf(msg,"jimread"));
@@ -259,8 +259,8 @@ function Jimage = jimread_intbgr(bufferedIm, imPath)
     dim = [double(width) double(height) 3];
     try
         im = matrix(im,dim);       // transpose matrix of the image
-        im = permute(im,[2 1 3]);  // formatting the image data 
-        im = uint8(im);            // convertion into 8-bits unsigned intergers usable by jimdisp()
+        im = jimread_transpose_hm(im);  // formatting the image data 
+        im = uint8(im);                 // Usable by jimdisp()
     catch
         msg = _("%s: No more memory.\n");
         error(msprintf(msg,"jimread"));
@@ -300,7 +300,7 @@ function Jimage = jimread_3bytebgr(bufferedIm, imPath)
     try
         im = flipdim(im,1);            // storage of the 3 layers in RGB order
         im = matrix(im',dim);          // transpose matrix of the image
-        im = permute(im,[2 1 3]);      // formatting the image data 
+        im = jimread_transpose_hm(im); // formatting the image data 
     catch
         msg = _("%s: No more memory.\n");
         error(msprintf(msg,"jimread"));
@@ -340,9 +340,9 @@ function Jimage = jimread_4byteabgr(bufferedIm, imPath)
     dim = [double(width) double(height) 4];
     im = matrix(unprocessedData,4,-1);
     try
-        im = flipdim(im,1);          // storage of the 4 layers in RGBA order
-        im = matrix(im',dim);        // transpose matrix of the image
-        im = permute(im,[2 1 3]);    // formatting the image data 
+        im = flipdim(im,1);            // storage of the 4 layers in RGBA order
+        im = matrix(im',dim);          // transpose matrix of the image
+        im = jimread_transpose_hm(im); // formatting the image data 
     catch
         msg = _("%s: No more memory.\n");
         error(msprintf(msg,"jimread"));
@@ -392,8 +392,8 @@ function Jimage = jimread_4byteabgrpre(bufferedIm, imPath)
     dim = [double(width) double(height) 4];
     im = matrix(im,dim);      // transpose matrix of the image
     try
-        im = permute(im,[2 1 3]); // formatting the image data 
-        im = uint8(im);           // convertion into 8-bits unsigned intergers usable by jimdisp()
+        im = jimread_transpose_hm(im); // formatting the image data 
+        im = uint8(im);                // Usable by jimdisp()
     catch
         msg = _("%s: No more memory.\n");
         error(msprintf(msg,"jimread"));
@@ -439,8 +439,8 @@ function Jimage = jimread_ushort565rgb(bufferedIm, imPath)
     dim = [double(width) double(height) 3];
     im = matrix(im,dim);             //transpose matrix of the image
     try
-        im = permute(im,[2 1 3]);  // formatting the image data 
-        im = uint8(im);            // convertion into 8-bits unsigned intergers usable by jimdisp()
+        im = jimread_transpose_hm(im);  // Formatting the image data 
+        im = uint8(im);                 // Usable by jimdisp()
     catch
         msg = _("%s: No more memory.\n");
         error(msprintf(msg,"jimread"));
@@ -486,8 +486,8 @@ function Jimage = jimread_ushort555rgb(bufferedIm, imPath)
     dim = [double(width) double(height) 3];
     im = matrix(im,dim);          // transpose matrix of the image
     try
-        im = permute(im,[2 1 3]); // formatting the image data 
-        im = uint8(im);           // convertion into 8-bits unsigned intergers usable by jimdisp()
+        im = jimread_transpose_hm(im); // Formatting the image data 
+        im = uint8(im);                // Usable by jimdisp()
     catch
         msg = _("%s: No more memory.\n");
         error(msprintf(msg,"jimread"));
@@ -526,8 +526,8 @@ function Jimage = jimread_byteGray(bufferedIm, imPath)
     dim = [double(width) double(height) 1];
     im = matrix(unprocessedData, dim);
     try
-        im = permute(im,[2 1 3]);  // formatting the image data 
-        im = uint8(im);            // convertion into 8-bits unsigned intergers usable by jimdisp()
+        im = im.';          // Formatting the image data 
+        im = uint8(im);     // Usable by jimdisp()
     catch
         msg = _("%s: No more memory.\n");
         error(msprintf(msg,"jimread"));
@@ -576,8 +576,8 @@ function Jimage = jimread_ushortGray(bufferedIm, imPath)
     dim = [double(width) double(height) 3];
     im = matrix(im,dim);          // transpose matrix of the image
     try
-        im = permute(im,[2 1 3]); // formatting the image data 
-        im = uint8(im);           // convertion into 8-bits unsigned intergers usable by jimdisp()
+        im = jimread_transpose_hm(im); // Formatting the image data 
+        im = uint8(im);                // Usable by jimdisp()
     catch
         msg = _("%s: No more memory.\n");
         error(msprintf(msg,"jimread"));
@@ -626,8 +626,8 @@ function Jimage = jimread_byteIndexed(bufferedIm, imPath)
     dim = [double(width) double(height) 4];
     im = matrix(im,dim);             //transpose matrix of the image
     try
-        im = permute(im,[2 1 3]);  // formatting the image data 
-        im = uint8(im);            // convertion into 8-bits unsigned intergers usable by jimdisp()
+        im = jimread_transpose_hm(im);  // Formatting the image data 
+        im = uint8(im);                 // Usable by jimdisp()
     catch
         msg = _("%s: No more memory.\n");
         error(msprintf(msg,"jimread"));
@@ -637,4 +637,16 @@ function Jimage = jimread_byteIndexed(bufferedIm, imPath)
     mime = strsubst(fileext(imPath), ".", "");
     tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
     Jimage = mlist(tmp, im, 'rgba', basename(imPath), mime, -1);
+endfunction
+
+// --------------------------------------------------------------------------
+
+// Replacement for im = permute(im,[2 1 3]); that needs too much memory for 5.5
+// => Scilab 5.5.2 "out of memory"
+function r = jimread_transpose_hm(hm)
+    s = size(hm);
+    r = hm(:,:,1).';
+    for i = 2:s(3)
+        r(:,:,i) = hm(:,:,i).';
+    end
 endfunction
