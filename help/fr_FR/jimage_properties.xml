@@ -1,134 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
+ * This file is part of Jimlab, an external module coded for Scilab
+ * and dedicated to image processing.
+ *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
- * 
+ *
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms
- * are also available at    
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * you should have received as part of this distribution.  The terms are also
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
-<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
-		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
-		xml:lang="fr" xml:id="jimage_properties">
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+        xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
+        xml:lang="fr" xml:id="jimage_properties">
     <refnamediv>
         <refname>Propriétés jimage</refname>
-        <refpurpose>Objet spécifique au module Jimlab : liste typée (mlist) contenant des champs de données sur l'image.</refpurpose>
+        <refpurpose>Objet spécifique au module Jimlab : liste typée (mlist) contenant des champs
+        de données sur l'image.</refpurpose>
     </refnamediv>
     <refsection>
         <title>Description</title>
         <para>
-            Jimlab définit le type <literal>jimage</literal> agrégeant une image (matrice ou hypermatrice de pixels à une, 3 ou 4 couches) et un lot de méta-données associées. Les champs définis sont : 
+            Jimlab définit le type <literal>jimage</literal> agrégeant une image (matrice ou
+            hypermatrice de pixels à une, 3 ou 4 couches) et un lot de méta-données associées.
+            Les champs définis sont :
             <variablelist>
                 <varlistentry>
                     <term>.image</term>
                     <listitem>
-                        Une matrice ou une hypermatrice décrivant l'intensité des pixels de l'image. Elle est codée en entiers 8 bits positifs (uint8) dans l'intervalle [0,255].
-					</listitem>
-				</varlistentry>
-				<varlistentry>
+                        Une matrice ou une hypermatrice décrivant l'intensité des pixels de l'image.
+                        Elle est codée en entiers 8 bits positifs (uint8) dans l'intervalle [0,255].
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
                     <term>.encoding</term>
                     <listitem>
-                        Une chaîne de caractères décrivant le type d'encodage de l'image. 
-						<itemizedlist>
-							<listitem>
-								<para>
-								'gray' : <literal>jimage.image</literal> est une matrice décrivant une image en niveaux de gris sur 256 niveaux.  
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-								'rgb' : <literal>jimage.image</literal> est une hypermatrice à 3 couches. Chaque couche donne l'intensité des pixels pour une couleur (rouge, vert et bleu) sur 256 niveaux.
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-								'rgba' : <literal>jimage.image</literal> est une hypermatrice à 4 couches dont la dernière gère le canal alpha. 
-								</para>
-							</listitem>
-						</itemizedlist>
-					</listitem>
-				</varlistentry>
-				<varlistentry>
+                        Une chaîne de caractères décrivant le type d'encodage de l'image.
+                        <itemizedlist>
+                            <listitem>
+                                <para>
+                                    'gray' : <literal>jimage.image</literal> est une matrice
+                                    décrivant une image en niveaux de gris sur 256 niveaux.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    'rgb' : <literal>jimage.image</literal> est une hypermatrice
+                                    à 3 couches. Chaque couche donne l'intensité des pixels pour
+                                    une couleur (rouge, vert et bleu) sur 256 niveaux.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    'rgba' : <literal>jimage.image</literal> est une hypermatrice à
+                                    4 couches dont la dernière gère le canal alpha.
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
                     <term>.title</term>
                     <listitem>
-                        Une chaîne de caractères (une seule ligne) contenant le titre associé à l'image. Si l'objet <literal>jimage</literal> est créé avec la fonction <function>jimread</function>(), le titre de l'image correspond au nom du fichier sans son extension.
-					</listitem>
-				</varlistentry>
-				<varlistentry>
+                        Une chaîne de caractères (une seule ligne) contenant le titre associé à
+                        l'image. Si l'objet <literal>jimage</literal> est créé avec la fonction
+                        <function>jimread</function>(), le titre de l'image correspond au nom du
+                        fichier sans son extension.
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
                     <term>.mime</term>
                     <listitem>
-                        Une chaîne de caractères contenant le type MIME de l'image : 'png', 'bmp', 'gif' ou 'jpg'.
-					</listitem>
-				</varlistentry>
-				<varlistentry>
+                        Une chaîne de caractères contenant le type MIME de l'image : 'png', 'bmp',
+                        'gif' ou 'jpg'.
+                    </listitem>
+                </varlistentry>
+                <varlistentry>
                     <term>.transparencyColor</term>
                     <listitem>
-						Ce champ représente la couleur de transparence d'une image. 
+                        Ce champ représente la couleur de transparence d'une image.
                         <itemizedlist>
-							<listitem>
-								<para>
-									-1 : il n'y a pas de couleur de transparence. C'est la valeur par défaut de ce champ lorsque l'objet jimage a été créé à l'aide de la fonction <function>jimread</function>().
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									Pour une image en niveaux de gris, un entier positif encodé sur 8 bits :a nuance de gris utilisée pour représenter un pixel transparent dans une image en niveaux de gris.
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-									Pour une image RGB ou RGBA, une hypermatrice à trois composantes encodées en entiers positifs sur 8 bits : la couleur utilisée pour représenter un pixel transparent dans une image RGB.
-
-								</para>
-							</listitem>
-						</itemizedlist>
-						La fonction <function>jimroi</function>() peut déterminer affecter la couleur de transparence aux pixels situés hors de la zone d'intérêt sélectionnée.
-						Lors de l'exportation d'un objet <literal>jimage</literal> avec la fonction <function>jimwrite</function>(), la couleur de transparence n'est pas écrite dans les métadonnées de l'image.
-					</listitem>
-				</varlistentry>
-            </variablelist>        
+                            <listitem>
+                                <para>
+                                    -1 : il n'y a pas de couleur de transparence. C'est la valeur
+                                    par défaut de ce champ lorsque l'objet jimage a été créé à
+                                    l'aide de la fonction <function>jimread</function>().
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    Pour une image en niveaux de gris, un entier positif encodé
+                                    sur 8 bits :a nuance de gris utilisée pour représenter un pixel
+                                    transparent dans une image en niveaux de gris.
+                                </para>
+                            </listitem>
+                            <listitem>
+                                <para>
+                                    Pour une image RGB ou RGBA, une hypermatrice à trois composantes
+                                    encodées en entiers positifs sur 8 bits : la couleur utilisée
+                                    pour représenter un pixel transparent dans une image RGB.
+                                </para>
+                            </listitem>
+                        </itemizedlist>
+                        La fonction <function>jimroi</function>() peut déterminer affecter la
+                        couleur de transparence aux pixels situés hors de la zone d'intérêt sélectionnée.
+                        Lors de l'exportation d'un objet <literal>jimage</literal> avec la fonction
+                        <function>jimwrite</function>(), la couleur de transparence n'est pas écrite
+                        dans les métadonnées de l'image.
+                    </listitem>
+                </varlistentry>
+            </variablelist>
         </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
-        <programlisting role="example"><![CDATA[ 
-
+        <programlisting role="example"><![CDATA[
 path = jimlabPath("/") + 'tests/images/noError/rgb.png';
 
 // Chargement d'une image dans un objet jimage
-jimage = jimread(path);
+Jimage = jimread(path);
 
-// Utilisation de size() et disp() 
-dim = size(jimage)
-disp(jimage)
+// Utilisation de size() et disp()
+dim = size(Jimage)
+disp(Jimage)
 
 // Affichage
-jimdisp(jimage,'box','info')
+jimdisp(Jimage, 'box', 'info')
  ]]></programlisting>
-	</refsection>
+    </refsection>
     <refsection role="see also">
         <title>Voir Aussi</title>
         <simplelist type="inline">
             <member>
                 <link linkend="jimread">jimread</link>
             </member>
-			<member>
+            <member>
                 <link linkend="jimdisp">jimdisp</link>
-			</member>
+            </member>
             <member>
                 <link linkend="jimwrite">jimwrite</link>
             </member>
-			<member>
+            <member>
                 <link linkend="jimroi">jimroi</link>
             </member>
-			<member>
+            <member>
                 <link linkend="Matplot_properties">Matplot_properties</link>
             </member>
-			<member>
+            <member>
                 <link linkend="size">size</link>
             </member>
         </simplelist>
@@ -137,7 +157,7 @@ jimdisp(jimage,'box','info')
         <title>Historique</title>
         <revhistory>
             <revision>
-                <revnumber>0.1 - 2017-05</revnumber>
+                <revnumber>0.1 - 2017-06</revnumber>
                 <revremark>Publication initiale du module Jimlab</revremark>
             </revision>
         </revhistory>
