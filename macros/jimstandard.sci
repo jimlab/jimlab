@@ -61,7 +61,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
                 originalType = ["double"];
             elseif ((max(imageMat) <= 255.) & (min(imageMat) >= 0.))
                 imageMat = uint8(imageMat);
-            elseif ((max(imageMat) <= 127.) & (min(imageMat) >= -127.))
+            elseif ((max(imageMat) <= 127.) & (min(imageMat) >= -128.))
                 imageMat = int8(imageMat);
             elseif ((max(imageMat) <= 2^16-1) & (min(imageMat) >= 0.))
                 imageMat = uint16(imageMat);
