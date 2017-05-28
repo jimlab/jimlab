@@ -12,36 +12,88 @@
 // <-- NO CHECK REF -->
 
 root = jimlabPath("/") + "tests/images/noError/";
-// Objet jimage RGBA
+// Object jimage encoded in RGBA
 path = root + 'rgba.png';
 jim = jimread(path);
 equalizedJimage = jimhistEqual(jim);
+assert_checkequal(jim.title, equalizedJimage.title);
+assert_checkequal(jim.mime, equalizedJimage.mime);
 
-// Matrice RGBA
+// RGBA matrix
 im = jim.image;
 equalizedImage = jimhistEqual(im);
 assert_checkequal(equalizedJimage.image, equalizedImage);
 
-// Objet jimage RGBA avec couleur de transparence à ignorer
+// Object jimage encoded in RGBA with a transparency color
 path = jimlabPath("/") + 'tests/images/logoEnsim.png';
 jim = jimread(path);
 jim.transparencyColor = cat(3,0,0,255);
 equalizedJimage = jimhistEqual(jim);
+assert_checkequal(jim.title, equalizedJimage.title);
+assert_checkequal(jim.mime, equalizedJimage.mime);
 
-// Matrice RGBA avec couleur de transparence à ignorer
+// RGBA matrix with a transparency color
 im = jim.image;
 equalizedImage = jimhistEqual(im, cat(3,0,0,255));
 assert_checkequal(equalizedJimage.image, equalizedImage);
 
-//
-fileList = dir(root);
-nameList = fileList.name;
-fileNumber = size(nameList);
-fileNumber = fileNumber(1);
+//Object jimage encoded in RGB
+path = root + 'rgba.png';
+jim = jimread(path);
+equalizedJimage = jimhistEqual(jim);
+assert_checkequal(jim.title, equalizedJimage.title);
+assert_checkequal(jim.mime, equalizedJimage.mime);
 
-for i = 1:fileNumber
-    path = root + nameList(i);
-    jim = jimread(path);
-    equalizedJimage = jimhistEqual(jim);
-    equalizedImage = jimhistEqual(jim.image);
-end
+//RGB matrix
+im = jim.image;
+equalizedImage = jimhistEqual(im);
+assert_checkequal(equalizedJimage.image, equalizedImage);
+
+// Object jimage encoded in RGB with a transparency color
+jim.transparencyColor = cat(3,255,255,255);
+equalizedJimage = jimhistEqual(jim);
+assert_checkequal(jim.title, equalizedJimage.title);
+assert_checkequal(jim.mime, equalizedJimage.mime);
+
+// RGB matrix with a transparency color
+equalizedImage = jimhistEqual(im, [255,255,255]);
+assert_checkequal(equalizedJimage.image, equalizedImage);
+
+//Object jimage encoded in gray levels
+path = root + 'gray.jpg';
+jim = jimread(path);
+equalizedJimage = jimhistEqual(jim);
+assert_checkequal(jim.title, equalizedJimage.title);
+assert_checkequal(jim.mime, equalizedJimage.mime);
+
+//Matrix of gray levels
+im = jim.image;
+equalizedImage = jimhistEqual(im);
+assert_checkequal(equalizedJimage.image, equalizedImage);
+
+// Object jimage encoded in gray levels with a transparency color
+jim.transparencyColor = 255;
+equalizedJimage = jimhistEqual(jim);
+assert_checkequal(jim.title, equalizedJimage.title);
+assert_checkequal(jim.mime, equalizedJimage.mime);
+
+// Matrix of gray levels with a transparency color 
+equalizedImage = jimhistEqual(im, 255);
+assert_checkequal(equalizedJimage.image, equalizedImage);
+
+//Wrong first argument
+msg = "%s: Argument #%d: Wrong type of input argument.\n";
+msg = msprintf(msg, "jimhistEqual", 1);
+assert_checkerror("eq = jimhistEqual(""wrong"")", msg);
+assert_checkerror("eq = jimhistEqual(""wrong"", 222)", msg);
+
+//Wrong second argument 
+msg = "%s: Argument #%d: Scalar or hypermatrix with 3 components expected.\n";
+msg = msprintf(msg, "jimhistEqual", 2);
+assert_checkerror("eq = jimhistEqual(im, ""wrong"")", msg);
+assert_checkerror("eq = jimhistEqual(im, [1:4])", msg);
+
+msg = "%s: Argument #%d: Components of transparencyColor must be in the intervalle [0:255].\n";
+msg = msprintf(msg, "jimhistEqual", 2);
+assert_checkerror("eq = jimhistEqual(im, [255, 0, 300])", msg);
+assert_checkerror("eq = jimhistEqual(im, 256)", msg);
