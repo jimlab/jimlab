@@ -156,7 +156,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
 endfunction
 
 
- function [convertedMat] = jimstandard_uint32(image))
+ function [convertedMat] = jimstandard_uint32(image)
      //This subfunction is called by jimstandard(). 
      //It converts a matrix of uint32 into a hypermatrix of uint8 with 4 layers. 
      //image : a matrix of uint32 
