@@ -77,6 +77,11 @@
 		subplot(2,2,4),jimdisp(impixeled2)
  ]]></programlisting>
   <scilab:image>
+	<!-- À DEBOGUER :
+!--error 4 
+Variable non définie : mat_filter
+at line      55 of function jimsmooth called by :  
+
  	//Objet de type jimage(gray image)
 		path=jimlabPath("/") + 'tests/images/noError/';
 		jimage1 = jimread(path + 'gray.jpg');
@@ -91,7 +96,7 @@
 		subplot(2,2,3),jimdisp(jimage2)
 		subplot(2,2,4),jimdisp(impixeled2)
 		subplot(2,2,4),jimdisp(blured2)
-
+-->
    </scilab:image>
 	</refsection>
     <refsection role="see also">
