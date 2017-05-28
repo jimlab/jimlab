@@ -42,15 +42,21 @@
      //must be converted into gray if a RGB transparencyColor is given
      if (isdef('transparencyColor',"l") & type(transparencyColor) ~= 0) then
          if (length(transparencyColor) ~= 3. & length(transparencyColor) ~= 1.)
-             msg1 = _("%s: Argument #%d: Scalar or hypermatrix with 3 components expected.\n");
-             error(msprintf(msg1,"jimhistEqual", 2));
+             msg = _("%s: Argument #%d: Scalar or hypermatrix with 3 components expected.\n");
+             error(msprintf(msg,"jimhistEqual", 2));
          elseif length(transparencyColor) == 3.
+             for i = 1:3
+                 if (transparencyColor(i) > 255 | transparencyColor(i) < -1)
+                    msg = _("%s: Argument #%d: Components of transparencyColor must be in the intervalle [0:255].\n");
+                    error(msprintf(msg,"jimhistEqual", 2));
+                 end
+             end
              transparencyColor = 0.299 .* transparencyColor(1) + ..
                 0.587 .* transparencyColor(2) + 0.114 .* transparencyColor(3);
          end
          if (transparencyColor > 255 | transparencyColor < -1)
-             msg2 = _("%s: Argument #%d: Components of transparencyColor must be in the intervalle [0:255].\n");
-             error(msprintf(msg2,"jimhistEqual", 2));
+             msg = _("%s: Argument #%d: Components of transparencyColor must be in the intervalle [0:255].\n");
+             error(msprintf(msg,"jimhistEqual", 2));
          end
      else
          transparencyColor = -1;
