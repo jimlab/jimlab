@@ -180,6 +180,7 @@ f = gce();
 f.image_type = "gray";
 tmp = double(int8gray);
 [test, T] = jimstandard(int8gray);
+[test2, T2] = jimstandard(tmp);
 assert_checkequal(test,test2) 
 assert_checkequal(T,T2) 
 assert_checkequal(uint8(int8gray),test)
