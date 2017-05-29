@@ -96,7 +96,7 @@
   <scilab:image>
   
 //Objet de type jimage(gray image)
-		path=jimlabPath("/") + 'tests/images/noError/";
+		path=jimlabPath("/") + "tests/images/noError/";
 		jimage1 = jimread(path + 'gray.jpg');
 		blured1 = jimsmooth(jimage1,"gaussian",9);
 		subplot(2,2,1),jimdisp(jimage1)
