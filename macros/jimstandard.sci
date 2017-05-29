@@ -22,7 +22,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
             argb? = %t;
         elseif opt == 0.
             argb? = %f;
-        elseif size(opt, 3) == 3.
+        elseif size(opt, 2) == 3.
             if(max(opt) > 1. & min(opt) < 0)
                 msg = _("%s: Argument #%d: coefficients of the colormap must be in the intervalle[0,1].\n");
                 error(msprintf(msg,"jimstandard", 2));
@@ -131,7 +131,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
                 end
                 tmp = uint16(imageMat);
                 convertedMat = jimstandard_uint16(imageMat,colorsBits);
-                originalType = "int16";
+                originalType = ["int16", colorsBits];
             elseif (tmp == 14.) then
                  convertedMat = jimstandard_uint32(imageMat)//,argb?);
                  originalType = "uint32";
