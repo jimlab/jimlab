@@ -6,7 +6,7 @@
  //are also available at    
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-function jimwrite(image,imagePath,Encoding,typeMIME)
+function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
  
     if(isdef(["image"],"l"))// Verify if image is a jimage object or a matrix
         if((typeof(image) == "hypermat")|(typeof(image) == "uint8"))
@@ -35,7 +35,7 @@ function jimwrite(image,imagePath,Encoding,typeMIME)
         if(isdir(imagePath))// if imagePath refer to a directory, definition of the name and the TypeMIME
             if(arg_jimage)
                 Name = image.title;
-                warning("jimage""s name will be used :"+ Name);
+                warning("jimage''s name will be used :"+ Name);
                 MIME = image.mime;
                 MIME = strsubst(MIME, ".", "");
                 
@@ -142,7 +142,7 @@ function jimwrite(image,imagePath,Encoding,typeMIME)
     fileparts(imagePath,"fname") + "." + typeMIME;
 end
 // This code create the final path used by Java methode 'write'
-disp(imagePath);
+
     S = 0;
     
     select Encoding,
