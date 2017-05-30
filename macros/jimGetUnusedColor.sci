@@ -72,7 +72,7 @@
             end
          end
          
-     elseif (size(image, 3) == 3)
+     elseif (size(image, 3) == 3 | size(image, 3) == 4)
          //case of a RGB encoded image
          
          //Checking targetColor input argument
@@ -94,7 +94,7 @@
          
          targetColor = uint32(targetColor(1)).*16^4 + uint32(targetColor(2)).*16^2 + uint32(targetColor(3));
          // Getting the colors used in the image
-         pixelList = matrix(image, -1, 3);
+         pixelList = matrix(image(:,:,1:3), -1, 3);
          //Conversion in uint32 in the aim to be able to use dseach()
          colorList = uint32(pixelList(:,1)).*16^4 + uint32(pixelList(:,2)).*16^2 + uint32(pixelList(:,3));
          [ibins, counts] = dsearch(colorList, [0:16777215], "d");
