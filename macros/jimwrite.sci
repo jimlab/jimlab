@@ -190,8 +190,8 @@ endfunction
             "int L = 0;"
             "int C = 0;"
             "float x = 1;"
-            "float z = 0;"
-            "float mid =new Float(0.5019608);"
+            
+            
             " for (L = 0; L < height; L++){"
                     "for(C = 0; C < width; C++){"
                         "Color A = new Color( Mat[L][C],Mat[L][C],Mat[L][C],x);"
