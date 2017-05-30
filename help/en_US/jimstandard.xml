@@ -163,7 +163,7 @@
                 <link linkend="Matplot_properties">Matplot_properties</link>
             </member>
 			<member>
-                <link linkend="gce">gce</link>
+                <link linkend="gcf">gcf</link>
             </member>
 			<member>
                 <link linkend="jimwrite">jimwrite</link>
