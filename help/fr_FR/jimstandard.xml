@@ -149,7 +149,7 @@
         <title>Description</title>
         <para>
             Cette fonction permet 
-		</para>
+	</para>
     </refsection>
     <refsection>
         <title>Exemples</title>
@@ -159,11 +159,11 @@
     <refsection role="see also">
         <title>Voir Aussi</title>
         <simplelist type="inline">
-			<member>
+	    <member>
                 <link linkend="Matplot_properties">Matplot_properties</link>
             </member>
-			<member>
-                <link linkend="gce">gce</link>
+	    <member>
+                <link linkend="gcf">gcf</link>
             </member>
 			<member>
                 <link linkend="jimwrite">jimwrite</link>
