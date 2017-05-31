@@ -75,7 +75,6 @@
                     </para>
                 </listitem>
             </varlistentry>
-        </variablelist>
         <varlistentry>
                 <term>S</term>
                 <listitem>
@@ -84,6 +83,8 @@
                     </para>
                 </listitem>
             </varlistentry>
+
+            </variablelist>
     </refsection>
     <refsection>
         <title>Description</title>
