@@ -16,15 +16,14 @@
 		xml:lang="en" xml:id="jimwrite">
     <refnamediv>
         <refname>jimwrite</refname>
-        <refpurpose>Write an image as file in a directory from a jimage mlist</refpurpose>
+        <refpurpose>Write an image as file in a directory. from a <literal>jimage</literal> object or a matrix</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntax</title>
         <synopsis>
-          jimwrite(image,imagePath)
-	   jimwrite(image,imagePath,Format)
-	   jimwrite(image,imagePath,,Name)
-	   jimwrite(image,imagePath,Format,Name)
+            S = jimwrite(image,imagePath)
+            S = jimwrite(image,imagePath,Encoding)
+            S = jimwrite(image,imagePath,Encoding,typeMIME)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -34,34 +33,47 @@
 		<term>image</term>
 		<listitem>
 			<para>
-				A mlist containing : the matrix of the image, the name, the format and encoding of the image
+				This argument can be either a <literal>jimage</literal> object containning image's matrix and meta data, or a hypermatrix of one, three or four layers representing a gray-scale, RGB or RGBA image. Image must be a int8,16,32 or uint8,16,32 matrix, a boolean matrix or a real matrix.
 			</para>
 		</listitem>
-
+                </varlistentry>
+                <varlistentry>
                 <term>imagePath</term>
                 <listitem>
-                   	<para>
-				A character string containing the path of the directory where the image might be saved. If unpresent, the default path is 					
-				the current directory's path.
-			</para>					
+                    <para>
+                    A string containning the path of the file. This can be an absolute or relative path.
+                        imagePath can also be a directory's path.
+                    In that case and for a <literal>jimage</literal> object, the file will be named after the .title field of the <literal>jimage</literal>. Without encoding and typeMIME arguments, these data will also be get from the <literal>jimage</literal>.
+                            For a matrix, default file name is "No_name" . Without encoding and typeMIME arguments, encoding will be set after the number of layers, and typeMIME will be ".jpg"..
+                    </para>
                 </listitem>
-				
-		<term>Format</term>
-		<listitem>
-			<para>
-				A character string containing the image's format. Only 'jpg', 'png', 'gif', 'bmp' and 'wbmp' are supported. If the format 					
-				isn't declared, the current format will be used. 
-			</para>
-		</listitem>
-
-		<term>Name</term>
-		<listitem>
-			<para>
-				A character string containing the image's title. If the title isn't declared, the default name is the current name. 
-			</para>
-		</listitem>
-
             </varlistentry>
+	<varlistentry>
+		<term>Encoding</term>
+                <listitem>
+                    <para>
+                       A string giving the encoding type : 'gray', 'rgb', or 'rgba'. Without encoding argument, the .encoding field of the <literal>jimage</literal> object, or 'rgb' for an hypermatrix will be used.
+		 <varlistentry>
+                <term>typeMIME</term>
+                <listitem>
+                    <para>
+                        A string givinning the MIME type. typeMIME can only be 'jpg', 'png', 'gif' and 'bmp' sont disponibles. Si le format n'est pas précisé, ou si il est incompatible, le type MIME présent dans la mliste jimage
+                        sera utilisée. Si la déclaration est faite avec une matrice, l'image sera enregistrée au format JPEG (jpg).
+                    </para>
+                </listitem>
+            </varlistentry>
+        <varlistentry>
+                <term>S</term>
+                <listitem>
+                    <para>
+                        Un booléen. Vaut vrai si l'image à été enregistré, faux sinon.
+                    </para>
+                </listitem>
+            </varlistentry>
+            </varlistentry>
+            
+            
+            
         </variablelist>
     </refsection>
     <refsection>
