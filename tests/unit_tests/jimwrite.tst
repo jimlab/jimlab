@@ -26,13 +26,13 @@ Encoding = ["RGB","RGBA","GRAY"];
 // Simple call
 
 im = jimread(imPath + s + NameList(1));
-jimwrite(im);
+assert_checktrue([jimwrite(im)]);
 
 // With path containing name and MIME
 
 for (i = 1:FileNumber(1))
     im = jimread(imPath + s + NameList(i));
-    jimwrite(im,dirPath + s + NameList(i));
+    assert_checktrue([jimwrite(im,dirPath + s + NameList(i))]);
     
 // Wrtting with a new type MIME en Encoding
     select i
@@ -49,14 +49,14 @@ for (i = 1:FileNumber(1))
         w = 0;
 end
 if(w)
-    jimwrite(im,dirPath,Encoding(e),MIME(m));
+    assert_checktrue([jimwrite(im,dirPath,Encoding(e),MIME(m))]);
 end
 end
 
 // Writting from an RGB hyper-matrix
 
 load(jimlabPath("/") + "tests"+s+"images"+s+"mat.data");
-jimwrite(mat,dirPath + s + "matImage","rgb","jpg");
+assert_checktrue([jimwrite(mat,dirPath + s + "matImage","rgb","jpg")]);
 
 cd(OriginPath);
 rmdir(dirPath,'s');
