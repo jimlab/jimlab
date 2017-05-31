@@ -26,9 +26,9 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            jimwrite(image,imagePath)
-            jimwrite(image,imagePath,Encoding)
-            jimwrite(image,imagePath,Encoding,typeMIME)
+            S = jimwrite(image,imagePath)
+            S = jimwrite(image,imagePath,Encoding)
+            S = jimwrite(image,imagePath,Encoding,typeMIME)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -76,6 +76,14 @@
                 </listitem>
             </varlistentry>
         </variablelist>
+        <varlistentry>
+                <term>S</term>
+                <listitem>
+                    <para>
+                        Un booléen. Vaut vrai si l'image à été enregistré, faux sinon.
+                    </para>
+                </listitem>
+            </varlistentry>
     </refsection>
     <refsection>
         <title>Description</title>
@@ -104,18 +112,21 @@
         <programlisting role="example"><![CDATA[
 
     // A partir d'un objet jimage
-    s = filesep();
-    path = jimlabPath("/") + "help"+s+"images"+s+"logoEnsim.png';
+    
+    path = pathconvert(jimlabPath("/") + "help/images/logoEnsim.png",%f);
     jimage_original = jimread(path);// On charge l'image original
-    path = jimlabPath("/") + "help"+s+"images'; // Redéfinition du chemin
+    path = pathconvert(jimlabPath("/") + "help/images",%f); // Redéfinition du chemin
+    subplot(2,2,1)
     jimdisp(jimage_original,,'info');// Affichage de l'image original
 
-    jimwrite(jimage_original,path +  s+ 'logoEnsim_Copie'); // Enregistrement de la copie au format d'origine
-    jimwrite(jimage_original,path + s +'logoEnsim_Copie',,'gif'); // Eregistrement sans chagement du format gif
+    jimwrite(jimage_original,pathconvert(path + "/logoEnsim_Copie",%f); // Enregistrement de la copie au format d'origine
+    jimwrite(jimage_original,pathconvert(path + "/logoEnsim_Copie",%f),,'gif'); // Eregistrement sans chagement du format gif
     // Affichage des images copiées
-    path1 = jimlabPath("/") + "help"+s+"images"+s+"logoEnsim_Copie.gif";
-    path2 = jimlabPath("/") + "help"+s+"images"+s+"logoEnsim_Copie.png";
+    path1 = pathconvert(jimlabPath("/") + "help/images/logoEnsim_Copie.gif";%f);
+    path2 =pathconvert(jimlabPath("/") + "help/images/logoEnsim_Copie.png";%f);
+    subplot(2,2,2)
     jimdisp(path1,,'info');
+    subplot(2,2,3)
     jimdisp(path2,,'info');
     // Suppression des fichiers créés
     mdelete(path1);
@@ -123,16 +134,19 @@
 
     // A partir d'une hyper-matrice
 
-    path = jimlabPath("/") + "help"+s+"images"+s+"mat.data';
+    path = pathconvert( jimlabPath("/") + "help\images/mat.data",%f);
     load(path);// Chargement de l'hyper-matrice
-    path = jimlabPath("/") + "help"+s+"images';
+    path = pathconvert(jimlabPath("/") + "help/images",%f);
+    subplot(2,2,1)
     jimdisp(mat); // Affichage de la matrice
     jimwrite(mat,path); // Enregistrement sans paramètres de noms, format ou d'encodage
-    jimwrite(mat,path + +s+'logo_mat','rgb','png'); // Enregistrement avec tous les paramètres
+    jimwrite(mat,pathconvert(path + "logo_mat",%f),'rgb','png'); // Enregistrement avec tous les paramètres
     // Affichage des images
-    path1 = jimlabPath("/") + "help"+s+"images"+s+"No_name.jpg";
-    path2 = jimlabPath("/") + "help"+s+"images"+s+"logo_mat.png";
+    path1 = pathconvert(jimlabPath("/") + "help/images/No_name.jpg",%f);
+    path2 = pathconvert(jimlabPath("/") + "help/images/logo_mat.png",%f);
+    subplot(2,2,2)
     jimdisp(path1,,'info');
+    subplot(2,2,3)
     jimdisp(path2,,'info');
     // Suppression des fichiers créés
     mdelete(path1);
