@@ -9,9 +9,11 @@
 //    - fixe gce() à la courbe dessinée : FAIT
 //  - ajouter la possibilité de supprimer un point : FAIT
 //  - fusionner les 2 polylines produites : FAIT
-//  TODO - possibilité de fournir le handle d'un polyline au lieu de x et y
-//  - possibilité d'indiquer le style du trait (possible sur le handle AVANT l'appel).
 //  - on conserve la toolbar : FAIT
+//  - It is no longer possible to set points out of the axes : DONE
+//  TODO 
+//  - possibilité de fournir le handle d'un polyline au lieu de x et y
+//  - possibilité d'indiquer le style du trait (possible sur le handle AVANT l'appel).
 //
 // This file is hereby licensed under the terms of the GNU GPL v2.0,
 // pursuant to article 5.3.4 of the CeCILL v.2.1.
@@ -292,12 +294,14 @@ function [x,y,ok,gc] = edit_curv(x,y,job,tit,gc)
                 m=3*eps
             end
             if m<eps then                 //on deplace le point
-                xs=x;ys=y
-                [x,y]=movept(x,y)
-            else
-                if add==1 then
-                    xs=x;ys=y                  //on rajoute un point de cassure
-                    [x,y] = addpt(c1,x,y)
+                xs = x; ys=y
+                [x,y] = movept(x,y)
+            elseif btn <> 127
+                db = edit_curv_axes.data_bounds;
+                if add==1 & xc>=db(1) & xc<=db(2) & yc>=db(3) & yc<= db(4) then
+                    xs = x;
+                    ys = y                    // on rajoute un point de cassure
+                    [x, y] = addpt(c1, x, y)
                     hdl.data = [x y];
                 end
             end
@@ -369,14 +373,14 @@ function [x,y] = addpt(c1,x,y)
             i=i+1
             pr=projaff(x(k:k+1),y(k:k+1),c1)
             if (x(k)-pr(1))*(x(k+1)-pr(1))<=0 then
-                pp=[pp pr]
-                d1=rect(3)-rect(1)
-                d2=rect(4)-rect(2)
-                d=[d norm([d1;d2].\(pr-c1))]
+                pp = [pp pr]
+                d1 = rect(3)-rect(1)
+                d2 = rect(4)-rect(2)
+                d = [d norm([d1;d2].\(pr-c1))]
             end
         end
         if d<>[] then
-            [m,i]=min(d)
+            [m,i] = min(d)
             if m<eps
                 k=kk(i)
                 pp=pp(:,i)
@@ -389,14 +393,15 @@ function [x,y] = addpt(c1,x,y)
     end
     d1=rect(3)-rect(1)
     d2=rect(4)-rect(2)
-    if norm([d1;d2].\([x(1);y(1)]-c1))<norm([d1;d2].\([x(npt);y(npt)]-c1)) then
+    if length(x)>0 & ..
+       norm([d1;d2].\([x(1);y(1)]-c1)) < norm([d1;d2].\([x(npt);y(npt)]-c1))
         //  -- mise a jour de x et y
-        x(2:npt+1)=x;x(1)=c1(1)
-        y(2:npt+1)=y;y(1)=c1(2)
+        x(2:npt+1) = x; x(1) = c1(1)
+        y(2:npt+1) = y; y(1) = c1(2)
     else
         //  -- mise a jour de x et y
-        x(npt+1)=c1(1)
-        y(npt+1)=c1(2)
+        x(npt+1) = c1(1)
+        y(npt+1) = c1(2)
     end
     hdl.data = [x y];
 endfunction
