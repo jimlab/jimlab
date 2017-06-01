@@ -20,9 +20,9 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-			blured= jimsmooth(Image,fogType)
-			blured=	 jimsmooth(Image,fogType,fogWidth)
-			blured=	 jimsmooth(Image,fogMatrix)
+			blurred = jimsmooth(Image,fogType)
+			blurred = jimsmooth(Image,fogType,fogWidth)
+			blurred = jimsmooth(Image,fogMatrix)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -34,12 +34,12 @@
 
                     <para>
 			Un objet de type jimage, une matrice de niveaux de gris ou en couleur RVB.
-					</para>
+		    </para>
 				</varlistentry>
 				<varlistentry>
-				<term>fogType</term>
+		<term>fogType</term>
 				 <para>
-			Mot "gaussian" ,"uniform" ou "triangular" :forme du profil symétrique du filtre local appliquer aux pixels.La valeur par défaut est "gaussian".
+					 Mot <emphasis role="bold">"gaussian"</emphasis> ,<emphasis role="bold">"uniform"</emphasis> ou <emphasis role="bold">"triangular"</emphasis> : forme du profil symétrique du filtre local appliquer aux pixels.La valeur par défaut est "gaussian".
 				</para>
 				</varlistentry>
 		
@@ -58,7 +58,7 @@
 			</varlistentry>
 
 			<varlistentry>
-				<term>blured</term>
+				<term>blurred</term>
                 <listitem>
                     <para>
 			Un objet de type jimage ou une matrice de niveaux de gris et de même taille que <code>Image</code>.
@@ -70,7 +70,7 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet de flouter une image à l'aide des profils prédéfinis de floutage suivant: uniforme ou triangulaire ou gaussien(sigma =flogWidth/4).Une matrice de floutage explicite <literal> flogMatrix </literal> peut alternativement être fournie.
+            Cette fonction permet de flouter une image à l'aide des profils prédéfinis de floutage suivant : uniforme ou triangulaire ou gaussien(sigma =flogWidth/4).Une matrice de floutage explicite <literal> flogMatrix </literal> peut alternativement être fournie.
 	</para>
 		<para>
 			 Si un objet <code>jimage</code> est donné en entrée, seul le champ <code> .image </code> est modifié.
@@ -82,14 +82,14 @@
 		//Objet de type jimage(gray image)
 		path=jimlabPath("/") + 'tests/images/noError/';
 		jimage1 = jimread(path + 'gray.jpg');
-		blured1 = jimsmooth(jimage1,"gaussian",9);
+		blurred1 = jimsmooth(jimage1,"gaussian",9);
 		subplot(2,2,1),jimdisp(jimage1)
 		subplot(2,2,2),jimdisp(blured1)
 
 		//Objet de type jimage(RGB image)
 
 		jimage2 = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
-		blured2 = jimsmooth(jimage2,"gaussian",9);
+		blurred2 = jimsmooth(jimage2,"gaussian",9);
 		subplot(2,2,3),jimdisp(jimage2)
 		subplot(2,2,4),jimdisp(blured2)
  ]]></programlisting>
@@ -98,14 +98,14 @@
 //Objet de type jimage(gray image)
 		path=jimlabPath("/") + "tests/images/noError/";
 		jimage1 = jimread(path + 'gray.jpg');
-		blured1 = jimsmooth(jimage1,"gaussian",9);
+		blurred1 = jimsmooth(jimage1,"gaussian",9);
 		subplot(2,2,1),jimdisp(jimage1)
 		subplot(2,2,2),jimdisp(blured1)
 
 		//Objet de type jimage(RGB image)
 
 		jimage2 = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
-		blured2 = jimsmooth(jimage2,"gaussian",9);
+		blurred2 = jimsmooth(jimage2,"gaussian",9);
 		subplot(2,2,3),jimdisp(jimage2)
 		subplot(2,2,4),jimdisp(blured2)
 
