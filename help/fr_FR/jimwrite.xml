@@ -84,12 +84,12 @@
                 </listitem>
             </varlistentry>
 
-            </variablelist>
+        </variablelist>
     </refsection>
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction créé et enregistre une image à partir d'une mliste jimage ou bien df'une hypermatrice. Il est possible d'enregistrer des images RGB, RGBA et en
+            Cette fonction créé et enregistre une image à partir d'une mliste jimage ou bien d'une hypermatrice. Il est possible d'enregistrer des images RGB, RGBA et en
             nuance de gris.
         </para>
         <para>
@@ -121,7 +121,7 @@
     jimdisp(jimage_original,,'info');// Affichage de l'image original
 
     jimwrite(jimage_original,pathconvert(path + "/logoEnsim_Copie",%f); // Enregistrement de la copie au format d'origine
-    jimwrite(jimage_original,pathconvert(path + "/logoEnsim_Copie",%f),,'gif'); // Eregistrement sans chagement du format gif
+    jimwrite(jimage_original,pathconvert(path + "/logoEnsim_Copie",%f),,'gif'); // Eregistrement avec chagement du format
     // Affichage des images copiées
     path1 = pathconvert(jimlabPath("/") + "help/images/logoEnsim_Copie.gif";%f);
     path2 =pathconvert(jimlabPath("/") + "help/images/logoEnsim_Copie.png";%f);
