@@ -2,18 +2,23 @@
 <!--
  * This file is part of the Jimlab module made for Scilab
  * Copyright (C) 2017 - ENSIM, Université du Maine - Nicolas AEGERTER
- * 
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
+ *
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
  * you should have received as part of this distribution.  The terms
- * are also available at    
+ * are also available at
  * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
-<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
-		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
-		xml:lang="en" xml:id="jimwrite">
+<refentry xmlns="http://docbook.org/ns/docbook"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svg="http://www.w3.org/2000/svg"
+        xmlns:mml="http://www.w3.org/1998/Math/MathML"
+        xmlns:db="http://docbook.org/ns/docbook"
+        xmlns:scilab="http://www.scilab.org"
+        xml:lang="en"
+        xml:id="jimwrite">
     <refnamediv>
         <refname>jimwrite</refname>
         <refpurpose>Write an image as file in a directory. from a <literal>jimage</literal> object or a matrix</refpurpose>
@@ -30,35 +35,59 @@
         <title>Arguments</title>
         <variablelist>
             <varlistentry>
-		<term>image</term>
-		<listitem>
-			<para>
+				<term>image</term>
+				<listitem>
+				<para>
 				This argument can be either a <literal>jimage</literal> object containning image's matrix and meta data, or a hypermatrix of one, three or four layers representing a gray-scale, RGB or RGBA image. Image must be a int8,16,32 or uint8,16,32 matrix, a boolean matrix or a real matrix.
-			</para>
-		</listitem>
-                </varlistentry>
-                <varlistentry>
+				</para>
+				</listitem>
+			</varlistentry>
+            <varlistentry>
                 <term>imagePath</term>
                 <listitem>
-                    <para>
+                 <para>
                     A string containning the path of the file. This can be an absolute or relative path.
                         imagePath can also be a directory's path.
                     In that case and for a <literal>jimage</literal> object, the file will be named after the .title field of the <literal>jimage</literal>. Without encoding and typeMIME arguments, these data will also be get from the <literal>jimage</literal>.
                             For a matrix, default file name is "No_name" . Without encoding and typeMIME arguments, encoding will be set after the number of layers, and typeMIME will be ".jpg"..
-                    </para>
+                </para>
                 </listitem>
             </varlistentry>
-	<varlistentry>
-		<term>Encoding</term>
+			<varlistentry>
+				<term>Encoding</term>
                 <listitem>
-                    <para>
+                 <para>
                        A string giving the encoding type : 'gray', 'rgb', or 'rgba'. Without encoding argument, the .encoding field of the <literal>jimage</literal> object, or 'rgb' for an hypermatrix will be used.
+				</para>
+				</listitem>
+				</varlistentry>
 		 <varlistentry>
                 <term>typeMIME</term>
                 <listitem>
                     <para>
-                        A string givinning the MIME type. typeMIME can only be 'jpg', 'png', 'gif' and 'bmp' sont disponibles. Si le format n'est pas précisé, ou si il est incompatible, le type MIME présent dans la mliste jimage
-                        sera utilisée. Si la déclaration est faite avec une matrice, l'image sera enregistrée au format JPEG (jpg).
+                        A string giving the MIME type. typeMIME can only be 'jpg', 'png', 'gif' and 'bmp'. By order of influence, typeMIME will be :
+						<itemizedlist>
+                                        <listitem>
+                                            <para> 
+											The typeMIME argument 
+											</para>
+										</listitem>
+										<listitem>
+										<para>
+										The file extention of imagePath.
+										</para>
+										</listitem>
+										<listitem>
+										<para>
+										If image is a <literal>jimage</literal>, the <literal>.mime</literal> field.
+										</para>
+										</listitem>
+										<listitem>
+										<para>
+										If image is an hypermatrix, default type MIME is jpg, or png for RGBA encoded hypermatrix.
+										</para>
+										</listitem>
+						</itemizedlist>
                     </para>
                 </listitem>
             </varlistentry>
@@ -66,12 +95,11 @@
                 <term>S</term>
                 <listitem>
                     <para>
-                        Un booléen. Vaut vrai si l'image à été enregistré, faux sinon.
+                        A boolean. True if the image had been write, false if it had not. 
                     </para>
                 </listitem>
             </varlistentry>
-            </varlistentry>
-            
+                  
             
             
         </variablelist>
@@ -79,43 +107,79 @@
     <refsection>
         <title>Description</title>
         	<para>
-            		This function save an image as a file from a mlist jimage. It can save RGB, RGBA or gray scales images.
+            		This function save an image as a file from a <literal>jimage</literal> or an hypermatrix. It can save RGB, RGBA or gray-scales images.
 		</para>
 		<para>
-			The mlist image contain : the image matrix data, the encoding, the format and the name, of the image.
-			The gray encoding is for 2D matrix data of gray scale images.
-			The rgb encoding is for 3D matrix data of RGB images.
-			The rgba encoding is for 4D matrix data of RGBA images. The last dimension stand for transparency.
-			This list is created by the function jimread
+			When a <literal>jimage</literal> is set as parameter, the name of the file, the type MIME, and the image encoding are extracted from the <literal>jimage</literal> parameter.Moreover, if type MIME or/and encoding argument or set in jimwrite, thsir will be used instead.
+
+			If the argument image is an hypermatrix, name, ype MIME and encoding argument are requiered, otherwise, default values will be used. Name is contained in the argument imagePath.
+			
+			RGBA encoded hypermatrix can only be write in PNG type MIME.
         </para>
     </refsection>
     <refsection>
-        <title>Exemples</title>
+        <title>Examples</title>
         <programlisting role="example"><![CDATA[ 
-			global jimlabPath
-			path = jimlabPath + '/help/images/logoEnsim.png';
-			jimage_original = jimread(path);// Charging of the original image file
-			path = jimlabPath + '/help/images'; // New path definition
-			jimdisp(jimage_original,,'info');// Display of the original image
+			// From a jimage object
 			
-			jimwrite(jimage_original,path,'gif','logoEnsim_Copie'); // Save the copy under GIF format
-			jimwrite(jimage_original,path,,'logoEnsim_Copie'); // Saving the copy under original format			
-			// Display the copied images
-			path1 = jimlabPath + '/help/images/logoEnsim_Copie.gif'; 
-			path2 = jimlabPath + '/help/images/logoEnsim_Copie.png';
-			jimdisp(path1,,'info');
-			jimdisp(path2,,'info');
+    path = pathconvert(jimlabPath("/") + "help/images/logoEnsim.png",%f);
+    jimage_original = jimread(path);// Loading the original image.
+    path = pathconvert(jimlabPath("/") + "help/images",%f); // Definition of the path.
+    subplot(2,2,1)
+    jimdisp(jimage_original,,'info');// Disp the image
+
+    jimwrite(jimage_original,pathconvert(path + "/logoEnsim_Copie",%f); // Saving with original typeMIME
+    jimwrite(jimage_original,pathconvert(path + "/logoEnsim_Copie",%f),,'gif'); // Saving with new typeMIME : gif
+    // Disp
+    path1 = pathconvert(jimlabPath("/") + "help/images/logoEnsim_Copie.gif";%f);
+    path2 =pathconvert(jimlabPath("/") + "help/images/logoEnsim_Copie.png";%f);
+    subplot(2,2,2)
+    jimdisp(path1,,'info');
+    subplot(2,2,3)
+    jimdisp(path2,,'info');
+    // The file created are deleted.
+    mdelete(path1);
+    mdelete(path2);
+
+    // From an hypermatrix
+
+    path = pathconvert( jimlabPath("/") + "help\images/mat.data",%f);
+    load(path);// Load the matrix.
+    path = pathconvert(jimlabPath("/") + "help/images",%f);
+    subplot(2,2,1)
+    jimdisp(mat); // Disp the image.
+    jimwrite(mat,path); // Saving with default values of Name, TypeMIME and Encoding
+    jimwrite(mat,pathconvert(path + "logo_mat",%f),'rgb','png'); // Saving with all parameters
+    // Disp
+    path1 = pathconvert(jimlabPath("/") + "help/images/No_name.jpg",%f);
+    path2 = pathconvert(jimlabPath("/") + "help/images/logo_mat.png",%f);
+    subplot(2,2,2)
+    jimdisp(path1,,'info');
+    subplot(2,2,3)
+    jimdisp(path2,,'info');
+    // The file created are deleted.
+    mdelete(path1);
+    mdelete(path2);
  ]]></programlisting>
 	</refsection>
     <refsection role="see also">
         <title>See also</title>
         <simplelist type="inline">
-            <member>
-                <link linkend="jimdisp">jimdisp</link>
+           <member>
+                <link linkend="jimage_properties">propriétés jimage</link>
             </member>
             <member>
                 <link linkend="jimread">jimread</link>
             </member>
+            <member>
+                <link linkend="jimdisp">jimdisp</link>
+            </member>
+            <member>
+                <link linkend="save">save</link>
+            </member>
+            <member>
+                <link linkend="xsave">xsave</link>
+			</member>
         </simplelist>
     </refsection>
     <refsection>
