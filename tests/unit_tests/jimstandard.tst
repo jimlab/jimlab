@@ -303,7 +303,7 @@ expected(:,:,3) = floor(b./uint16(2));
 expected(:,:,4) = modulo(tmp,uint16(2)) * 255;
 expected(:,:,1:3) = double(expected(:,:,1:3)) * 255/31;
 expected= uint8(expected);
-assert_checkequal(expected, test)   //ne fonctionne pas alors que même formule que dans jimstandard() 
+assert_checkequal(expected, test)   //ne fonctionne pas alors que mêmes opérations que dans jimstandard() 
 assert_checkequal(test,test2) 
 assert_checkequal(T,T2)
 assert_checkequal(T, ["int16", "5551"])
@@ -387,27 +387,49 @@ indMat3 = uint8(indMat);
 [test6, T6] = jimstandard(indMat3, colormap);
 dim = size(indMat);
 imageDouble = colormap(indMat,:)
-expected = matrix(imageDouble, dim(1), dim(2), -1)      //pb de dimensions
+expected = matrix(imageDouble, dim(1), dim(2), -1)
 expected = uint8(255*expected);
 originalType = "ind"; 
-assert_checkequal(expected,test)
-assert_checkequal(test2,test)
-assert_checkequal(T2,T)
-assert_checkequal(test3,test)
-assert_checkequal(T3,T)
-assert_checkequal(test4,test)
-assert_checkequal(T4,T)
-assert_checkequal(test5,test)
-assert_checkequal(T5,T)
-assert_checkequal(test6,test)
-assert_checkequal(T6,T)
-assert_checkequal(T, "ind")
-assert_checkequal(type(test(1,1,1)), 8.)
+assert_checkequal(expected,test);
+assert_checkequal(test2,test);
+assert_checkequal(T2,T);
+assert_checkequal(test3,test);
+assert_checkequal(T3,T);
+assert_checkequal(test4,test);
+assert_checkequal(T4,T);
+assert_checkequal(test5,test);
+assert_checkequal(T5,T);
+assert_checkequal(test6,test);
+assert_checkequal(T6,T);
+assert_checkequal(T, "ind");
+assert_checkequal(type(test(1,1,1)), 8.);
 clear expected;
 
 //booleens
-boolMat = round(rand(10,10)) == 0
+boolMat = round(rand(10,10)) == 0;
 [test, T] = jimstandard(boolMat);
-assert_checkequal(test, uint8(boolMat)*255)
-assert_checkequal(T, "bool")
-assert_checkequal(type(test(1,1,1)), 8.)
+assert_checkequal(test, uint8(boolMat)*255);
+assert_checkequal(T, "bool");
+assert_checkequal(type(test(1,1,1)), 8.);
+
+
+//Wrong colormap argument
+msg = "%s: Argument #%d: coefficients of the colormap must be in the intervalle[0,1].\n";
+msg = msprintf(msg, "jimstandard", 2);
+colormap = grand(nc,3,"uin",0,2);
+assert_checkerror("test = jimstandard(indMat , colormap)", msg);
+
+//Wrong type for the second argument
+msg = "%s: Argument #%d: Wrong type of input argument.\n";
+msg = msprintf(msg, "jimstandard", 2);
+assert_checkerror("test = jimstandard(indMat , 9)", msg);
+
+//%f if the input image is not supported
+unsupportedMat = rand(10,10,5);
+[test, T] = jimstandard(unsupportedMat);
+assert_checkequal(test, %f);
+assert_checkequal(T, 0);
+unsupportedMat = ["1", "0"; "0.5", "0.5"];
+[test, T] = jimstandard(unsupportedMat);
+assert_checkequal(test, %f);
+assert_checkequal(T, 0);
