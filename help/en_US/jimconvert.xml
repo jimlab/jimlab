@@ -157,7 +157,6 @@ image = Jimage.image;
 // Conversion in gray levels
 jgray = jimconvert(Jimage, 'gray')
 gray = jimconvert(image, 'gray');
-typeof(gray)
 
 // Conversion in RGB
 path = jimlabPath("/") + 'tests/images/logoEnsim.png';
@@ -166,7 +165,6 @@ image2 = Jimage2.image;
 transparencyColor = uint8(cat(3, 200, 200, 200));
 jrgb = jimconvert(Jimage2, 'rgb', transparencyColor)
 rgb = jimconvert(image2, 'rgb', transparencyColor);
-typeof(rgb)
 
 // Display of the images before and after conversion
 clf
