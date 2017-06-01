@@ -61,10 +61,10 @@
          l = 1;
      end
 
-     //        transparencyColor = cat(3, transparencyColor(1), transparencyColor(2)..
-     //      , transparencyColor(3));
-
-     if (type(encoding) == 10)
+     if(~isdef("encoding", "l") | type(encoding) ==0)
+         msg = _("%s: Argument #%d: The output encoding is not given.\n");
+         error(msprintf(msg, "jimconvert", 2));
+     elseif (type(encoding) == 10)
 
        select encoding
        case 'gray' then
@@ -99,12 +99,12 @@
                                  0.114 .* Jimage(:,:,3);
                // convertedJimage = round(convertedJimage);
                convertedJimage = uint8(convertedJimage);
-           elseif bw ~= %t
-               msg = _("%s: %s cannot be converted into gray encoding.\n");
-               error(msprintf(msg,"jimconvert", name + ext));
+           elseif (size(Jimage,3) == 1.)
+               convertedJimage = Jimage;
+               warning("Your image has not been modified.")
            end
        case 'rgb' then
-           if (size(Jimage, 3) == 4)
+           if (size(Jimage, 3) == 4.)
                // By default transparencyColor is white
                if transparencyColor(1) == -1
                    transparencyColor = cat(3, 255, 255, 255);
@@ -123,6 +123,9 @@
                if (find(transparency) == [])
                    transparencyColor = -1;
                end
+           elseif (size(Jimage,3) == 3.)
+               convertedJimage = Jimage;
+               warning("Your image has not been modified.");
            else
                msg = _("%s: %s cannot be converted into rgb encoding.\n");
                error(msprintf(msg,"jimconvert", name + ext));
