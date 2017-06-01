@@ -339,7 +339,7 @@ Matplot(test);
 pause
 
 //doubles normalisés rgba
-doublenMat = rand(10,10,4)
+doublenMat = rand(10,10,4);
 subplot(2,1,1)
 Matplot(doublenMat);
 [test, T] = jimstandard(doublenMat,%f);
