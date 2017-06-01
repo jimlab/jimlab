@@ -12,6 +12,7 @@ function jimageR = %jimage_f_jimage(jimage1, jimage2)
     // Vertical concatenation of 2 jimages.
     // We simply use the horizontal one (when it will be implemented),
     // and the transposition:
+    vertConcat = %t;
     jimageR = [jimage1' jimage2']';
 endfunction
 
