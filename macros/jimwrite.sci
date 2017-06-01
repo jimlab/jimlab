@@ -33,6 +33,7 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
     end
     
         if(isdir(imagePath))// if imagePath refer to a directory, definition of the name and the TypeMIME
+            imagePath = pathconvert(imagePath);
             if(arg_jimage)
                 Name = image.title;
                 warning("jimage''s name will be used :"+ Name);
@@ -50,8 +51,11 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
          else
              MIME = convstr(fileparts(imagePath,"extension"));
              MIME = strsubst(MIME, ".", "");
-             if(MIME == "")
+             if((MIME == "")&(arg_jimage == 0))
                  MIME = "jpg";
+             elseif((MIME == "")&(arg_jimage == 1))
+                 MIME = image.mime;
+                 
              end
              
          end
@@ -87,7 +91,6 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
           warning('Undefineded typeMIME, jpg will be used')
      end
      
-        
    if(isdef(["Encoding"],"l"))
        if((type(Encoding) == 10))
          Encoding = convstr(Encoding);
@@ -134,13 +137,15 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
  
     
     if (isdef(["Name"],"l"))
-        imagePath = fileparts(imagePath,"path") + Name + "." + typeMIME;
+        imagePath = pathconvert(fileparts(imagePath,"path") +..
+         Name + "." + typeMIME,%f);
  
     else
     
-    imagePath = fileparts(imagePath,"path") +..
-    fileparts(imagePath,"fname") + "." + typeMIME;
+    imagePath = pathconvert(fileparts(imagePath,"path") +..
+     fileparts(imagePath,"fname") + "." + typeMIME,%f);
 end
+
 // This code create the final path used by Java methode 'write'
 
     S = 0;
@@ -154,10 +159,10 @@ end
             S =  jimwriteRGBA(Mat,imagePath,typeMIME);
 
     else 
-        error('Unexpected image type');
+        warning('Unexpected image type');
    end
     if  (~S)
-        error('The image haven''t been saved');
+        warning('The image haven''t been saved');
     end
     
 endfunction
