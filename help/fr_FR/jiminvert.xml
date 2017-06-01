@@ -17,12 +17,12 @@
 		xml:lang="fr" xml:id="jiminvert">
     <refnamediv>
         <refname>jiminvert</refname>
-        <refpurpose>Inverse les couleurs d'une image</refpurpose>
+        <refpurpose>Négatif d'une image</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-           Modimage = jiminvert(image)
+           negative = jiminvert(image)
 	   </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -32,20 +32,18 @@
 		<term>image</term>
 		<listitem>
 			<para>
-			L'argument image peut être soit un objet <literal>jimage</literal> contenant l'image, et ses métadonnées, soit une matrice à une, trois ou quatres couches représentant l'image en nuance de gris, en RVB ou en RVBA.
+			L'argument image peut être soit un objet <literal>jimage</literal> contenant l'image et ses métadonnées, soit une matrice à une, trois ou quatres couches représentant l'image en nuance de gris, en RVB ou en RVBA.
 
-			L'objet est crée par la fonction <link linkend="jimread">jimread</link>.
+			
 			
 			Seul les matrices entières codées sur 8, 16, et 32 bits, les matrices booléennes et les matrices de réels sont supportées.
 			</para>
 		</listitem>
 
-   		<term>Modimage</term>
+   		<term>negative</term>
     		<listitem>
    		<para>
-			Modimage est soit un objet jimage, soit une hyper-matice qui représente l'image modifiée par jiminvert. Modimage doit être du même 				
-			type que l'argument d'entrée de la fonction. C'est-à-dire un objet jimage si image et un objet jimage ou une hypermatrice si image 
-			est une hyper-matrice. 
+			Négatif de l'image, de type identique à l'original.
 		</para>					
                 </listitem>
 				
@@ -58,33 +56,37 @@
     <refsection>
         <title>Description</title>
         	<para>
-            		Cette fonction inverse les couleurs d'une image représentenée par un objet jimage ou une hyper-matrice placée en paramètre.
+            		Cette fonction inverse les couleurs d'une image placée en paramètre d'entrée.
 		</para>
 		<para>
-			Pour une image RVB, chaques nouvelle couleur sera calculée à l'aide de la formule "NewColor = 255 - OriginalColor".
-			De même, une martice une couche représentant une image en niveau de gris sera transformée selon la même formule. L'image résultante 				
-			sera donc le négatif de l'image original.
+			Pour une image RVB, chaque nouvelle couleur sera calculée à l'aide de la formule "NewColor = 255 - OriginalColor".
+			De même, une matrice une couche représentant une image en niveau de gris sera transformée celon la même formule. L'image résultante 				
+			sera donc le négatif de l'image originale.
         </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
  			// Avec un objet jimage
-			s = filesep();
-			path = jimlabPath("/") + "help/images/logoEnsim.png';
+			
+			path = pathconvert(jimlabPath("/") + "tests/images/logoEnsim.png",%f);
 			jimage_original = jimread(path);// On charge l'image original
+			subplot(2,2,1);
 			jimdisp(jimage_original,,'info');// Affichage de l'image original
 			
-			jimage_modified = jiminvert(jimage_original);// Inverssion de l'image
-			jimdisp(jimage_modified,,'info'); // Affichage de l'image modifiée
+			jimage_negative = jiminvert(jimage_original);// Inverssion de l'image
+			subplot(2,2,2);
+			jimdisp(jimage_negative,,'info'); // Affichage de l'image modifiée
 
 			// Avec une hyper-matrice
 
-			path = jimlabPath("/") + 'help/images/mat.data'; // Impotation de la matrice
+			path = pathconvert(jimlabPath("/") + "tests/images/mat.data",%f); // Impotation de la matrice
 			load(path);
+			subplot(2,2,3);
 			jimdisp(mat); 
-			mat_modified = jiminvert(mat); // Invertion de la matrice
-			jimdisp(mat_modified); // Affichage de la matrice modifiée
+			mat_negative = jiminvert(mat); // Invertion de la matrice
+			subplot(2,2,4);
+			jimdisp(mat_negative); // Affichage de la matrice modifiée
 			
 	 ]]></programlisting>
 	</refsection>
@@ -95,10 +97,10 @@
 		<link linkend="jimage_properties">propriétés jimage</link>
 		</member>
 		<member>
-                <link linkend="jimread">jimread</link>
+                <link linkend="jimsmooth">jimsmooth</link>
             	</member>
 		<member>
-                <link linkend="jimdisp">jimdisp</link>
+                <link linkend="jimconvert">jimconvert</link>
             	</member>
 	</simplelist>
     </refsection>
