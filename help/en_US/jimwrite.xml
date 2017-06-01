@@ -122,17 +122,17 @@
         <programlisting role="example"><![CDATA[ 
 			// From a jimage object
 			
-    path = pathconvert(jimlabPath("/") + "help/images/logoEnsim.png",%f);
+    path = pathconvert(jimlabPath("/") + "tests/images/lena_color.gif",%f);
     jimage_original = jimread(path);// Loading the original image.
-    path = pathconvert(jimlabPath("/") + "help/images",%f); // Definition of the path.
+    path = pathconvert(jimlabPath("/") + "tests/images",%f); // Definition of the path.
     subplot(2,2,1)
     jimdisp(jimage_original,,'info');// Disp the image
 
-    jimwrite(jimage_original,pathconvert(path + "/logoEnsim_Copie",%f); // Saving with original typeMIME
-    jimwrite(jimage_original,pathconvert(path + "/logoEnsim_Copie",%f),,'gif'); // Saving with new typeMIME : gif
+    jimwrite(jimage_original,pathconvert(path + "/lenaCopie",%f)); // Saving with original typeMIME
+    jimwrite(jimage_original,pathconvert(path + "/lenaCopie",%f),,'png'); // Saving with new typeMIME : png
     // Disp
-    path1 = pathconvert(jimlabPath("/") + "help/images/logoEnsim_Copie.gif";%f);
-    path2 =pathconvert(jimlabPath("/") + "help/images/logoEnsim_Copie.png";%f);
+    path1 = pathconvert(jimlabPath("/") + "tests/images/lenaCopie.gif",%f);
+    path2 = pathconvert(jimlabPath("/") + "tests/images/lenaCopie.png",%f);
     subplot(2,2,2)
     jimdisp(path1,,'info');
     subplot(2,2,3)
@@ -143,16 +143,16 @@
 
     // From an hypermatrix
 
-    path = pathconvert( jimlabPath("/") + "help\images/mat.data",%f);
+    path = pathconvert( jimlabPath("/") + "tests\images/mat.data",%f);
     load(path);// Load the matrix.
-    path = pathconvert(jimlabPath("/") + "help/images",%f);
+    path = pathconvert(jimlabPath("/") + "tests/images");
     subplot(2,2,1)
     jimdisp(mat); // Disp the image.
     jimwrite(mat,path); // Saving with default values of Name, TypeMIME and Encoding
     jimwrite(mat,pathconvert(path + "logo_mat",%f),'rgb','png'); // Saving with all parameters
     // Disp
-    path1 = pathconvert(jimlabPath("/") + "help/images/No_name.jpg",%f);
-    path2 = pathconvert(jimlabPath("/") + "help/images/logo_mat.png",%f);
+    path1 = pathconvert(jimlabPath("/") + "tests/images/No_name.jpg",%f);
+    path2 = pathconvert(jimlabPath("/") + "tests/images/logo_mat.png",%f);
     subplot(2,2,2)
     jimdisp(path1,,'info');
     subplot(2,2,3)
