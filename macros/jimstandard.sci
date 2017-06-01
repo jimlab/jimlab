@@ -143,6 +143,12 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
         end
     end
     
+    // If the hypermatrix has more than four layers, it cannot represent an image. 
+    if layers > 4 then
+        convertedMat = %f;
+        originalType = 0;
+    end
+    
     if(isdef("argb?","l") & argb? & layers == 4) then // If argb standard is used, convertion in rgba standard
         test = ["int16","uint16"];
         if(strstr(test,originalType(1)) == "")
