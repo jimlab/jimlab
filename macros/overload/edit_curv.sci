@@ -86,7 +86,8 @@ function [x,y,ok,gc] = edit_curv(x,y,job,tit,gc)
     symbsiz = 0.2
     // bornes initiales du graphique
     if findobj("type","Axes")~=[] then
-        db = gca().data_bounds;
+        db = gca();
+        db = db.data_bounds;
     else
         db = [];
     end
@@ -139,7 +140,8 @@ function [x,y,ok,gc] = edit_curv(x,y,job,tit,gc)
     Data=w(ones(menu_d))+string(1:size(menu_d,"*"))+rpar(ones(menu_d))
 
     //curwin = scf().figure_id
-    curwin = gcf().figure_id;
+    curwin = gcf();
+    curwin = curwin.figure_id;
 
     // Disable the menus and toolbars
     //toolbar(curwin,"off");
