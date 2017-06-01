@@ -112,19 +112,19 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
 
-    // A partir d'un objet jimage
+   // A partir d'un objet jimage
     
-    path = pathconvert(jimlabPath("/") + "help/images/logoEnsim.png",%f);
+    path = pathconvert(jimlabPath("/") + "tests/images/lena_color.gif",%f);
     jimage_original = jimread(path);// On charge l'image original
-    path = pathconvert(jimlabPath("/") + "help/images",%f); // Redéfinition du chemin
+    path = pathconvert(jimlabPath("/") + "tests/images",%f); // Redéfinition du chemin
     subplot(2,2,1)
     jimdisp(jimage_original,,'info');// Affichage de l'image original
 
-    jimwrite(jimage_original,pathconvert(path + "/logoEnsim_Copie",%f); // Enregistrement de la copie au format d'origine
-    jimwrite(jimage_original,pathconvert(path + "/logoEnsim_Copie",%f),,'gif'); // Eregistrement avec chagement du format
+    jimwrite(jimage_original,pathconvert(path + "/lenaCopie",%f)); // Enregistrement de la copie au format d'origine
+    jimwrite(jimage_original,pathconvert(path + "/lenaCopie",%f),,'png'); // Eregistrement avec chagement du format
     // Affichage des images copiées
-    path1 = pathconvert(jimlabPath("/") + "help/images/logoEnsim_Copie.gif";%f);
-    path2 =pathconvert(jimlabPath("/") + "help/images/logoEnsim_Copie.png";%f);
+    path1 = pathconvert(jimlabPath("/") + "tests/images/lenaCopie.gif",%f);
+    path2 = pathconvert(jimlabPath("/") + "tests/images/lenaCopie.png",%f);
     subplot(2,2,2)
     jimdisp(path1,,'info');
     subplot(2,2,3)
@@ -135,16 +135,16 @@
 
     // A partir d'une hyper-matrice
 
-    path = pathconvert( jimlabPath("/") + "help\images/mat.data",%f);
+    path = pathconvert( jimlabPath("/") + "tests\images/mat.data",%f);
     load(path);// Chargement de l'hyper-matrice
-    path = pathconvert(jimlabPath("/") + "help/images",%f);
+    path = pathconvert(jimlabPath("/") + "tests/images");
     subplot(2,2,1)
     jimdisp(mat); // Affichage de la matrice
-    jimwrite(mat,path); // Enregistrement sans paramètres de noms, format ou d'encodage
-    jimwrite(mat,pathconvert(path + "logo_mat",%f),'rgb','png'); // Enregistrement avec tous les paramètres
+    jimwrite(mat,path) // Enregistrement sans paramètres de noms, format ou d'encodage
+    jimwrite(mat,pathconvert(path + "logo_mat",%f),'rgb','png') // Enregistrement avec tous les paramètres
     // Affichage des images
-    path1 = pathconvert(jimlabPath("/") + "help/images/No_name.jpg",%f);
-    path2 = pathconvert(jimlabPath("/") + "help/images/logo_mat.png",%f);
+    path1 = pathconvert(jimlabPath("/") + "tests/images/No_name.jpg",%f);
+    path2 = pathconvert(jimlabPath("/") + "tests/images/logo_mat.png",%f);
     subplot(2,2,2)
     jimdisp(path1,,'info');
     subplot(2,2,3)
@@ -152,6 +152,7 @@
     // Suppression des fichiers créés
     mdelete(path1);
     mdelete(path2);
+
 
      ]]></programlisting>
     </refsection>
