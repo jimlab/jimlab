@@ -8,7 +8,6 @@
 // should have received as part of this distribution.  The terms are also
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-// <-- TEST WITH GRAPHIC -->  // required by JIMS
 // <-- NO CHECK REF -->
 
 //uint8 rgba
