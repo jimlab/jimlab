@@ -23,7 +23,7 @@
         <title>Syntax</title>
         <synopsis>
             equalizedImage = jimhistEqual(image)
-            equalizedImage = jimhistEqual(image, transparencyColor)
+            equalizedImage = jimhistEqual(image, ignoredTC)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -110,7 +110,7 @@
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term>transparencyColor</term>
+                <term>ignoredTC</term>
                 <listitem>
                     <para>
                         <itemizedlist>
@@ -155,10 +155,13 @@
             If the input image is a <literal>jimage</literal> object, the fields
             <literal>.title</literal> and <literal>.format</literal> are kept for the output object.
             If the field <literal>.transparencyColor</literal> is different from -1, the
-            transparency color is ignored by the algorithm.
+            transparency color is ignored by the algorithm only if <literal>ignoredTC</literal> is given.
         </para>
         <para>
             If the input image is a color image, it is converted into gray levels.
+        </para>
+		<para>
+            If the a transparency color is given, it isn't modified by <function>jimhistEqual</function>() and nor are the pixels with this color .
         </para>
     </refsection>
     <refsection>
@@ -167,8 +170,8 @@
 // Jimage objet with transparency
 path = jimlabPath("/") + 'tests/images/logoEnsim.png';
 Jimage = jimread(path);
-Jimage.transparencyColor = cat(3,140,140,140);
-equalizedJimage = jimhistEqual(Jimage);
+ignoredTC = cat(3,140,140,140);
+equalizedJimage = jimhistEqual(Jimage, ignoredTC);
 subplot(2,2,1)
 jimdisp(Jimage)
 subplot(2,2,2)
@@ -189,8 +192,8 @@ jimdisp(equalizedImage)
             //Objet de type jimage avec transparence
             path = jimlabPath("/") + 'tests/images/logoEnsim.png';
             Jimage = jimread(path);
-            Jimage.transparencyColor = cat(3,140,140,140);
-            equalizedJimage = jimhistEqual(Jimage);
+            ignoredTC = cat(3,140,140,140);
+            equalizedJimage = jimhistEqual(Jimage, ignoredTC);
             subplot(2,2,1)
             jimdisp(Jimage)
             subplot(2,2,2)
