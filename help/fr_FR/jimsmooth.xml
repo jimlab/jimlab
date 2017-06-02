@@ -80,34 +80,34 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
 		//Objet de type jimage(gray image)
-		path=jimlabPath("/") + 'tests/images/noError/';
+		path = jimlabPath("/") + 'tests/images/noError/';
 		jimage1 = jimread(path + 'gray.jpg');
-		blurred1 = jimsmooth(jimage1,"gaussian",9);
-		subplot(2,2,1),jimdisp(jimage1)
-		subplot(2,2,2),jimdisp(blured1)
+		blurred1 = jimsmooth(jimage1, "gaussian", 9);
+		subplot(2,2,1), jimdisp(jimage1)
+		subplot(2,2,2), jimdisp(blurred1)
 
 		//Objet de type jimage(RGB image)
 
 		jimage2 = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
 		blurred2 = jimsmooth(jimage2,"gaussian",9);
-		subplot(2,2,3),jimdisp(jimage2)
-		subplot(2,2,4),jimdisp(blured2)
+		subplot(2,2,3), jimdisp(jimage2)
+		subplot(2,2,4), jimdisp(blurred2)
  ]]></programlisting>
   <scilab:image>
   
-//Objet de type jimage(gray image)
-		path=jimlabPath("/") + "tests/images/noError/";
-		jimage1 = jimread(path + 'gray.jpg');
-		blurred1 = jimsmooth(jimage1,"gaussian",9);
-		subplot(2,2,1),jimdisp(jimage1)
-		subplot(2,2,2),jimdisp(blured1)
+	//Objet de type jimage(gray image)
+	path=jimlabPath("/") + "tests/images/noError/";
+	jimage1 = jimread(path + 'gray.jpg');
+	blurred1 = jimsmooth(jimage1,"gaussian",9);
+	subplot(2,2,1), jimdisp(jimage1)
+	subplot(2,2,2), jimdisp(blurred1)
 
-		//Objet de type jimage(RGB image)
+	//Objet de type jimage(RGB image)
 
-		jimage2 = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
-		blurred2 = jimsmooth(jimage2,"gaussian",9);
-		subplot(2,2,3),jimdisp(jimage2)
-		subplot(2,2,4),jimdisp(blured2)
+	jimage2 = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
+	blurred2 = jimsmooth(jimage2,"gaussian",9);
+	subplot(2,2,3), jimdisp(jimage2)
+	subplot(2,2,4), jimdisp(blurred2)
 
    </scilab:image>
 	</refsection>
