@@ -31,134 +31,134 @@
             <variablelist>
                 <varlistentry>
 		    <term>image</term>
-                <listitem>
-                	<para>
-						<itemizedlist>
-							<listitem>
-								<para>
-									<emphasis role="bold">image en couleurs</emphasis>
-									<itemizedlist>
-										<listitem>
-											<para>
-												hypermatrice RGB ou RGBA ou ARGB (<literal>argb? = %t</literal>) d'entiers int8 ou uint8, ou de décimaux équivalents sur [0, 255], sur [-128, 127] ou normalisés dans l'intervalle [0, 1].
-											</para>
-										</listitem>
-										<listitem>
-											<para>
-												matrice
-													<itemizedlist>
-				<listitem>
-				<para>
-				d'entiers uint8 ou int8 sous découpage binaire "rgb332" (<literal>colorsBits = "332"</literal>), ou de décimaux équivalents sur [0, 2<superscript>16</superscript>-1] ou sur [-2<superscript>15</superscript>; 2<superscript>15</superscript>-1].
+                    <listitem>
+		        <para>
+			    <itemizedlist>
+			        <listitem>
+				    <para>
+				        <emphasis role="bold">image en couleurs</emphasis>
+					    <itemizedlist>
+					        <listitem>
+						    <para>
+						        hypermatrice RGB ou RGBA ou ARGB (<literal>argb? = %t</literal>) d'entiers int8 ou uint8, ou de décimaux équivalents sur [0, 255], sur [-128, 127] ou normalisés dans l'intervalle [0, 1].
+					            </para>
+						</listitem>
+						<listitem>
+						    <para>
+						        matrice
+							    <itemizedlist>
+							        <listitem>
+								    <para>
+								        d'entiers uint8 ou int8 sous découpage binaire "rgb332" (<literal>colorsBits = "332"</literal>), ou de décimaux équivalents sur [0, 2<superscript>16</superscript>-1] ou sur [-2<superscript>15</superscript>; 2<superscript>15</superscript>-1].
+								    </para>
+								</listitem>
+								<listitem>
+								    <para>
+								        d'entiers uint16 ou int16 sous découpage binaire "rgba4444" (ou fixé par <literal>colorsBits</literal>), ou de décimaux équivalents sur [0, 2<superscript>16</superscript>-1] ou sur [-2<superscript>15</superscript>; 2<superscript>15</superscript>-1].
+								    </para>
+								</listitem>
+								<listitem>
+								    <para>
+								        d'entiers uint32 ou int32 sous découpage binaire "rgba8888" (ou "argb8888" si <literal>argb? = %t</literal>), ou de décimaux équivalents sur [0, 2<superscript>32</superscript>-1] ou sur [-2<superscript>31</superscript>, 2<superscript>32</superscript>-1]
+								    </para>
+								</listitem>	
+								<listitem>
+								    <para>
+								        de n° entiers (décimaux, int# ou uint#) de couleurs référencées dans <literal>colormap</literal>
+								    </para>
+								</listitem>
+							    </itemizedlist>
+							</para>
+						    </listitem>
+						</itemizedlist>
+					    </para>
+					</listitem>
+					<listitem>
+					    <para>
+					         <emphasis role="bold">image en niveaux de gris</emphasis> : matrice d'entiers uint8 ou int8, ou de décimaux équivalents sur [0, 255], sur [-128, 127] ou normalisés dans l'intervalle [0, 1] ou matrice de booléens (<literal>%t</literal> = Blanc).
+					    </para>
+					</listitem>
+				    </itemizedlist>
 				</para>
-				</listitem>
-				<listitem>
+			    </listitem>
+			</varlistentry>
+			<varlistentry>
+			    <term>colormap</term>
+			    <listitem>
 				<para>
-															d'entiers uint16 ou int16 sous découpage binaire "rgba4444" (ou fixé par <literal>colorsBits</literal>), ou de décimaux équivalents sur [0, 2<superscript>16</superscript>-1] ou sur [-2<superscript>15</superscript>; 2<superscript>15</superscript>-1].
-															</para>
-														</listitem>
-														<listitem>
-															<para>
-															d'entiers uint32 ou int32 sous découpage binaire "rgba8888" (ou "argb8888" si <literal>argb? = %t</literal>), ou de décimaux équivalents sur [0, 2<superscript>32</superscript>-1] ou sur [-2<superscript>31</superscript>, 2<superscript>32</superscript>-1]
-															</para>
-														</listitem>	
-														<listitem>
-															<para>
-															de n° entiers (décimaux, int# ou uint#) de couleurs référencées dans <literal>colormap</literal>
-															</para>
-														</listitem>																
-													</itemizedlist>
-												</para>
-											</listitem>
-										</itemizedlist>
-									</para>
-							</listitem>
-							<listitem>
-								<para>
-								<emphasis role="bold">image en niveaux de gris</emphasis> : matrice d'entiers uint8 ou int8, ou de décimaux équivalents sur [0, 255], sur [-128, 127] ou normalisés dans l'intervalle [0, 1] ou matrice de booléens (<literal>%t</literal> = Blanc).
-								</para>
-							</listitem>
-						</itemizedlist>
-					</para>				
-                </listitem>
+				    <itemizedlist>
+					<listitem>
+					    <para>
+						Matrice de taille M x 3 de décimaux [0, 1]. Ligne n°i = intensités <literal>[R V B]</literal> de la couleur n°i.
+					    </para>
+					</listitem>
+					<listitem>
+					    <para>
+						Un identifiant de figure, dont l'attribut <literal>.color_map</literal> est utilisé.
+					    </para>
+					</listitem>
+				    </itemizedlist>
+				</para>
+			    </listitem>
 			</varlistentry>
 			<varlistentry>
-				<term>colormap</term> 
-                <listitem>
-                    <para>
-						<itemizedlist>
-							<listitem>
-								<para>
-								Matrice de taille M x 3 de décimaux [0, 1]. Ligne n°i = intensités <literal>[R V B]</literal> de la couleur n°i.
-								</para>
-							</listitem>
-							<listitem>
-								<para>
-								Un identifiant de figure, dont l'attribut <literal>.color_map</literal> est utilisé.
-								</para>
-							</listitem>
-						</itemizedlist>
-					</para>
-                </listitem>
+			    <term>argb?</term>
+			    <listitem>
+				<para>
+				    Un booléen : <literal>%t</literal> si l'image est encodée en ARGB ou argb####, <literal>%f</literal> sinon. Par défaut, il est <literal>%f</literal>.
+				</para>
+			    </listitem>
 			</varlistentry>
 			<varlistentry>
-				<term>argb?</term> 
-                <listitem>
-                    <para>
-					Un booléen : <literal>%t</literal> si l'image est encodée en ARGB ou argb####, <literal>%f</literal> sinon. Par défaut, il est <literal>%f</literal>.
-					</para>
-                </listitem>
+			    <term>colorsBits</term>
+			    <listitem>
+				<para>
+				    Une chaîne de caractères indiquant le découpage RVB ou RVBA des couleurs d'une matrice d'entrée spécifiées 
+				    <itemizedlist>
+					<listitem>
+					    en entiers 8 bits : "332"
+					</listitem>
+					<listitem>
+					    en entiers 16 bits : "4444", "5551", "555" (dernier bit ignoré) ou "444" (4 derniers bits ignorés)
+					</listitem>
+				    </itemizedlist>
+				</para>
+			    </listitem>
 			</varlistentry>
 			<varlistentry>
-				<term>colorsBits</term> 
-                	<listitem>
-                    	<para>
-						Une chaîne de caractères indiquant le découpage RVB ou RVBA des couleurs d'une matrice d'entrée spécifiées 
-						<itemizedlist>
-							<listitem>
-							en entiers 8 bits : "332"
-							</listitem>
-							<listitem>
-							en entiers 16 bits : "4444", "5551", "555" (dernier bit ignoré) ou "444" (4 derniers bits ignorés)
-							</listitem>
-						</itemizedlist>
-						</para>
-                	</listitem>
+			    <term>image</term>
+			    <listitem>
+			        <para>
+				    <itemizedlist>
+					<listitem>
+					    une hypermatrice d'uint8 à 4 couches dont les couleurs sont encodées en RGBA
+					</listitem>
+					<listitem>
+					    une hypermatrice d'uint8 à 3 couches dont les couleurs sont encodées en RGB
+					</listitem>
+					<listitem>
+					    une matrice d'uint8 encodée en niveaux de gris
+					</listitem>
+				    </itemizedlist>
+				</para>
+			    </listitem>
 			</varlistentry>
-			<varlistentry>
-				<term>image</term> 
-                <listitem>
-                    <para>
-						<itemizedlist>
-							<listitem>
-							une hypermatrice d'uint8 à 4 couches dont les couleurs sont encodées en RGBA
-							</listitem>
-							<listitem>
-							une hypermatrice d'uint8 à 3 couches dont les couleurs sont encodées en RGB
-							</listitem>
-							<listitem>
-							une matrice d'uint8 encodée en niveaux de gris
-							</listitem>
-						</itemizedlist>
-					</para>
-                </listitem>
-			</varlistentry>
-        </variablelist>
-    </refsection>
-    <refsection>
-        <title>Description</title>
-        <para>
-            Cette fonction permet de standardiser l'encodage d'une image pour qu'elle soit utilisable par les fonctions de traitement d'image du module Jimlab. Elle est essentielle pour des images ayant été importées dans Scilab par un autre moyen que la fonction <function>jimread</function>().
-		</para>
-		<para>
-            L'image d'entrée est convertie en entiers 8 bits non signés (uint8) sur 1, 3 ou 4 couches. Pour tous les encodages supportés par <function>Matplot</function>(), la converion adoptée est la même que celle de la fonction native. 
-		</para>
-		<para>
-            Cette fonction est utilisée en interne par toutes les fonctions du module Jimlab avec les valeurs par défaut. Dans le cas où l'image est indexée ou encodée sous découpage binaire "rgb332", "rgb444", "rgb555", "rgba5551" ou "argb####", <function>jimstandard</function>() doit impérativement être utilisée avant n'importe quelle autre fonction. 
-		</para>
-    </refsection>
-    <refsection>
-        <title>Exemples</title>
+		    </variablelist>
+		</refsection>
+		<refsection>
+		    <title>Description</title>
+		    <para>
+			Cette fonction permet de standardiser l'encodage d'une image pour qu'elle soit utilisable par les fonctions de traitement d'image du module Jimlab. Elle est essentielle pour des images ayant été importées dans Scilab par un autre moyen que la fonction <function>jimread</function>().
+		    </para>
+		    <para>
+			L'image d'entrée est convertie en entiers 8 bits non signés (uint8) sur 1, 3 ou 4 couches. Pour tous les encodages supportés par <function>Matplot</function>(), la converion adoptée est la même que celle de la fonction native. 
+		    </para>
+		    <para>
+			Cette fonction est utilisée en interne par toutes les fonctions du module Jimlab avec les valeurs par défaut. Dans le cas où l'image est indexée ou encodée sous découpage binaire "rgb332", "rgb444", "rgb555", "rgba5551" ou "argb####", <function>jimstandard</function>() doit impérativement être utilisée avant n'importe quelle autre fonction. 
+		    </para>
+		</refsection>
+		<refsection>
+		    <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 //image d'entrée indexée
 
@@ -234,7 +234,7 @@ subplot(2,1,2); Matplot(usableMat)
 	    <member>
                 <link linkend="gcf">gcf</link>
             </member>
-			<member>
+	    <member>
                 <link linkend="jimwrite">jimwrite</link>
             </member>
         </simplelist>
