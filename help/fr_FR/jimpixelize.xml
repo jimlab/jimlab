@@ -78,7 +78,7 @@
  ]]></programlisting>
   <scilab:image>
 	<!-- À DEBOGUER :
-!--error 4 
+!- error 4 
 Variable non définie : mat_filter
 at line      55 of function jimsmooth called by :  
 
