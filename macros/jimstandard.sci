@@ -146,7 +146,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
     end
     
     // If the hypermatrix has more than four layers, it cannot represent an image. 
-    if layers > 4 then
+    if (layers > 4 | layers == 2) then
         convertedMat = %f;
         originalType = 0;
     end
