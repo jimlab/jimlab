@@ -16,10 +16,6 @@
          mime = Jimage.mime;
          name = Jimage.title;
          ext = '.' + mime;
-         // Priority for a transparencyColor explicitely given
-         if (~isdef("transparencyColor", "l") | type(transparencyColor) == 0.)
-            transparencyColor = Jimage.transparencyColor;
-         end
          Jimage = Jimage.image;
          jim = %t;
      else
