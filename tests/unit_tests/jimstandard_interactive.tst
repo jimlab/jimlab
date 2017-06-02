@@ -381,8 +381,6 @@ doubleNgray = doublenMat(:,:,1);
 assert_checkequal(T, ["double"])
 assert_checkequal(type(test(1,1,1)), 8.)
 assert_checkequal(test, uint8(doubleNgray * 255))
-Matplot(test);
-pause
 
 //image indexée
 f = gcf();
