@@ -117,7 +117,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
                 // matrix of uint16
                 if (~isdef('colorsBits', "l") | type(colorsBits) == 0) then
                     colorsBits = '4444';
-                    warning('The type of encoding is not given. By default, the type rgba4444 is used');
+                    warning('The type of enconing is not given. By default, the type rgba4444 is used');
                 elseif (colorsBits == "332") then
                     warning('Wrong binary encoding. By default, the type rgba4444 is used');
                 end
@@ -132,7 +132,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
                     warning('Wrong binary encoding. By default, the type rgba4444 is used');
                 end
                 tmp = uint16(imageMat);
-                convertedMat = jimstandard_uint16(imageMat,colorsBits);
+                convertedMat = jimstandard_uint16(tmp,colorsBits);
                 originalType = ["int16", colorsBits];
             elseif (tmp == 14.) then
                  convertedMat = jimstandard_uint32(imageMat);
