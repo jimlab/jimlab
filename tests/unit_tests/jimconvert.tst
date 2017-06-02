@@ -10,6 +10,7 @@
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
 // <-- NO CHECK REF -->
+// <-- TEST WITH GRAPHICS --> //required by JIMS
 
     //Conversion of a RGBA encoded image 
 path = jimlabPath("/") + 'tests/images/logoEnsim.png';
