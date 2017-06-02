@@ -11,9 +11,9 @@
  *
  -->
 <refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
-		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
-		xml:lang="fr" xml:id="jimstandard">
+        xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
+        xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+        xml:lang="fr" xml:id="jimstandard">
     <refnamediv>
         <refname>jimstandard</refname>
         <refpurpose>Standardisation de l'encodage d'une image pour le module Jimlab</refpurpose>
@@ -21,16 +21,16 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-        standardImage = jimstandard(image, colormap)
-	standardImage = jimstandard(image, argb?)
-	standardImage = jimstandard(image, colorsBits)
+            standardImage = jimstandard(image, colormap)
+            standardImage = jimstandard(image, argb?)
+            standardImage = jimstandard(image, colorsBits)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
-	<title>Arguments</title>
-		<variablelist>
-            <varlistentry>
-                <term>image</term>
+        <title>Arguments</title>
+            <variablelist>
+                <varlistentry>
+		    <term>image</term>
                 <listitem>
                 	<para>
 						<itemizedlist>
