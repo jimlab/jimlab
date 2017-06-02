@@ -2,6 +2,7 @@
 // an external module coded for Scilab and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+// Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which you
@@ -16,6 +17,9 @@ root = jimlabPath("/") + "tests/images/noError/";
 path = root + 'rgba.png';
 jim = jimread(path);
 equalizedJimage = jimhistEqual(jim);
+jim.transparencyColor = cat(3, 255, 255, 255);
+equalizedJimage2 = jimhistEqual(jim);
+assert_checkequal(equalizedJimage.image, equalizedJimage2.image);
 assert_checkequal(jim.title, equalizedJimage.title);
 assert_checkequal(jim.mime, equalizedJimage.mime);
 
@@ -27,8 +31,8 @@ assert_checkequal(equalizedJimage.image, equalizedImage);
 // Object jimage encoded in RGBA with a transparency color
 path = jimlabPath("/") + 'tests/images/logoEnsim.png';
 jim = jimread(path);
-jim.transparencyColor = cat(3,0,0,255);
-equalizedJimage = jimhistEqual(jim);
+ignoredTC = cat(3,0,0,255);
+equalizedJimage = jimhistEqual(jim, ignoredTC);
 assert_checkequal(jim.title, equalizedJimage.title);
 assert_checkequal(jim.mime, equalizedJimage.mime);
 
@@ -41,6 +45,9 @@ assert_checkequal(equalizedJimage.image, equalizedImage);
 path = root + 'rgba.png';
 jim = jimread(path);
 equalizedJimage = jimhistEqual(jim);
+jim.transparencyColor = cat(3, 255,255,255);
+equalizedJimage2 = jimhistEqual(jim);
+assert_checkequal(equalizedJimage.image, equalizedJimage2.image);
 assert_checkequal(jim.title, equalizedJimage.title);
 assert_checkequal(jim.mime, equalizedJimage.mime);
 
@@ -50,8 +57,8 @@ equalizedImage = jimhistEqual(im);
 assert_checkequal(equalizedJimage.image, equalizedImage);
 
 // Object jimage encoded in RGB with a transparency color
-jim.transparencyColor = cat(3,255,255,255);
-equalizedJimage = jimhistEqual(jim);
+ignoredTC = cat(3,255,255,255);
+equalizedJimage = jimhistEqual(jim, ignoredTC);
 assert_checkequal(jim.title, equalizedJimage.title);
 assert_checkequal(jim.mime, equalizedJimage.mime);
 
@@ -63,6 +70,9 @@ assert_checkequal(equalizedJimage.image, equalizedImage);
 path = root + 'gray.jpg';
 jim = jimread(path);
 equalizedJimage = jimhistEqual(jim);
+jim.transparencyColor= 255;
+equalizedJimage2 = jimhistEqual(jim);
+assert_checkequal(equalizedJimage.image, equalizedJimage2.image);
 assert_checkequal(jim.title, equalizedJimage.title);
 assert_checkequal(jim.mime, equalizedJimage.mime);
 
@@ -72,8 +82,8 @@ equalizedImage = jimhistEqual(im);
 assert_checkequal(equalizedJimage.image, equalizedImage);
 
 // Object jimage encoded in gray levels with a transparency color
-jim.transparencyColor = 255;
-equalizedJimage = jimhistEqual(jim);
+ignoredTC = 255;
+equalizedJimage = jimhistEqual(jim, ignoredTC);
 assert_checkequal(jim.title, equalizedJimage.title);
 assert_checkequal(jim.mime, equalizedJimage.mime);
 
