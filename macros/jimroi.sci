@@ -98,15 +98,19 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, cro
     if editpoly then
         jimdisp(image);
         [x,y] = edit_curv(xd,yd)
+        
+        if size(x) < 3 then
+            msg_5 = "%s: Three points must be selected at least in order to select a polygon."
+            error(msprintf(msg_5, 'jimroi'))
+        end
+        
         polygon = floor([x,y]),
+
     else
         polygon = input_polygon
     end
     
-    if size(x) < 3 then
-        msg_5 = "%s: Three points must be selected at least in order to select a polygon."
-         error(msprintf(msg_5, 'jimroi'))
-    end
+
 
     // Creating the mask
     mask = jimcreateMask(polygon, Matrix);
