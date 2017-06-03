@@ -29,7 +29,7 @@ equalizedImage = jimhistEqual(im);
 assert_checkequal(equalizedJimage.image, equalizedImage);
 
 // Object jimage encoded in RGBA with a transparency color
-path = jimlabPath("/") + 'tests/images/logoEnsim.png';
+path = jimlabPath("/") + 'tests/images/logoEnsim_rgba.png';
 jim = jimread(path);
 ignoredTC = cat(3,0,0,255);
 equalizedJimage = jimhistEqual(jim, ignoredTC);
