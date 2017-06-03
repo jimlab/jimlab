@@ -13,7 +13,7 @@
 // <-- TEST WITH GRAPHICS --> //required by JIMS
 
     //Conversion of a RGBA encoded image 
-path = jimlabPath("/") + 'tests/images/logoEnsim.png';
+path = jimlabPath("/") + 'tests/images/logoEnsim_rgba.png';
 Jimage = jimread(path);
 image = Jimage.image;
 //in rgb without transparencyColor 
