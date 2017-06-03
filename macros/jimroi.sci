@@ -8,7 +8,7 @@
 // are also available at    
 // http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
-function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, edit, crop2polygon)
+function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, crop2polygon)
 
 // INPUT ARGUMENTS
 // • image : jimage object, single layered matrix, 3- or
@@ -19,8 +19,8 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, edit, crop2po
 // intersection).
 // • crop2polygon : boolean used in order to crop the mask to the minimal
 // rectangle around the polygon. By default, it's set to %f.
-// • edit : boolean used in order to edit the polygon via edit_curv(). By default,
-// it's set to %f.
+// • editpoly : boolean used in order to edit the polygon via edit_curv(). By
+// default it's set to %f.
 // 0 and 1 work for both of these arguments.
 
 // OUTPUT ARGUMENTS
@@ -31,7 +31,7 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, edit, crop2po
 // • ijTopLeft : coordinates of the top left corner of the rectangle
 // containing the whole polygon.
 
-// WIP.
+// Left to do :
 // See if the point_in_polygon() function can be replaced by a vectorized function.
 
 
@@ -49,9 +49,17 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, edit, crop2po
         error(msprintf(msg_1, 'jimroi', 1))
     end
 
+    // Setting default values if not given by the user
+    if ~isdef('input_polygon','l') | type(input_polygon) == 0 then
+        input_polygon = [];
+    end
+    
+        if ~isdef('editpoly','l') | type(editpoly) == 0 then
+        editpoly = %f;
+    end
+
     // Checking the type of the matrix of the summits
     msg_2 = "%s: Argument #%d : Must be a [N ; 2] matrix of integers describing the N summits of (x,y) coordinates";
-    
     
     if ~(type(input_polygon) == 1) then
         if ~(size(input_polygon, 2) == 2) |  ~(size(input_polygon, 2) == 0)  then
@@ -59,6 +67,12 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, edit, crop2po
         end
     end
 
+    // Allowing the polygon to be empty if the user wants to edit it interactively
+    if  input_polygon == [] & editpoly == %f then
+        msg_4 = "%s: Argument #%d : Must be a [N ; 2] matrix of integers describing the N summits of (x,y) coordinates. \n It can be an empty matrix only if edit is True."
+         error(msprintf(msg_4, 'jimroi', 2))
+    end
+    
     // Checking the crop argument
     if ~isdef('crop2polygon','l') | type(crop2polygon) == 0 then
         crop2polygon = %f ;
@@ -76,16 +90,8 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, edit, crop2po
         warning("Wrong input argument #3 : default value %f will be used.")
     end
 
-    // Creation of the mask
-    
-    if  input_polygon == [] & edit == %f then
-        msg_4 = "%s: Argument #%d : Must be a [N ; 2] matrix of integers describing the N summits of (x,y) coordinates. \n It can be an empty matrix only if edit is True."
-         error(msprintf(msg_4, 'jimroi', 2))
-    end
-    
     
     // Interactive edition of the polygon
-    
     if input_polygon ~=[] then
         xd = input_polygon(:,1)
         yd = input_polygon(:,2)
@@ -93,7 +99,7 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, edit, crop2po
         xd = [] ; yd = []
     end
     
-    if edit then
+    if editpoly then
         jimdisp(image);
         [x,y] = edit_curv(xd,yd)
         polygon = floor([x,y]),
@@ -101,17 +107,17 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, edit, crop2po
         polygon = input_polygon
     end
         
-        mask = jimcreateMask(polygon, Matrix);
+        
+    // Creating the mask
+    mask = jimcreateMask(polygon, Matrix);
     
 
     // Cropping the mask
-
     if crop2polygon then
         mask = jimcropMask(polygon, Matrix, mask)
     end
     
     // Returning ijTopleft
-    
     poly_top = max(polygon(:,2));
     poly_bot = min(polygon(:,2));
     poly_left = min(polygon(:,1));
@@ -163,12 +169,12 @@ endfunction
 function out_mask = jimcropMask (input_polygon, mat_image, input_mask)
 // This subfunction is used to crop the mask to the minimal rectangle
 // within which the polygon is contained.
-// input_polygon : a [N ; 2] matrix containing the summits of the
+// • input_polygon : a [N ; 2] matrix containing the summits of the
 // polygon (correctly sorted for the polygone to avoid any
 // intersection)
-// mat_image : a single, 3- or 4-layered matrix or hypermatrix.
-// input_mask : a (hyper)matrix of boolean of the same size of mat_image.
-// out_mask : a (hyper)matrix of boolean.
+// • mat_image : a single, 3- or 4-layered matrix or hypermatrix.
+// • input_mask : a (hyper)matrix of boolean of the same size of mat_image.
+// • out_mask : a (hyper)matrix of boolean.
     
     [h,w] = size(mat_image);
     
@@ -238,6 +244,7 @@ function out_mask = jimcropMask (input_polygon, mat_image, input_mask)
         n_bot = 2
     end
     
-        out_mask = out_mask(n_bot:n_top,n_left:n_right)
+    // Returning the final cropped mask
+    out_mask = out_mask(n_bot:n_top,n_left:n_right)
     
 endfunction
