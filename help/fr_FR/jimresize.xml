@@ -67,7 +67,7 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
 // A partir d'une image pré-chargée
-path = jimlabPath + '/help/images/logoEnsim.png';
+path = jimlabPath + '/help/images/logoEnsim_rgba.png';
 Jimage = jimread(path)
 
 dim = size(Jimage);
