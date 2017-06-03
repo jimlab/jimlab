@@ -31,9 +31,6 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, cro
 // • ijTopLeft : coordinates of the top left corner of the rectangle
 // containing the whole polygon.
 
-// Left to do :
-// See if the point_in_polygon() function can be replaced by a vectorized function.
-
 
     // Checking the type of the input image
     if (isdef("image","l") & type(image) ~= 0)
@@ -89,7 +86,6 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, cro
     if ~(type(crop2polygon) == 4) then
         warning("Wrong input argument #3 : default value %f will be used.")
     end
-
     
     // Interactive edition of the polygon
     if input_polygon ~=[] then
@@ -111,7 +107,7 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, cro
     // Creating the mask
     mask = jimcreateMask(polygon, Matrix);
     
-
+    
     // Cropping the mask
     if crop2polygon then
         mask = jimcropMask(polygon, Matrix, mask)
@@ -123,7 +119,7 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, cro
     poly_left = min(polygon(:,1));
     poly_right = max(polygon(:,1));
 
-    ijTopLeft = [poly_top-1,poly_left-1];
+    ijTopLeft = [size(Matrix,1)-poly_top+1 ,poly_left];
 
 
 endfunction
@@ -146,23 +142,21 @@ function output_mask = jimcreateMask(input_polygon, mat_image)
     // The origin of a Matplot figure is at the bottom left but the matrix
     // has its origin in the top left corner.
 
-    poly_out = input_polygon;
-    poly_out(:,1) = h;
-    poly_out(:,2) = w;
-    y_poly_out = x_poly;
-    x_poly_out = poly_out(:,1)-y_poly;
+    x_poly = input_polygon(:,1);
+    y_poly = input_polygon(:,2);
+
+    x2 = x_poly ;
+    y2 = h - y_poly +1 ;
 
     // The polygon now displays the same shape than the summits describe.
-
-    // Gray and RGB matrix (subfunction)
-    for i = 1:h
-        for j = 1:w
-            in(i,j) = point_in_polygon(x_poly_out, y_poly_out, i,j);
-        end
-    end
-
+    
     // Creating the boolean mask
-    output_mask = in(:,:) == 1;
+    xa = [1:1:h];
+    ya = [1:1:w];
+    [x,y] = meshgrid (xa, ya);
+    [in,on] = moc_inpolygon (x, y, x2, y2);
+    output_mask = in | on;
+ 
 
 endfunction
 
@@ -183,7 +177,7 @@ function out_mask = jimcropMask (input_polygon, mat_image, input_mask)
     poly_left = min(input_polygon(:,1));
     poly_right = max(input_polygon(:,1));
 
-    out_mask = input_mask(h-poly_top:h-poly_bot,poly_left:poly_right)
+    out_mask = input_mask(h-poly_top:h-poly_bot+1,poly_left:poly_right)
         
     // Border corrections : suppressing the extreme lines filled with %F
     h_mask = size(out_mask,1)
@@ -222,7 +216,6 @@ function out_mask = jimcropMask (input_polygon, mat_image, input_mask)
             break
         end
     end
-
 
     // Exclusion of the lines filled with %F
     n_left = 1 ; n_right = w_mask ;
