@@ -16,7 +16,7 @@
         xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
         xml:lang="en" xml:id="jimage_properties">
     <refnamediv>
-        <refname>jimage</refname>
+        <refname>jimage properties</refname>
         <refpurpose>Typed list object (mlist) created for Jimlab and containing data of an image
             in several fields.</refpurpose>
     </refnamediv>
