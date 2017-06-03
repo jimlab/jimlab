@@ -70,7 +70,7 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 // A partir d'une image pré-chargée
-path = jimlabPath() + '/help/images/logoEnsim.png';
+path = jimlabPath() + '/help/images/logoEnsim_rgba.png';
 image = jimread(path);
 jimdisp(image,'box','info');
 
@@ -98,7 +98,7 @@ jimdisp(path,'','info')
         <title>Historique</title>
         <revhistory>
             <revision>
-                <revnumber>0.1 - 2017-05</revnumber>
+                <revnumber>0.1 - 2017-06</revnumber>
                 <revremark>Publication initiale du module Jimlab</revremark>
             </revision>
         </revhistory>
