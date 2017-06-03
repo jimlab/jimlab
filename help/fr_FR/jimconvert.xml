@@ -160,7 +160,7 @@ jgray = jimconvert(Jimage, 'gray')
 gray = jimconvert(image, 'gray');
 
 //Conversion en RGB
-path = jimlabPath("/") + 'tests/images/logoEnsim.png';
+path = jimlabPath("/") + 'tests/images/logoEnsim_rgba.png';
 Jimage2 = jimread(path)
 image2 = Jimage2.image;
 transparencyColor = uint8(cat(3, 200, 200, 200));
@@ -183,7 +183,7 @@ Jimage = jimread(path)
 jgray = jimconvert(Jimage, 'gray')
 
 //Conversion en RGB
-path = jimlabPath("/") + 'tests/images/logoEnsim.png';
+path = jimlabPath("/") + 'tests/images/logoEnsim_rgba.png';
 Jimage2 = jimread(path)
 transparencyColor = uint8(cat(3, 200, 200, 200));
 jrgb = jimconvert(Jimage2, 'rgb', transparencyColor)
