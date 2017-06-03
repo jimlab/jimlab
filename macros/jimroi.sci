@@ -102,11 +102,14 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, cro
     else
         polygon = input_polygon
     end
-        
-        
+    
+    if size(x) < 3 then
+        msg_5 = "%s: Three points must be selected at least in order to select a polygon."
+         error(msprintf(msg_5, 'jimroi'))
+    end
+
     // Creating the mask
     mask = jimcreateMask(polygon, Matrix);
-    
     
     // Cropping the mask
     if crop2polygon then
@@ -120,7 +123,6 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, cro
     poly_right = max(polygon(:,1));
 
     ijTopLeft = [size(Matrix,1)-poly_top+1 ,poly_left];
-
 
 endfunction
 
@@ -151,12 +153,11 @@ function output_mask = jimcreateMask(input_polygon, mat_image)
     // The polygon now displays the same shape than the summits describe.
     
     // Creating the boolean mask
-    xa = [1:1:h];
-    ya = [1:1:w];
+    xa = [1:1:w];
+    ya = [1:1:h];
     [x,y] = meshgrid (xa, ya);
     [in,on] = moc_inpolygon (x, y, x2, y2);
-    output_mask = in | on;
- 
+    output_mask = (in | on);
 
 endfunction
 
@@ -178,7 +179,7 @@ function out_mask = jimcropMask (input_polygon, mat_image, input_mask)
     poly_right = max(input_polygon(:,1));
 
     out_mask = input_mask(h-poly_top:h-poly_bot+1,poly_left:poly_right)
-        
+
     // Border corrections : suppressing the extreme lines filled with %F
     h_mask = size(out_mask,1)
     w_mask = size(out_mask,2)
