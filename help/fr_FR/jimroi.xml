@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
- * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
- * Copyright (C) 2017 - ENSIM, Université du Maine - Gael SENÉE
+ * This file is part of Jimlab, an external module coded for Scilab
+ * and dedicated to image processing.
  *
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Gael SENÉE
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+ 
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms
- * are also available at    
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * you should have received as part of this distribution.  The terms are also
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
 <refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
@@ -22,7 +23,13 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            [mask, [, polygon [, ijTopLeft]]] = jimroi(input_image, polygon [, crop2polygon])
+            mask = jimroi (input_image, polygon)
+            [mask, polygon, ijTopLeft] = jimroi (input_image, polygon)
+            [mask, polygon, ijTopLeft] = jimroi (input_image, polygon, editpoly)
+            [mask, polygon, ijTopLeft] = jimroi (input_image, , editpoly)
+            [mask, polygon, ijTopLeft] = jimroi (input_image, , editpoly, crop2polygon)
+            [mask, polygon, ijTopLeft] = jimroi (input_image, polygon, , crop2polygon)
+            [mask, polygon, ijTopLeft] = jimroi (input_image, polygon, editpoly, crop2polygon)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -33,7 +40,7 @@
                 <listitem>
                 <para>
                     Objet <literal>jimage</literal>, matrice à une couche, ou hypermatrice à trois ou quatre couches.
-				</para>
+                </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
@@ -41,15 +48,23 @@
                 <listitem>
                 <para>
                     Matrice de taille [N;2] des sommets de la zone polygonale d'intérêt. Les N sommets ont pour coordonnées un couple (x,y).
-				</para>
+                </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>editpolygon</term> 
+                <listitem>
+                <para>
+                    Booléen permettant l'édition du polygone de manière interactive.
+                </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
                 <term>crop2polygon</term> 
                 <listitem>
                 <para>
-                    Chaîne de caractères. 'cropped' réduit la taille de l'objet de sortie aux dimensions minimales entourant le polygone de sélection. Par défaut, 'no'.
-				</para>
+                    Booléen donnant la consigne de recadrer le masque au rectangle minimal pouvant encadrer le polygone. Par défaut, %f.
+                </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
@@ -64,8 +79,8 @@
                 <term>ijTopLeft</term> 
                 <listitem>
                 <para>
-                    Couple (x,y) du nombre de lignes et de colonnes supprimées, lorsque l'objet de sortie est rogné. L'origine est considérée dans le coin inférieur gauche.
-				</para>
+                    Coordonnées (x,y) du coin supérieur gauche du rectangle minimal encadrant le polygone de sélection.
+                </para>
                 </listitem>
             </varlistentry>
         </variablelist>
@@ -74,19 +89,32 @@
         <title>Description</title>
         <para>
             Cette fonction applique une zone de sélection sur une image. Cette zone est un polygone, défini par une matrice de taille [N;2] correspondant à ses sommets.
-			Ce polygone peut être modifié interactivement avec la souris. Il est possible d'ajouter des points, d'en déplacer et d'en supprimer.
+Ce polygone peut être créé ou modifié interactivement avec la souris, via appel de la fonction <function>edit_curv()</function>, si le booléen <literal>editpoly</literal> vaut %True. Il est possible d'ajouter des points, d'en déplacer et d'en supprimer.
+Le masque de sortie peut garder les dimensions de l'image d'origine, ou bien être recadré au rectangle minimal encadrant le polygone de sélection. Le booléen <literal>crop2polygon</literal> doit alors recevoir %True pour valeur.
         </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
-// Creating a jimage object from an image file
-path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
-jimage1 = jimread(path);
+// Création d'un objet jimage à partir d'un fichier image
+path = jimlabPath("/") + 'tests/images/noError/rgb.jpg';
+Jimage = jimread(path);
 
-// 
+// Matrice des sommets du polygone
 Summits = [10 10 ; 10 30 ; 30 40 ; 30 10];
-[mask, polygon, ij] = jimroi (jimage1, Summits);
+
+// Extraction du masque sans recadrage
+[mask, polygon, ij] = jimroi (Jimage, Summits);
+
+// Extraction du masque recadré
+[mask, polygon, ij] = jimroi (Jimage, Summits, , 1);
+
+// Création interactive du polygone, extraction du masque sans recadrage
+[mask, polygon, ij] = jimroi (Jimage, , 1);
+
+// Modification interactive du polygone, extraction du masque recadré
+[mask, polygon, ij] = jimroi (Jimage, Summits, 1, 1);
+
 ]]></programlisting>
 	</refsection>
     <refsection role="see also">
@@ -101,7 +129,7 @@ Summits = [10 10 ; 10 30 ; 30 40 ; 30 10];
         <title>Historique</title>
         <revhistory>
             <revision>
-                <revnumber>0.1 - 2017-05</revnumber>
+                <revnumber>0.1 - 2017-06</revnumber>
                 <revremark>Publication initiale du module Jimlab</revremark>
             </revision>
         </revhistory>
