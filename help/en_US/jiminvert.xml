@@ -66,7 +66,7 @@
         <programlisting role="example"><![CDATA[
  			// From a jimage object
 			
-			path = pathconvert(jimlabPath("/") + "tests/images/logoEnsim.png",%f);
+			path = pathconvert(jimlabPath("/") + "tests/images/logoEnsim_rgba.png",%f);
 			jimage_original = jimread(path);// Loading the original image
 			subplot(2,2,1);
 			jimdisp(jimage_original,,'info');// Disp the original image
