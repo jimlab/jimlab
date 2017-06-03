@@ -8,6 +8,9 @@
 // <-- NO CHECK REF -->
 // <-- TEST WITH GRAPHIC -->
 
+version = getversion()
+os = getos()
+
 // From an image file pre-loaded with jimread
 //[m, mp] = libraryinfo('jimlablib');
 //imagePath = getlongpathname(mp +'tests\images\noError\rgb.jpg');
@@ -26,9 +29,7 @@ jimdisp(imagePath,'box');
 jimdisp(imagePath,,'info');
 jimdisp(imagePath,'box','info');
 
-version = getversion()
-
-if version ~= 'scilab-5.5.2' then
+if ~(version == 'scilab-5.5.2' & os == 'Darwin')  then
     // From a URL
     imageURL = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
     
@@ -37,3 +38,4 @@ if version ~= 'scilab-5.5.2' then
     jimdisp(imageURL,,'info');
     jimdisp(imageURL,'box','info');
 end
+
