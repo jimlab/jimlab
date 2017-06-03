@@ -16,10 +16,12 @@
 // Tests of jimrotate()
 // ====================
 
-imrgba = jimread(jimlabPath("/") + "tests/images/puffin.png");
+jim = jimread(jimlabPath("/") + "tests/images/puffin.png");
 clf
 f = gcf();
 f.axes_size = [850 470];
-jim = jimread(path);
 subplot(2,4,1), jimdisp(jim)
-for i=2:8, subplot(2,4,i), jimdisp(jimrotate(jim,(i-1)*25)), end
+for i = 2:8
+    subplot(2,4,i)
+    jimdisp(jimrotate(jim,(i-1)*25))
+end
