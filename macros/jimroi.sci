@@ -36,14 +36,12 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, cro
     if (isdef("image","l") & type(image) ~= 0)
         if typeof(image) == 'jimage' then
             Matrix = image.image;
-        elseif type(image) == 1 | type(image) == 8 then
-            Matrix = jimstandard(image);
         else
-            msg_1 = "%s: Argument #%d : A (hyper)matrix of 1, 3 or 4 layers, or a jimage object must be given";
-            error(msprintf(msg_1, 'jimroi', 1))
+            Matrix = jimstandard(image);
         end
     else
-        error(msprintf(msg_1, 'jimroi', 1))
+        msg_1 = "%s: Argument #%d : A (hyper)matrix of 1, 3 or 4 layers, or a jimage object must be given";
+        error(msprintf(msg_1, 'jimroi', 1));
     end
 
     // Setting default values if not given by the user
