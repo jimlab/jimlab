@@ -169,7 +169,7 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
 // Objet de type jimage avec transparence
-path = jimlabPath("/") + 'tests/images/logoEnsim.png';
+path = jimlabPath("/") + 'tests/images/logoEnsim_rgba.png';
 Jimage = jimread(path);
 ignoredTC = cat(3,140,140,140);
 equalizedJimage = jimhistEqual(Jimage, ignoredTC);
@@ -191,7 +191,7 @@ jimdisp(equalizedImage)
  ]]></programlisting>
     <scilab:image>
     //Objet de type jimage avec transparence
-    path = jimlabPath("/") + 'tests/images/logoEnsim.png';
+    path = jimlabPath("/") + 'tests/images/logoEnsim_rgba.png';
     Jimage = jimread(path);
     ignoredTC = cat(3,140,140,140);
     equalizedJimage = jimhistEqual(Jimage, ignoredTC);
