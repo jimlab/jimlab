@@ -70,7 +70,7 @@
         <title>Examples</title>
         <programlisting role="example"><![CDATA[ 
 // From a pre-loaded image file
-path = jimlabPath() + '/help/images/logoEnsim.png';
+path = jimlabPath() + '/help/images/logoEnsim_rgba.png';
 image = jimread(path);
 jimdisp(image,'box','info');
 
