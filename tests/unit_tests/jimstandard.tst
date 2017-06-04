@@ -432,3 +432,30 @@ unsupportedMat = ["1", "0"; "0.5", "0.5"];
 [test, T] = jimstandard(unsupportedMat);
 assert_checkequal(test, %f);
 assert_checkequal(T, 0);
+
+unsupportedMat = int16(grand(10, 10, 2, "uin", -32768, 32767));
+[test, T] = jimstandard(unsupportedMat);
+assert_checkequal(test, %f);
+assert_checkequal(T, 0);
+unsupportedMat = ["1", "0"; "0.5", "0.5"];
+[test, T] = jimstandard(unsupportedMat);
+assert_checkequal(test, %f);
+assert_checkequal(T, 0);
+
+unsupportedMat = uint8(grand(10, 10, 3, "uin", 0, 255));
+[test, T] = jimstandard(unsupportedMat, "332");
+assert_checkequal(test, %f);
+assert_checkequal(T, 0);
+unsupportedMat = ["1", "0"; "0.5", "0.5"];
+[test, T] = jimstandard(unsupportedMat);
+assert_checkequal(test, %f);
+assert_checkequal(T, 0);
+
+unsupportedMat = round(rand(10,10, 3)) == 0;
+[test, T] = jimstandard(unsupportedMat, "332");
+assert_checkequal(test, %f);
+assert_checkequal(T, 0);
+unsupportedMat = ["1", "0"; "0.5", "0.5"];
+[test, T] = jimstandard(unsupportedMat);
+assert_checkequal(test, %f);
+assert_checkequal(T, 0);
