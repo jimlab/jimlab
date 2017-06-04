@@ -1,11 +1,12 @@
-
- //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
- //
- //This file must be used under the terms of the CeCILL.
- //This source file is licensed as described in the file COPYING, which
- //you should have received as part of this distribution.  The terms
- //are also available at
- //http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
+// This file is part of the Jimlab module,
+// an external module coded for Scilab and dedicated to image processing.
+//
+// Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which you
+// should have received as part of this distribution.  The terms are also
+// available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
  function [convertedJimage] = jimconvert(Jimage, encoding, transparencyColor)
 	//This function converts an image encoding into RGB or gray levels.
@@ -19,7 +20,7 @@
          //extraction of metadata from jimage object
          mime = Jimage.mime;
          name = Jimage.title;
-         ext = '.' + mime;
+         ext = "." + mime;
          // Priority for a transparencyColor explicitely given
          if (~isdef("transparencyColor", "l") | type(transparencyColor) == 0.)
             transparencyColor = Jimage.transparencyColor;
@@ -38,8 +39,8 @@
      else
          //conversion in uint8 if necessary, jimstandard() default values are used
          [Jimage, originalType] = jimstandard(Jimage);
-         name = 'your ';
-         ext = 'image';
+         name = "your ";
+         ext = "image";
          jim = %f;
          bw = %f;
          if (type(Jimage) == 4) then
@@ -75,7 +76,7 @@
      elseif (type(encoding) == 10)
 
        select encoding
-       case 'gray' then
+       case "gray" then
            //transparencyColor must be a scalar in this case
            if l == 3.
                transparencyColor = [0.299 0.587 0.114] * transparencyColor(:);
@@ -111,7 +112,7 @@
                convertedJimage = Jimage;
                warning("Your image has not been modified.")
            end
-       case 'rgb' then
+       case "rgb" then
            if (size(Jimage, 3) == 4.)
                // By default transparencyColor is white
                if transparencyColor(1) == -1
@@ -148,8 +149,8 @@
        end
        if jim
 			//if a jimage object is given, the output object must be a jimage. 
-           convertedJimage = mlist(['jimage','image','encoding',..
-           'title','mime','transparencyColor'], convertedJimage, ..
+           convertedJimage = mlist(["jimage","image","encoding",..
+           "title","mime","transparencyColor"], convertedJimage, ..
                     encoding, name, mime, int16(transparencyColor));
        end
     else
