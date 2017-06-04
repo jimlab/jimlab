@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of Jimlab, an external module coded for Scilab
- * and dedicated to image processing.
+ * This file is part of the Jimlab module,
+ * an external module coded for Scilab and dedicated to image processing.
  *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  *
  * This file must be used under the terms of the CeCILL.
- * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms are also
+ * This source file is licensed as described in the file COPYING, which you
+ * should have received as part of this distribution.  The terms are also
  * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
@@ -169,7 +169,7 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
 // Objet de type jimage avec transparence
-path = jimlabPath("/") + 'tests/images/logoEnsim_rgba.png';
+path = jimlabPath("/") + "tests/images/logoEnsim_rgba.png";
 Jimage = jimread(path);
 ignoredTC = cat(3,140,140,140);
 equalizedJimage = jimhistEqual(Jimage, ignoredTC);
@@ -191,7 +191,7 @@ jimdisp(equalizedImage)
  ]]></programlisting>
     <scilab:image>
     //Objet de type jimage avec transparence
-    path = jimlabPath("/") + 'tests/images/logoEnsim_rgba.png';
+    path = jimlabPath("/") + "tests/images/logoEnsim_rgba.png";
     Jimage = jimread(path);
     ignoredTC = cat(3,140,140,140);
     equalizedJimage = jimhistEqual(Jimage, ignoredTC);
@@ -212,7 +212,7 @@ jimdisp(equalizedImage)
     </scilab:image>
     <programlisting role="example"><![CDATA[
 // Matrice en niveaux de gris sans transparence
-path = jimlabPath("/") + 'tests/images/lena_lowcontrast.jpg';
+path = jimlabPath("/") + "tests/images/lena_lowcontrast.jpg";
 Jimage = jimread(path);
 image = Jimage.image;
 equalizedImage = jimhistEqual(image);
@@ -222,7 +222,7 @@ subplot(2,2,2)
 jimdisp(equalizedImage)
 
 // Matrice en niveaux de gris avec couleur de transparence
-path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+path = jimlabPath("/") + "tests/images/noError/gray.jpg";
 Jimage = jimread(path);
 image = Jimage.image;
 equalizedImage = jimhistEqual(image, 255);
@@ -233,7 +233,7 @@ jimdisp(equalizedImage)
  ]]></programlisting>
     <scilab:image>
     //Matrice en niveaux de gris sans transparence
-    path = jimlabPath("/") + 'tests/images/lena_lowcontrast.jpg';
+    path = jimlabPath("/") + "tests/images/lena_lowcontrast.jpg";
     Jimage = jimread(path);
     image = Jimage.image;
     equalizedImage = jimhistEqual(image);
@@ -243,7 +243,7 @@ jimdisp(equalizedImage)
     jimdisp(equalizedImage)
 
     //Matrice en niveaux de gris avec couleur de transparence
-    path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+    path = jimlabPath("/") + "tests/images/noError/gray.jpg";
     Jimage = jimread(path);
     image = Jimage.image;
     equalizedImage = jimhistEqual(image, 255);
