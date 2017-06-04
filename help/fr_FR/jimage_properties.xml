@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of Jimlab, an external module coded for Scilab
- * and dedicated to image processing.
+ * This file is part of the Jimlab module,
+ * an external module coded for Scilab and dedicated to image processing.
  *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  *
  * This file must be used under the terms of the CeCILL.
- * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms are also
+ * This source file is licensed as described in the file COPYING, which you
+ * should have received as part of this distribution.  The terms are also
  * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
@@ -41,20 +41,20 @@
                         <itemizedlist>
                             <listitem>
                                 <para>
-                                    'gray' : <literal>jimage.image</literal> est une matrice
+                                    "gray" : <literal>jimage.image</literal> est une matrice
                                     décrivant une image en niveaux de gris sur 256 niveaux.
                                 </para>
                             </listitem>
                             <listitem>
                                 <para>
-                                    'rgb' : <literal>jimage.image</literal> est une hypermatrice
+                                    "rgb" : <literal>jimage.image</literal> est une hypermatrice
                                     à 3 couches. Chaque couche donne l'intensité des pixels pour
                                     une couleur (rouge, vert et bleu) sur 256 niveaux.
                                 </para>
                             </listitem>
                             <listitem>
                                 <para>
-                                    'rgba' : <literal>jimage.image</literal> est une hypermatrice à
+                                    "rgba" : <literal>jimage.image</literal> est une hypermatrice à
                                     4 couches dont la dernière gère le canal alpha.
                                 </para>
                             </listitem>
@@ -73,8 +73,8 @@
                 <varlistentry>
                     <term>.mime</term>
                     <listitem>
-                        Une chaîne de caractères contenant le type MIME de l'image : 'png', 'bmp',
-                        'gif' ou 'jpg'.
+                        Une chaîne de caractères contenant le type MIME de l'image : "png", "bmp",
+                        "gif" ou "jpg".
                     </listitem>
                 </varlistentry>
                 <varlistentry>
@@ -117,7 +117,7 @@
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
-path = jimlabPath("/") + 'tests/images/noError/rgb.png';
+path = jimlabPath("/") + "tests/images/noError/rgb.png";
 
 // Chargement d'une image dans un objet jimage
 Jimage = jimread(path);
@@ -127,7 +127,7 @@ dim = size(Jimage)
 disp(Jimage)
 
 // Affichage
-jimdisp(Jimage, 'box', 'info')
+jimdisp(Jimage, "box", "info")
  ]]></programlisting>
     </refsection>
     <refsection role="see also">
