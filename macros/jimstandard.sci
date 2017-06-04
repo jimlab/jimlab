@@ -47,6 +47,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
     originalType = 0;
     layers = size(imageMat, 3);
     
+    
     if (isdef("colormap", "l"))
         //If a colormap is given, the image is considered as indexed
         dim = size(imageMat)
@@ -79,68 +80,103 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
         t = type(imageMat(1,1,1));
         select(t)
         case 4. then     //boolean matrix
-            convertedMat = uint8(255*imageMat);
-            originalType = "bool";
+            if layers == 1 
+                convertedMat = uint8(255*imageMat);
+                originalType = "bool";
+            else 
+                convertedMat = %f;
+                originalType =0;
+            end
         case 8. then     //matrix of integer
             tmp = inttype(imageMat(:,:,1));
             if (tmp == 1.) then
                 convertedMat = uint8(imageMat)                                    
                 originalType = "int8";
                 if isdef("colorsBits", "l") & colorsBits == "332"
-                    image = uint16(convertedMat);
-                    r = modulo(image,uint16(2^8));
-                    convertedMat(:,:,1) = floor(r./uint16(2^5));
-                    g = modulo(image,uint16(2^5));
-                    convertedMat(:,:,2) = floor(g./uint16(2^2));
-                    convertedMat(:,:,3) = modulo(image,uint16(2^2));
-                    convertedMat(:,:,1:2) = double(convertedMat(:,:,1:2)) * 255/7;
-                    convertedMat(:,:,3) = double(convertedMat(:,:,3)) * 255/3;
-                    convertedMat = uint8(convertedMat);
-                    originalType = [originalType, "332"];
+                    if layers == 1. 
+                        image = uint16(convertedMat);
+                        r = modulo(image,uint16(2^8));
+                        convertedMat(:,:,1) = floor(r./uint16(2^5));
+                        g = modulo(image,uint16(2^5));
+                        convertedMat(:,:,2) = floor(g./uint16(2^2));
+                        convertedMat(:,:,3) = modulo(image,uint16(2^2));
+                        convertedMat(:,:,1:2) = double(convertedMat(:,:,1:2)) * 255/7;
+                        convertedMat(:,:,3) = double(convertedMat(:,:,3)) * 255/3;
+                        convertedMat = uint8(convertedMat);
+                        originalType = [originalType, "332"];
+                    else
+                        convertedMat = %f;
+                        originalType = 0;
+                    end
                 end
             elseif(tmp == 11.)
                 convertedMat = imageMat;
                 originalType = "uint8";
                 if isdef("colorsBits", "l") & colorsBits == "332"
-                    image = uint16(convertedMat);
-                    r = modulo(image,uint16(2^8));
-                    convertedMat(:,:,1) = floor(r./uint16(2^5));
-                    g = modulo(image,uint16(2^5));
-                    convertedMat(:,:,2) = floor(g./uint16(2^2));
-                    convertedMat(:,:,3) = modulo(image,uint16(2^2));
-                    convertedMat(:,:,1:2) = double(convertedMat(:,:,1:2)) * 255/7;
-                    convertedMat(:,:,3) = double(convertedMat(:,:,3)) * 255/3;
-                    convertedMat = uint8(convertedMat);
-                    originalType = [originalType, "332"];
+                    if layers == 1. 
+                        image = uint16(convertedMat);
+                        r = modulo(image,uint16(2^8));
+                        convertedMat(:,:,1) = floor(r./uint16(2^5));
+                        g = modulo(image,uint16(2^5));
+                        convertedMat(:,:,2) = floor(g./uint16(2^2));
+                        convertedMat(:,:,3) = modulo(image,uint16(2^2));
+                        convertedMat(:,:,1:2) = double(convertedMat(:,:,1:2)) * 255/7;
+                        convertedMat(:,:,3) = double(convertedMat(:,:,3)) * 255/3;
+                        convertedMat = uint8(convertedMat);
+                        originalType = [originalType, "332"];
+                    else
+                        convertedMat = %f;
+                        originalType = 0;
+                    end
                 end
             elseif(tmp == 12.) then
                 // matrix of uint16
-                if (~isdef('colorsBits', "l") | type(colorsBits) == 0) then
-                    colorsBits = '4444';
-                    warning('The type of encoding is not given. By default, the type rgba4444 is used');
-                elseif (colorsBits == "332") then
-                    warning('Wrong binary encoding. By default, the type rgba4444 is used');
+                if layers == 1. then
+                    if (~isdef('colorsBits', "l") | type(colorsBits) == 0) then
+                        colorsBits = '4444';
+                        warning('The type of encoding is not given. By default, the type rgba4444 is used');
+                    elseif (colorsBits == "332") then
+                        warning('Wrong binary encoding. By default, the type rgba4444 is used');
+                    end
+                    convertedMat = jimstandard_uint16(tmp,colorsBits);
+                    originalType = ["uint16", colorsBits];
+                else
+                    convertedMat = %f;
+                    originalType = 0;
                 end
-                convertedMat = jimstandard_uint16(imageMat,colorsBits);
-                originalType = ["uint16", colorsBits];
             elseif(tmp == 2.) then
                 // matrix of int16
-                if (~isdef('colorsBits', "l") | type(colorsBits) == 0) then
-                    colorsBits = '4444';
-                    warning('The type of enconing is not given. By default, the type rgba4444 is used');
-                elseif (colorsBits == "332") then
-                    warning('Wrong binary encoding. By default, the type rgba4444 is used');
+                if layers == 1. then
+                    if (~isdef('colorsBits', "l") | type(colorsBits) == 0) then
+                        colorsBits = '4444';
+                        warning('The type of encoding is not given. By default, the type rgba4444 is used');
+                    elseif (colorsBits == "332") then
+                        warning('Wrong binary encoding. By default, the type rgba4444 is used');
+                    end
+                    tmp = uint16(imageMat);
+                    convertedMat = jimstandard_uint16(tmp,colorsBits);
+                    originalType = ["int16", colorsBits];
+                else
+                    convertedMat = %f;
+                    originalType = 0;
                 end
-                tmp = uint16(imageMat);
-                convertedMat = jimstandard_uint16(tmp,colorsBits);
-                originalType = ["int16", colorsBits];
             elseif (tmp == 14.) then
-                 convertedMat = jimstandard_uint32(imageMat);
-                 originalType = "uint32";
+                if layers == 1.
+                    convertedMat = jimstandard_uint32(imageMat);
+                    originalType = "uint32";
+                else
+                    convertedMat = %f;
+                    originalType =0;
+                end
            elseif(tmp == 4.) then
-                 tmp = uint32(imageMat); 
-                 convertedMat = jimstandard_uint32(tmp);
-                 originalType = "int32";
+               if layers == 1.
+                   tmp = uint32(imageMat); 
+                   convertedMat = jimstandard_uint32(tmp);
+                   originalType = "int32";
+               else
+                   convertedMat = %f;
+                   originalType =0;
+               end
             end
         end
     end
