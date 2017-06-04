@@ -208,8 +208,6 @@ function [IML] =jimpixelize_padGRAY(matrice,height,width)
         for i= 1 : add_blockl
 
             matrice=[matrice(1:endc,:) ;matrice(indiceL,:)];
-            matrice=[matrice(1:endc,:) ;matrice(indiceL,:)];
-            matrice=[matrice(1:endc,:) ;matrice(indiceL,:)];
             endc=endc+1;
             indiceL=L-i;
 
@@ -222,8 +220,7 @@ function [IML] =jimpixelize_padGRAY(matrice,height,width)
         add_blockc=width - rest_blockc;
         for i= 1 : add_blockc   
             matrice=[matrice ,matrice(:,indiceC)];
-            matrice=[matrice ,matrice(:,indiceC)];
-            matrice=[matrice ,matrice(:,indiceC)];
+        
             indiceC=C-i;
         end
     end
