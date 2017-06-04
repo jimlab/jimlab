@@ -1,11 +1,11 @@
-// This file is part of Jimlab, an external module coded for Scilab 
-//  and dedicated to image processing.
+// This file is part of the Jimlab module,
+// an external module coded for Scilab and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Gaël SENÉE
 //
 // This file must be used under the terms of the CeCILL.
-// This source file is licensed as described in the file COPYING, which
-// you should have received as part of this distribution.  The terms are also
+// This source file is licensed as described in the file COPYING, which you
+// should have received as part of this distribution.  The terms are also
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
 function jim = jimage(image, standard_options)
@@ -13,8 +13,8 @@ function jim = jimage(image, standard_options)
     // image : a single-layered matrix, or a three- or four-layered hypermatrix.
     // This matrix is converted in jimage standard format (uint8).
     // The following fields get a default value :
-    // • filename : 'user'
-    // • mime : 'unknown'
+    // • filename : "user"
+    // • mime : "unknown"
     // • transparencyColor : -1
 
 
@@ -32,10 +32,10 @@ function jim = jimage(image, standard_options)
     end
 
      // Setting default MIME type
-     mime = 'unknown'
+     mime = "unknown"
 
     // Setting the default file name
-    title = 'user'
+    title = "user"
         
     // Setting the default transparency color
     transColor = -1
@@ -44,18 +44,18 @@ function jim = jimage(image, standard_options)
         
     select size(mat_image,3)
         case 1 then
-            encoding = 'gray'
+            encoding = "gray"
         case 3 then
-            encoding = 'rgb'
+            encoding = "rgb"
         case 4 then
-            encoding = 'rgba'
+            encoding = "rgba"
         else
           msg = _("%s: An image can be represented only by a 1, 3 or 4 layers matrix or hypermatrix. \n");
           error(msprintf(msg,"jimage"));
     end
         
     // Creating the jimage object
-    fields = ['jimage','image','encoding','title','mime','transparencyColor'];
+    fields = ["jimage","image","encoding","title","mime","transparencyColor"];
     jim = mlist(fields, mat_image, encoding, title, mime, transColor);
     
 endfunction
