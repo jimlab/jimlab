@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
- * Copyright (C) 2017 - ENSIM, Université du Maine - Gaël Senée
- * 
+ * This file is part of the Jimlab module,
+ * an external module coded for Scilab and dedicated to image processing.
+ *
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Gael SENÉE
+ *
  * This file must be used under the terms of the CeCILL.
- * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms
- * are also available at    
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * This source file is licensed as described in the file COPYING, which you
+ * should have received as part of this distribution.  The terms are also
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
 <refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
@@ -22,9 +23,9 @@
         <title>Syntaxes</title>
         <synopsis>
             jimdisp(image)
-			jimdisp(image,'box')
-			jimdisp(image,'box','info')
-			jimdisp(image,,'info')
+			jimdisp(image,"box")
+			jimdisp(image,"box","info")
+			jimdisp(image,,"info")
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -34,12 +35,12 @@
                 <term>image</term>
                 <listitem>
                     <para>
-                        Objet <literal>jimage</literal>, matrice (une couche), hypermatrice (trois ou quatre couches), ou chaîne de caractères contenant le chemin relaif ou absolu du fichier image ou un URL.
+                        Objet <literal>jimage</literal>, matrice (une couche), hypermatrice (trois ou quatre couches), ou chaîne de caractères contenant le chemin relatif ou absolu du fichier image ou un URL.
                     </para>					
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term>'box'</term>
+                <term>"box"</term>
                 <listitem>
                     <para>
 						Entoure l'image d'un cadre si le paramètre est renseigné.
@@ -47,7 +48,7 @@
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term>'info'</term>
+                <term>"info"</term>
                 <listitem>
                     <para>
 						Affiche certaines propriétés de l'image si le paramètre est renseigné.
@@ -59,7 +60,7 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet d'afficher une image à partir de son chemin, d'un URL, ou d'un objet <literal>jimage</literal> préalablement créé par la fonction <link linkend="jimread">jimread</link>.
+            Cette fonction permet d'afficher une image à partir de son chemin, d'un URL, ou d'un objet <literal>jimage</literal> préalablement créé par la fonction <function>jimread()</function>.
         </para>
         <para>
             L'affichage des propriétés par la présence de l'argument 'info' comprend : le titre, le type mime, la taille et le type d'encodage de l'image.
@@ -70,13 +71,13 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 // A partir d'une image pré-chargée
-path = jimlabPath() + '/help/images/logoEnsim_rgba.png';
+path = jimlabPath() + "/help/images/logoEnsim_rgba.png";
 image = jimread(path);
-jimdisp(image,'box','info');
+jimdisp(image,"box","info");
 
 // A partir d'un fichier local
-path = jimlabPath() + '/tests/images/noError/gray.jpg';
-jimdisp(path,'','info')
+path = jimlabPath() + "/tests/images/noError/gray.jpg";
+jimdisp(path,,"info")
 
  ]]></programlisting>
 	</refsection>
