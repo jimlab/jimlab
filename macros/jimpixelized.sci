@@ -1,9 +1,12 @@
-//Copyright (C) 2017 - ENSIM, Université du Maine - Alix Melaine Mnoubue
-//This file must be used under the terms of the CeCILL.
-//This source file is licensed as described in the file COPYING, which
-//you should have received as part of this distribution. The terms
-//are also available at
-//http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+// This file is part of the Jimlab module,
+// an external module coded for Scilab and dedicated to image processing.
+//
+// Copyright (C) 2017 - ENSIM, Université du Maine - Mnoubue ALIX MELAINE
+//
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which you
+// should have received as part of this distribution.  The terms are also
+// available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
 function [IMB] =jimpixelized(Image,varagin)
    
@@ -20,12 +23,12 @@ function [IMB] =jimpixelized(Image,varagin)
   
     
     // Testing arguments's typetype_filter
-    if(typeof(Image) == 'hypermat' ) then
+    if(typeof(Image) == "hypermat" ) then
         mat_image = Image;
-    elseif(typeof(Image) == 'jimage' ) then
+    elseif(typeof(Image) == "jimage" ) then
         mat_image = Image. image;
     else
-        error('Not any jimage or matrix argument have been defined' );
+        error("Not any jimage or matrix argument have been defined" );
     end
       //row and colum of image
     [L,C]=size(mat_image);
