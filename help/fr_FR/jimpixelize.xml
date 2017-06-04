@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
- * Copyright (C) 2017 - ENSIM, Université du Maine - Alix Melaine Mnoubue
+ * This file is part of the Jimlab module,
+ * an external module coded for Scilab and dedicated to image processing.
+ *
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Mnoubue ALIX MELAINE
  *
  * This file must be used under the terms of the CeCILL.
- * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms
- * are also available at
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * This source file is licensed as described in the file COPYING, which you
+ * should have received as part of this distribution.  The terms are also
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ *
 -->
 <refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
 		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
@@ -63,15 +65,15 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
 		//Objet de type jimage(gray image)
-		path=jimlabPath("/") + 'tests/images/noError/';
-		jimage1 = jimread(path + 'gray.jpg');
+		path=jimlabPath("/") + "tests/images/noError/";
+		jimage1 = jimread(path + "gray.jpg");
 		impixeled1 = jimsmooth(jimage1,10);
 		subplot(2,2,1),jimdisp(jimage1)
 		subplot(2,2,2),jimdisp(impixeled1)
 
 		//Objet de type jimage(RGB image)
 
-		jimage2 = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
+		jimage2 = jimread(jimlabPath("/") + "tests/images/noError/RGB.jpg");
 		impixeled2 = jimsmooth(jimage2,5,2);
 		subplot(2,2,3),jimdisp(jimage2)
 		subplot(2,2,4),jimdisp(impixeled2)
@@ -83,15 +85,15 @@ Variable non définie : mat_filter
 at line      55 of function jimsmooth called by :  
 
  	//Objet de type jimage(gray image)
-		path=jimlabPath("/") + 'tests/images/noError/';
-		jimage1 = jimread(path + 'gray.jpg');
+		path=jimlabPath("/") + "tests/images/noError/";
+		jimage1 = jimread(path + "gray.jpg");
 		impixeled1 = jimsmooth(jimage1,10);
 		subplot(2,2,1),jimdisp(jimage1)
 		subplot(2,2,2),jimdisp(impixeled1)
 
 		//Objet de type jimage(RGB image)
 
-		jimage2 = jimread(jimlabPath("/") + 'tests/images/noError/RGB.jpg');
+		jimage2 = jimread(jimlabPath("/") + "tests/images/noError/RGB.jpg");
 		impixeled2 = jimsmooth(jimage2,5,2);
 		subplot(2,2,3),jimdisp(jimage2)
 		subplot(2,2,4),jimdisp(impixeled2)
@@ -111,7 +113,7 @@ at line      55 of function jimsmooth called by :
         <title>Historique</title>
         <revhistory>
             <revision>
-                <revnumber>2017-05</revnumber>
+                <revnumber>0.1 - 2017-06</revnumber>
                 <revremark>Publication initiale du module Jimlab</revremark>
             </revision>
         </revhistory>
