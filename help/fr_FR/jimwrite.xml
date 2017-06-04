@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
+ * This file is part of the Jimlab module,
+ * an external module coded for Scilab and dedicated to image processing.
+ *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Nicolas AEGERTER
  * Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
  *
  * This file must be used under the terms of the CeCILL.
- * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms
- * are also available at
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * This source file is licensed as described in the file COPYING, which you
+ * should have received as part of this distribution.  The terms are also
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
 <refentry xmlns="http://docbook.org/ns/docbook"
@@ -60,9 +61,9 @@
                 <term>Encoding</term>
                 <listitem>
                     <para>
-                        Une chaine de caractère donnant l'encodage de l'image. Seul les types d'encodages 'GRAY', 'RGB' et 'RGBA' sont disponibles. Si le type d'encodage
+                        Une chaine de caractère donnant l'encodage de l'image. Seul les types d'encodages "GRAY", "RGB" et "RGBA" sont disponibles. Si le type d'encodage
                         n'est pas précisé, ou si il est incompatible, le type d'encodage présent dans la mliste jimage sera utilisée. Si la déclaration est faite avec une matrice,
-                        l'image sera enregistrée en 'RGB'.
+                        l'image sera enregistrée en "RGB".
                     </para>
                 </listitem>
             </varlistentry>
@@ -70,7 +71,7 @@
                 <term>typeMIME</term>
                 <listitem>
                     <para>
-                        Une chaine de caractère donnant le type MIME dans lequel l'image sera enregistrée. Seul les formats 'jpg', 'png', 'gif' et 'bmp' sont disponibles. Si le format n'est pas précisé, ou si il est incompatible, le type MIME présent dans la mliste jimage
+                        Une chaine de caractère donnant le type MIME dans lequel l'image sera enregistrée. Seul les formats "jpg", "png", "gif" et "bmp" sont disponibles. Si le format n'est pas précisé, ou si il est incompatible, le type MIME présent dans la mliste jimage
                         sera utilisée. Si la déclaration est faite avec une matrice, l'image sera enregistrée au format JPEG (jpg).
                     </para>
                 </listitem>
@@ -102,10 +103,10 @@
 
             La fonction jimwrite ne permet pas l'écriture d'une matrice quatre couches dans un format ne prenant pas en compte la couche de
             transparence. Ainsi, les images représetées par des matrice quatres couches ne sont enregistrable uniquement en PNG et en GIF. Si une
-            déclaration de jimwrite associant une valeur d'encodage 'rgba' et un type MIME incompatible est effectuée, la fonction jimwrite
-            modifira le type MIME pour le type 'png'.
+            déclaration de jimwrite associant une valeur d'encodage "rgba" et un type MIME incompatible est effectuée, la fonction jimwrite
+            modifira le type MIME pour le type "png".
 
-            Une image représentée par une matrice trois couche peut cependant être écrite en 'gif' ou en 'png' à l'aide de jimwrite.
+            Une image représentée par une matrice trois couche peut cependant être écrite en "gif" ou en "png" à l'aide de jimwrite.
         </para>
     </refsection>
     <refsection>
@@ -118,17 +119,17 @@
     jimage_original = jimread(path);// On charge l'image original
     path = pathconvert(jimlabPath("/") + "tests/images",%f); // Redéfinition du chemin
     subplot(2,2,1)
-    jimdisp(jimage_original,,'info');// Affichage de l'image original
+    jimdisp(jimage_original,,"info");// Affichage de l'image original
 
     jimwrite(jimage_original,pathconvert(path + "/lenaCopie",%f)); // Enregistrement de la copie au format d'origine
-    jimwrite(jimage_original,pathconvert(path + "/lenaCopie",%f),,'png'); // Eregistrement avec chagement du format
+    jimwrite(jimage_original,pathconvert(path + "/lenaCopie",%f),,"png"); // Eregistrement avec chagement du format
     // Affichage des images copiées
     path1 = pathconvert(jimlabPath("/") + "tests/images/lenaCopie.gif",%f);
     path2 = pathconvert(jimlabPath("/") + "tests/images/lenaCopie.png",%f);
     subplot(2,2,2)
-    jimdisp(path1,,'info');
+    jimdisp(path1,,"info");
     subplot(2,2,3)
-    jimdisp(path2,,'info');
+    jimdisp(path2,,"info");
     // Suppression des fichiers créés
     mdelete(path1);
     mdelete(path2);
@@ -141,14 +142,14 @@
     subplot(2,2,1)
     jimdisp(mat); // Affichage de la matrice
     jimwrite(mat,path) // Enregistrement sans paramètres de noms, format ou d'encodage
-    jimwrite(mat,pathconvert(path + "logo_mat",%f),'rgb','png') // Enregistrement avec tous les paramètres
+    jimwrite(mat,pathconvert(path + "logo_mat",%f),"rgb","png") // Enregistrement avec tous les paramètres
     // Affichage des images
     path1 = pathconvert(jimlabPath("/") + "tests/images/No_name.jpg",%f);
     path2 = pathconvert(jimlabPath("/") + "tests/images/logo_mat.png",%f);
     subplot(2,2,2)
-    jimdisp(path1,,'info');
+    jimdisp(path1,,"info");
     subplot(2,2,3)
-    jimdisp(path2,,'info');
+    jimdisp(path2,,"info");
     // Suppression des fichiers créés
     mdelete(path1);
     mdelete(path2);
@@ -181,7 +182,7 @@
         <title>Historique</title>
         <revhistory>
             <revision>
-                <revnumber>2017-05</revnumber>
+                <revnumber>0.1 - 2017-06</revnumber>
                 <revremark>Publication initiale du module Jimlab</revremark>
             </revision>
         </revhistory>
