@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-* This file is part of Jimlab, an external module coded for Scilab
- * and dedicated to image processing.
+ * This file is part of the Jimlab module,
+ * an external module coded for Scilab and dedicated to image processing.
  *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  *
  * This file must be used under the terms of the CeCILL.
- * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms are also
+ * This source file is licensed as described in the file COPYING, which you
+ * should have received as part of this distribution.  The terms are also
  * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
@@ -151,49 +151,49 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
 //Chargement de l'image depuis un fichier
-path = jimlabPath("/") + 'tests/images/noError/rgba.png';
+path = jimlabPath("/") + "tests/images/noError/rgba.png";
 Jimage = jimread(path)
 image = Jimage.image;
 
 //Conversion en niveaux de gris
-jgray = jimconvert(Jimage, 'gray')
-gray = jimconvert(image, 'gray');
+jgray = jimconvert(Jimage, "gray")
+gray = jimconvert(image, "gray");
 
 //Conversion en RGB
-path = jimlabPath("/") + 'tests/images/logoEnsim_rgba.png';
+path = jimlabPath("/") + "tests/images/logoEnsim_rgba.png";
 Jimage2 = jimread(path)
 image2 = Jimage2.image;
 transparencyColor = uint8(cat(3, 200, 200, 200));
-jrgb = jimconvert(Jimage2, 'rgb', transparencyColor)
-rgb = jimconvert(image2, 'rgb', transparencyColor);
+jrgb = jimconvert(Jimage2, "rgb", transparencyColor)
+rgb = jimconvert(image2, "rgb", transparencyColor);
 
 //Affichage des images converties
 clf
-subplot(2,2,1), jimdisp(Jimage,,'info')
-subplot(2,2,2), jimdisp(jgray,,'info')
-subplot(2,2,3), jimdisp(Jimage2,,'info')
-subplot(2,2,4), jimdisp(jrgb,,'info')
+subplot(2,2,1), jimdisp(Jimage,,"info")
+subplot(2,2,2), jimdisp(jgray,,"info")
+subplot(2,2,3), jimdisp(Jimage2,,"info")
+subplot(2,2,4), jimdisp(jrgb,,"info")
  ]]></programlisting>
         <scilab:image>
             <!--//Chargement de l'image depuis un fichier
-path = jimlabPath("/") + 'tests/images/noError/rgba.png';
+path = jimlabPath("/") + "tests/images/noError/rgba.png";
 Jimage = jimread(path)
 
 //Conversion en niveaux de gris
-jgray = jimconvert(Jimage, 'gray')
+jgray = jimconvert(Jimage, "gray")
 
 //Conversion en RGB
-path = jimlabPath("/") + 'tests/images/logoEnsim_rgba.png';
+path = jimlabPath("/") + "tests/images/logoEnsim_rgba.png";
 Jimage2 = jimread(path)
 transparencyColor = uint8(cat(3, 200, 200, 200));
-jrgb = jimconvert(Jimage2, 'rgb', transparencyColor)
+jrgb = jimconvert(Jimage2, "rgb", transparencyColor)
 
 //Affichage des images converties
 clf
-subplot(2,2,1), jimdisp(Jimage,,'info')
-subplot(2,2,2), jimdisp(jgray,,'info')
-subplot(2,2,3), jimdisp(Jimage2,,'info')
-subplot(2,2,4), jimdisp(jrgb,,'info')
+subplot(2,2,1), jimdisp(Jimage,,"info")
+subplot(2,2,2), jimdisp(jgray,,"info")
+subplot(2,2,3), jimdisp(Jimage2,,"info")
+subplot(2,2,4), jimdisp(jrgb,,"info")
 -->
         </scilab:image>
     </refsection>
