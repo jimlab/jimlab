@@ -42,11 +42,15 @@ function resizedImage = jimresize (originalImage, out_height, out_width, interp_
     if ~isdef("out_height","l") | type(out_height) == 0 then
         msg_2 = "%s: Argument #%d : An output height must given."
         error(msprintf(msg, "jimresize", 2));
+    else
+        out_height = floor(out_height)
     end
 
     if ~isdef("out_width","l") | type(out_width) == 0 then
         msg_3 = "%s: Argument #%d : An output width must given."
         error(msprintf(msg, "jimresize", 3));
+    else
+        out_width = floor(out_width)
     end
     
     // Checking ratio
