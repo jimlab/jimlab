@@ -1,12 +1,18 @@
+
  //Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  //
  //This file must be used under the terms of the CeCILL.
  //This source file is licensed as described in the file COPYING, which
  //you should have received as part of this distribution.  The terms
  //are also available at
- //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ //http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 
  function [convertedJimage] = jimconvert(Jimage, encoding, transparencyColor)
+	//This function converts an image encoding into RGB or gray levels.
+	//Jimage : an object representing an image (jimage object, hypermatrix or matrix)
+	//encoding : a word "gray" or "rgb" giving the output encoding
+	//transparencyColor : the color shade allocated to every transparent pixel, a scalar or a vector/hypermatrix with 3 components in [0,255]
+	//convertedJimage : the converted image encoded in uint8 in RGB or gray levels
 
      // test of the first argument
      if (typeof(Jimage) == "jimage") then
@@ -22,6 +28,7 @@
          jim = %t;
          bw = %f;
      elseif (type(Jimage) == 4)
+		 // boolean image : %t = white, %f = black
          jim = %f;
          bw = %t;
          convertedJimage = uint8(Jimage) * 255;
@@ -37,6 +44,7 @@
          bw = %f;
          if (type(Jimage) == 4) then
              if (Jimage == %f) then
+				//jimstandard() returns %f if the image is not handled
                 msg = _("%s: Argument #%d: Wrong type of input argument.\n");
                 error(msprintf(msg,"jimconvert", 1));
             end
@@ -112,6 +120,7 @@
                    msg = _("%s: Argument #%d: hypermatrix with 3 components expected.\n");
                    error(msprintf(msg,"jimconvert", 3));
                end
+			   //pixels with 0 on the alpha channel are filled with the transparencyColor
                transparency = Jimage(:,:,4) == 0;
                transparencyMat(:,:,1) = uint8(transparency) * transparencyColor(1);
                transparencyMat(:,:,2) = uint8(transparency) * transparencyColor(2);
@@ -119,7 +128,10 @@
                convertedMat(:,:,1) = Jimage(:,:,1) .* uint8(~transparency);
                convertedMat(:,:,2) = Jimage(:,:,2) .* uint8(~transparency);
                convertedMat(:,:,3) = Jimage(:,:,3) .* uint8(~transparency);
+			   //addition of the transparent pixels and the non-transparent ones
                convertedJimage = uint8(transparencyMat) + convertedMat;
+			   // If no pixel is transparent, the field transparencyColor of
+               // the jimage object is -1
                if (find(transparency) == [])
                    transparencyColor = -1;
                end
@@ -135,6 +147,7 @@
            error(msprintf(msg,"jimconvert",2));
        end
        if jim
+			//if a jimage object is given, the output object must be a jimage. 
            convertedJimage = mlist(['jimage','image','encoding',..
            'title','mime','transparencyColor'], convertedJimage, ..
                     encoding, name, mime, int16(transparencyColor));

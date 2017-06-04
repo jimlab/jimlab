@@ -1,12 +1,18 @@
-//Copyright (C) 2017 - ENSIM, Université du Maine - Nicolas Aegerter
- 
+ //Copyright (C) 2017 - ENSIM, Université du Maine - Nicolas Aegerter
+ //
  //This file must be used under the terms of the CeCILL.
  //This source file is licensed as described in the file COPYING, which
  //you should have received as part of this distribution.  The terms
  //are also available at    
- //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ //http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 
 function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
+	//This function writes an image as a file from a jimage object or a matrix/hypermatrix
+	//image : an object reprensenting an image (jimage, matrix or hypermatrix)
+	//imagePath : a string giving the directory where the image must be written
+	//Encoding : word "gray", "rgb" or "rgba"
+	//typeMIME : a word givin the type MIME : "jpg", "png", "gif" or "bmp"
+	//S : a boolean 
  
     if(isdef(["image"],"l"))// Verify if image is a jimage object or a matrix
         if((typeof(image) == "hypermat")|(typeof(image) == "uint8"))
@@ -17,18 +23,18 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
         Mat = image.image;
     else
         arg_jimage = -1;
-        error('Not any jimage or matrix argument have been definded')
+        error("Not any jimage or matrix argument have been definded")
     end
     deftypeMIME = "jpg png gif bmp";
     
      
      if((size(Mat,3) ~= 4)&(size(Mat,3) ~= 3)&(size(Mat,3) ~= 1)) // Verify if Mat is a 2D or 3D matrix 
-            error('Argument Mat is not a matrix')
+            error("Argument Mat is not a matrix")
      end
     
     
     if(~isdef(["imagePath"],"l") | type(imagePath) ~= 10) //Verify if imagePath is a string  
-        warning('Invalid Path of file, current depository will be used');
+        warning("Invalid Path of file, current depository will be used");
         imagePath = pwd();
     end
     
@@ -43,7 +49,7 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
              else
                 Name = "No_name";
                  warning("No_name will be used as file name");
-                 warning('Undefineded type MIME, jpg will be used');
+                 warning("Undefineded type MIME, jpg will be used");
                  MIME = "jpg";
                  
              end
@@ -69,7 +75,7 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
          typeMIME = convstr(typeMIME),
          invalid_typeMIME = 0;
          comptypeMIME = strstr(deftypeMIME,typeMIME); // Verify if user's specified format is supported
-           if((type(typeMIME) ~= 10)|(comptypeMIME == '')) // If typeMIME is not definded or wrong, 
+           if((type(typeMIME) ~= 10)|(comptypeMIME == "")) // If typeMIME is not definded or wrong, 
                 invalid_typeMIME = 1;
            end
       elseif(~(isdef(["typeMIME"],"l")))
@@ -84,20 +90,20 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
 
       if(arg_jimage & invalid_typeMIME) // Jimage typeMIME is used 
           typeMIME = image.mime
-           warning('Invalid typeMIME detected, jimage typeMIME will be used :'..
+           warning("Invalid typeMIME detected, jimage typeMIME will be used :"..
           + typeMIME)
      elseif(invalid_typeMIME)
-          typeMIME = 'jpg';
-          warning('Undefineded typeMIME, jpg will be used')
+          typeMIME = "jpg";
+          warning("Undefineded typeMIME, jpg will be used")
      end
      
    if(isdef(["Encoding"],"l"))
        if((type(Encoding) == 10))
          Encoding = convstr(Encoding);
          invalid_Encoding = 0;
-         defEncoding = ['rgb','rgba','gray'];
+         defEncoding = ["rgb","rgba","gray"];
          compEncoding = strstr(defEncoding,Encoding); // Verify if user's specified encoding is supported
-         if((compEncoding == '')) // If Format is not definded or wrong, 
+         if((compEncoding == "")) // If Format is not definded or wrong, 
                 invalid_Encoding = 1;
          end
         else
@@ -109,23 +115,23 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
      end
     if(arg_jimage & invalid_Encoding)// Jimage's encoding is used 
         Encoding = image.encoding;
-        warning('Invalid encoding detected, jimage encoding will be used : '..
+        warning("Invalid encoding detected, jimage encoding will be used : "..
          + image.encoding)
     elseif(invalid_Encoding & (size(image,3) >= 3))
-          Encoding = 'rgb';//the default value is 'rgb'
-        warning('Wrong definition of encoding. rgb will be used')
-         warning('Transparency won''t be efficient')
+          Encoding = "rgb";//the default value is "rgb"
+        warning("Wrong definition of encoding. rgb will be used")
+         warning("Transparency won''t be efficient")
      elseif(invalid_Encoding &( size(image,3) < 3))
-          Encoding = 'gray';//the default value is 'rgb'
-        warning('Wrong definition of encoding. gray will be used')
-         warning('Transparency won''t be efficient')
+          Encoding = "gray";//the default value is "rgb"
+        warning("Wrong definition of encoding. gray will be used")
+         warning("Transparency won''t be efficient")
      end
      
-     if(Encoding == 'rgba')
-         if((typeMIME == 'jpg')|(typeMIME == 'bmp'))// RGBA is not aviable for jpg and bmp
-             warning(Encoding +' is not aviable for '+ typeMIME ..
-             + ' type. png will be used')
-             typeMIME = 'png';
+     if(Encoding == "rgba")
+         if((typeMIME == "jpg")|(typeMIME == "bmp"))// RGBA is not aviable for jpg and bmp
+             warning(Encoding +" is not aviable for "+ typeMIME ..
+             + " type. png will be used")
+             typeMIME = "png";
          end
      end
      
@@ -146,23 +152,23 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
      fileparts(imagePath,"fname") + "." + typeMIME,%f);
 end
 
-// This code create the final path used by Java methode 'write'
+// This code create the final path used by Java methode "write"
 
     S = 0;
     
     select Encoding,
-        case 'gray' then
+        case "gray" then
             S =  jimwriteGRAY(Mat,imagePath,typeMIME);
-        case 'rgb' then
+        case "rgb" then
             S = jimwriteRGB(Mat,imagePath,typeMIME);
-        case 'rgba' then
+        case "rgba" then
             S =  jimwriteRGBA(Mat,imagePath,typeMIME);
 
     else 
-        warning('Unexpected image type');
+        warning("Unexpected image type");
    end
     if  (~S)
-        warning('The image haven''t been saved');
+        warning("The image haven''t been saved");
     end
     
 endfunction

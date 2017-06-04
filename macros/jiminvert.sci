@@ -7,8 +7,11 @@
 //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
 function Mod_image = jiminvert(image)
-// If a jimage argument is used, will be a jimage object with the same properties than input jimage.
- 
+	//This function returns the negative of an image 
+	//image : an object reprensenting an image (jimage, matrix or hypermatrix)
+	//Mod_image : the negative of image
+	
+	// If a jimage argument is used, will be a jimage object with the same properties than input jimage.
     if(typeof(image) == "jimage")
         arg_Jimage = 1;
         dim = size(image);  // Definition of image's size
@@ -53,7 +56,7 @@ function Mod_image = jiminvert(image)
    
    if(arg_Jimage)
        
-    Mod_image = mlist(['jimage','image','encoding','title','mime','transparencyColor'],..
+    Mod_image = mlist(["jimage","image","encoding","title","mime","transparencyColor"],..
      convertedImage, image.encoding, image.title, image.mime, image.transparencyColor);
 
    else

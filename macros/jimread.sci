@@ -2,6 +2,7 @@
 // an external module coded for Scilab and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+// Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which you
@@ -9,12 +10,17 @@
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
  function Jimage = jimread(imPath)
+	//This function reads a local or distant image and returns the image in a Scilab object
+	//imPath : a string
+	//Jimage : an object jimage
+	
+	
     if(type(imPath) == 10)
         jimport java.io.File;
         jimport javax.imageio.ImageIO;
         
         //Tests the type of the input argument
-        if(strstr(convstr(imPath),'http') == convstr(imPath))
+        if(strstr(convstr(imPath),"http") == convstr(imPath))
             imPath = getURL(imPath,TMPDIR);
         else
             imPath = pathconvert(imPath, %f);
@@ -83,9 +89,9 @@ function Jimage = jimread_intrgb(bufferedIm, imPath)
     // This sub-function reads an image from a TYPE_INT_RGB BufferedImage.
     // It is called by the function jimread().
     // Jimage : a mlist:
-    //         * The fist field 'im' is a WxHx3 matrix
-    //         * the second field 'encoding' is a string
-    //         * the third field 'title' is a string. 
+    //         * The fist field "im" is a WxHx3 matrix
+    //         * the second field "encoding" is a string
+    //         * the third field "title" is a string. 
     // bufferedIm : a Java object from BufferedImage class with type TYPE_INT_RGB
     // imPath : the complete image file's path.
     // More informations about the BufferedImage Class : 
@@ -121,7 +127,7 @@ function Jimage = jimread_intrgb(bufferedIm, imPath)
     
     //creates a mlist with the image data and some properties
     mime = strsubst(fileext(imPath), ".", "");
-    tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
+    tmp = ["jimage","image","encoding","title","mime","transparencyColor"];
     Jimage = mlist(tmp, im, "rgb", basename(imPath), mime, -1);
 endfunction
 
@@ -131,9 +137,9 @@ function Jimage = jimread_intargb(bufferedIm, imPath)
     // This sub-function reads an image from a TYPE_INT_ARGB BufferedImage.
     // It is called by the function jimread().
     // Jimage : a mlist.
-    //   * The fist field 'im' is a WxHx4 matrix
-    //   * the second field 'encoding' is a string
-    //   * the third field 'title' is a string.
+    //   * The fist field "im" is a WxHx4 matrix
+    //   * the second field "encoding" is a string
+    //   * the third field "title" is a string.
     // bufferedIm : a Java object from BufferedImage class with type TYPE_INT_ARGB
     // imPath : the complete image file's path.
     // More informations about the BufferedImage Class : 
@@ -171,7 +177,7 @@ function Jimage = jimread_intargb(bufferedIm, imPath)
     
     //creates a mlist with the image data and some properties
     mime = strsubst(fileext(imPath), ".", "");
-    tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
+    tmp = ["jimage","image","encoding","title","mime","transparencyColor"];
     Jimage = mlist(tmp, im, "rgba", basename(imPath), mime, -1);
 endfunction
 
@@ -220,7 +226,7 @@ function Jimage = jimread_intargbpre(bufferedIm, imPath)
     
     // creates a mlist with the image data and some properties
     mime = strsubst(fileext(imPath), ".", "");
-    tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
+    tmp = ["jimage","image","encoding","title","mime","transparencyColor"];
     Jimage = mlist(tmp, im, "rgba", basename(imPath), mime, -1);
 endfunction
 
@@ -230,9 +236,9 @@ function Jimage = jimread_intbgr(bufferedIm, imPath)
     // This sub-function reads an image from a TYPE_INT_BGR BufferedImage.
     // It is called by the function jimread().
     // Jimage : a mlist.
-    //    * The fist field 'im' is a WxHx4 matrix
-    //    * the second field 'encoding' is a string
-    //    * the third field 'title' is a string.
+    //    * The fist field "im" is a WxHx4 matrix
+    //    * the second field "encoding" is a string
+    //    * the third field "title" is a string.
     //bufferedIm : a Java object from BufferedImage class with type TYPE_INT_BGR
     // imPath : the complete image file's path.
     // More informations about the BufferedImage Class : 
@@ -268,8 +274,8 @@ function Jimage = jimread_intbgr(bufferedIm, imPath)
     
     //creates a mlist with the image data and some properties
     mime = strsubst(fileext(imPath), ".", "");
-    tmp =  ['jimage','image','encoding','title','mime','transparencyColor'];
-    Jimage = mlist(tmp, im, 'rgb', basename(imPath), mime, -1);
+    tmp =  ["jimage","image","encoding","title","mime","transparencyColor"];
+    Jimage = mlist(tmp, im, "rgb", basename(imPath), mime, -1);
 endfunction
 
 // --------------------------------------------------------------------------
@@ -278,9 +284,9 @@ function Jimage = jimread_3bytebgr(bufferedIm, imPath)
     // This sub-function reads an image from a TYPE_3BYTE_BGR BufferedImage. 
     // It is called by the function jimread().
     // Jimage : a mlist.
-    //    * The fist field 'im' is a WxHx4 matrix
-    //    * the second field 'encoding' is a string
-    //    * the third field 'title' is a string.
+    //    * The fist field "im" is a WxHx4 matrix
+    //    * the second field "encoding" is a string
+    //    * the third field "title" is a string.
     // bufferedIm : a Java object from BufferedImage class with type TYPE_3BYTE_BGR
     // imPath : the complete image file's path.
     // More informations about the BufferedImage Class :
@@ -310,8 +316,8 @@ function Jimage = jimread_3bytebgr(bufferedIm, imPath)
     
     //creates a mlist with the image data and some properties
     mime = strsubst(fileext(imPath), ".", "");
-    tmp = ['jimage', 'image', 'encoding', 'title', 'mime', 'transparencyColor'];
-    Jimage = mlist(tmp, im, 'rgb', basename(imPath), mime, -1);
+    tmp = ["jimage", "image", "encoding", "title", "mime", "transparencyColor"];
+    Jimage = mlist(tmp, im, "rgb", basename(imPath), mime, -1);
 endfunction
 
 // --------------------------------------------------------------------------
@@ -320,9 +326,9 @@ function Jimage = jimread_4byteabgr(bufferedIm, imPath)
     // This sub-function reads an image from a TYPE_4BYTE_ABGR BufferedImage.
     // It is called by the function jimread().
     // Jimage : a mlist.
-    //    * The fist field 'im' is a WxHx4 matrix
-    //    * the second field 'encoding' is a string
-    //    * the third field 'title' is a string.
+    //    * The fist field "im" is a WxHx4 matrix
+    //    * the second field "encoding" is a string
+    //    * the third field "title" is a string.
     // bufferedIm : a Java object from BufferedImage class with type TYPE_4BYTE_ABGR
     // imPath : the complete image file's path.
     // More informations about the BufferedImage Class :
@@ -352,8 +358,8 @@ function Jimage = jimread_4byteabgr(bufferedIm, imPath)
     
     // creates a mlist with the image data and some properties
     mime = strsubst(fileext(imPath), ".", "");
-    tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
-    Jimage = mlist(tmp, im, 'rgba', basename(imPath), mime, -1);
+    tmp = ["jimage","image","encoding","title","mime","transparencyColor"];
+    Jimage = mlist(tmp, im, "rgba", basename(imPath), mime, -1);
 endfunction
 
 // --------------------------------------------------------------------------
@@ -362,9 +368,9 @@ function Jimage = jimread_4byteabgrpre(bufferedIm, imPath)
     // This sub-function reads an image from a TYPE_4BYTE_ABGR_PRE BufferedImage.
     // It is called by the function jimread().
     // Jimage : a mlist.
-    //    * The fist field 'im' is a WxHx4 matrix
-    //    * the second field 'encoding' is a string
-    //    * the third field 'title' is a string.
+    //    * The fist field "im" is a WxHx4 matrix
+    //    * the second field "encoding" is a string
+    //    * the third field "title" is a string.
     // bufferedIm : a Java object from BufferedImage class with type TYPE_4BYTE_ABGR_PRE
     // imPath : the complete image file's path.
     // More informations about the BufferedImage Class :
@@ -401,8 +407,8 @@ function Jimage = jimread_4byteabgrpre(bufferedIm, imPath)
     
     // creates a mlist with the image data and some properties
     mime = strsubst(fileext(imPath), ".", "");
-    tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
-    Jimage = mlist(tmp, im, 'rgba', basename(imPath), mime, -1);
+    tmp = ["jimage","image","encoding","title","mime","transparencyColor"];
+    Jimage = mlist(tmp, im, "rgba", basename(imPath), mime, -1);
 endfunction
 
 // --------------------------------------------------------------------------
@@ -411,9 +417,9 @@ function Jimage = jimread_ushort565rgb(bufferedIm, imPath)
     // This sub-function reads an image from a TYPE_USHORT_565_RGB BufferedImage.
     // It is called by the function jimread().
     // Jimage : a mlist.
-    //    * The fist field 'im' is a WxHx4 matrix
-    //    * the second field 'encoding' is a string
-    //    * the third field 'title' is a string.
+    //    * The fist field "im" is a WxHx4 matrix
+    //    * the second field "encoding" is a string
+    //    * the third field "title" is a string.
     // bufferedIm : a Java object from BufferedImage class with type TYPE_USHORT_565_RGB
     // imPath : the complete image file's path.
     // More informations about the BufferedImage Class : 
@@ -448,8 +454,8 @@ function Jimage = jimread_ushort565rgb(bufferedIm, imPath)
     
     //creates a mlist with the image data and some properties
     mime = strsubst(fileext(imPath), ".", "");
-    tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
-    Jimage = mlist(tmp, im, 'rgb', basename(imPath), mime, -1);
+    tmp = ["jimage","image","encoding","title","mime","transparencyColor"];
+    Jimage = mlist(tmp, im, "rgb", basename(imPath), mime, -1);
 endfunction
 
 // --------------------------------------------------------------------------
@@ -458,9 +464,9 @@ function Jimage = jimread_ushort555rgb(bufferedIm, imPath)
     // This sub-function reads an image from a TYPE_USHORT_555_RGB BufferedImage.
     // It is called by the function jimread().
     // Jimage : a mlist.
-    //    * The fist field 'im' is a WxHx4 matrix
-    //    * the second field 'encoding' is a string
-    //    * the third field 'title' is a string.
+    //    * The fist field "im" is a WxHx4 matrix
+    //    * the second field "encoding" is a string
+    //    * the third field "title" is a string.
     // bufferedIm : a Java object from BufferedImage class with type TYPE_USHORT_555_RGB
     // imPath : the complete image file's path.
     // More informations about the BufferedImage Class : 
@@ -495,8 +501,8 @@ function Jimage = jimread_ushort555rgb(bufferedIm, imPath)
     
     //creates a mlist with the image data and some properties
     mime = strsubst(fileext(imPath), ".", "");
-    tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
-    Jimage = mlist(tmp, im, 'rgb', basename(imPath), mime, -1);
+    tmp = ["jimage","image","encoding","title","mime","transparencyColor"];
+    Jimage = mlist(tmp, im, "rgb", basename(imPath), mime, -1);
     
 endfunction
 
@@ -506,9 +512,9 @@ function Jimage = jimread_byteGray(bufferedIm, imPath)
     // This sub-function reads an image from a TYPE_BYTE_GRAY BufferedImage.
     // It is called by the function jimread().
     // Jimage : a mlist.
-    //    * The fist field 'im' is a WxHx4 matrix
-    //    * the second field 'encoding' is a string
-    //    * the third field 'title' is a string.
+    //    * The fist field "im" is a WxHx4 matrix
+    //    * the second field "encoding" is a string
+    //    * the third field "title" is a string.
     // bufferedIm : a Java object from BufferedImage class with type TYPE_BYTE_GRAY
     // imPath : the complete image file's path.
     // More informations about the BufferedImage Class : 
@@ -537,8 +543,8 @@ function Jimage = jimread_byteGray(bufferedIm, imPath)
     
     //creates a mlist with the image data and some properties
     mime = strsubst(fileext(imPath), ".", "");
-    tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
-    Jimage = mlist(tmp, im, 'gray', basename(imPath), mime, -1);
+    tmp = ["jimage","image","encoding","title","mime","transparencyColor"];
+    Jimage = mlist(tmp, im, "gray", basename(imPath), mime, -1);
     
 endfunction
 
@@ -548,9 +554,9 @@ function Jimage = jimread_ushortGray(bufferedIm, imPath)
     // This sub-function reads an image from a TYPE_USHORT_GRAY BufferedImage.
     // It is called by the function jimread().
     // Jimage : a mlist.
-    //    * The fist field 'im' is a WxHx4 matrix
-    //    * the second field 'encoding' is a string
-    //    * the third field 'title' is a string.
+    //    * The fist field "im" is a WxHx4 matrix
+    //    * the second field "encoding" is a string
+    //    * the third field "title" is a string.
     // bufferedIm : a Java object from BufferedImage class with type TYPE_USHORT_GRAY
     // imPath : the complete image file's path.
     // More informations about the BufferedImage Class : 
@@ -585,8 +591,8 @@ function Jimage = jimread_ushortGray(bufferedIm, imPath)
     
     //creates a mlist with the image data and some properties
     mime = strsubst(fileext(imPath), ".", "");
-    tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
-    Jimage = mlist(tmp, im, 'rgb', basename(imPath), mime, -1);
+    tmp = ["jimage","image","encoding","title","mime","transparencyColor"];
+    Jimage = mlist(tmp, im, "rgb", basename(imPath), mime, -1);
     
 endfunction
 
@@ -596,9 +602,9 @@ function Jimage = jimread_byteIndexed(bufferedIm, imPath)
     // This sub-function reads an image from a TYPE_BYTE_INDEXED BufferedImage.
     // It is called by the function jimread().
     // Jimage : a mlist.
-    //    * The fist field 'im' is a WxHx4 matrix
-    //    * the second field 'encoding' is a string
-    //    * the third field 'title' is a string.
+    //    * The fist field "im" is a WxHx4 matrix
+    //    * the second field "encoding" is a string
+    //    * the third field "title" is a string.
     // bufferedIm : a Java object from BufferedImage class with type TYPE_BYTE_INDEXED
     // imPath : the complete image file's path.
     // More informations about the BufferedImage Class : 
@@ -635,8 +641,8 @@ function Jimage = jimread_byteIndexed(bufferedIm, imPath)
     
     // creates a mlist with the image data and some properties
     mime = strsubst(fileext(imPath), ".", "");
-    tmp = ['jimage','image','encoding','title','mime','transparencyColor'];
-    Jimage = mlist(tmp, im, 'rgba', basename(imPath), mime, -1);
+    tmp = ["jimage","image","encoding","title","mime","transparencyColor"];
+    Jimage = mlist(tmp, im, "rgba", basename(imPath), mime, -1);
 endfunction
 
 // --------------------------------------------------------------------------

@@ -2,6 +2,7 @@
 // and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Gaël SENÉE
+//
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which
 // you should have received as part of this distribution.  The terms
@@ -34,22 +35,22 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, cro
 
     // Checking the type of the input image
     if (isdef("image","l") & type(image) ~= 0)
-        if typeof(image) == 'jimage' then
+        if typeof(image) == "jimage" then
             Matrix = image.image;
         else
             Matrix = jimstandard(image);
         end
     else
         msg_1 = "%s: Argument #%d : A (hyper)matrix of 1, 3 or 4 layers, or a jimage object must be given";
-        error(msprintf(msg_1, 'jimroi', 1));
+        error(msprintf(msg_1, "jimroi", 1));
     end
 
     // Setting default values if not given by the user
-    if ~isdef('input_polygon','l') | type(input_polygon) == 0 then
+    if ~isdef("input_polygon","l") | type(input_polygon) == 0 then
         input_polygon = [];
     end
     
-        if ~isdef('editpoly','l') | type(editpoly) == 0 then
+        if ~isdef("editpoly","l") | type(editpoly) == 0 then
         editpoly = %f;
     end
 
@@ -58,18 +59,18 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, cro
     
     if ~(type(input_polygon) == 1) then
         if ~(size(input_polygon, 2) == 2) |  ~(size(input_polygon, 2) == 0)  then
-            error(msprintf(msg_2, 'jimroi', 2))
+            error(msprintf(msg_2, "jimroi", 2))
         end
     end
 
     // Allowing the polygon to be empty if the user wants to edit it interactively
     if  input_polygon == [] & editpoly == %f then
         msg_4 = "%s: Argument #%d : Must be a [N ; 2] matrix of integers describing the N summits of (x,y) coordinates. \n It can be an empty matrix only if edit is True."
-         error(msprintf(msg_4, 'jimroi', 2))
+         error(msprintf(msg_4, "jimroi", 2))
     end
     
     // Checking the crop argument
-    if ~isdef('crop2polygon','l') | type(crop2polygon) == 0 then
+    if ~isdef("crop2polygon","l") | type(crop2polygon) == 0 then
         crop2polygon = %f ;
     end
     
@@ -99,7 +100,7 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, cro
         
         if size(x) < 3 then
             msg_5 = "%s: Three points must be selected at least in order to select a polygon."
-            error(msprintf(msg_5, 'jimroi'))
+            error(msprintf(msg_5, "jimroi"))
         end
         
         polygon = floor([x,y]),

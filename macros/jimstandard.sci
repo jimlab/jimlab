@@ -5,11 +5,16 @@
  //This source file is licensed as described in the file COPYING, which
  //you should have received as part of this distribution.  The terms
  //are also available at    
- //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ //http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 
 function [convertedMat, originalType] = jimstandard(imageMat,opt)
+	//The function standardizes an image encoding for the module Jimlab
+	//imageMat : a matrix or a hypermatrix
+	//colormap : a Mx3 matrix or a figure handle
+	//colorsBits : a string giving the binary encoding : "444","555","4444","5551" or "332"
+	//argb? : a boolean, %t if the image is encoded in ARGB, %f otherwise
     
-    //Detection of the optionnal input argument
+    //Detection of the optionnal input argument : colormap, colorsBits or argb? 
     if (isdef("opt", "l") & type(opt) ~= 0) then
         if type(opt) == 4
             argb? = opt;
@@ -79,7 +84,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
         
         t = type(imageMat(1,1,1));
         select(t)
-        case 4. then     //boolean matrix
+        case 4. then     //boolean matrix : %t = white, %f = black
             if layers == 1 
                 convertedMat = uint8(255*imageMat);
                 originalType = "bool";
@@ -87,9 +92,10 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
                 convertedMat = %f;
                 originalType =0;
             end
-        case 8. then     //matrix of integer
+        case 8. then     //matrix of integers
             tmp = inttype(imageMat(:,:,1));
             if (tmp == 1.) then
+				// matrix or hypermatrix of int8
                 convertedMat = uint8(imageMat)                                    
                 originalType = "int8";
                 if isdef("colorsBits", "l") & colorsBits == "332"
@@ -110,6 +116,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
                     end
                 end
             elseif(tmp == 11.)
+				// matrix or hypermatrix of uint8
                 convertedMat = imageMat;
                 originalType = "uint8";
                 if isdef("colorsBits", "l") & colorsBits == "332"
@@ -132,13 +139,13 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
             elseif(tmp == 12.) then
                 // matrix of uint16
                 if layers == 1. then
-                    if (~isdef('colorsBits', "l") | type(colorsBits) == 0) then
-                        colorsBits = '4444';
-                        warning('The type of encoding is not given. By default, the type rgba4444 is used');
+                    if (~isdef("colorsBits", "l") | type(colorsBits) == 0) then
+                        colorsBits = "4444";
+                        warning("The type of encoding is not given. By default, the type rgba4444 is used");
                     elseif (colorsBits == "332") then
-                        warning('Wrong binary encoding. By default, the type rgba4444 is used');
+                        warning("Wrong binary encoding. By default, the type rgba4444 is used");
                     end
-                    convertedMat = jimstandard_uint16(tmp,colorsBits);
+                    convertedMat = jimstandard_uint16(imageMat,colorsBits);
                     originalType = ["uint16", colorsBits];
                 else
                     convertedMat = %f;
@@ -147,11 +154,11 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
             elseif(tmp == 2.) then
                 // matrix of int16
                 if layers == 1. then
-                    if (~isdef('colorsBits', "l") | type(colorsBits) == 0) then
-                        colorsBits = '4444';
-                        warning('The type of encoding is not given. By default, the type rgba4444 is used');
+                    if (~isdef("colorsBits", "l") | type(colorsBits) == 0) then
+                        colorsBits = "4444";
+                        warning("The type of encoding is not given. By default, the type rgba4444 is used");
                     elseif (colorsBits == "332") then
-                        warning('Wrong binary encoding. By default, the type rgba4444 is used');
+                        warning("Wrong binary encoding. By default, the type rgba4444 is used");
                     end
                     tmp = uint16(imageMat);
                     convertedMat = jimstandard_uint16(tmp,colorsBits);
@@ -161,6 +168,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
                     originalType = 0;
                 end
             elseif (tmp == 14.) then
+				//matrix of uint32
                 if layers == 1.
                     convertedMat = jimstandard_uint32(imageMat);
                     originalType = "uint32";
@@ -169,6 +177,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
                     originalType =0;
                 end
            elseif(tmp == 4.) then
+			   //matrix of int32
                if layers == 1.
                    tmp = uint32(imageMat); 
                    convertedMat = jimstandard_uint32(tmp);
@@ -199,6 +208,7 @@ function [convertedMat, originalType] = jimstandard(imageMat,opt)
    
 endfunction
 
+// ---------------------------------------------------------------------------------
 
  function [convertedMat] = jimstandard_uint32(image)
      //This subfunction is called by jimstandard(). 
@@ -218,16 +228,19 @@ endfunction
     
  endfunction
  
+ //-------------------------------------------------------------------
+ 
  function [convertedMat] = jimstandard_uint16(image, colorsBits)
      //This subfunction is called by jimstandard(). 
      //It converts a matrix of uint16 into a hypermatrix of uint8 with 3 or 4 layers. 
 
      //image : a matrix of uint16 
-     //colorsBits : a string. '444', '555', '4444' or '5551'. This arguments enable to know the number of bits used by each components.
+     //colorsBits : a string. "444", "555", "4444" or "5551". This arguments enable to know the number of bits used by each components.
      //convertedMat : a hypermatrix of uint8 with 3 or 4 layers. The value of each layer corresponds to one components of the uint16 value. 
      
      select(colorsBits)
-     case '444' then
+	 
+     case "444" then
          //This case corresponds to image_type "rgb444" in Matplot_properties
         r = modulo(image,uint16(16^3));
         convertedMat(:,:,1) = floor(r./uint16(16^2));
@@ -236,7 +249,8 @@ endfunction
         convertedMat(:,:,3) = modulo(image,uint16(16));
         convertedMat = double(convertedMat) * 255/15;
         convertedMat = uint8(convertedMat);
-     case '555' then
+		
+     case "555" then
          //This case corresponds to image_type "rgb555" in Matplot_properties
          r = modulo(image,uint16(2^15));
          convertedMat(:,:,1) = floor(r./uint16(2^10));
@@ -245,7 +259,8 @@ endfunction
          convertedMat(:,:,3) = modulo(image,uint16(2^5))
          convertedMat = double(convertedMat) * 255/31;
          convertedMat = uint8(convertedMat);
-     case '4444' then
+		 
+     case "4444" then
         //This case corresponds to image_type "rgb4444" in Matplot_properties
         convertedMat(:,:,1) = floor(image./uint16(16^3));
         g = modulo(image,uint16(16^3));
@@ -255,7 +270,8 @@ endfunction
         convertedMat(:,:,4) = modulo(image,uint16(16));
         convertedMat = double(convertedMat) * 255/15;
         convertedMat = uint8(convertedMat);
-     case '5551' then
+		
+     case "5551" then
          //This case corresponds to image_type "rgba5551" in Matplot_properties
          convertedMat(:,:,1) = floor(image./uint32(2^11));
          g = modulo(image,uint32(2^11));
@@ -265,6 +281,7 @@ endfunction
          convertedMat(:,:,4) = modulo(image,uint16(2)) * 255;
          convertedMat(:,:,1:3) = double(convertedMat(:,:,1:3)) * 255/31;
          convertedMat = uint8(convertedMat);
+		 
      end
     
 endfunction

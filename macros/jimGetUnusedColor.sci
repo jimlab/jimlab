@@ -7,6 +7,12 @@
  //http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
  function [Color] = jimGetUnusedColor(image, targetColor)
+	 //This function finds a color which is not used in an image. 
+	 //If all colors are used, the least represented one is returned.
+	 //image : an object representing an image (jimage, hypermatrix or matrix)
+	 //targetColor : a scalar or a vector/hypermatrix with 3 components in [0,255]
+	 //Color : the unused/least used color which is the nearest from targetColor 
+
      
      // test of the first argument and convertion in uint8 if necessary
      if (typeof(image) ~= "jimage") then
@@ -27,7 +33,7 @@
 
          //Checking targetColor input argument 
          //must be a scalar if the image is in gray levels
-         if (isdef(targetColor, 'l') & type(targetColor) ~= 0)
+         if (isdef("targetColor", "l") & type(targetColor) ~= 0)
             if (length(targetColor) ~= 1) then
                 msg = _("%s: Argument #%d: Scalar (1 element) expected.\n");
                 error(msprintf(msg,"jimGetUnusedColor", 2));
@@ -36,10 +42,12 @@
                 error(msprintf(msg,"jimGetUnusedColor", 2, 0, 255));
             end
         else
+			//default value : white
             targetColor = 255;
         end
          
          targetColor = uint8(targetColor);
+		 //list of the image colors
          usedColors = unique(image);
          if (intersect(usedColors, targetColor) == []) then
              Color = targetColor;
@@ -47,7 +55,7 @@
              //If the target color is used, the nearest value is returned
              targetInf = targetColor;
              targetSup = targetColor;
-             while (~isdef('Color','l'))
+             while (~isdef("Color","l"))
                 if targetInf > 0
                     targetInf = targetInf - 1;
                 end
@@ -56,10 +64,10 @@
                 end
                 if (intersect(usedColors, targetInf) == []) then
                     Color = targetInf;
-                    warning('targetColor is used, the nearest unused color in the image is returned.');
+                    warning("targetColor is used, the nearest unused color in the image is returned.");
                 elseif (intersect(usedColors, targetSup) == []) then
                     Color = targetSup;
-                    warning('targetColor is used, the nearest unused color in the image is returned.');
+                    warning("targetColor is used, the nearest unused color in the image is returned.");
                 end
                 if (targetInf == 0 & targetSup == 255) then
                     //case where all colors are used
@@ -76,7 +84,7 @@
          //case of a RGB encoded image
          
          //Checking targetColor input argument
-         if (isdef('targetColor', 'l') & type(targetColor) ~= 0)
+         if (isdef("targetColor", "l") & type(targetColor) ~= 0)
             if (size(targetColor) ~= [1. 1. 3.]) then
                 msg = _("%s: Argument #%d: Hypermatrix with 3 elements expected.\n");
                 error(msprintf(msg,"jimGetUnusedColor", 2));
@@ -99,11 +107,13 @@
          colorList = uint32(pixelList(:,1)).*16^4 + uint32(pixelList(:,2)).*16^2 + uint32(pixelList(:,3));
          [ibins, counts] = dsearch(colorList, [0:16777215], "d");
          if (counts(targetColor + 1) == 0)
+			//targetColor is not used 
              Color32 = targetColor;
          else
+			//the distance between 2 color shades is defined by the difference between their equivalent uint32 value
              targetInf = targetColor;
              targetSup = targetColor;
-             while (~isdef('Color32','l'))
+             while (~isdef("Color32","l"))
                 if targetInf > 0
                     targetInf = targetInf - 1;
                 end
@@ -112,10 +122,10 @@
                 end
                 if (counts(targetInf + 1) == 0) then
                     Color32 = targetInf;
-                    warning('targetColor is used, the nearest unused color in the image is returned.');
+                    warning("targetColor is used, the nearest unused color in the image is returned.");
                 elseif (counts(targetSup + 1) == 0) then
                     Color32 = targetSup;
-                    warning('targetColor is used, the nearest unused color in the image is returned.');
+                    warning("targetColor is used, the nearest unused color in the image is returned.");
                 end
                 if (targetInf == 0 & targetSup == 16777215) then
                     //case where all colors are used
