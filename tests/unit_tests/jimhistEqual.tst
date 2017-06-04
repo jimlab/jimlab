@@ -14,7 +14,7 @@
 
 root = jimlabPath("/") + "tests/images/noError/";
 // Object jimage encoded in RGBA
-path = root + 'rgba.png';
+path = root + "rgba.png";
 jim = jimread(path);
 equalizedJimage = jimhistEqual(jim);
 jim.transparencyColor = cat(3, 255, 255, 255);
@@ -29,7 +29,7 @@ equalizedImage = jimhistEqual(im);
 assert_checkequal(equalizedJimage.image, equalizedImage);
 
 // Object jimage encoded in RGBA with a transparency color
-path = jimlabPath("/") + 'tests/images/logoEnsim_rgba.png';
+path = jimlabPath("/") + "tests/images/logoEnsim_rgba.png";
 jim = jimread(path);
 ignoredTC = cat(3,0,0,255);
 equalizedJimage = jimhistEqual(jim, ignoredTC);
@@ -42,7 +42,7 @@ equalizedImage = jimhistEqual(im, cat(3,0,0,255));
 assert_checkequal(equalizedJimage.image, equalizedImage);
 
 //Object jimage encoded in RGB
-path = root + 'rgba.png';
+path = root + "rgba.png";
 jim = jimread(path);
 equalizedJimage = jimhistEqual(jim);
 jim.transparencyColor = cat(3, 255,255,255);
@@ -67,7 +67,7 @@ equalizedImage = jimhistEqual(im, [255,255,255]);
 assert_checkequal(equalizedJimage.image, equalizedImage);
 
 //Object jimage encoded in gray levels
-path = root + 'gray.jpg';
+path = root + "gray.jpg";
 jim = jimread(path);
 equalizedJimage = jimhistEqual(jim);
 jim.transparencyColor= 255;
@@ -103,7 +103,7 @@ msg = msprintf(msg, "jimhistEqual", 2);
 assert_checkerror("eq = jimhistEqual(im, ""wrong"")", msg);
 assert_checkerror("eq = jimhistEqual(im, [1:4])", msg);
 
-msg = "%s: Argument #%d: Components of transparencyColor must be in the intervalle [0:255].\n";
+msg = "%s: Argument #%d: Components of ignoredTC must be in the intervalle [0:255].\n";
 msg = msprintf(msg, "jimhistEqual", 2);
 assert_checkerror("eq = jimhistEqual(im, [255, 0, 300])", msg);
 assert_checkerror("eq = jimhistEqual(im, 256)", msg);

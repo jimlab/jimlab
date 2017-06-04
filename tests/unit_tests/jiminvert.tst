@@ -6,7 +6,7 @@
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which you
 // should have received as part of this distribution.  The terms are also
-// available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+// available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 
 // <-- NO CHECK REF -->
 // <-- TEST WITH GRAPHICS --> //required by JIMS
@@ -14,7 +14,7 @@
 
 // % gray %
 
-imagePath = jimlabPath() +'\tests\images\noError\gray.jpg';
+imagePath = jimlabPath() +"\tests\images\noError\gray.jpg";
 Jimage = jimread(imagePath);
 [h,w] = size(Jimage);
 
@@ -29,7 +29,7 @@ assert_checkequal(type(inverted),type(Jimage))
 
 // % RGB %
 
-imagePath = jimlabPath() +'\tests\images\noError\rgb.jpg';
+imagePath = jimlabPath() +"\tests\images\noError\rgb.jpg";
 Jimage = jimread(imagePath);
 [h,w] = size(Jimage);
 
@@ -48,7 +48,7 @@ assert_checkequal(type(inverted),type(Jimage))
 
 // % RGBA %
 
-imagePath = jimlabPath() +'\tests\images\noError\rgba.png';
+imagePath = jimlabPath() +"\tests\images\noError\rgba.png";
 Jimage = jimread(imagePath);
 [h,w] = size(Jimage);
 

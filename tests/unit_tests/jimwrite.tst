@@ -59,6 +59,6 @@ load(jimlabPath("/") + "tests"+s+"images"+s+"mat.data");
 assert_checktrue([jimwrite(mat,dirPath + s + "matImage","rgb","jpg")]);
 
 cd(OriginPath);
-rmdir(dirPath,'s');
+rmdir(dirPath,"s");
 
 

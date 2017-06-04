@@ -9,6 +9,7 @@
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
 
 // <-- NO CHECK REF -->
+// <-- TEST WITH GRAPHIC -->
 
 //uint8 rgba
 uint8rgba = uint8(grand(10,10,4,"uin",0,255));

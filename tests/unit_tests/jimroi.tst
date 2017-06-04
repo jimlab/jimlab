@@ -74,7 +74,7 @@ assert_checkequal(ijTopLeft,[h-max(Summits(:,2))+1,min(Summits(:,1))])
 // % From a jimage object
 
 // RGB 315x838 pixels
-path = pathconvert(jimlabPath()+'/tests/images/logoEnsim_rgb.png');
+path = pathconvert(jimlabPath()+"/tests/images/logoEnsim_rgb.png");
 jim = jimread(path);
 [h,w] = size(jim);
 
