@@ -15,9 +15,9 @@ function resizedImage = jimresize (originalImage, out_height, out_width, interp_
 // • out_height : height of the output image.
 // • out_width : width of the output image.
 // • inter_type : string of characters giving the choice of the interpolation
-// algorithm. By default, 'natural'.
+// algorithm. By default, "natural".
 // • spline_type : string of characters giving the choice of the spline calculation
-// algorithm. By default, 'not_a_knot'.
+// algorithm. By default, "not_a_knot".
 // • resizedImage : the output image, in standard Jimlab format.
 
 // WIP.
@@ -29,24 +29,24 @@ function resizedImage = jimresize (originalImage, out_height, out_width, interp_
     msg = "%s: Argument #%d : A (hyper)matrix of 1, 3 or 4 layers, or a jimage object must be given";
 
     if (isdef("originalImage","l") & type(originalImage) ~= 0)
-        if typeof(originalImage) == 'jimage' then
+        if typeof(originalImage) == "jimage" then
             mat_image = originalImage.image;
         else
             mat_image = jimstandard(originalImage);
         end
     else
-        error(msprintf(msg, 'jimresize', 1));
+        error(msprintf(msg, "jimresize", 1));
     end
 
     // Checking dimensions
-    if ~isdef('out_height','l') | type(out_height) == 0 then
+    if ~isdef("out_height","l") | type(out_height) == 0 then
         msg_2 = "%s: Argument #%d : An output height must given."
-        error(msprintf(msg, 'jimresize', 2));
+        error(msprintf(msg, "jimresize", 2));
     end
 
-    if ~isdef('out_width','l') | type(out_width) == 0 then
+    if ~isdef("out_width","l") | type(out_width) == 0 then
         msg_3 = "%s: Argument #%d : An output width must given."
-        error(msprintf(msg, 'jimresize', 3));
+        error(msprintf(msg, "jimresize", 3));
     end
     
     // Checking ratio
@@ -56,44 +56,45 @@ function resizedImage = jimresize (originalImage, out_height, out_width, interp_
     coeff_h = out_height / h
     
     if (coeff_w / coeff_h >= 1.01 | coeff_w / coeff_h < 0.99) then
-        warning('jimresize: Argument #3 & #4  : The output dimensions ratio is not the same as the input image. The image might get distorted.')
+        warning("jimresize: Argument #3 & #4  : The output dimensions ratio is not the same as the input image. The image might get distorted.")
     end
 
     // Detecting optional arguments, setting default if not detected
     
-    if ~isdef('interp_type','l') | type(interp_type) == 0 then
-        interp_type = 'natural';
-        warning('jimresize: Argument #4 : interpolation type not given. Default algorithm will be used.')
+    if ~isdef("interp_type","l") | type(interp_type) == 0 then
+        interp_type = "natural";
+        warning("jimresize: Argument #4 : interpolation type not given. Default algorithm will be used.")
     end
 
-    if ~isdef('spline_type','l') | type(spline_type) == 0 then
-        spline_type = 'not_a_knot';
-        warning('jimresize: Argument #4 : interpolation type not given. Default algorithm will be used.')
+    if ~isdef("spline_type","l") | type(spline_type) == 0 then
+        spline_type = "not_a_knot";
+        warning("jimresize: Argument #4 : interpolation type not given. Default algorithm will be used.")
     end
     
     // Checking algorithm types
     
     select interp_type
-    case 'by_zero' then
-    case 'by_nan' then
-    case 'C0' then
-    case 'natural' then
-    case 'periodic' then
+    case "by_zero" then
+    case "by_nan" then
+    case "C0" then
+    case "natural" then
+    case "periodic" then
     else
-        interp_type = 'natural';
-        warning('jimresize: Argument #4 : wrong interpolation type given. Default algorithm will be used.')
+        interp_type = "natural";
+        warning("jimresize: Argument #4 : wrong interpolation type given. Default algorithm will be used.")
     end
     
     select spline_type
-    case 'not_a_knot' then
-    case 'natural' then
-    case 'periodic' then
-    case 'monotone' then
-    case 'fast' then
-    case 'fast-periodic' then
+    case "not_a_knot" then
+    case "natural" then
+    case "periodic" then
+    case "monotone" then
+    case "fast" then
+    case "fast-periodic" then
+    case "clamped" then
     else
-        spline_type = 'not_a_knot';
-        warning('jimresize: Argument #5 : wrong spline type given. Default algorithm will be used.')
+        spline_type = "not_a_knot";
+        warning("jimresize: Argument #5 : wrong spline type given. Default algorithm will be used.")
     end
     
     // Checking the number of layers
@@ -105,12 +106,14 @@ function resizedImage = jimresize (originalImage, out_height, out_width, interp_
     elseif(ndims(mat_image) == 2) then
         interpolatedMatrix = jimresizeGray (mat_image, out_height, out_width, interp_type, spline_type)
     else    
-        error(msprintf(msg,'jiminvert',1));
+        error(msprintf(msg,"jiminvert",1));
     end
 
-    if typeof(originalImage) == jimage then
-        resizedImage = mlist(['jimage','image','encoding','title','mime','transparencyColor'],..
-        interpolatedMatrix, image.encoding, image.title, image.mime, image.transparencyColor);
+
+    // Returning the resized image
+    if typeof(originalImage) == "jimage" then
+        resizedImage = mlist(["jimage","image","encoding","title","mime","transparencyColor"],..
+        interpolatedMatrix, originalImage.encoding, originalImage.title, originalImage.mime, originalImage.transparencyColor);
     else
         resizedImage = interpolatedMatrix
     end
@@ -124,9 +127,9 @@ function interpolatedImage = jimresizeGray (mat_image, out_height, out_width, in
 // • out_height : height of the output image.
 // • out_width : width of the output image.
 // • inter_type : string of characters giving the choice of the interpolation
-// algorithm. By default, 'natural'.
+// algorithm. By default, "natural".
 // • spline_type : string of characters giving the choice of the spline calculation
-// algorithm. By default, 'not_a_knot'.
+// algorithm. By default, "not_a_knot".
 // • interpolatedImage : the output image, in standard Jimlab format.
 
     [h,w] = size(mat_image);
@@ -166,9 +169,9 @@ function interpolatedImage = jimresizeRGB (mat_image, out_height, out_width, int
 // • out_height : height of the output image.
 // • out_width : width of the output image.
 // • inter_type : string of characters giving the choice of the interpolation
-// algorithm. By default, 'natural'.
+// algorithm. By default, "natural".
 // • spline_type : string of characters giving the choice of the spline calculation
-// algorithm. By default, 'not_a_knot'.
+// algorithm. By default, "not_a_knot".
 // • interpolatedImage : the output image, in standard Jimlab format.
 
     [h,w] = size(mat_image);
@@ -222,9 +225,9 @@ function interpolatedImage = jimresizeRGBA (mat_image, out_height, out_width, in
 // • out_height : height of the output image.
 // • out_width : width of the output image.
 // • inter_type : string of characters giving the choice of the interpolation
-// algorithm. By default, 'natural'.
+// algorithm. By default, "natural".
 // • spline_type : string of characters giving the choice of the spline calculation
-// algorithm. By default, 'not_a_knot'.
+// algorithm. By default, "not_a_knot".
 // • interpolatedImage : the output image, in standard Jimlab format.
 
     [h,w] = size(mat_image);
