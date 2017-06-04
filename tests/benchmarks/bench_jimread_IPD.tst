@@ -8,7 +8,7 @@
 //
 //  <-- BENCH NB RUN : 10 -->
 
-v = getversion('scilab');
+v = getversion("scilab");
 
 if v(1) ~= 5 then
     msg = _("%s: This benchmark cannot run with this version of Scilab.\n");
@@ -18,17 +18,17 @@ end
 loaded = 0;
 installed = 0;
 
-if ~atomsIsLoaded('IPD') then
+if ~atomsIsLoaded("IPD") then
     loaded=1;
-    if ~atomsIsInstalled('IPD') then
+    if ~atomsIsInstalled("IPD") then
         installed=1;
-        atomsInstall('IPD')
+        atomsInstall("IPD")
     end
-    atomsLoad('IPD')
+    atomsLoad("IPD")
 end
 
 root = jimlabPath();
-path = root + '/tests/images/logoEnsim.png';
+path = root + "/tests/images/logoEnsim.png";
 image = ReadImage(path);
 
 // <-- BENCH START -->
@@ -36,8 +36,8 @@ image = ReadImage(path);
 // <-- BENCH END -->
 
 if loaded then
-    atomsRemove('IPD')
+    atomsRemove("IPD")
     if installed then
-        atomsRemove('IPD',, %T)
+        atomsRemove("IPD",, %T)
     end
 end

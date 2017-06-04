@@ -8,7 +8,7 @@
 //
 //  <-- BENCH NB RUN : 10 -->
 
-v = getversion('scilab');
+v = getversion("scilab");
 
 if v(1) ~= 5 then
     msg = _("%s: This benchmark cannot run with this version of Scilab.\n");
@@ -19,13 +19,13 @@ loaded = 0;
 installed = 0;
 
 if (getos() == "Windows" | getos() == "Linux")
-    if ~atomsIsLoaded('SIVP') then
+    if ~atomsIsLoaded("SIVP") then
         loaded = 1;
-        if ~atomsIsInstalled('SIVP') then
+        if ~atomsIsInstalled("SIVP") then
             installed = 1;
-            atomsInstall('SIVP')
+            atomsInstall("SIVP")
         end
-        atomsLoad('SIVP')
+        atomsLoad("SIVP")
     end
 else
     msg = _("%s: This benchmark cannot run with this OS.\n");
@@ -33,7 +33,7 @@ else
 end
 
 root = jimlabPath();
-path = root + '/tests/images/logoEnsim.png';
+path = root + "/tests/images/logoEnsim.png";
 image = imread(path);
 
 // <-- BENCH START -->
@@ -41,9 +41,9 @@ image = imread(path);
 // <-- BENCH END -->
 
 if loaded then
-    atomsRemove('SIVP')
+    atomsRemove("SIVP")
     if installed then
-        atomsRemove('SIVP',, %T)
+        atomsRemove("SIVP",, %T)
     end
 end
 

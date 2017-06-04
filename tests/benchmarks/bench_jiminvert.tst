@@ -16,4 +16,5 @@ jimage1 = jimread(path);
 // <-- BENCH START -->
 
 jimage2 = jiminvert(jimage1);
+
 // <-- BENCH END -->

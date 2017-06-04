@@ -8,7 +8,7 @@
 //
 //  <-- BENCH NB RUN : 10 -->
 
-v = getversion('scilab');
+v = getversion("scilab");
 
 if v(1) == 5 then
     module = "SIP";
@@ -37,7 +37,7 @@ else
 end
 
 root = jimlabPath();
-path = root + '/tests/images/logoEnsim.png';
+path = root + "/tests/images/logoEnsim.png";
 image = imread(path);
 
 // <-- BENCH START -->

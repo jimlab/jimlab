@@ -17,5 +17,6 @@ path = jimlabPath + '/tests/images/';
 // <-- BENCH START -->
 jimwrite(,mat,path,'png','BenchTest_mat','rgb');
 // <-- BENCH END -->
+
 path = jimlabPath + '/tests/images/BenchTest_mat.png';
 mdelete(path);

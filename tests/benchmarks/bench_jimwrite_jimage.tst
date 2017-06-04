@@ -15,7 +15,10 @@ jimage1 = jimread(path)
 path = jimlabPath + '/tests/images/';
 
 // <-- BENCH START -->
+
 jimwrite(jimage1,,path,'png','BenchTest_jimage',);
+
 // <-- BENCH END -->
+
 path = jimlabPath + '/tests/images/BenchTest_jimage.png';
 mdelete(path);
