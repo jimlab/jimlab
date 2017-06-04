@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of Jimlab, an external module coded for Scilab
- * and dedicated to image processing.
+ * This file is part of the Jimlab module,
+ * an external module coded for Scilab and dedicated to image processing.
  *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Gael SENÉE
  * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
- 
+ *
  * This file must be used under the terms of the CeCILL.
- * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms are also
+ * This source file is licensed as described in the file COPYING, which you
+ * should have received as part of this distribution.  The terms are also
  * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
  -->
@@ -23,13 +23,13 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            mask = jimroi (input_image, polygon)
-            [mask, polygon, ijTopLeft] = jimroi (input_image, polygon)
-            [mask, polygon, ijTopLeft] = jimroi (input_image, polygon, editpoly)
-            [mask, polygon, ijTopLeft] = jimroi (input_image, , editpoly)
-            [mask, polygon, ijTopLeft] = jimroi (input_image, , editpoly, crop2polygon)
-            [mask, polygon, ijTopLeft] = jimroi (input_image, polygon, , crop2polygon)
-            [mask, polygon, ijTopLeft] = jimroi (input_image, polygon, editpoly, crop2polygon)
+            mask = jimroi(input_image, polygon)
+            [mask, polygon, ijTopLeft] = jimroi(input_image, polygon)
+            [mask, polygon, ijTopLeft] = jimroi(input_image, polygon, editpoly)
+            [mask, polygon, ijTopLeft] = jimroi(input_image, , editpoly)
+            [mask, polygon, ijTopLeft] = jimroi(input_image, , editpoly, crop2polygon)
+            [mask, polygon, ijTopLeft] = jimroi(input_image, polygon, , crop2polygon)
+            [mask, polygon, ijTopLeft] = jimroi(input_image, polygon, editpoly, crop2polygon)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -97,7 +97,7 @@ Le masque de sortie peut garder les dimensions de l'image d'origine, ou bien êt
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
 // Création d'un objet jimage à partir d'un fichier image
-path = jimlabPath("/") + 'tests/images/noError/rgb.jpg';
+path = jimlabPath("/") + "tests/images/noError/rgb.jpg";
 Jimage = jimread(path);
 
 // Matrice des sommets du polygone
@@ -121,7 +121,7 @@ Summits = [10 10 ; 10 30 ; 30 40 ; 30 10];
         <title>Voir Aussi</title>
         <simplelist type="inline">
 			<member>
-                <link linkend="edit_curves">edit_curves</link>
+                <link linkend="edit_curv">edit_curv</link>
             </member>
         </simplelist>
     </refsection>
