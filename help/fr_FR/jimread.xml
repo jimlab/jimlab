@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of Jimlab, an external module coded for Scilab
- * and dedicated to image processing.
+ * This file is part of the Jimlab module,
+ * an external module coded for Scilab and dedicated to image processing.
  *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
  * Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
  *
  * This file must be used under the terms of the CeCILL.
- * This source file is licensed as described in the file COPYING, which
- * you should have received as part of this distribution.  The terms are also
+ * This source file is licensed as described in the file COPYING, which you
+ * should have received as part of this distribution.  The terms are also
  * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
 -->
@@ -71,7 +71,7 @@
             </listitem>
             <listitem>
                 <para>
-                    le type d'encodage ('gray', 'rgb', ou 'rgba') dans le champ <literal>.encoding</literal>,
+                    le type d'encodage ("gray", "rgb", ou "rgba") dans le champ <literal>.encoding</literal>,
                 </para>
             </listitem>
             <listitem>
@@ -102,19 +102,19 @@
 //A partir d'un fichier local
 
 //jpg en niveaux de gris
-path = jimlabPath("/") + 'tests/images/noError/gray.jpg';
+path = jimlabPath("/") + "tests/images/noError/gray.jpg";
 Jimage1 = jimread(path)
 
 //bmp en RGB
-path = jimlabPath("/") + 'tests/images/noError/rgb.bmp';
+path = jimlabPath("/") + "tests/images/noError/rgb.bmp";
 Jimage2 = jimread(path)
 
 //png en RGBA
-path = jimlabPath("/") + 'tests/images/noError/rgba.png';
+path = jimlabPath("/") + "tests/images/noError/rgba.png";
 Jimage3 = jimread(path)
 
 //A partir d'un fichier distant
-path = 'https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif';
+path = "https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif";
 Jimage4 = jimread(path)
 
 //Affichage
@@ -143,7 +143,7 @@ subplot(2,2,4), jimdisp(Jimage4)
         <title>Historique</title>
         <revhistory>
             <revision>
-                <revnumber>0.1 - 2017-05</revnumber>
+                <revnumber>0.1 - 2017-06</revnumber>
                 <revremark>Publication initiale du module Jimlab</revremark>
             </revision>
         </revhistory>
