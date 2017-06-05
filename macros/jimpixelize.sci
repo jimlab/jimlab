@@ -37,74 +37,26 @@ function [IMB] =jimpixelize(Image,varargin)
     [c,d]=size(mat_image);
     nb=picHeigth*picWidth
     m=(c*d) / (nb);
-    if(ndims(Image) == 4 & modulo((c*d),nb))// Verify if Mat is a 2D or 3D matrix 
-        Encoding = "rgba"; // Alpha channel isn't modified*
+    if(ndims(Image) == 4 & modulo((c*d),nb)) then
+        Encoding = "rgba"; 
         mat_image=jimpixelize_padRGBa(mat_image,picHeigth,picWidth);
-    elseif(ndims(Image) == 3 & modulo((c*d),nb)) // For 2D matrix
+    elseif(ndims(Image) == 3 & modulo((c*d),nb)) then // For 3D matrix
         Encoding = "rgb";
         mat_image=jimpixelize_padRGB(mat_image,picHeigth,picWidth);
-    elseif(ndims(Image) == 2 & modulo((c*d),nb))
+    elseif(ndims(Image) == 2 & modulo((c*d),nb)) then
         Encoding = "gray";
-        mat_image=jimpixelize_padGRAY(mat_image,picHeigth,picWidth);
-    else    
-        error("Argument Mat is not a matrix")
+        mat_image=jimpixelize_padGRAY(mat_image,picHeigth,picWidth);     
     end
 
-    [L,C]=size(mat_image);
-    cont1=[];
-    cont2=[];
-    cont3=[];
-    limit_row= (L / picHeigth);
-    limit_col=(C / picWidth);
-
-    k=1;
-    for rrow=1 : limit_row
-        pas_row=picHeigth + k-1;
-        j=1; 
-        for rrol=1 : limit_col
-            pas_col=picWidth + j-1;
-            B1= mat_image(k:pas_row , j:pas_col,1);
-            B2= mat_image(k:pas_row , j:pas_col,2);
-            B3= mat_image(k:pas_row , j:pas_col,3);
-            [line,colne]=size(B1);
-            p=line*colne;
-            mat1=(matrix(B1,p,1));
-            mat2=(matrix(B2,p,1));
-            mat3=(matrix(B3,p,1));
-            cont1=[cont1,mat1];
-            cont2=[cont2,mat2];
-            cont3=[cont3,mat3];
-            j=pas_col+1;
-        end
-        k=pas_row+1;
-
+    select ndims(Image)
+    case 4 then
+        IMB=jimpixelize_RGBa(mat_image);
+    case 3 then
+        IMB=jimpixelize_RGB(mat_image);
+    case 2 then
+        IMB=jimpixelize_GRAY(mat_image);
     end
 
-
-    moy1= mean(double(cont1),'r');
-    moy2= mean(double(cont2),'r');
-    moy3= mean(double(cont3),'r');
-
-
-
-    pas_moy=1;
-    k=1;
-    j=1;
-    for rrow=1 : limit_row
-        pas_row=picHeigth + k-1;
-        j=1;
-        for rrol=1 : limit_col
-            pas_col=picWidth + j-1;
-            mat_image(k:pas_row , j:pas_col,1)=uint8(moy1(1,pas_moy));
-            mat_image(k:pas_row , j:pas_col,2)=uint8(moy2(1,pas_moy));
-            mat_image(k:pas_row , j:pas_col,3)=uint8(moy3(1,pas_moy));
-            pas_moy=pas_moy+1;
-            j=pas_col+1;
-        end
-        k=pas_row+1;
-
-    end
-    IMB=mat_image;
 
 endfunction
 
@@ -149,6 +101,8 @@ function [IML] =jimpixelize_padRGB(matrice,height,width)
     IML(:,:,1)=mat1;
     IML(:,:,2)=mat2;
     IML(:,:,3)=mat3;
+
+
 endfunction
 
 //Image RGBa
@@ -236,4 +190,172 @@ function [IML] =jimpixelize_padGRAY(matrice,height,width)
 
 
 endfunction
+//pixelize Image RGB
 
+function [result] =jimpixelize_RGB(mat_image)
+
+    [L,C]=size(mat_image);
+    cont1=[];
+    cont2=[];
+    cont3=[];
+    limit_row= (L / picHeigth);
+    limit_col=(C / picWidth);
+
+    k=1;
+    for rrow=1 : limit_row
+        pas_row=picHeigth + k-1;
+        j=1; 
+        for rrol=1 : limit_col
+            pas_col=picWidth + j-1;
+            B1= mat_image(k:pas_row , j:pas_col,1);
+            B2= mat_image(k:pas_row , j:pas_col,2);
+            B3= mat_image(k:pas_row , j:pas_col,3);
+            [line,colne]=size(B1);
+            p=line*colne;
+            mat1=(matrix(B1,p,1));
+            mat2=(matrix(B2,p,1));
+            mat3=(matrix(B3,p,1));
+            cont1=[cont1,mat1];
+            cont2=[cont2,mat2];
+            cont3=[cont3,mat3];
+            j=pas_col+1;
+        end
+        k=pas_row+1;
+
+    end
+
+
+    moy1= mean(double(cont1),'r');
+    moy2= mean(double(cont2),'r');
+    moy3= mean(double(cont3),'r');
+    pas_moy=1;
+    k=1;
+    j=1;
+    for rrow=1 : limit_row
+        pas_row=picHeigth + k-1;
+        j=1;
+        for rrol=1 : limit_col
+            pas_col=picWidth + j-1;
+            mat_image(k:pas_row , j:pas_col,1)=uint8(moy1(1,pas_moy));
+            mat_image(k:pas_row , j:pas_col,2)=uint8(moy2(1,pas_moy));
+            mat_image(k:pas_row , j:pas_col,3)=uint8(moy3(1,pas_moy));
+            pas_moy=pas_moy+1;
+            j=pas_col+1;
+        end
+        k=pas_row+1;
+
+    end
+    result=mat_image;
+endfunction
+
+//pixelise Image RGBa
+
+function [result] =jimpixelize_RGBa(mat_image)
+
+    [L,C]=size(mat_image);
+    cont1=[];
+    cont2=[];
+    cont3=[];
+    cont4=[];
+    limit_row= (L / picHeigth);
+    limit_col=(C / picWidth);
+
+    k=1;
+    for rrow=1 : limit_row
+        pas_row=picHeigth + k-1;
+        j=1; 
+        for rrol=1 : limit_col
+            pas_col=picWidth + j-1;
+            B1= mat_image(k:pas_row , j:pas_col,1);
+            B2= mat_image(k:pas_row , j:pas_col,2);
+            B3= mat_image(k:pas_row , j:pas_col,3);
+            B4= mat_image(k:pas_row , j:pas_col,4);
+            [line,colne]=size(B1);
+            p=line*colne;
+            mat1=(matrix(B1,p,1));
+            mat2=(matrix(B2,p,1));
+            mat3=(matrix(B3,p,1));
+            mat4=(matrix(B4,p,1));
+            cont1=[cont1,mat1];
+            cont2=[cont2,mat2];
+            cont3=[cont3,mat3];
+            cont4=[cont4,mat4];
+            j=pas_col+1;
+        end
+        k=pas_row+1;
+
+    end
+
+
+    moy1= mean(double(cont1),'r');
+    moy2= mean(double(cont2),'r');
+    moy3= mean(double(cont3),'r');
+    moy4= mean(double(cont4),'r');
+    pas_moy=1;
+    k=1;
+    j=1;
+    for rrow=1 : limit_row
+        pas_row=picHeigth + k-1;
+        j=1;
+        for rrol=1 : limit_col
+            pas_col=picWidth + j-1;
+            mat_image(k:pas_row , j:pas_col,1)=uint8(moy1(1,pas_moy));
+            mat_image(k:pas_row , j:pas_col,2)=uint8(moy2(1,pas_moy));
+            mat_image(k:pas_row , j:pas_col,3)=uint8(moy3(1,pas_moy));
+            mat_image(k:pas_row , j:pas_col,4)=uint8(moy4(1,pas_moy));
+            pas_moy=pas_moy+1;
+            j=pas_col+1;
+        end
+        k=pas_row+1;
+
+    end
+    result=mat_image;
+endfunction
+//pixelise Image GRAY
+
+function [result] =jimpixelize_GRAY(mat_image)
+
+    [L,C]=size(mat_image);
+    cont=[];
+    limit_row= (L / picHeigth);
+    limit_col=(C / picWidth);
+
+    k=1;
+    for rrow=1 : limit_row
+        pas_row=picHeigth + k-1;
+        j=1; 
+        for rrol=1 : limit_col
+            pas_col=picWidth + j-1;
+            B= mat_image(k:pas_row , j:pas_col);
+
+            [line,colne]=size(1);
+            p=line*colne;
+            mat=(matrix(B,p,1));  
+            cont=[cont,mat];       
+            j=pas_col+1;
+        end
+        k=pas_row+1;
+
+    end
+
+
+    moy= mean(double(cont),'r');
+
+    pas_moy=1;
+    k=1;
+    j=1;
+    for rrow=1 : limit_row
+        pas_row=picHeigth + k-1;
+        j=1;
+        for rrol=1 : limit_col
+            pas_col=picWidth + j-1;
+            mat_image(k:pas_row , j:pas_col)=uint8(moy(1,pas_moy));
+
+            pas_moy=pas_moy+1;
+            j=pas_col+1;
+        end
+        k=pas_row+1;
+
+    end
+    result=mat_image;
+endfunction
