@@ -61,7 +61,6 @@ function [IMB] =jimpixelize(Image,varargin)
     for rrow=1 : limit_row
         pas_row=picHeigth + k-1;
         j=1; 
-        disp(pas_row)
         for rrol=1 : limit_col
             pas_col=picWidth + j-1;
             B1= mat_image(k:pas_row , j:pas_col,1);
@@ -132,7 +131,7 @@ function [IML] =jimpixelize_padRGB(matrice,height,width)
             indiceL=L-i;
 
         end
-
+        L=L+add_blockl;
     end
 
     if (( modulo(C, width) ) ) then
@@ -144,8 +143,12 @@ function [IML] =jimpixelize_padRGB(matrice,height,width)
             mat3=[mat3 ,mat3(:,indiceC)];
             indiceC=C-i;
         end
+        C=C+add_blockc;
     end
-    IML=cat(3,mat1,mat2,mat3);
+    IML = resize_matrix(matrice, L, C)
+    IML(:,:,1)=mat1;
+    IML(:,:,2)=mat2;
+    IML(:,:,3)=mat3;
 endfunction
 
 //Image RGBa
@@ -167,12 +170,12 @@ function [IML] =jimpixelize_padRGBa(matrice,height,width)
             mat1=[mat1(1:endc,:) ;mat1(indiceL,:)];
             mat2=[mat2(1:endc,:) ;mat2(indiceL,:)];
             mat3=[mat3(1:endc,:) ;mat3(indiceL,:)];
-             mat4=[mat4(1:endc,:) ;mat4(indiceL,:)];
+            mat4=[mat4(1:endc,:) ;mat4(indiceL,:)];
             endc=endc+1;
             indiceL=L-i;
 
         end
-
+        L=L+add_blockl;
     end
 
     if (( modulo(C, width) ) ) then
@@ -185,8 +188,13 @@ function [IML] =jimpixelize_padRGBa(matrice,height,width)
             mat4=[mat4 ,mat4(:,indiceC)];
             indiceC=C-i;
         end
+        C=C+add_blockc;
     end
-    IML=cat(4,mat1,mat2,mat3,mat4);
+    IML = resize_matrix(matrice, L, C)
+    IML(:,:,1)=mat1;
+    IML(:,:,2)=mat2;
+    IML(:,:,3)=mat3;
+    IML(:,:,4)=mat4;
 
 
 endfunction
@@ -200,7 +208,7 @@ function [IML] =jimpixelize_padGRAY(matrice,height,width)
     indiceL=L;
     indiceC=C;
     endc=L;
- 
+
 
     if (( modulo(l, height) ) ) then
         rest_blockl=modulo(L,n*height);
@@ -220,7 +228,7 @@ function [IML] =jimpixelize_padGRAY(matrice,height,width)
         add_blockc=width - rest_blockc;
         for i= 1 : add_blockc   
             matrice=[matrice ,matrice(:,indiceC)];
-        
+
             indiceC=C-i;
         end
     end
@@ -228,3 +236,4 @@ function [IML] =jimpixelize_padGRAY(matrice,height,width)
 
 
 endfunction
+
