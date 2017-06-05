@@ -10,21 +10,20 @@
 
 // <-- NO CHECK REF -->
 // <-- TEST WITH GRAPHICS --> //required by JIMS
-
 // % gray %
 
 imagePath = jimlabPath() +"\tests\images\noError\gray.jpg";
-Jimage = jimread(imagePath);
-jimpixelize(Jimage)
-jimpixelize(Jimage,20)
-jimpixelize(Jimage,7,2)
-jimpixelize(Jimage)
+Jim = jimread(imagePath);
+jimpixelize(Jim)
+jimpixelize(Jim,2)
+jimpixelize(Jim,2,2)
+jimpixelize(Jim)
 
 // % RGB %
 
 imagePath = jimlabPath() +"\tests\images\noError\rgb.png";
-Jimage = jimread(imagePath);
-jimpixelize(Jimage)
-jimpixelize(Jimage,20)
-jimpixelize(Jimage,7,2)
-jimpixelize(Jimage)
+Jim1 = jimread(imagePath);
+jimpixelize(Jim1)
+jimpixelize(Jim1,4)
+jimpixelize(Jim1,3,2)
+jimpixelize(Jim1)
