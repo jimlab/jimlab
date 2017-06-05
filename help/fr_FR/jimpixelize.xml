@@ -82,15 +82,15 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
 		//Objet de type jimage(gray image)
-		path = jimlabPath("/") + "tests/images/noError/";
-		jimage1 = jimread(path + "gray.jpg");
+		path = jimlabPath("/") + "tests/images/logoEnsim_gray.png";
+		jimage1 = jimread(path);
 		blurred1 = jimsmooth(jimage1, "gaussian", 9);
 		subplot(2,2,1), jimdisp(jimage1)
 		subplot(2,2,2), jimdisp(blurred1)
 
 		//Objet de type jimage(RGB image)
-
-		jimage2 = jimread(jimlabPath("/") + "tests/images/noError/RGB.jpg");
+		 path1 = jimlabPath("/") + "tests/images/lena_color.gif";
+		jimage2 = jimread(path1);
 		blurred2 = jimsmooth(jimage2,"gaussian",9);
 		subplot(2,2,3), jimdisp(jimage2)
 		subplot(2,2,4), jimdisp(blurred2)
@@ -130,3 +130,4 @@
         </revhistory>
     </refsection>
 </refentry>
+
