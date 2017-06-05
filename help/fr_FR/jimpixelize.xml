@@ -16,13 +16,13 @@
 		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
 		xml:lang="fr" xml:id="jimpixelize">
     <refnamediv>
-        <refname>jimpixelised</refname>
+        <refname>jimpixelize</refname>
         <refpurpose>pixelisation d'une image</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-			impixeled= jimpixelised(Image,boxSize)
+			impixeled= jimpixelize(Image,boxSize)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -33,7 +33,7 @@
                 <term>Image</term>
 
                     <para>
-			Un objet de type jimage, une matrice de niveaux de gris ou en couleur RVB.
+			Un objet de type jimage, une matrice en niveaux de gris ou en couleur RVB.
 					</para>
 				</varlistentry>
 				<varlistentry>
@@ -55,7 +55,7 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet de flouter une image.la zone  pixelisée fait apparaitre des blocs de n*m pixels de couleurs uniformes.
+            Cette fonction permet de brouiller une image.la zone  pixelisée fait apparaitre des blocs de n*m pixels de couleurs uniformes.
 	</para>
 		<para>
 			 Si un objet <code>jimage</code> est donné en entrée, seul le champ <code> .image </code> est modifié.
@@ -67,39 +67,17 @@
 		//Objet de type jimage(gray image)
 		path=jimlabPath("/") + "tests/images/noError/";
 		jimage1 = jimread(path + "gray.jpg");
-		impixeled1 = jimsmooth(jimage1,10);
+		impixeled1 = jimpixelize(jimage1,10);
 		subplot(2,2,1),jimdisp(jimage1)
 		subplot(2,2,2),jimdisp(impixeled1)
 
 		//Objet de type jimage(RGB image)
 
 		jimage2 = jimread(jimlabPath("/") + "tests/images/noError/RGB.jpg");
-		impixeled2 = jimsmooth(jimage2,5,2);
+		impixeled2 = jimpixelize(jimage2,5,2);
 		subplot(2,2,3),jimdisp(jimage2)
 		subplot(2,2,4),jimdisp(impixeled2)
  ]]></programlisting>
-  <scilab:image>
-	<!-- À DEBOGUER :
-!- error 4 
-Variable non définie : mat_filter
-at line      55 of function jimsmooth called by :  
-
- 	//Objet de type jimage(gray image)
-		path=jimlabPath("/") + "tests/images/noError/";
-		jimage1 = jimread(path + "gray.jpg");
-		impixeled1 = jimsmooth(jimage1,10);
-		subplot(2,2,1),jimdisp(jimage1)
-		subplot(2,2,2),jimdisp(impixeled1)
-
-		//Objet de type jimage(RGB image)
-
-		jimage2 = jimread(jimlabPath("/") + "tests/images/noError/RGB.jpg");
-		impixeled2 = jimsmooth(jimage2,5,2);
-		subplot(2,2,3),jimdisp(jimage2)
-		subplot(2,2,4),jimdisp(impixeled2)
-		subplot(2,2,4),jimdisp(blured2)
--->
-   </scilab:image>
 	</refsection>
     <refsection role="see also">
         <title>Voir Aussi</title>
