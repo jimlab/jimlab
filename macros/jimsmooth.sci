@@ -9,6 +9,7 @@
 //are also available at
 //http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 
+
 function [IMB] =jimsmooth(Image, varargin)
     //test arguments
     if( argn(2) ==1) then
@@ -54,13 +55,13 @@ function [IMB] =jimsmooth(Image, varargin)
     end
 
 //test Encoding Image
-    if((ndims(mat_image) == 4) ) // Verify if Mat is a 2D
+    if((ndims(mat_image) == 4) ) then // Verify if Mat is a 2D
         type_image = "rgba"; // Alpha channel isn't modified 
        mat_im= jimsmooth_padRGBa(mat_image,fogWidth);
-    elseif(ndims(mat_image) == 3) // For 3D matrix
+    elseif(ndims(mat_image) == 3) then // For 3D matrix
         type_image = "rgb";
         mat_im= jimsmooth_padRGB(mat_image,fogWidth);
-    elseif(ndims(mat_image) == 2) // For 2D matrix
+    elseif(ndims(mat_image) == 2) then // For 2D matrix
         type_image = "gray";
         mat_im= jimsmooth_padGRAY(mat_image,fogWidth);
     else
@@ -318,4 +319,5 @@ matImage = resize_matrix(matrice, L, C);
 
 
 endfunction
+
 
