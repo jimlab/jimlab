@@ -14,17 +14,16 @@
 <refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
 		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
 		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
-		xml:lang="fr" xml:id="jimsmooth">
+		xml:lang="fr" xml:id="jimpixelize">
     <refnamediv>
-        <refname>jimsmooth</refname>
-        <refpurpose>Floutage d'une image</refpurpose>
+        <refname>jimpixelize</refname>
+        <refpurpose>pixelisation d'une image</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-			blurred = jimsmooth(Image,fogType)
-			blurred = jimsmooth(Image,fogType,fogWidth)
-			blurred = jimsmooth(Image,fogMatrix)
+			impixeled= jimpixelize(Image,boxSize)
+			impixeled= jimpixelize(Image,picHeigth,picWidth)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -35,32 +34,17 @@
                 <term>Image</term>
 
                     <para>
-			Un objet de type jimage, une matrice de niveaux de gris ou en couleur RVB.
-            </para>
+			Un objet de type jimage, une matrice en niveaux de gris ou en couleur RVB.
+					</para>
 				</varlistentry>
 				<varlistentry>
-		<term>fogType</term>
-            <para>
-            Mot <emphasis role="bold">"gaussian"</emphasis> ,<emphasis role="bold">"uniform"</emphasis> ou <emphasis role="bold">"triangular"</emphasis> : forme du profil symétrique du filtre local appliquer aux pixels.La valeur par défaut est "gaussian".
+				<term>boxSize</term>
+				 <para>
+			Soit un scalaire correspondant à la taille du carré(nombre de pixels) avec laquelle Image serait divisé.La valeur par défaut est 10; Soit un  vecteur à 2 composantes [boxH,boxW] avec boxH et bowW deux nombres entiers positifs representant respectivement la hauteur et la largeur(Width) des gros pixels générés.
 				</para>
 				</varlistentry>
-		
 			<varlistentry>
-			<term>fogWidth</term>
-			<para>
-			Un nombre entier positif impair.La valeur par défaut est 3.
-			</para>
-			</varlistentry>
-			
-			<varlistentry>
-			<term>fogMatrix</term>
-			<para>
-			Une matrice 
-			</para>
-			</varlistentry>
-
-			<varlistentry>
-				<term>blurred</term>
+				<term>impixeled</term>
                 <listitem>
                     <para>
 			Un objet de type jimage ou une matrice de niveaux de gris et de même taille que <code>Image</code>.
@@ -72,43 +56,41 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction permet de flouter une image à l'aide des profils prédéfinis de floutage suivant : uniforme ou triangulaire ou gaussien(sigma =flogWidth/4).Une matrice de floutage explicite <literal> flogMatrix </literal> peut alternativement être fournie.
+            Cette fonction permet de brouiller une image.la zone  pixelisée fait apparaitre des blocs de n*m pixels de couleurs uniformes.
 	</para>
 		<para>
-        Si un objet <code>jimage</code> est donné en entrée, seul le champ <code> .image </code> est modifié.
+			 Si un objet <code>jimage</code> est donné en entrée, seul le champ <code> .image </code> est modifié.
                </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
 		//Objet de type jimage(gray image)
-		path = jimlabPath("/") + "tests/images/logoEnsim_gray.png";
-		jimage1 = jimread(path);
-		blurred1 = jimsmooth(jimage1, "gaussian", 9);
+		
+		jimage1 = jimread(jimlabPath("/") + "tests/images/logoEnsim_gray.png");
+		impixeled1 = jimpixelize(jimage1);
 		subplot(2,2,1), jimdisp(jimage1)
-		subplot(2,2,2), jimdisp(blurred1)
+		subplot(2,2,2), jimdisp(impixeled1)
 
 		//Objet de type jimage(RGB image)
-		 path1 = jimlabPath("/") + "tests/images/lena_color.gif";
-		jimage2 = jimread(path1);
-		blurred2 = jimsmooth(jimage2,"gaussian",9);
+
+		jimage2 = jimread(jimlabPath("/") + "tests/images/logoEnsim_rgb.png");
+		impixeled2 = jimpixelize(jimage2,5,2);
 		subplot(2,2,3), jimdisp(jimage2)
-		subplot(2,2,4), jimdisp(blurred2)
+		subplot(2,2,4), jimdisp(impixeled2)
  ]]></programlisting>
-  <scilab:image>
+   <scilab:image>
   
 	//Objet de type jimage(RGB  image)
-	 path = jimlabPath("/") + "tests/images/logoEnsim_rgb.png";
-    jimage1 = jimread(path);
-
-	blurred1 = jimsmooth(jimage1,"gaussian",9);
-	subplot(2,2,1), jimdisp(jimage1),title('original image')
-	subplot(2,2,2), jimdisp(blurred1),title('gaussian filter')
-
-	blurred2 = jimsmooth(jimage1,"uniform",9);
-	blurred3 = jimsmooth(jimage1,"triangular",9);
-	subplot(2,2,3), jimdisp(blurred2),title('uniform filter')
-	subplot(2,2,4), jimdisp(blurred3),title('triangular filter')
+	 path = jimlabPath("/") + "tests/images/lena_color.gif";
+    jimage3 = jimread(path);
+		impixeled1 = jimpixelize(jimage3,6,2);
+		subplot(2,2,1), jimdisp(jimage3), title("lena_color.gif")
+		subplot(2,2,2), jimdisp(impixeled1), title("lena_color.gif boxH 6, boxW 2")
+		impixeled2 = jimpixelize(jimage3,10);
+		subplot(2,2,3), jimdisp(impixeled2), title("lena.png boxSize 10")
+        impixeled3 = jimpixelize(jimage3,15,15);
+		subplot(2,2,4), jimdisp(impixeled3), title("lena.png boxH 15, boxW 15 ")
 
    </scilab:image>
 	</refsection>
@@ -130,4 +112,3 @@
         </revhistory>
     </refsection>
 </refentry>
-
