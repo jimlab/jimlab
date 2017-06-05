@@ -34,7 +34,7 @@ if ~atomsIsLoaded("IPD") then
 end
 
 root = jimlabPath();
-path = root + "/tests/images/logoEnsim.png";
+path = root + "/tests/images/logoEnsim_rgba.png";
 image = ReadImage(path);
 
 // <-- BENCH START -->

@@ -43,7 +43,7 @@ else
 end
 
 root = jimlabPath();
-path = root + "/tests/images/logoEnsim.png";
+path = root + "/tests/images/logoEnsim_rgba.png";
 image = imread(path);
 
 // <-- BENCH START -->

@@ -15,7 +15,7 @@
 //  <-- BENCH NB RUN : 10 -->
 
 root = jimlabPath();
-path = root + '/tests/images/logoEnsim.png';
+path = root + '/tests/images/logoEnsim_rgba.png';
 Jimage = jimread(path);
 
 // <-- BENCH START -->
