@@ -29,6 +29,7 @@ function [IMB] =jimpixelize(Image,varargin)
         mat_image = Image;
     elseif(typeof(Image) == 'jimage' ) then
         mat_image = Image. image;
+       
     else
         error('Not any jimage or matrix argument have been defined' );
     end
@@ -37,18 +38,18 @@ function [IMB] =jimpixelize(Image,varargin)
     [c,d]=size(mat_image);
     nb=picHeigth*picWidth
     m=(c*d) / (nb);
-    if(ndims(Image) == 4 & modulo((c*d),nb)) then
+    if(ndims(mat_image) == 4 & modulo((c*d),nb)) then
         Encoding = "rgba"; 
         mat_image=jimpixelize_padRGBa(mat_image,picHeigth,picWidth);
-    elseif(ndims(Image) == 3 & modulo((c*d),nb)) then // For 3D matrix
+    elseif(ndims(mat_image) == 3 & modulo((c*d),nb)) then // For 3D matrix
         Encoding = "rgb";
         mat_image=jimpixelize_padRGB(mat_image,picHeigth,picWidth);
-    elseif(ndims(Image) == 2 & modulo((c*d),nb)) then
+    elseif(ndims(mat_image) == 2 & modulo((c*d),nb)) then
         Encoding = "gray";
         mat_image=jimpixelize_padGRAY(mat_image,picHeigth,picWidth);     
     end
 
-    select ndims(Image)
+    select ndims(mat_image)
     case 4 then
         IMB=jimpixelize_RGBa(mat_image);
     case 3 then
