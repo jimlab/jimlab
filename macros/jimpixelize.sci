@@ -329,7 +329,7 @@ function [result] =jimpixelize_GRAY(mat_image)
             pas_col=picWidth + j-1;
             B= mat_image(k:pas_row , j:pas_col);
 
-            [line,colne]=size(1);
+            [line,colne]=size(B);
             p=line*colne;
             mat=(matrix(B,p,1));  
             cont=[cont,mat];       
@@ -357,6 +357,8 @@ function [result] =jimpixelize_GRAY(mat_image)
         end
         k=pas_row+1;
 
-    end
+end
+
     result=mat_image;
 endfunction
+
