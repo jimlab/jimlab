@@ -49,7 +49,7 @@ image = imread(path);
 if loaded then
     atomsRemove("SIVP")
     if installed then
-        atomsRemove("SIVP",, %T)
+        atomsRemove("SIVP", %T)
     end
 end
 

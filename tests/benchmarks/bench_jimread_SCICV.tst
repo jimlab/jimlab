@@ -16,7 +16,9 @@
 
 v = getversion("scilab");
 
-if v(1) ~= 5 then
+if v(1) == 6 then
+    module ="scicv";
+else
     msg = _("%s: This benchmark cannot run with this version of Scilab.\n");
     error(msprintf(msg,"bench_jimread"));
 end
@@ -24,26 +26,28 @@ end
 loaded = 0;
 installed = 0;
 
-if ~atomsIsLoaded("IPD") then
+
+if ~atomsIsLoaded(module) then
     loaded=1;
-    if ~atomsIsInstalled("IPD") then
+    if ~atomsIsInstalled(module) then
         installed=1;
-        atomsInstall("IPD")
+        atomsInstall(module);
     end
-    atomsLoad("IPD")
+    atomsLoad(module);
 end
+
 
 root = jimlabPath();
 path = root + "/tests/images/logoEnsim_rgba.png";
-image = ReadImage(path);
+image = imread(path);
 
 // <-- BENCH START -->
-image = ReadImage(path);
+image = imread(path);
 // <-- BENCH END -->
 
 if loaded then
-    atomsRemove("IPD")
+    atomsRemove(module);
     if installed then
-        atomsRemove("IPD", %T)
+        atomsRemove(module,%T);
     end
 end
