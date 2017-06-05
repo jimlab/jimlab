@@ -1,4 +1,4 @@
-//Copyright (C) 2017 - ENSIM, Université du Maine - Alix Melaine Mnoubue
+//Copyright (C) 2017 - ENSIM, Université du Maine -  Mnoubue Alix Melaine
 //This file must be used under the terms of the CeCILL.
 //This source file is licensed as described in the file COPYING, which
 //you should have received as part of this distribution. The terms
@@ -72,7 +72,7 @@ function [IML] =jimpixelize_padRGB(matrice,height,width)
     endc=L;
     mat1=matrice(:,:,1);   mat2=matrice(:,:,2);   mat3=matrice(:,:,3);
 
-    if (( modulo(l, height) ) ) then
+    if (( modulo(L, height) ) ) then
         rest_blockl=modulo(L,n*height);
         add_blockl=height-rest_blockl;
         for i= 1 : add_blockl
@@ -117,7 +117,7 @@ function [IML] =jimpixelize_padRGBa(matrice,height,width)
     endc=L;
     mat1=matrice(:,:,1);   mat2=matrice(:,:,2);   mat3=matrice(:,:,3);  mat4=matrice(:,:,4);
 
-    if (( modulo(l, height) ) ) then
+    if (( modulo(L, height) ) ) then
         rest_blockl=modulo(L,n*height);
         add_blockl=height-rest_blockl;
         for i= 1 : add_blockl
@@ -165,7 +165,7 @@ function [IML] =jimpixelize_padGRAY(matrice,height,width)
     endc=L;
 
 
-    if (( modulo(l, height) ) ) then
+    if (( modulo(L, height) ) ) then
         rest_blockl=modulo(L,n*height);
         add_blockl=height-rest_blockl;
         for i= 1 : add_blockl
