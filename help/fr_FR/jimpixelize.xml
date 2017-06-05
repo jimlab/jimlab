@@ -23,6 +23,7 @@
         <title>Syntaxes</title>
         <synopsis>
 			impixeled= jimpixelize(Image,boxSize)
+			impixeled= jimpixelize(Image,picHeigth,picWidth)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -39,7 +40,7 @@
 				<varlistentry>
 				<term>boxSize</term>
 				 <para>
-			soit un scalaire correspondant à la taille du carré(nombre de pixels) avec laquelle Image serait divisé.La valeur par défaut est 10; Soit un  vecteur à 2 composantes [picHeigth,picWidth](picHeigth,picWidth deux nombres entiers positifs correspondant respectivement  à la longueur ,largeur du rectangle.)
+			Soit un scalaire correspondant à la taille du carré(nombre de pixels) avec laquelle Image serait divisé.La valeur par défaut est 10; Soit un  vecteur à 2 composantes [picHeigth,picWidth](picHeigth,picWidth deux nombres entiers positifs correspondant respectivement  à la longueur ,largeur du rectangle.)
 				</para>
 				</varlistentry>
 			<varlistentry>
