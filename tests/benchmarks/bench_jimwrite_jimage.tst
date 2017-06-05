@@ -15,13 +15,13 @@
 //  <-- BENCH NB RUN : 10 -->
 
 
-path = jimlabPath() + '/tests/images/logoEnsim.png';
+path = jimlabPath() + '/tests/images/logoEnsim_rgb.png';
 jimage1 = jimread(path)
 path = jimlabPath() + '/tests/images/';
 
 // <-- BENCH START -->
 
-jimwrite(jimage1,,path,'png','BenchTest_jimage',);
+jimwrite(jimage1,path + 'BenchTest_jimage.png');
 
 // <-- BENCH END -->
 

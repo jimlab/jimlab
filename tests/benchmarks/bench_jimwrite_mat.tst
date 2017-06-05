@@ -20,7 +20,7 @@ load(path);
 path = jimlabPath() + '/tests/images/';
 
 // <-- BENCH START -->
-jimwrite(,mat,path,'png','BenchTest_mat','rgb');
+jimwrite(mat,path + 'BenchTest_mat','rgb','png');
 // <-- BENCH END -->
 
 path = jimlabPath() + '/tests/images/BenchTest_mat.png';
