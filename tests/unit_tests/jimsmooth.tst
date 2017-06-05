@@ -57,3 +57,17 @@ result=uint8( mat_im);
 assert_checkequal(blured,result)
 
 
+
+
+// % rgb % (not a jimage object)
+
+uint8rgb = uint8(grand(350,200,3,"uin",0,255));
+blured = jimsmooth(uint8rgb,"triangular",9);
+mat_filter = jimsmooth_mask("triangular",9) ;
+uint8rgb= jimsmooth_padRGB(uint8rgb,9);
+uint8rgb(:,:,1)=conv2(double(uint8rgb(:,:,1)),mat_filter,'same');
+uint8rgb(:,:,2)=conv2(double(uint8rgb(:,:,2)),mat_filter,'same');
+uint8rgb(:,:,3)=conv2(double(uint8rgb(:,:,3)),mat_filter,'same');
+
+imsmooth=uint8( uint8rgb);
+assert_checkequal(blured,imsmooth)
