@@ -54,10 +54,10 @@ function [IMB] =jimsmooth(Image, varargin)
         error('Not any jimage or matrix argument have been defined' );
     end
 
-//test Encoding Image
+    //test Encoding Image
     if((ndims(mat_image) == 4) ) then // Verify if Mat is a 2D
         type_image = "rgba"; // Alpha channel isn't modified 
-       mat_im= jimsmooth_padRGBa(mat_image,fogWidth);
+        mat_im= jimsmooth_padRGBa(mat_image,fogWidth);
     elseif(ndims(mat_image) == 3) then // For 3D matrix
         type_image = "rgb";
         mat_im= jimsmooth_padRGB(mat_image,fogWidth);
@@ -67,17 +67,21 @@ function [IMB] =jimsmooth(Image, varargin)
     else
         error("Argument Mat is not a matrix");
     end
-    
-//select Encoding Image
+
+    //select Encoding Image
     select type_image,
     case "gray" then
-        IMB= uint8(conv2( double( mat_im),mat_filter,'same')) ;
+        result= uint8(conv2( double( mat_im),mat_filter,'same')) ;
+        IMB=jimsmooth_DelPadGRAY(result,fogWidth);
+
     case "rgb" then
         // Convolve the three separate color .
         mat_im(:,:,1)=conv2(double(mat_im(:,:,1)),mat_filter,'same');
         mat_im(:,:,2)=conv2(double(mat_im(:,:,2)),mat_filter,'same');
         mat_im(:,:,3)=conv2(double(mat_im(:,:,3)),mat_filter,'same');
-         IMB=uint8( mat_im);
+        result=uint8( mat_im);
+        IMB=jimsmooth_DelPadRGB(result,fogWidth);
+
     case "rgba" then
         // Convolve the three separate color .
         mat_im(:,:,1)=conv2(double(mat_im(:,:,1)),mat_filter,'same');
@@ -86,7 +90,8 @@ function [IMB] =jimsmooth(Image, varargin)
         mat_im(:,:,4)=conv2(double(mat_im(:,:,4)),mat_filter,'same');
         //Recombine separate color channels into a single
 
-        IMB=uint8( mat_im);
+        result=uint8( mat_im);
+        IMB=jimsmooth_DelPadRGBa(result,fogWidth);
 
     end
 
@@ -135,44 +140,22 @@ endfunction
 function [matImage] =jimsmooth_padGRAY(matrice,width)
     [L,C]=size(matrice);
 
-    indiceL=L;
-    indiceC=C;
-    endc=L;
-
     //add row in the low
 
-    for i= 1 : width
-        matrice=[matrice(1:endc,:) ;matrice(indiceL,:)];
-        endc=endc+1;
-        indiceL=L-i;
+    matrice=[matrice ;matrice(L:-1:L-width+1,:,:)];
 
-    end
-    L=L+width;
 
-    //add roww in the hight
-    indiceLh=L;
-    matrice=[matrice(1:1,:); matrice(1,:) ;matrice(2:indiceLh,:)];
-    indiceLh=indiceLh+1;
-    for i= 1 : width 
-        matrice=[matrice(1:1,:); matrice(i*2,:) ;matrice(2:indiceLh,:)];
-        indiceLh=indiceLh+1;
+    //add row in the hight
 
-    end
-    matrice(1:1,:)=[];
+    matrice=[ matrice(width:-1:1,:,:);matrice];
 
     //add colunn in the right
 
-    for i= 1 : width   
-        matrice=[matrice ,matrice(:,indiceC)];
-        indiceC=C-i;
-    end
+    matrice=[ matrice , matrice(:,C:-1:C-width+1)];
 
     //add colunn in the left
-    indiceCl=1
-    for i= 1 : width   
-        matrice=[matrice(:,indiceCl) , matrice];
-        indiceCl=indiceCl+2;
-    end
+
+    matrice=[  matrice(:,width:-1:1),matrice];
 
     matImage=matrice;
 
@@ -183,62 +166,33 @@ endfunction
 function [matImage] =jimsmooth_padRGB(matrice,width)
     [L,C]=size(matrice);
 
-    indiceL=L;
-    indiceC=C;
-    endc=L;
-
-    //add row in the low
-
     mat1=matrice(:,:,1);   mat2=matrice(:,:,2);   mat3=matrice(:,:,3);
-    
-    for i= 1 : width
-        mat1=[mat1(1:endc,:) ;mat1(indiceL,:)];
-         mat2=[mat2(1:endc,:) ;mat2(indiceL,:)];
-          mat3=[mat3(1:endc,:) ;mat3(indiceL,:)];
-        endc=endc+1;
-        indiceL=L-i;
-
-    end
-    L=L+width;
+    //add row in the low
+    mat1=[mat1 ;mat1(L:-1:L-width+1,:,:)];
+    mat2=[mat2 ;mat2(L:-1:L-width+1,:,:)];
+    mat3=[mat3 ;mat3(L:-1:L-width+1,:,:)];
 
     //add roww in the hight
-    indiceLh=L;
-   
-    mat1=[mat1(1:1,:); mat1(1,:) ;mat1(2:indiceLh,:)];
-     mat2=[mat2(1:1,:); mat2(1,:) ;mat2(2:indiceLh,:)];
-      mat3=[mat3(1:1,:); mat3(1,:) ;mat3(2:indiceLh,:)];
-    indiceLh=indiceLh+1;
-    for i= 1 : width 
-        mat1=[mat1(1:1,:); mat1(i*2,:) ;mat1(2:indiceLh,:)];
-        mat2=[mat2(1:1,:); mat2(i*2,:) ;mat2(2:indiceLh,:)];
-        mat3=[mat3(1:1,:); mat3(i*2,:) ;mat3(2:indiceLh,:)];
-        indiceLh=indiceLh+1;
 
-end
- L=L+width;
-    mat1(1:1,:)=[];
-    mat2(1:1,:)=[];
-    mat3(1:1,:)=[];
-
+    mat1=[ mat1(width:-1:1,:,:);mat1];
+    mat2=[ mat2(width:-1:1,:,:);mat2];
+    mat3=[ mat3(width:-1:1,:,:);mat3];
     //add colunn in the right
 
-    for i= 1 : width   
-        mat1=[mat1 ,mat1(:,indiceC)];
-         mat2=[mat2 ,mat2(:,indiceC)];
-          mat3=[mat3 ,mat3(:,indiceC)];
-        indiceC=C-i;
-    end
+    mat1=[ mat1 , mat1(:,C:-1:C-width+1)];
+    mat2=[ mat2 , mat2(:,C:-1:C-width+1)];
+    mat3=[ mat3 , mat3(:,C:-1:C-width+1)];
 
-    //add colunn in the left
-    indiceCl=1
-    for i= 1 : width   
-        mat1=[mat1(:,indiceCl) , mat1];
-         mat2=[mat2(:,indiceCl) , mat2];
-          mat3=[mat3(:,indiceCl) , mat3];
-        indiceCl=indiceCl+2;
-    end
+    //add colunn in the left   
+    mat1=[  mat1(:,width:-1:1),mat1];
+    mat2=[  mat2(:,width:-1:1),mat2];
+    mat3=[  mat3(:,width:-1:1),mat3]
+
+    //new size of row and column 
+    L=L+(2*width);  
     C=C + (2*width);
-matImage = resize_matrix(matrice, L, C);
+
+    matImage = resize_matrix(matrice, L, C);
     matImage(:,:,1)=mat1;
     matImage(:,:,2)=mat2;
     matImage(:,:,3)=mat3;
@@ -251,73 +205,167 @@ endfunction
 function [matImage] =jimsmooth_padRGBa(matrice,width)
     [L,C]=size(matrice);
 
-    indiceL=L;
-    indiceC=C;
-    endc=L;
-
     //add row in the low
 
     mat1=matrice(:,:,1);   mat2=matrice(:,:,2);   mat3=matrice(:,:,3);mat4=matrice(:,:,4);
-    
-    for i= 1 : width
-        mat1=[mat1(1:endc,:) ;mat1(indiceL,:)];
-         mat2=[mat2(1:endc,:) ;mat2(indiceL,:)];
-          mat3=[mat3(1:endc,:) ;mat3(indiceL,:)];
-           mat4=[mat4(1:endc,:) ;mat4(indiceL,:)];
-        endc=endc+1;
-        indiceL=L-i;
 
-    end
-    L=L+width;
+    //add row in the low
+    mat1=[mat1 ;mat1(L:-1:L-width+1,:,:)];
+    mat2=[mat2 ;mat2(L:-1:L-width+1,:,:)];
+    mat3=[mat3 ;mat3(L:-1:L-width+1,:,:)];
+    mat4=[mat4 ;mat4(L:-1:L-width+1,:,:)];
 
     //add roww in the hight
-    indiceLh=L;
-   
-    mat1=[mat1(1:1,:); mat1(1,:) ;mat1(2:indiceLh,:)];
-     mat2=[mat2(1:1,:); mat2(1,:) ;mat2(2:indiceLh,:)];
-      mat3=[mat3(1:1,:); mat3(1,:) ;mat3(2:indiceLh,:)];
-      mat4=[mat4(1:1,:); mat4(1,:) ;mat4(2:indiceLh,:)];
-    indiceLh=indiceLh+1;
-    for i= 1 : width 
-        mat1=[mat1(1:1,:); mat1(i*2,:) ;mat1(2:indiceLh,:)];
-        mat2=[mat2(1:1,:); mat2(i*2,:) ;mat2(2:indiceLh,:)];
-        mat3=[mat3(1:1,:); mat3(i*2,:) ;mat3(2:indiceLh,:)];
-        mat4=[mat4(1:1,:); mat4(i*2,:) ;mat4(2:indiceLh,:)];
-        indiceLh=indiceLh+1;
 
-end
- L=L+width;
-    mat1(1:1,:)=[];
-    mat2(1:1,:)=[];
-    mat3(1:1,:)=[];
 
+    mat1=[ mat1(width:-1:1,:,:);mat1];
+    mat2=[ mat2(width:-1:1,:,:);mat2];
+    mat3=[ mat3(width:-1:1,:,:);mat3];
+    mat4=[ mat4(width:-1:1,:,:);mat4];
     //add colunn in the right
 
-    for i= 1 : width   
-        mat1=[mat1 ,mat1(:,indiceC)];
-         mat2=[mat2 ,mat2(:,indiceC)];
-          mat3=[mat3 ,mat3(:,indiceC)];
-          mat4=[mat4 ,mat4(:,indiceC)];
-        indiceC=C-i;
-    end
+    mat1=[ mat1 , mat1(:,C:-1:C-width+1)];
+    mat2=[ mat2 , mat2(:,C:-1:C-width+1)];
+    mat3=[ mat3 , mat3(:,C:-1:C-width+1)];
+    mat4=[ mat4 , mat4(:,C:-1:C-width+1)];
 
-    //add colunn in the left
-    indiceCl=1
-    for i= 1 : width   
-        mat1=[mat1(:,indiceCl) , mat1];
-         mat2=[mat2(:,indiceCl) , mat2];
-          mat3=[mat3(:,indiceCl) , mat3];
-           mat4=[mat4(:,indiceCl) , mat4];
-        indiceCl=indiceCl+2;
-    end
+    //add colunn in the left   
+    mat1=[  mat1(:,width:-1:1),mat1];
+    mat2=[  mat2(:,width:-1:1),mat2];
+    mat3=[  mat3(:,width:-1:1),mat3];
+    mat4=[  mat4(:,width:-1:1),mat4];
+
+    //new size of row and column 
+    L=L+(2*width);  
     C=C + (2*width);
-matImage = resize_matrix(matrice, L, C);
+
+    matImage = resize_matrix(matrice, L, C);
     matImage(:,:,1)=mat1;
     matImage(:,:,2)=mat2;
     matImage(:,:,3)=mat3;
-     matImage(:,:,4)=mat4;
+    matImage(:,:,4)=mat4;
 
 
 endfunction
 
+
+function [matImage] =jimsmooth_DelPadGRAY(matrice,width)
+    [L,C]=size(matrice);
+
+    //delete row in the low
+
+    matrice(L:-1:L-width+1,:)=[];
+
+
+    //delete row in the hight
+
+    matrice(width:-1:1,:)=[];
+
+    //delete colunn in the right
+    matrice(:,C:-1:C-width+1)=[];
+
+    //delete colunn in the left
+    matrice(:,width:-1:1)=[];
+
+    //new size of row and column 
+    L=L-(2*width);  
+    C=C-(2*width);
+    matImage=matrice; 
+endfunction   
+
+
+//RGBa Image
+function [matImage] =jimsmooth_DelPadRGBa(matrice,width)
+    [L,C]=size(matrice);
+
+    //delete row in the low
+
+    mat1=matrice(:,:,1);   mat2=matrice(:,:,2);   mat3=matrice(:,:,3);mat4=matrice(:,:,4);
+
+    //delete row in the low
+    mat1(L:-1:L-width+1,:)=[];
+    mat2(L:-1:L-width+1,:)=[];
+    mat3(L:-1:L-width+1,:)=[];
+    mat4(L:-1:L-width+1,:)=[];
+
+    //delete roww in the hight
+
+
+    mat1(width:-1:1,:,:)=[];
+    mat2(width:-1:1,:,:)=[];
+    mat3(width:-1:1,:,:)=[];
+    mat4(width:-1:1,:,:)=[];
+    //delete colunn in the right
+
+    mat1(:,C:-1:C-width+1)=[];
+    mat2(:,C:-1:C-width+1)=[];
+    mat3(:,C:-1:C-width+1)=[];
+    mat4(:,C:-1:C-width+1)=[];
+
+    //delete colunn in the left   
+    mat1(:,width:-1:1)=[];
+    mat2(:,width:-1:1)=[];
+    mat3(:,width:-1:1)=[];
+    mat4(:,width:-1:1)=[];
+
+    //new size of row and column 
+    L=L-(2*width);  
+    C=C-(2*width);
+
+    matImage = resize_matrix(matrice, L, C);
+    matImage(:,:,1)=mat1;
+    matImage(:,:,2)=mat2;
+    matImage(:,:,3)=mat3;
+    matImage(:,:,4)=mat4;
+
+
+endfunction
+
+
+//RGB Image
+function [matImage] =jimsmooth_DelPadRGB(matrice,width)
+    [L,C]=size(matrice);
+
+    //delete row in the low
+
+    mat1=matrice(:,:,1);   mat2=matrice(:,:,2);   mat3=matrice(:,:,3);
+
+    //delete row in the low
+    mat1(L:-1:L-width+1,:)=[];
+    mat2(L:-1:L-width+1,:)=[];
+    mat3(L:-1:L-width+1,:)=[];
+
+    //delete roww in the hight
+
+
+    mat1(width:-1:1,:)=[];
+    mat2(width:-1:1,:)=[];
+    mat3(width:-1:1,:)=[];
+
+    //delete colunn in the right
+
+    mat1(:,C:-1:C-width+1)=[];
+    mat2(:,C:-1:C-width+1)=[];
+    mat3(:,C:-1:C-width+1)=[];
+
+
+    //delete colunn in the left   
+    mat1(:,width:-1:1)=[];
+    mat2(:,width:-1:1)=[];
+    mat3(:,width:-1:1)=[];
+
+
+    //new size of row and column 
+    L=L-(2*width);  
+    C=C-(2*width);
+
+    matImage = resize_matrix(matrice, L, C);
+
+    matImage(:,:,1)=mat1;
+    matImage(:,:,2)=mat2;
+    matImage(:,:,3)=mat3;
+
+
+
+endfunction
 
