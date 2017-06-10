@@ -16,9 +16,9 @@
 //   - TESTS AUTOMATIQUES À VENIR
 //   - INCLURE RGB
 
-// =================================================
-// Tests of the overloaded COCATENATIONS [,] and [;]
-// =================================================
+// ==================================================
+// Tests of the overloaded CONCATENATIONS [,] and [;]
+// ==================================================
 
 path = jimlabPath("/") + "tests/images/";
 imrgba = jimread(path + "lena_color.gif");
