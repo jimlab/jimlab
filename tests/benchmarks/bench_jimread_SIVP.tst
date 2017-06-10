@@ -30,6 +30,7 @@ if (getos() == "Windows" | getos() == "Linux")
     if ~atomsIsLoaded(moduleName) then
         if ~atomsIsInstalled(moduleName) then
             atomsInstall(moduleName);
+            atomsAutoloadDel(moduleName);
         end
         atomsLoad(moduleName);
     end
@@ -38,7 +39,6 @@ else
     error(msprintf(msg,"bench_jimread_SIVP"));
 end
 
-path = getshortpathname(pathconvert(jimlabPath() + "/tests/images/logoEnsim_rgba.png",%f));
 path = getshortpathname(jimlabPath() + "/tests/images/logoEnsim_rgba.png");
 image = imread(path);
 
