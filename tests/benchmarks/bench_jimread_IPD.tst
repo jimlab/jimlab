@@ -12,7 +12,7 @@
 // Benchmark for the jimread function
 //==============================================================================
 //
-//  <-- BENCH NB RUN : 10 -->
+//  <-- BENCH NB RUN : 50 -->
 
 v = getversion("scilab");
 
@@ -21,29 +21,17 @@ if v(1) ~= 5 then
     error(msprintf(msg,"bench_jimread"));
 end
 
-loaded = 0;
-installed = 0;
-
 if ~atomsIsLoaded("IPD") then
-    loaded=1;
     if ~atomsIsInstalled("IPD") then
-        installed=1;
         atomsInstall("IPD")
+        atomsAutoloadDel("IPD");
     end
     atomsLoad("IPD")
 end
 
-root = jimlabPath();
-path = root + "/tests/images/logoEnsim_rgba.png";
+path = getshortpathname(jimlabPath() + "/tests/images/logoEnsim_rgba.png");
 image = ReadImage(path);
 
 // <-- BENCH START -->
 image = ReadImage(path);
 // <-- BENCH END -->
-
-if loaded then
-    atomsRemove("IPD")
-    if installed then
-        atomsRemove("IPD", %T)
-    end
-end
