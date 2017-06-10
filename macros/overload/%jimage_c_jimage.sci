@@ -1,4 +1,4 @@
-// This file is part of the Jimlab module,
+// This file is part of Jimlab,
 // an external module coded for Scilab and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
@@ -10,6 +10,8 @@
 
 function jimageR = %jimage_c_jimage(jimage1, jimage2)
     // Horizontal concatenation of 2 jimages.
+    // (PROFILING DONE)
+
     s1 = [size(jimage1.image) 1];
     s2 = [size(jimage2.image) 1];
     if s1(1)~=s2(1) then
@@ -37,15 +39,21 @@ function jimageR = %jimage_c_jimage(jimage1, jimage2)
         tC1 = jimage1.transparencyColor;
         tC2 = jimage2.transparencyColor;
         // s1(3) is either 3 or 4, not 1. So:
-        if s2(3)==1     // Gray layer => we replicate it => RGB
-            image2(:,:,2) = image2;
-            image2(:,:,3) = image2(:,:,1);
+        // Allocating memory
+        image2_0 = image2;
+        image2(1,1,s1(3)) = uint8(0);
+
+        // Gray layer => we replicate it => RGB
+        if s2(3)==1
+            image2(:,:,2) = image2_0;
+            image2(:,:,3) = image2_0;
             if tC2~=-1
                 tC2 = tC2 * ones(1,1,3);
             end
             s2(3) = 3;
         end
-        if s1(3)==4 then // s2(3) is (now) 3 = RGB => We add an alpha layer
+
+        if s1(3)==4 then     // s2(3) is (now) 3 = RGB => We add an alpha layer
             alpha2 = uint8(ones(s2(1), s2(2)))*255;
             if tC2~=-1
                 n = s2(1)*s2(2);

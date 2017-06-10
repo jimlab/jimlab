@@ -1,4 +1,4 @@
-// This file is part of the Jimlab module,
+// This file is part of Jimlab,
 // an external module coded for Scilab and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
@@ -6,7 +6,9 @@
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which you
 // should have received as part of this distribution.  The terms are also
-// available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+// available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
+
+// (PROFILING DONE)
 
 function jimageR = %jimage_a_jimage(jimage1, jimage2)
     // ADDITION jimage1 + jimage2
@@ -90,14 +92,26 @@ function jimageR = %jimage_a_jimage(jimage1, jimage2)
 
     // If one is in gray and the other colored, we replicate the gray into 3 layers
     if ndims(image1)==2 & ndims(image2)==3 then
-        image1 = image1 .*. ones(1,1,3);
+        tmp = image1;
+        image1(:,:,3) = tmp; 
+        image1(:,:,2) = tmp; 
     elseif ndims(image1)==3 & ndims(image2)==2 
-        image2 = image2 .*. ones(1,1,3);
+        tmp = image2;
+        image2(:,:,3) = tmp; 
+        image2(:,:,2) = tmp; 
     end
     // If at least one image is in colors, we replicate both alpha layer
     if ndims(image1)>2 | ndims(image2)>2 then
-        alpha1 = alpha1 .*. ones(1,1,3);
-        alpha2 = alpha2 .*. ones(1,1,3);
+        alpha1_0 = double(alpha1);
+        alpha1 = zeros(s1(1),s1(2),3);  // memory allocation
+        alpha1(:,:,1) = alpha1_0;
+        alpha1(:,:,2) = alpha1_0;
+        alpha1(:,:,3) = alpha1_0;
+        alpha2_0 = double(alpha2);
+        alpha2 = zeros(alpha1);         // memory allocation
+        alpha2(:,:,1) = alpha2_0;
+        alpha2(:,:,2) = alpha2_0;
+        alpha2(:,:,3) = alpha2_0;
     end
 
     // ADDITION. MANAGEMENT OF SATURATION
@@ -113,7 +127,8 @@ function jimageR = %jimage_a_jimage(jimage1, jimage2)
     imageR(imageR>255) = 255;
     imageR = uint8(imageR);
     if ndims(image1)>2 | ndims(image2)>2 then
-        imageR(:,:,4) = uint8(min(1, alpha1 + alpha2)*255);
+        imageR(1,1,4) = uint8(0);   // Extends memory allocation
+        imageR(:,:,4) = uint8(min(1, alpha1_0 + alpha2_0)*255);
     end
     // ************
 
