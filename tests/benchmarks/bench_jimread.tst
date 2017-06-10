@@ -12,10 +12,9 @@
 // Benchmark for the jimread function
 //==============================================================================
 //
-//  <-- BENCH NB RUN : 10 -->
+//  <-- BENCH NB RUN : 50 -->
 
-root = jimlabPath();
-path = root + '/tests/images/logoEnsim_rgba.png';
+path = jimlabPath() + '/tests/images/logoEnsim_rgba.png';
 Jimage = jimread(path);
 
 // <-- BENCH START -->
