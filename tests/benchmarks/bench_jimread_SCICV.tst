@@ -2,6 +2,7 @@
 // an external module coded for Scilab and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+// Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which you
@@ -12,7 +13,7 @@
 // Benchmark for the jimread function
 //==============================================================================
 //
-//  <-- BENCH NB RUN : 10 -->
+//  <-- BENCH NB RUN : 50 -->
 
 v = getversion("scilab");
 
@@ -23,31 +24,19 @@ else
     error(msprintf(msg,"bench_jimread"));
 end
 
-loaded = 0;
-installed = 0;
-
-
 if ~atomsIsLoaded(module) then
-    loaded=1;
     if ~atomsIsInstalled(module) then
-        installed=1;
         atomsInstall(module);
+        atomsAutoloadDel(module);
     end
     atomsLoad(module);
 end
 
-
-root = jimlabPath();
-path = root + "/tests/images/logoEnsim_rgba.png";
+root = jimlabPath("/");
+path = root + mgetl(root + "tests/benchmarks/read_filename.txt",1);
+path = getshortpathname(path);
 image = imread(path);
 
 // <-- BENCH START -->
 image = imread(path);
 // <-- BENCH END -->
-
-if loaded then
-    atomsRemove(module);
-    if installed then
-        atomsRemove(module,%T);
-    end
-end
