@@ -39,9 +39,12 @@ else
     error(msprintf(msg,"bench_jimread_SIVP"));
 end
 
-path = getshortpathname(jimlabPath() + "/tests/images/logoEnsim_rgba.png");
+root = jimlabPath("/");
+path = root + mgetl(root + "tests/benchmarks/read_filename.txt",1);
+path = getshortpathname(path);
 image = imread(path);
 
 // <-- BENCH START -->
 image = imread(path);
 // <-- BENCH END -->
+
