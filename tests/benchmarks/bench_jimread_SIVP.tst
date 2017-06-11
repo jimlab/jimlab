@@ -40,7 +40,7 @@ else
 end
 
 root = jimlabPath("/");
-path = root + mgetl(root + "tests/benchmarks/read_filename.txt",1);
+path = root + mgetl(root + "tests/benchmarks/filename_read.txt",1);
 path = getshortpathname(path);
 image = imread(path);
 
