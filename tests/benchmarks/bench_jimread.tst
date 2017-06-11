@@ -1,7 +1,8 @@
 // This file is part of the Jimlab module,
 // an external module coded for Scilab and dedicated to image processing.
 //
-// Copyright (C) 2017 - ENSIM, Université du Maine - camille CHAILLOUS
+// Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+// Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which you
@@ -14,7 +15,9 @@
 //
 //  <-- BENCH NB RUN : 50 -->
 
-path = jimlabPath() + '/tests/images/logoEnsim_rgba.png';
+root = jimlabPath("/");
+path = root + mgetl(root + "tests/benchmarks/filename_read.txt",1);
+//path = getshortpathname(path);
 Jimage = jimread(path);
 
 // <-- BENCH START -->
