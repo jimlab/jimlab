@@ -20,13 +20,15 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
         msg = _("%s: Argument #%d: The output encoding is not given.\n");
         error(msprintf(msg, "jimconvert", 2));
     else
-        stdr_encoding = strstr(["rgba","rgb","gray"], encoding);
         if (type(encoding) ~= 10)
             msg = _("%s: Argument #%d: Text(s) expected.\n");
             error(msprintf(msg,"jimconvert",2));
-        elseif (stdr_encoding == [])
-            msg = _("%s: Argument #%d: rgba, rgb or gray expected.\n");
-            error(msprintf(msg,"jimconvert",2));
+        else
+            stdr_encoding = strstr(["rgba","rgb","gray"], encoding);
+            if (stdr_encoding == [""])
+                msg = _("%s: Argument #%d: rgba, rgb or gray expected.\n");
+                error(msprintf(msg,"jimconvert",2));
+            end
         end
     end
 
@@ -80,7 +82,7 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
     if (isdef("transparency","l") & type(transparency) ~= 0) then
         if (min(transparency) > 0. & max(transparency) < 1.)
             transparency = uint8(255 * transparency);
-        elseif (min(transparency) < -1 & max(transparency) > 255.)
+        elseif (min(transparency) < -1 | max(transparency) > 255.)
             msg = _("%s: Argument #%d: Components of transparency must be in the intervalle [0,255] or [0,1].\n");
             error(msprintf(msg, "jimconvert", 3));
         end
@@ -168,7 +170,7 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
             //addition of the transparent pixels and the non-transparent ones
             convertedJimage = uint8(transparencyMat) + convertedMat;
             //A modifier éventuellement apres réponse de S. Gougeon
-            if (find(transparencyMask) == [] & jimTC(1) == -1)
+            if (find(transparencyMask) == [] & isdef("jimTC", "l") & jimTC(1) == -1)
                 transparency = -1;
             end
             
@@ -198,7 +200,9 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
                 if alpha
                     convertedJimage(:,:,4) = transparency;
                 else
-                    //convertedJimage(:,:,4) = ()
+                    transparency = uint32(transparency(1)).*16^4 + uint32(transparency(2)).*16^2 + uint32(transparency(3));
+                    tmp = uint32(Jimage(:,:,1)).*16^4 + uint32(Jimage(:,:,2)).*16^2 + uint32(Jimage(:,:,3));
+                    convertedJimage(:,:,4) = 255 * uint8(tmp ~= transparency)
                 end
             else
                 convertedJimage(:,:,4) = 255 * ones(size(Jimage, 1:2));
@@ -211,12 +215,12 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
             convertedJimage = matrix(tmp, [dim(1), dim(2), 3]);
             if (isdef("alpha", "l"))
                 if alpha
-                    convertedJimage(:,:,4) = transparency;
+                    convertedJimage(:,:,4) = uint8(transparency);
                 else
-                    convertedJimage(:,:,4) = 255* uint8(Jimage ~= transparency)
+                    convertedJimage(:,:,4) = 255 * uint8(Jimage ~= transparency)
                 end
             else
-                convertedJimage(:,:,4) = 255 * ones(size(Jimage, 1:2));
+                convertedJimage(:,:,4) = 255 * ones(size(Jimage, 1), size(Jimage, 2));
             end
             convertedJimage = uint8(convertedJimage)
         end
