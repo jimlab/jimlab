@@ -8,31 +8,49 @@
 // should have received as part of this distribution.  The terms are also
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 
-function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, crop2polygon)
+function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, varargin)
 
 // INPUT ARGUMENTS
-// • image : jimage object, single layered matrix, 3- or
-// 4-layered hypermatrix.
-// • polygon : summits of the polygon the user wants to select.
-// It consists of a [N ; 2] matrix containing the summits of the
-// polygon (correctly sorted for the polygone to avoid any
-// intersection).
-// • crop2polygon : boolean used in order to crop the mask to the minimal
-// rectangle around the polygon. By default, it's set to %f.
-// • editpoly : boolean used in order to edit the polygon via edit_curv(). By
-// default it's set to %f.
-// 0 and 1 work for both of these arguments.
+// • image : jimage object, single layered matrix, 3- or 4-layered hypermatrix.
+// • input_polygon : summits of the polygon the user wants to select.
+// It consists of an N lines and 2 columns array containing the (x,y) coordinates
+// of the N summits of the polygon.
+// If empty or wrong, an interactive edition of the polygon is forced.
+// • options (varargin) :
+// "edit" allows the user to select summits of the polygon interactively,
+// "crop" returns the mask cropped to the size of the minimal rectangle containing
+// the polygon.
 
 // OUTPUT ARGUMENTS
 // • mask : the function returns a boolean matrix or hypermatrix :
-// %T inside the polygon and %F outside the polygon.
+// %T inside the polygon and on its sides, and %F outside the polygon.
 // • polygon : returns the output polygon, changed by the interactive edition
-// or not. 
+// or not.
 // • ijTopLeft : coordinates of the top left corner of the rectangle
 // containing the whole polygon.
 
+    // % Standard errors for this function %
+    msg_points = "%s: Three points must be selected at least in order to select a polygon."
 
-    // Checking the type of the input image
+    msg_options = "%s: Argument %s : The optional arguments available are ""crop"" or ""edit"".";
+
+    msg_summits = "%s: Argument #%s : Must be an array of integers describing the N summits of (x,y) coordinates";
+    
+    msg_emptypoly = "%s: Argument #%d : A wrong or empty polygon has been given. Forcing the interactive edit."
+    
+    msg_nbarg = "%s: Too many input arguments (must be < 5)."
+    
+    
+    // % The algorithm will depend on the number of input parameters %
+
+    [outputs,inputs]=argn(0);
+
+    if inputs > 4 then
+    warning(msprintf(msg_nbarg, "jimroi"))
+    warning("Arguments up to #4 will be considered, the others will be ignored.")
+    end
+
+    // % Argument # 1 : Checking the type of the input image %
     if (isdef("image","l") & type(image) ~= 0)
         if typeof(image) == "jimage" then
             Matrix = image.image;
@@ -40,85 +58,157 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, editpoly, cro
             Matrix = jimstandard(image);
         end
     else
-        msg_1 = "%s: Argument #%d : A (hyper)matrix of 1, 3 or 4 layers, or a jimage object must be given";
-        error(msprintf(msg_1, "jimroi", 1));
+        msg_matrix = "%s: Argument #%d : A (hyper)matrix of 1, 3 or 4 layers, or a jimage object must be given";
+        error(msprintf(msg_matrix, "jimroi", 1));
     end
 
-    // Setting default values if not given by the user
+    // % Argument # 2 : Setting default polygon if not given by the user %
     if ~isdef("input_polygon","l") | type(input_polygon) == 0 then
         input_polygon = [];
     end
     
-        if ~isdef("editpoly","l") | type(editpoly) == 0 then
-        editpoly = %f;
-    end
-
     // Checking the type of the matrix of the summits
-    msg_2 = "%s: Argument #%d : Must be a [N ; 2] matrix of integers describing the N summits of (x,y) coordinates";
     
     if ~(type(input_polygon) == 1) then
         if ~(size(input_polygon, 2) == 2) |  ~(size(input_polygon, 2) == 0)  then
-            error(msprintf(msg_2, "jimroi", 2))
+            error(msprintf(msg_summits, "jimroi", 2))
         end
     end
 
-    // Allowing the polygon to be empty if the user wants to edit it interactively
-    if  input_polygon == [] & editpoly == %f then
-        msg_4 = "%s: Argument #%d : Must be a [N ; 2] matrix of integers describing the N summits of (x,y) coordinates. \n It can be an empty matrix only if edit is True."
-         error(msprintf(msg_4, "jimroi", 2))
+    // Arguments #3 & #4 : Setting default values
+    if inputs == 4 & type(varargin(2)) == 0 then
+        varargin(2) = "";
+        inputs = inputs-1 ;
+        warning(msprintf(msg_options, "jimroi", "#4"))
+        warning("Default value will be used.")
     end
     
-    // Checking the crop argument
-    if ~isdef("crop2polygon","l") | type(crop2polygon) == 0 then
-        crop2polygon = %f ;
+    if inputs == 4 & type(varargin(1)) == 0 then
+        varargin(1) = "";
+        varargin(1) = varargin(2);
+        varargin(2) = "";
+        inputs = inputs-1 ;
+        warning(msprintf(msg_options, "jimroi", "#3"))
+        warning("Default value will be used.")
     end
-    
-    if crop2polygon == 0 then
-        crop2polygon = %f
+
+    if inputs == 3 & type(varargin(1)) == 0 then
+        varargin(1) = "";
+        inputs = inputs-1 ;
+        warning(msprintf(msg_options, "jimroi", "#3"))
+        warning("Default value will be used.")
     end
-    
-    if crop2polygon == 1 then
-        crop2polygon = %t
-    end
-    
-    if ~(type(crop2polygon) == 4) then
-        warning("Wrong input argument #3 : default value %f will be used.")
-    end
-    
-    // Interactive edition of the polygon
-    if input_polygon ~=[] then
-        xd = input_polygon(:,1)
-        yd = input_polygon(:,2)
+
+
+    // % Setting default values for the interactive edition %
+
+    if input_polygon == [] then
+        xd = [] ; yd = [] ;
     else
-        xd = [] ; yd = []
+        xd = input_polygon(:,1) ;
+        yd = input_polygon(:,2) ;
     end
+
+select inputs
     
-    if editpoly then
-        jimdisp(image);
-        [x,y] = edit_curv(xd,yd)
+    // A matrix or jimage is the only input argument
+    // The mask is uncropped and the interactive edit is forced
+    case 1 then
+
+        jimdisp(image)
+        [x,y] = edit_curv(xd,yd) ;
         
         if size(x) < 3 then
-            msg_5 = "%s: Three points must be selected at least in order to select a polygon."
-            error(msprintf(msg_5, "jimroi"))
+            error(msprintf(msg_points, "jimroi"))
         end
         
-        polygon = floor([x,y]),
-
+        polygon = floor([x,y]);
+        mask = jimcreateMask(polygon, Matrix);
+        
+    // A predefined polygon is given
+    case 2 then
+    
+    // If the polygon is empty, the interactive edit is forced
+    if input_polygon == [] then
+        warning(msprintf(msg_emptypoly, "jimroi", 2))
+        jimdisp(image)
+        [x,y] = edit_curv(xd,yd) ;
+        
+        if size(x) < 3 then
+            error(msprintf(msg_points, "jimroi"))
+        end
+        
+        polygon = floor([x,y]);
+    
     else
         polygon = input_polygon
     end
-    
+        mask = jimcreateMask(polygon, Matrix) ;
 
-
-    // Creating the mask
-    mask = jimcreateMask(polygon, Matrix);
+    // An optional argument is given : "crop" or "edit"
+    case 3 then
     
-    // Cropping the mask
-    if crop2polygon then
-        mask = jimcropMask(polygon, Matrix, mask)
+         select varargin(1)
+            case "crop" then
+                if input_polygon == [] then
+                    warning(msprintf(msg_emptypoly, "jimroi", 2))
+                    jimdisp(image)
+                    [x,y] = edit_curv(xd,yd) ;
+    
+                    if size(x) < 3 then
+                        error(msprintf(msg_points, "jimroi"))
+                    end
+    
+                    polygon = floor([x,y]);
+    
+                else
+                    polygon = input_polygon
+                end
+                mask = jimcreateMask(polygon, Matrix) ;
+                mask = jimcropMask(polygon, Matrix, mask) ;
+
+            case "edit" then
+                jimdisp(image)
+                [x,y] = edit_curv(xd,yd)
+                
+                if size(x) < 3 then
+                    error(msprintf(msg_points, "jimroi"))
+                end
+                
+                polygon = floor([x,y]);
+                mask = jimcreateMask(polygon, Matrix);
+            
+            else 
+                error(msprintf(msg_options, "jimroi","#3"))
+        end
+
+    // The user wants to edit the polygon and crop the mask
+    case 4 then
+        
+        if varargin(1) == "edit" | varargin(2) == "edit" then
+            jimdisp(image)
+            [x,y] = edit_curv(xd,yd)
+            
+            if size(x) < 3 then
+                error(msprintf(msg_points, "jimroi"))
+            end
+            
+            polygon = floor([x,y]);
+            mask = jimcreateMask(polygon, Matrix);
+        else
+                error(msprintf(msg_options, "jimroi","#3 & #4"))
+        end
+        
+        if varargin(1) == "crop" | varargin(2) == "crop" then
+            mask = jimcropMask(polygon, Matrix, mask)
+        else
+                error(msprintf(msg_options, "jimroi","#3 & #4"))
+        end
+        
     end
-    
-    // Returning ijTopleft
+
+
+    // % Returning ijTopleft
     poly_top = max(polygon(:,2));
     poly_bot = min(polygon(:,2));
     poly_left = min(polygon(:,1));
@@ -180,11 +270,11 @@ function out_mask = jimcropMask (input_polygon, mat_image, input_mask)
     poly_left = min(input_polygon(:,1));
     poly_right = max(input_polygon(:,1));
 
-    out_mask = input_mask(h-poly_top:h-poly_bot+1,poly_left:poly_right)
+    out_mask = input_mask(h-poly_top:h-poly_bot+1,poly_left:poly_right) ;
 
     // Border corrections : suppressing the extreme lines filled with %F
-    h_mask = size(out_mask,1)
-    w_mask = size(out_mask,2)
+    h_mask = size(out_mask,1) ;
+    w_mask = size(out_mask,2) ;
     
     left = %f ; right = %f ; bot = %f ; top = %f ;
 
