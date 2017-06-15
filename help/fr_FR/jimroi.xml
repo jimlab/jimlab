@@ -9,7 +9,7 @@
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which you
  * should have received as part of this distribution.  The terms are also
- * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  *
  -->
 <refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
@@ -18,69 +18,109 @@
 		xml:lang="fr" xml:id="jimroi">
     <refnamediv>
         <refname>jimroi</refname>
-        <refpurpose>Sélection d'une zone polygonale fermée d'intérêt sur l'étendue complète d'une image</refpurpose>
+        <refpurpose>Sélection d'une zone polygonale fermée sur une image</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            mask = jimroi(input_image, polygon)
-            [mask, polygon, ijTopLeft] = jimroi(input_image, polygon)
-            [mask, polygon, ijTopLeft] = jimroi(input_image, polygon, editpoly)
-            [mask, polygon, ijTopLeft] = jimroi(input_image, , editpoly)
-            [mask, polygon, ijTopLeft] = jimroi(input_image, , editpoly, crop2polygon)
-            [mask, polygon, ijTopLeft] = jimroi(input_image, polygon, , crop2polygon)
-            [mask, polygon, ijTopLeft] = jimroi(input_image, polygon, editpoly, crop2polygon)
+            [mask, out_polygon] = jimroi(image)
+            [mask, out_polygon] = jimroi(image, in_polygon)
+            [mask, out_polygon] = jimroi(image, in_polygon, "edit")
+            [mask, out_polygon, ijTopLeft] = jimroi(image, , "crop")
+            
         </synopsis>
     </refsynopsisdiv>
     <refsection>
         <title>Arguments</title>
         <variablelist>
             <varlistentry>
-                <term>input_image</term> 
+                <term>input_image</term>
                 <listitem>
-                <para>
-                    Objet <literal>jimage</literal>, matrice à une couche, ou hypermatrice à trois ou quatre couches.
-                </para>
+                    <para>
+                        Objet <literal>jimage</literal>, matrice à une couche, ou hypermatrice à trois ou quatre couches.
+                    </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term>polygon</term> 
+                <term>polygon</term>
                 <listitem>
-                <para>
-                    Matrice de taille [N;2] des sommets de la zone polygonale d'intérêt. Les N sommets ont pour coordonnées un couple (x,y).
-                </para>
+                    <para>
+                        Matrice (N lignes et 2 colonnes) des coordonnées (x,y) des N sommets du polygone donné en entrée.
+                    </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term>editpolygon</term> 
-                <listitem>
+                <term>Options :</term>
                 <para>
-                    Booléen permettant l'édition du polygone de manière interactive.
+                    Deux options constituées d'un mot sont disponibles et peuvent être utilisées ensemble ou non en fin de liste :
+                    <itemizedlist>
+                        <listitem>
+                            <para>
+                                <literal>"crop"</literal> : donne la consigne de recadrer le masque au rectangle minimal pouvant encadrer le polygone.
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <literal>"edit"</literal> : permet l'édition du polygone de manière interactive :
+                                <itemizedlist>
+                                    <listitem>
+                                        <para>
+                                            cliquer gauche sur un segment ou à proximité pour insérer ou ajouter un point ;
+                                        </para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>
+                                            cliquer gauche sur un point pour le sélectionner, puis :
+                                            <itemizedlist>
+                                                <listitem>
+                                                    <para>
+                                                        presser gauche et traîner pour bouger le point,
+                                                    </para>
+                                                </listitem>
+                                                <listitem>
+                                                    <para>
+                                                        presser <literal>"Suppr"</literal> pour supprimer le point ;
+                                                    </para>
+                                                </listitem>
+                                            </itemizedlist>
+                                        </para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>
+                                            cliquer le bouton du centre pour quitter l'édition.
+                                        </para>
+                                    </listitem>
+                                </itemizedlist>
+                            </para>
+                        </listitem>
+                    </itemizedlist>
                 </para>
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term>crop2polygon</term> 
-                <listitem>
-                <para>
-                    Booléen donnant la consigne de recadrer le masque au rectangle minimal pouvant encadrer le polygone. Par défaut, %f.
-                </para>
-                </listitem>
             </varlistentry>
             <varlistentry>
                 <term>mask</term>
                 <listitem>
                     <para>
-                        Matrice de booléens correspondant à la zone sélectionnée. Les points à l'intérieur du polygone de sélection prennent pour valeur %True, ceux à l'extérieur %False.
-                    </para>					
+                        Matrice 2D de booléens de la taille de l'image, ou de la taille de l'image élaguée si <literal>"crop"</literal> est utilisé.
+                    </para>
+                    <para>
+                        <literal>mask(i,j)</literal> vaut <literal>%T</literal> si <literal>(i,j)</literal> est dans le polygone et vaut <literal>%F</literal> sinon. Les points sur les arêtes du polygone valent <literal>%T</literal>.
+                    </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term>ijTopLeft</term> 
+                <term>out_polygon</term>
                 <listitem>
-                <para>
-                    Coordonnées (x,y) du coin supérieur gauche du rectangle minimal encadrant le polygone de sélection.
-                </para>
+                    <para>
+                        Matrice (N lignes et 2 colonnes) des coordonnées (x,y) des N sommets du polygone retourné en sortie, modifié ou non par l'édition interactive.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>ijTopLeft</term>
+                <listitem>
+                    <para>
+                        Coordonnées (x,y) du coin supérieur gauche du rectangle minimal encadrant le polygone de sélection.
+                    </para>
                 </listitem>
             </varlistentry>
         </variablelist>
@@ -88,50 +128,62 @@
     <refsection>
         <title>Description</title>
         <para>
-            Cette fonction applique une zone de sélection sur une image. Cette zone est un polygone, défini par une matrice de taille [N;2] correspondant à ses sommets.
-Ce polygone peut être créé ou modifié interactivement avec la souris, via appel de la fonction <function>edit_curv()</function>, si le booléen <literal>editpoly</literal> vaut %True. Il est possible d'ajouter des points, d'en déplacer et d'en supprimer.
-Le masque de sortie peut garder les dimensions de l'image d'origine, ou bien être recadré au rectangle minimal encadrant le polygone de sélection. Le booléen <literal>crop2polygon</literal> doit alors recevoir %True pour valeur.
+            Cette fonction applique une zone de sélection sur une image. Cette zone est un polygone, défini par une matrice de N lignes et 2 colonnes, décrivant les coordonnées (x,y) de ses N sommets.
+        </para>
+        <para>
+            Ce polygone peut être créé ou modifié interactivement avec la souris, via appel de la fonction <function>edit_curv()</function>, si l'option <literal>"edit"</literal>est renseignée. Il est possible d'ajouter des points, d'en déplacer et d'en supprimer.
+        </para>
+        <para>
+            Le masque de sortie peut garder les dimensions de l'image d'origine, ou bien être recadré au rectangle minimal encadrant le polygone de sélection. L'option <literal>"crop"</literal> doit alors être renseignée.
         </para>
     </refsection>
     <refsection>
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
-// Création d'un objet jimage à partir d'un fichier image
-path = jimlabPath("/") + "tests/images/noError/rgb.jpg";
-Jimage = jimread(path);
-
-// Matrice des sommets du polygone
-Summits = [10 10 ; 10 30 ; 30 40 ; 30 10];
-
-// Extraction du masque sans recadrage
-[mask, polygon, ij] = jimroi (Jimage, Summits);
-
-// Extraction du masque recadré
-[mask, polygon, ij] = jimroi (Jimage, Summits, , 1);
-
-// Création interactive du polygone, extraction du masque sans recadrage
-[mask, polygon, ij] = jimroi (Jimage, , 1);
-
-// Modification interactive du polygone, extraction du masque recadré
-[mask, polygon, ij] = jimroi (Jimage, Summits, 1, 1);
-
-]]></programlisting>
-	</refsection>
-    <refsection role="see also">
-        <title>Voir Aussi</title>
-        <simplelist type="inline">
-			<member>
-                <link linkend="edit_curv">edit_curv</link>
-            </member>
-        </simplelist>
-    </refsection>
-    <refsection>
-        <title>Historique</title>
-        <revhistory>
-            <revision>
-                <revnumber>0.1 - 2017-06</revnumber>
-                <revremark>Publication initiale du module Jimlab</revremark>
-            </revision>
-        </revhistory>
-    </refsection>
-</refentry>
+            // Création d'un objet jimage à partir d'un fichier image
+            path = jimlabPath("/") + "tests/images/noError/rgb.jpg";
+            Jimage = jimread(path);
+            
+            // Matrice des sommets du polygone
+            Summits = [10 10 ; 10 30 ; 30 40 ; 30 10];
+            
+            // Extraction du masque sans recadrage
+            [mask, polygon] = jimroi (Jimage, Summits);
+            
+            // Extraction du masque recadré
+            [mask, polygon, ij] = jimroi (Jimage, Summits, "crop");
+            
+            // Création interactive du polygone, extraction du masque sans recadrage
+            // Édition interactive forcée
+            [mask, polygon] = jimroi (Jimage);
+            
+            // Édition interactive du polygone, extraction du masque recadré
+            [mask, polygon, ij] = jimroi (Jimage, Summits, "edit", "crop");
+            
+            ]]></programlisting>
+            <para>
+                <inlinemediaobject>
+                    <imageobject>
+                        <imagedata fileref="../images/jimroi_example.png"/>
+                    </imageobject>
+                </inlinemediaobject>
+            </para>
+        </refsection>
+        <refsection role="see also">
+            <title>Voir Aussi</title>
+            <simplelist type="inline">
+                <member>
+                    <link linkend="edit_curv">edit_curv</link>
+                </member>
+            </simplelist>
+        </refsection>
+        <refsection>
+            <title>Historique</title>
+            <revhistory>
+                <revision>
+                    <revnumber>0.1 - 2017-06</revnumber>
+                    <revremark>Publication initiale du module Jimlab</revremark>
+                </revision>
+            </revhistory>
+        </refsection>
+    </refentry>
