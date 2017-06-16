@@ -24,6 +24,7 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
             msg = _("%s: Argument #%d: Text(s) expected.\n");
             error(msprintf(msg,"jimconvert",2));
         else
+            encoding = convstr(encoding);
             stdr_encoding = strstr(["rgba","rgb","gray"], encoding);
             if (stdr_encoding == [""])
                 msg = _("%s: Argument #%d: rgba, rgb or gray expected.\n");
