@@ -29,7 +29,8 @@ function jimdisp(image, box, info)
 
     // Case where a 2D, 3D matrix or a jimage object is given
     else
-        jimdisp_mat(image);
+        Matrix = jimstandard(image)
+        jimdisp_mat(Matrix);
         
         if info == "info" then
             withinfo(image);
