@@ -29,8 +29,7 @@ function jimdisp(image, box, info)
 
     // Case where a 2D, 3D matrix or a jimage object is given
     else
-        Matrix = jimstandard(image)
-        jimdisp_mat(Matrix);
+        jimdisp_mat(image);
         
         if info == "info" then
             withinfo(image);
@@ -59,7 +58,8 @@ function jimdisp_mat(image)
         Matplot(image.image);
         fig.figure_name = image.title + "." + image.mime;
     else
-        Matplot(image);
+        Matrix = jimstandard(image)
+        Matplot(Matrix);
     end
     ax.box = "off";
     ax.axes_visible = ["off","off","off"];
