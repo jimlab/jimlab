@@ -96,15 +96,18 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
             msg = _("%s: Argument #%d: hypermatrix with 3 components expected.\n");
             error(msprintf(msg, "jimconvert", 3));
         elseif encoding == "rgba"
-            if dimTC == size(Jimage)
+            if dimTC == [size(Jimage,1), size(Jimage,2)]
                 alpha = %t;
-            elseif (l == size(Jimage, 3))
-                alpha = %f
-            elseif (l ~= size(Jimage, 3) & size(Jimage, 3) ~= 4.)
-                msg = _("%s: Argument #%d and #%d: Dimensions must agree.\n");
-                error(msprintf(msg, "jimconvert", 1, 3));
             elseif (size(Jimage, 3) == 4.)
                 transparency = -1;
+                if jim
+                    transparency = jimTC;
+                end
+            elseif (l == size(Jimage, 3))
+                alpha = %f
+            elseif (l ~= size(Jimage, 3))
+                msg = _("%s: Argument #%d and #%d: Dimensions must agree.\n");
+                error(msprintf(msg, "jimconvert", 1, 3));
             else
                 msg = _("%s: Argument #%d: Scalar, alpha channel matrix or hypermatrix with 3 components expected.\n");
                 error(msprintf(msg, "jimconvert", 3));
