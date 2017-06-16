@@ -71,7 +71,7 @@ Jimage.transparencyColor = -1;
 jgray = jimconvert(Jimage, "gray");
 assert_checkequal(jgray.transparencyColor, int16(-1))
 gray = jimconvert(image, "gray");
-Jimage.transparencyColor = 200;
+Jimage.transparencyColor = int16(200);
 jgray = jimconvert(Jimage, "gray");
 assert_checkequal(jgray.transparencyColor, int16(200))
 
@@ -81,6 +81,22 @@ jgray = jimconvert(Jimage, "gray", tColor);
 gray = jimconvert(image, "gray", tColor);
 assert_checkequal(jgray.transparencyColor, int16(tColor))
 
+//in RGBA 
+jrgba = jimconvert(Jimage, "rgba");
+assert_checkequal(jrgba.image, Jimage.image);
+assert_checkequal(jrgba.transparencyColor, Jimage.transparencyColor);
+jrgba = jimconvert(Jimage, "RGBA");
+assert_checkequal(jrgba.image, Jimage.image);
+assert_checkequal(jrgba.transparencyColor, Jimage.transparencyColor);
+jrgba = jimconvert(Jimage, "RGBA", 255);
+assert_checkequal(jrgba.image, Jimage.image);
+assert_checkequal(jrgba.transparencyColor, Jimage.transparencyColor);
+jrgba = jimconvert(Jimage, "RGBA", [255,255,255]);
+assert_checkequal(jrgba.image, Jimage.image);
+assert_checkequal(jrgba.transparencyColor, Jimage.transparencyColor);
+jrgba = jimconvert(Jimage, "RGBA", ones(size(Jimage)));
+assert_checkequal(jrgba.image, Jimage.image);
+assert_checkequal(jrgba.transparencyColor, Jimage.transparencyColor);
 
     //Conversion of a RGB encoded image
     
@@ -112,6 +128,8 @@ rgb2 = jimconvert(image, "rgb", [255,255,255]);
 assert_checkequal(Jimage.image, jrgb.image);
 assert_checkequal(Jimage.image, rgb);
 assert_checkequal(Jimage.image, rgb2);
+
+
 
     //Conversion of a boolean image
 
@@ -165,3 +183,6 @@ msg = msprintf(msg, "jimconvert", 3);
 tColor = cat(3, 400, 3, 3);
 assert_checkerror("rgba = jimconvert(Jimage.image , ""rgb"", tColor)", msg)
 
+//rgb2 = jimconvert(image, "rgb", 255)
+//rgb2 = jimconvert(image, "rgb", ones(image))
+//erreur : Argument #3: hypermatrix with 3 components expected.
