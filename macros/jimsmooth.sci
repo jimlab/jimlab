@@ -1,371 +1,176 @@
-// This file is part of the Jimlab module,
+// This file is part of Jimlab,
 // an external module coded for Scilab and dedicated to image processing.
 //
-//Copyright (C) 2017 - ENSIM, Université du Maine - Alix Melaine Mnoubue
+// Copyright (C) 2017 - ENSIM, Université du Maine - Mnoubue ALIX MELAINE 
+// Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON 
 //
-//This file must be used under the terms of the CeCILL.
-//This source file is licensed as described in the file COPYING, which
-//you should have received as part of this distribution. The terms
-//are also available at
-//http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
+// This file must be used under the terms of the CeCILL.
+// This source file is licensed as described in the file COPYING, which
+// you should have received as part of this distribution. The terms are also
+// available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 
-
-function [IMB] =jimsmooth(Image, varargin)
-    //test arguments
-    if( argn(2) ==1) then
-        fogType="gaussian";
-        fogWidth=3;
-        mat_filter = jimsmooth_mask(fogType,fogWidth) ;
+function Image = jimsmooth(Image, varargin)
+    // blurred = jimsmooth(Image)
+    // blurred = jimsmooth(Image, fogWidth)
+    // blurred = jimsmooth(Image, fogType)
+    // blurred = jimsmooth(Image, fogType, fogWidth)
+    // blurred = jimsmooth(Image, fogMatrix)
+    // fogType : "mean", "triangular", "hyperbolic", "gaussian" (default)
+    // fogWidth: a unique or vector of two positive odd decimal integers
+    
+    // CHECKING ARGUMENTS
+    // ==================
+    rhs = argn(2);
+    if rhs<1 | rhs>3 then
+        msg = _("%s: Wrong number of input arguments: %d to %d expected.\n");
+        error(msprintf(msg, "jimsmooth", 1, 3));
     end
-    //number of arguments is two and the width of the filter is 3
-    if( argn(2) <3 & (length(varargin) ==1) & (type(varargin(1))==10)) then
-        fogType=varargin(1);
-        fogWidth=3;
-        mat_filter = jimsmooth_mask(fogType,fogWidth) ;
-    end
-
-    if(argn(2) >=3) then
-        if(length(varargin) ==2) then
-            fogType=varargin(1);
-            fogWidth=varargin(2) ;
-            mat_filter = jimsmooth_mask(fogType,fogWidth) ;
-        end
-        if(length(varargin) ==3) then
-            if(~( isequal(fogType, 'customize' ))) then
-                warning('The filter type should be customize' ) ;
-            end
-            fogWidth=varargin(1) ;
-            //test for parity of matrix customize
-            if(~ modulo(length(varargin(2)) , 2) )
-                mat_filter=varargin(2);
-            else 
-                error('the length of the matrix must be odd and bigger than 1' ) ;
-
-            end
-
-        end
-    end
-    // Testing arguments's typetype_filter
-    if(typeof(Image) == 'hypermat' ) then
-        mat_image = Image;
-    elseif(typeof(Image) == 'jimage' ) then
-        mat_image = Image. image;
+    // Checking Image
+    // --------------
+    if typeof(Image)~="jimage"
+        image = jimstandard(Image);
     else
-        error('Not any jimage or matrix argument have been defined' );
+        image = Image.image;
     end
 
-    //test Encoding Image
-    if((ndims(mat_image) == 4) ) then // Verify if Mat is a 2D
-        type_image = "rgba"; // Alpha channel isn't modified 
-        mat_im= jimsmooth_padRGBa(mat_image,fogWidth);
-    elseif(ndims(mat_image) == 3) then // For 3D matrix
-        type_image = "rgb";
-        mat_im= jimsmooth_padRGB(mat_image,fogWidth);
-    elseif(ndims(mat_image) == 2) then // For 2D matrix
-        type_image = "gray";
-        mat_im= jimsmooth_padGRAY(mat_image,fogWidth);
+    if rhs==1 then
+        fogType = "gaussian";
+        fogWidth = [3 3];
+    else // rhs > 1
+        tmp = varargin(1)
+        if type(tmp)==10    // fogType
+            if size(tmp,"*")>1
+                msg = _("%s: Argument #%d: Scalar (1 element) expected.\n");
+                error(msprintf(msg, "jimsmooth", 2));
+            end
+            maskTypes = ["uniform" "triangular" "hyperbolic" "gaussian"];
+            if ~or(convstr(tmp)==maskTypes)
+                msg = _("%s: Argument #%d: Must be in the set {%s}.\n");
+                maskTypes = """" + strcat(mtypes, """,""") + """";
+                error(msprintf(msg, "jimsmooth", 2, maskTypes));
+            end
+            fogType = convstr(tmp);
+            if rhs>2
+                tmp = varargin(2);
+            else
+                tmp = [];
+            end
+        end
+        if type(tmp)==1     // fogMatrix | fogWidth
+            if ~isreal(tmp, 0)
+                msg = _("%s: Argument #%d: Real number(s) expected.\n");
+                error(msprintf(msg, "jimsmooth", 2));
+            end
+            if ndims(tmp)>2
+                msg = _("%s: Argument #%d: Vector or matrix expected.\n");
+                error(msprintf(msg, "jimsmooth", 2));
+            end
+            if tmp==[]
+                fogWidth = [3 3]
+            elseif or(length(tmp)==[1 2])   // fogWidth
+                tmp = fix(tmp);
+                if ~and(modulo(tmp, 2)) | or(tmp<=0)
+                    msg = _("%s: Argument #%d: Both sizes must be positive and odd.\n");
+                    error(msprintf(msg, "jimsmooth", 2));
+                end
+                if length(tmp)==1
+                    tmp = [tmp tmp];
+                end
+                fogWidth = tmp;
+            else    // fogMatrix
+                if ~and(modulo(size(tmp), 2))
+                    msg = _("%s: Argument #%d: Both matrix sizes must be odd.\n");
+                    error(msprintf(msg, "jimsmooth", 2));
+                end
+                mat_filter = tmp;
+                fogWidth = size(tmp);
+            end
+        else
+            msg = _("%s: Wrong type for argument #%d.\n");
+            error(msprintf(msg, "jimsmooth", rhs));
+        end
+    end
+    if ~isdef("mat_filter","l") then
+        mat_filter = jimsmooth_mask(fogType, fogWidth) ;
+    end
+
+    // PADDING
+    // =======
+    nLayers = min(3, size(image,3));
+    // We do not smooth the alpha channel:
+    image = image(:,:,1:nLayers);
+    // Padding with the border line:
+    dh = (fogWidth(1)-1)/2;
+    dw = (fogWidth(2)-1)/2;
+    image = [repmat(image(1,:,:),dh,1) ; image ; repmat(image($,:,:),dh,1)];
+    image = [repmat(image(:,1,:),1,dw),  image, repmat(image(:,$,:),1, dw)];
+
+    // SMOOTHING
+    // =========
+    inputType = inttype(image(1));
+    image = double(image);
+    for i = 1:nLayers
+        image(:,:,i) = conv2(image(:,:,i), mat_filter, 'same');
+    end
+    image = iconvert(image, inputType);
+
+    // UNPADDING
+    // =========
+    image = image(dh+1:$-dh, dw+1:$-dw, :);
+    
+    if typeof(Image)=="jimage" then
+        Image.image(:,:,1:nLayers) = image;
     else
-        error("Argument Mat is not a matrix");
+        Image(:,:,1:nLayers) = image;
     end
-
-    //select Encoding Image
-    select type_image,
-    case "gray" then
-        result= uint8(conv2( double( mat_im),mat_filter,'same')) ;
-        IMB=jimsmooth_DelPadGRAY(result,fogWidth);
-
-    case "rgb" then
-        // Convolve the three separate color .
-        mat_im(:,:,1)=conv2(double(mat_im(:,:,1)),mat_filter,'same');
-        mat_im(:,:,2)=conv2(double(mat_im(:,:,2)),mat_filter,'same');
-        mat_im(:,:,3)=conv2(double(mat_im(:,:,3)),mat_filter,'same');
-        result=uint8( mat_im);
-        IMB=jimsmooth_DelPadRGB(result,fogWidth);
-
-    case "rgba" then
-        // Convolve the three separate color .
-        mat_im(:,:,1)=conv2(double(mat_im(:,:,1)),mat_filter,'same');
-        mat_im(:,:,2)=conv2(double(mat_im(:,:,2)),mat_filter,'same');
-        mat_im(:,:,3)=conv2(double(mat_im(:,:,3)),mat_filter,'same');
-        mat_im(:,:,4)=conv2(double(mat_im(:,:,4)),mat_filter,'same');
-        //Recombine separate color channels into a single
-
-        result=uint8( mat_im);
-        IMB=jimsmooth_DelPadRGBa(result,fogWidth);
-
-    end
-
-
-
 endfunction
 
-//Function returning the specified input mask
-function [matMask] =jimsmooth_mask(fogType, fogwidth)
+// ----------------------------------------------------------------------------
 
-    order=2;
-    //testing the parity of fogwidth mask
-    if((modulo(fogwidth, 2)) ==0 | fogwidth<3 ) then error('the fogwidth must be  odd' ) ; end;
-    // mat =mask(fogwidth);//the mask of filter
+function matMask = jimsmooth_mask(fogType, fogwidth)
+  // Function building the mask matrix according to the mask type and parameters
+
+    ic = int(fogwidth/2) +1; // index of the center
+    if or(fogType==["triangular" "hyperbolic" "gaussian"]) then
+        // Matrix of distances to the mask's center:
+        [X, Y] = meshgrid(1:fogwidth(2), 1:fogwidth(1));
+        D = sqrt((X-ic(2)).^2 + (Y-ic(1)).^2);
+    end
+
     select fogType
+    case "uniform" then
+        matMask = ones(fogwidth(1), fogwidth(2));
 
+//    case "triangular" then
+//        mat = ones(fogwidth(1),fogwidth(2));
+//        mat = mat/sum(mat);
+//        matMask = conv2(mat,mat,"same") ;
+
+    case "triangular" then      // conical
+        rMax = sqrt(sum(fogwidth.^2));
+        p = 4*(rMax-1);
+        // r = (max(fw)-1)/2 =>  w = 1/p
+        // r = 0             =>  w = 1
+        matMask = 1 - (1-1/p)/(rMax-1)*2 * D;
+
+    case "hyperbolic"   // Hyperbolic mask profile
+        // r = distance to the center
+        // n = number of surrounding neighboors at r: n = 8*r (or 2*%pi*r)
+        // a = 2*r+1   n=4*(a-1)=8*r
+        D(ic(1),ic(2)) = 1;     // Cancels the central 0
+        matMask = 1 ./D/7;
+        matMask(ic(1),ic(2)) = 1;
 
     case "gaussian" then
-        ic = int(fogwidth/2) +1; // index of the center
+        order = 2.5;
         sigma = (fogwidth/2) /order;
-        // Matrix of distances to the mask's center:
-        [X,Y] = meshgrid(1: fogwidth) ;
-
         // Creation of the 2D gaussian profile/weights
-        matMask = exp(-((X-ic) .^2 + (Y-ic) .^2) /2/sigma^2) ;
-        // Normalization:
-        matMask = matMask/sum(matMask) ;
-    case "uniform" then
-        matMask = (1/fogwidth^2) *ones(fogwidth,fogwidth) ;
-    case "triangular" then
+        matMask = exp(-(((X-ic(2))/sigma(2)).^2 + ((Y-ic(1))/sigma(1)).^2)/2);
 
-        if(fogwidth > 3) then
-            mat=(1/fogwidth^2) *ones(fogwidth,fogwidth) ;
-            matMask = conv2(mat,mat) ;
-        else
-            error('the size of this filter musb be bigger than 3' ) ;
-        end
-
-    else
-        error('this filter does not exits' ) ;
+    else    // should not occur
+        error('jimsmooth_mask: This filter does not exist') ;
     end
 
+    // Normalization:
+    matMask = matMask / sum(matMask);
 endfunction
-
-//Gray Image
-function [matImage] =jimsmooth_padGRAY(matrice,width)
-    [L,C]=size(matrice);
-
-    //add row in the low
-
-    matrice=[matrice ;matrice(L:-1:L-width+1,:,:)];
-
-
-    //add row in the hight
-
-    matrice=[ matrice(width:-1:1,:,:);matrice];
-
-    //add colunn in the right
-
-    matrice=[ matrice , matrice(:,C:-1:C-width+1)];
-
-    //add colunn in the left
-
-    matrice=[  matrice(:,width:-1:1),matrice];
-
-    matImage=matrice;
-
-
-endfunction   
-
-//RGB Image
-function [matImage] =jimsmooth_padRGB(matrice,width)
-    [L,C]=size(matrice);
-
-    mat1=matrice(:,:,1);   mat2=matrice(:,:,2);   mat3=matrice(:,:,3);
-    //add row in the low
-    mat1=[mat1 ;mat1(L:-1:L-width+1,:,:)];
-    mat2=[mat2 ;mat2(L:-1:L-width+1,:,:)];
-    mat3=[mat3 ;mat3(L:-1:L-width+1,:,:)];
-
-    //add roww in the hight
-
-    mat1=[ mat1(width:-1:1,:,:);mat1];
-    mat2=[ mat2(width:-1:1,:,:);mat2];
-    mat3=[ mat3(width:-1:1,:,:);mat3];
-    //add colunn in the right
-
-    mat1=[ mat1 , mat1(:,C:-1:C-width+1)];
-    mat2=[ mat2 , mat2(:,C:-1:C-width+1)];
-    mat3=[ mat3 , mat3(:,C:-1:C-width+1)];
-
-    //add colunn in the left   
-    mat1=[  mat1(:,width:-1:1),mat1];
-    mat2=[  mat2(:,width:-1:1),mat2];
-    mat3=[  mat3(:,width:-1:1),mat3]
-
-    //new size of row and column 
-    L=L+(2*width);  
-    C=C + (2*width);
-
-    matImage = resize_matrix(matrice, L, C);
-    matImage(:,:,1)=mat1;
-    matImage(:,:,2)=mat2;
-    matImage(:,:,3)=mat3;
-
-
-endfunction
-
-
-//RGB Image
-function [matImage] =jimsmooth_padRGBa(matrice,width)
-    [L,C]=size(matrice);
-
-    //add row in the low
-
-    mat1=matrice(:,:,1);   mat2=matrice(:,:,2);   mat3=matrice(:,:,3);mat4=matrice(:,:,4);
-
-    //add row in the low
-    mat1=[mat1 ;mat1(L:-1:L-width+1,:,:)];
-    mat2=[mat2 ;mat2(L:-1:L-width+1,:,:)];
-    mat3=[mat3 ;mat3(L:-1:L-width+1,:,:)];
-    mat4=[mat4 ;mat4(L:-1:L-width+1,:,:)];
-
-    //add roww in the hight
-
-
-    mat1=[ mat1(width:-1:1,:,:);mat1];
-    mat2=[ mat2(width:-1:1,:,:);mat2];
-    mat3=[ mat3(width:-1:1,:,:);mat3];
-    mat4=[ mat4(width:-1:1,:,:);mat4];
-    //add colunn in the right
-
-    mat1=[ mat1 , mat1(:,C:-1:C-width+1)];
-    mat2=[ mat2 , mat2(:,C:-1:C-width+1)];
-    mat3=[ mat3 , mat3(:,C:-1:C-width+1)];
-    mat4=[ mat4 , mat4(:,C:-1:C-width+1)];
-
-    //add colunn in the left   
-    mat1=[  mat1(:,width:-1:1),mat1];
-    mat2=[  mat2(:,width:-1:1),mat2];
-    mat3=[  mat3(:,width:-1:1),mat3];
-    mat4=[  mat4(:,width:-1:1),mat4];
-
-    //new size of row and column 
-    L=L+(2*width);  
-    C=C + (2*width);
-
-    matImage = resize_matrix(matrice, L, C);
-    matImage(:,:,1)=mat1;
-    matImage(:,:,2)=mat2;
-    matImage(:,:,3)=mat3;
-    matImage(:,:,4)=mat4;
-
-
-endfunction
-
-
-function [matImage] =jimsmooth_DelPadGRAY(matrice,width)
-    [L,C]=size(matrice);
-
-    //delete row in the low
-
-    matrice(L:-1:L-width+1,:)=[];
-
-
-    //delete row in the hight
-
-    matrice(width:-1:1,:)=[];
-
-    //delete colunn in the right
-    matrice(:,C:-1:C-width+1)=[];
-
-    //delete colunn in the left
-    matrice(:,width:-1:1)=[];
-
-    //new size of row and column 
-    L=L-(2*width);  
-    C=C-(2*width);
-    matImage=matrice; 
-endfunction   
-
-
-//RGBa Image
-function [matImage] =jimsmooth_DelPadRGBa(matrice,width)
-    [L,C]=size(matrice);
-
-    //delete row in the low
-
-    mat1=matrice(:,:,1);   mat2=matrice(:,:,2);   mat3=matrice(:,:,3);mat4=matrice(:,:,4);
-
-    //delete row in the low
-    mat1(L:-1:L-width+1,:)=[];
-    mat2(L:-1:L-width+1,:)=[];
-    mat3(L:-1:L-width+1,:)=[];
-    mat4(L:-1:L-width+1,:)=[];
-
-    //delete roww in the hight
-
-
-    mat1(width:-1:1,:,:)=[];
-    mat2(width:-1:1,:,:)=[];
-    mat3(width:-1:1,:,:)=[];
-    mat4(width:-1:1,:,:)=[];
-    //delete colunn in the right
-
-    mat1(:,C:-1:C-width+1)=[];
-    mat2(:,C:-1:C-width+1)=[];
-    mat3(:,C:-1:C-width+1)=[];
-    mat4(:,C:-1:C-width+1)=[];
-
-    //delete colunn in the left   
-    mat1(:,width:-1:1)=[];
-    mat2(:,width:-1:1)=[];
-    mat3(:,width:-1:1)=[];
-    mat4(:,width:-1:1)=[];
-
-    //new size of row and column 
-    L=L-(2*width);  
-    C=C-(2*width);
-
-    matImage = resize_matrix(matrice, L, C);
-    matImage(:,:,1)=mat1;
-    matImage(:,:,2)=mat2;
-    matImage(:,:,3)=mat3;
-    matImage(:,:,4)=mat4;
-
-
-endfunction
-
-
-//RGB Image
-function [matImage] =jimsmooth_DelPadRGB(matrice,width)
-    [L,C]=size(matrice);
-
-    //delete row in the low
-
-    mat1=matrice(:,:,1);   mat2=matrice(:,:,2);   mat3=matrice(:,:,3);
-
-    //delete row in the low
-    mat1(L:-1:L-width+1,:)=[];
-    mat2(L:-1:L-width+1,:)=[];
-    mat3(L:-1:L-width+1,:)=[];
-
-    //delete roww in the hight
-
-
-    mat1(width:-1:1,:)=[];
-    mat2(width:-1:1,:)=[];
-    mat3(width:-1:1,:)=[];
-
-    //delete colunn in the right
-
-    mat1(:,C:-1:C-width+1)=[];
-    mat2(:,C:-1:C-width+1)=[];
-    mat3(:,C:-1:C-width+1)=[];
-
-
-    //delete colunn in the left   
-    mat1(:,width:-1:1)=[];
-    mat2(:,width:-1:1)=[];
-    mat3(:,width:-1:1)=[];
-
-
-    //new size of row and column 
-    L=L-(2*width);  
-    C=C-(2*width);
-
-    matImage = resize_matrix(matrice, L, C);
-
-    matImage(:,:,1)=mat1;
-    matImage(:,:,2)=mat2;
-    matImage(:,:,3)=mat3;
-
-
-
-endfunction
-
