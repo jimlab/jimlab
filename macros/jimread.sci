@@ -628,26 +628,21 @@ function Jimage = jimread_byteIndexed(bufferedIm, imPath)
 
     // decomposes the integer value of the color into the three 8-bits color
     // components and an 8-bits alpha component for each pixels
-    //pause
-    tmp = unprocessedData / uint32(2^24);
+
+    tmp = unprocessedData ./ uint32(2^24);
     im(1,size(tmp,2),4) = uint32(0);      // Fast memory allocation
     im(:,:,4) = tmp;
-    // r = modulo(unprocessedData,uint32(2^24));
-    // im(:,:,1) = floor(r / uint32(2^16));
-    // g = modulo(unprocessedData, uint32(2^16));
-    // im(:,:,2) = floor(g / uint32(2^8));
-    // im(:,:,3) = modulo(unprocessedData,uint32(2^8));
     r = unprocessedData - tmp * uint32(2^24);
-    im(:,:,1) = r / uint32(2^16);
+    im(:,:,1) = r ./ uint32(2^16);
     g = unprocessedData - r * uint32(2^16);
-    im(:,:,2) = g / uint32(2^8);
+    im(:,:,2) = g ./ uint32(2^8);
     im(:,:,3) = unprocessedData - g * uint32(2^8);
     im = uint8(im);
 
     jremove bufferedIm unprocessedData
 
     dim = [double(width) double(height) 4];
-    im = matrix(im,dim);             //transpose matrix of the image
+    im = matrix(im,dim);                // transpose matrix of the image
     try
         im = jimread_transpose_hm(im);  // Formatting the image data
     catch
