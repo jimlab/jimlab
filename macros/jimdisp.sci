@@ -8,7 +8,7 @@
 // should have received as part of this distribution.  The terms are also
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 
-function jimdisp(image, box, info)
+function jimdisp(image, box, info, colormap)
 
     // Initializing default parameters
     if ~isdef("info","l") | type(info) == 0  then
@@ -16,6 +16,9 @@ function jimdisp(image, box, info)
     end
     if ~isdef("box","l") | type(box) == 0 then
         box = "no";
+    end
+    if ~isdef("colormap","l") | type(colormap) == 0 then
+        colormap = "no";
     end
 
     // Case where an image path or URL is given : the image is first
@@ -30,7 +33,6 @@ function jimdisp(image, box, info)
     // Case where a 2D, 3D matrix or a jimage object is given
     else
         jimdisp_mat(image);
-        
         if info == "info" then
             withinfo(image);
         end
@@ -58,7 +60,11 @@ function jimdisp_mat(image)
         Matplot(image.image);
         fig.figure_name = image.title + "." + image.mime;
     else
-        Matrix = jimstandard(image)
+        if colormap == "cm" | colormap == "colormap" then
+            Matrix = image ;
+        else
+            Matrix = jimstandard(image)
+        end
         Matplot(Matrix);
     end
     ax.box = "off";
