@@ -22,17 +22,17 @@
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            resized_image = jimresize(original_image, out_height, out_width)
-            resized_image = jimresize(original_image, out_height, out_width, interp_type)
-            resized_image = jimresize(original_image, out_height, out_width, , spline_type)
-            resized_image = jimresize(original_image, out_height, out_width, interp_type, spline_type)
+            resized_image = jimresize(image, out_height, out_width)
+            resized_image = jimresize(image, out_height, out_width, interp_type)
+            resized_image = jimresize(image, out_height, out_width, , spline_type)
+            resized_image = jimresize(image, out_height, out_width, interp_type, spline_type)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
-        <title>Paramètres</title>
+        <title>Arguments</title>
         <variablelist>
             <varlistentry>
-                <term>original_image</term>
+                <term>image</term>
                 <listitem>
                     <para>
                         L'argument image peut être :
@@ -74,7 +74,7 @@
                 <term>inter_type</term>
                 <listitem>
                     <para>
-                        Type de l'algorithme d'interpolation utilisé. Les algorithmes utilisables sont : "natural" (par défaut), "periodic", "by_zero", "by_nan", et "C0".
+                        Type de l'algorithme d'interpolation utilisé. Les algorithmes utilisables sont : "natural" (par défaut), "periodic", "by_zero", "by_nan" et "C0".
                     </para>
                 </listitem>
             </varlistentry>
@@ -82,7 +82,7 @@
                 <term>spline_type</term>
                 <listitem>
                     <para>
-                        Type de spline utilisé pour l'interpolation utilisé. Les types utilisables sont : "not_a_knot" (par défaut), "natural", "periodic", "monotone", "fast" et "fast-periodic".
+                        Type de spline utilisé pour l'interpolation utilisé. Les types utilisables sont : "not_a_knot" (par défaut), "natural", "periodic", "monotone", "fast", "fast-periodic" et "clamped".
                     </para>
                 </listitem>
             </varlistentry>
@@ -94,7 +94,7 @@
             Cette fonction permet de redimensionner une image contenue dans un objet <literal>jimage</literal>, ou une matrice ou hypermatrice d'une image.
         </para>
         <para>
-            Ce redimensionnement utilise la fonction <function>inter2d()</function>.
+            Ce redimensionnement utilise la fonction <function>interp2d()</function>.
         </para>
     </refsection>
     <refsection>
