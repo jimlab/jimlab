@@ -9,9 +9,6 @@
 // <-- NO CHECK REF -->
 // <-- TEST WITH GRAPHIC -->
 
-version = getversion()
-os = getos()
-
 // From an image file pre-loaded with jimread
 //[m, mp] = libraryinfo("jimlablib");
 //imagePath = getlongpathname(mp +"tests\images\noError\rgb.jpg");
@@ -30,13 +27,10 @@ jimdisp(imagePath,"box");
 jimdisp(imagePath,,"info");
 jimdisp(imagePath,"box","info");
 
-if ~(version == "scilab-5.5.2" & os == "Darwin")  then
-    // From a URL
-    imageURL = "https://webensim.univ-lemans.fr/ressources/icones/interface/Logoensim_2010_tr3.gif";
-    
-    jimdisp(imageURL);
-    jimdisp(imageURL,"box");
-    jimdisp(imageURL,,"info");
-    jimdisp(imageURL,"box","info");
-end
+// From a URL
+imageURL = "http://www.scilab.org/var/ezflow_site/storage/images/media/images/scilab.logo2/27845-1-eng-US/scilab.logo_imagelarge.png";
+jimdisp(imageURL);
+jimdisp(imageURL,"box");
+jimdisp(imageURL,,"info");
+jimdisp(imageURL,"box","info");
 
