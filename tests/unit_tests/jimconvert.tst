@@ -221,10 +221,10 @@ Jimage.transparencyColor = int16(255);
 jrgb = jimconvert(Jimage, "rgb");
 assert_checkequal(expected, jrgb.image);
 assert_checkequal(jrgb.transparencyColor, cat(3, Jimage.transparencyColor, Jimage.transparencyColor, Jimage.transparencyColor));
+clear expected
 
 //in RGB with a transparency color
 Jimage.transparencyColor = -1;
-
 rgb2 = jimconvert(image, "rgb", [255, 255, 255]);
 assert_checkequal(expected, jrgb.image);
 assert_checkequal(expected, rgb);
@@ -234,36 +234,49 @@ jrgb = jimconvert(Jimage, "rgb", int16(cat(3, 255, 255, 255)));
 assert_checkequal(expected, jrgb.image);
 assert_checkequal(jrgb.transparencyColor, int16(cat(3,255,255,255)));
 
-//in RGBA 
+//in RGBA with no optionnal argument
+Jimage.transparencyColor = -1;
+jrgba = jimconvert(Jimage, "rgba");
+rgba = jimconvert(image, "rgba");
+dim = size(image);
+tmp = [image, image, image];
+expected = matrix(tmp, [dim(1), dim(2), 3]);
+assert_checkequal(expected, jrgba.image(:,:,1:3));
+assert_checkequal(rgba, jrgba.image(:,:,1:3));
+assert_checkequal(uint8(255 * ones(dim(1), dim(2))), jrgba.image(:,:,4));
+assert_checkequal(uint8(255 * ones(dim(1), dim(2))), rgba(:,:,4));
+Jimage.transparencyColor = 255;
+jrgba = jimconvert(Jimage, "rgba");
+
 
     //Errors
 
 //Wrong first argument
-msg = "%s: Argument #%d: Wrong type of input argument.\n";
+msg = _("%s: Argument #%d: Wrong type of input argument.\n");
 msg = msprintf(msg, "jimconvert", 1);
 assert_checkerror("gray = jimconvert(""wrong"" , ""gray"")", msg)
 
 //Wrong second argument
-msg = "%s: Argument #%d: rgba, rgb or gray expected.\n";
+msg = _("%s: Argument #%d: rgba, rgb or gray expected.\n");
 msg = msprintf(msg, "jimconvert", 2);
 assert_checkerror("rgba = jimconvert(Jimage.image , ""bw"")", msg)
 
-msg = "%s: Argument #%d: The output encoding is not given.\n";
+msg = _("%s: Argument #%d: The output encoding is not given.\n");
 msg = msprintf(msg, "jimconvert", 2);
 assert_checkerror("rgba = jimconvert(Jimage.image)", msg)
 
-msg = "%s: Argument #%d: Text(s) expected.\n";
+msg = _("%s: Argument #%d: Text(s) expected.\n");
 msg = msprintf(msg, "jimconvert", 2);
 assert_checkerror("rgba = jimconvert(Jimage.image , 5)", msg)
 
 //Wrong third argument
 path = jimlabPath("/") + "tests/images/noError/rgba.png";
 Jimage = jimread(path);
-msg = "%s: Argument #%d: hypermatrix with 3 components expected.\n";
+msg = _("%s: Argument #%d: hypermatrix with 3 components expected.\n");
 msg = msprintf(msg, "jimconvert", 3);
 assert_checkerror("rgba = jimconvert(Jimage.image , ""rgb"", 38)", msg)
 
-msg = "%s: Argument #%d: Components of transparency must be in the intervalle [0,255] or [0,1].\n";
+msg = _("%s: Argument #%d: Components of transparency must be in the intervalle [0,255] or [0,1].\n");
 msg = msprintf(msg, "jimconvert", 3);
 tColor = cat(3, 400, 3, 3);
 assert_checkerror("rgba = jimconvert(Jimage.image , ""rgb"", tColor)", msg)
