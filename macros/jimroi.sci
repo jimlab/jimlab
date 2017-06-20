@@ -30,15 +30,12 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, varargin)
 // containing the whole polygon.
 
     // % Standard errors for this function %
-    msg_points = "%s: Three points must be selected at least in order to select a polygon."
-
-    msg_options = "%s: Argument %s : The optional arguments available are ""crop"" or ""edit"".";
-
-    msg_summits = "%s: Argument #%s : Must be an array of integers describing the N summits of (x,y) coordinates";
-    
-    msg_emptypoly = "%s: Argument #%d : A wrong or empty polygon has been given. Forcing the interactive edit."
-    
-    msg_nbarg = "%s: Too many input arguments (must be < 5)."
+    msg_points = _("%s: Three points must be selected at least in order to select a polygon.")
+    msg_options = _("%s: Argument %s : The optional arguments available are ""crop"" or ""edit"".")
+    msg_summits = _("%s: Argument #%s : Must be an array of integers describing the N summits of (x,y) coordinates")
+    msg_emptypoly = _("%s: Argument #%d : A wrong or empty polygon has been given. Forcing the interactive edit.")
+    msg_nbarg = _("%s: Too many input arguments (must be < 5).")
+    msg_matrix = _("%s: Argument #%d : A (hyper)matrix of 1, 3 or 4 layers, or a jimage object must be given")
     
     
     // % The algorithm will depend on the number of input parameters %
@@ -58,7 +55,6 @@ function [mask, polygon, ijTopLeft] = jimroi(image, input_polygon, varargin)
             Matrix = jimstandard(image);
         end
     else
-        msg_matrix = "%s: Argument #%d : A (hyper)matrix of 1, 3 or 4 layers, or a jimage object must be given";
         error(msprintf(msg_matrix, "jimroi", 1));
     end
 
