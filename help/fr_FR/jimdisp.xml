@@ -71,7 +71,7 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[ 
 // A partir d'une image pré-chargée
-path = jimlabPath() + "/help/images/logoEnsim_rgba.png";
+path = jimlabPath() + "/tests/images/logoEnsim_rgba.png";
 image = jimread(path);
 jimdisp(image,"box","info");
 
