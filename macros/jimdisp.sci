@@ -90,7 +90,7 @@ function jimdisp(image, varargin)
         // Case where an image path or URL is given : the image is first
         // loaded with jimread.
         image = jimread(image);
-    elseif typeof(image)~="jimage" & accordingColormap
+    elseif typeof(image)~="jimage" & ~accordingColormap
         image = jimstandard(image);
     end
 
