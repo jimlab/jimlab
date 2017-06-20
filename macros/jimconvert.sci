@@ -91,7 +91,7 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
         if (encoding == "gray" & l ~= 1.)
             msg = _("%s: Argument #%d: Scalar expected.\n");
             error(msprintf(msg, "jimconvert", 3));
-        elseif ((encoding == "rgb" | encoding == "rgba") & l == 1.)
+        elseif ((encoding == "rgb") & l == 1.)
             msg = _("%s: Argument #%d: hypermatrix with 3 components expected.\n");
             error(msprintf(msg, "jimconvert", 3));
         elseif encoding == "rgba"
