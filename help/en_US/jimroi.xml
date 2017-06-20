@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of the Jimlab module,
+ * an external module coded for Scilab and dedicated to image processing.
+ *
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Gael SENÉE
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+ *
+ * This file must be used under the terms of the CeCILL.
+ * This source file is licensed as described in the file COPYING, which you
+ * should have received as part of this distribution.  The terms are also
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
+ *
+ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
+		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
+		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
+		xml:lang="en" xml:id="jimroi">
+    <refnamediv>
+        <refname>jimroi</refname>
+        <refpurpose>Selection of a closed polygon on an image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Syntaxes</title>
+        <synopsis>
+            [mask, out_polygon] = jimroi(image)
+            [mask, out_polygon] = jimroi(image, in_polygon)
+            [mask, out_polygon] = jimroi(image, in_polygon, "edit")
+            [mask, out_polygon, ijTopLeft] = jimroi(image, , "crop")
+			
+        </synopsis>
+    </refsynopsisdiv>
+    <refsection>
+        <title>Arguments</title>
+        <variablelist>
+            <varlistentry>
+                <term>input_image</term>
+                <listitem>
+                    <para>
+                        <literal>jimage</literal> object, single layered matrix, or three or four layered hypermatrix.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>polygon</term>
+                <listitem>
+                    <para>
+                        N lines and 2 columns matrix containing the (x,y) coordinates of the N summits of the input polygon.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>Options :</term>
+                <para>
+                    Two options are available via keywords. They can be used togeether or not, as last parameters :
+                    <itemizedlist>
+                        <listitem>
+                            <para>
+                                <literal>"crop"</literal> : crops the mask to the minimum sized rectangle surrounding the polygon.
+                            </para>
+                        </listitem>
+                        <listitem>
+                            <para>
+                                <literal>"edit"</literal> : allows the interactive edition of the polygon :
+                                <itemizedlist>
+                                    <listitem>
+                                        <para>
+                                            add or insert point by clicking near or on a segment ;
+                                        </para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>
+                                            select a point by left clicking it ;
+                                            <itemizedlist>
+                                                <listitem>
+                                                    <para>
+                                                        drag and drop a point by holding the left mouse button
+                                                    </para>
+                                                </listitem>
+                                                <listitem>
+                                                    <para>
+                                                        remove a point by pressing "Suppr" ;
+                                                    </para>
+                                                </listitem>
+                                            </itemizedlist>
+                                        </para>
+                                    </listitem>
+                                    <listitem>
+                                        <para>
+                                            quit the edition by clicking the middle mouse button or Edit > OK in the tasks menu.
+                                        </para>
+                                    </listitem>
+                                </itemizedlist>
+                            </para>
+                        </listitem>
+                    </itemizedlist>
+                </para>
+            </varlistentry>
+            <varlistentry>
+                <term>mask</term>
+                <listitem>
+                    <para>
+                        2D matrix of booleans. Its size is the size of the image or the size of the cropped image if "crop" is used.
+                    </para>
+                    <para>
+                        <literal>mask(i,j)</literal> equals <literal>%T</literal> if <literal>(i,j)</literal> is inside the polygon or on its sides, and equals <literal>%F</literal> if <literal>(i,j)</literal> is outside the polygon.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>out_polygon</term>
+                <listitem>
+                    <para>
+                        N lines and 2 columns matrix containing the (x,y) coordinates of the N summits of the input polygon, modified or not by the interactive edition if "edit" is used.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>ijTopLeft</term>
+                <listitem>
+                    <para>
+                        (x,y) coordinates or the top left corner of the minimum rectangle containing the polygon of selection.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Description</title>
+        <para>
+            This fonction applies a selection zone on an image. This zone is a polygon, defined by an N lines and 2 columns matrix describing the (x,y) coordinates of its N summits.
+        </para>
+        <para>
+            This polygon can be created or edited interactively, with the help of the function <function>edit_curv()</function>. It's possible to add, move or remove points when the option "edit" is used.
+        </para>
+        <para>
+            The output mask can keep the size of the input image, or can be cropped to the minimum sized rectangle containing the polygon. The option "crop" may be used to do so.
+        </para>
+    </refsection>
+    <refsection>
+        <title>Examples</title>
+        <programlisting role="example"><![CDATA[
+            // Creation of a jimage object from an image file
+            path = jimlabPath("/") + "tests/images/noError/rgb.jpg";
+            Jimage = jimread(path);
+            
+            // Matrix of the summits of a polygon
+            Summits = [10 10 ; 10 30 ; 30 40 ; 30 10];
+            
+            // Extraction of the mask without cropping
+            [mask, polygon] = jimroi (Jimage, Summits);
+            
+            // Extraction of the cropped mask
+            [mask, polygon, ij] = jimroi (Jimage, Summits, "crop");
+            
+            // Interactive creation of the polygon, extraction of the mask without cropping
+            // Interactive edition forced
+            [mask, polygon] = jimroi (Jimage);
+            
+            // Interactive edition of the polygon, returning cropped mask
+            [mask, polygon, ij] = jimroi (Jimage, Summits, "edit", "crop");
+            
+            ]]></programlisting>
+            <para>
+                <inlinemediaobject>
+                    <imageobject>
+                        <imagedata fileref="../images/jimroi_example.png"/>
+                    </imageobject>
+                </inlinemediaobject>
+            </para>
+        </refsection>
+        <refsection role="see also">
+            <title>See Also</title>
+            <simplelist type="inline">
+                <member>
+                    <link linkend="edit_curv">edit_curv</link>
+                </member>
+            </simplelist>
+        </refsection>
+        <refsection>
+            <title>History</title>
+            <revhistory>
+                <revision>
+                    <revnumber>0.1 - 2017-06</revnumber>
+                    <revremark>First release of Jimlab</revremark>
+                </revision>
+            </revhistory>
+        </refsection>
+    </refentry>
