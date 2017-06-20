@@ -45,6 +45,8 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
             if (jimTC(1) ~= -1)
                 if (length(jimTC) == 3. & encoding == "gray")
                     transparency = [0.299 0.587 0.114] * jimTC(:);
+                elseif (length(jimTC) == 1. & encoding ~= "gray")
+                    transparency = [jimTC, jimTC, jimTC];
                 else
                     transparency = jimTC;
                 end
@@ -89,7 +91,7 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
         if (encoding == "gray" & l ~= 1.)
             msg = _("%s: Argument #%d: Scalar expected.\n");
             error(msprintf(msg, "jimconvert", 3));
-        elseif (encoding == "rgb" & l ~= 3.)
+        elseif ((encoding == "rgb" | encoding == "rgba") & l == 1.)
             msg = _("%s: Argument #%d: hypermatrix with 3 components expected.\n");
             error(msprintf(msg, "jimconvert", 3));
         elseif encoding == "rgba"
@@ -100,6 +102,7 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
                 if jim
                     transparency = jimTC;
                 end
+                alpha = %f;
             elseif (l == size(Jimage, 3))
                 alpha = %f
             elseif (l ~= size(Jimage, 3))
@@ -195,8 +198,18 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
             
         //RGBA=>RGBA
         if (size(Jimage, 3) == 4.)
-            convertedJimage = Jimage;
-            warning("Your image has not been modified.");
+            if (~isdef("alpha", "l") | ~alpha)
+                convertedJimage = Jimage;
+                warning("Your image has not been modified.");
+            else
+                convertedJimage = Jimage(:,:,1:3);
+                convertedJimage(:,:,4) = uint8(transparency);
+                if jim
+                    transparency = jimTC;
+                else
+                    transparency = -1;
+                end
+            end
             
         //RGB=>RGBA
         elseif (size(Jimage, 3) == 3.)
