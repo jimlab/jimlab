@@ -57,10 +57,7 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
         // boolean image : %t = white, %f = black
         jim = %f;
         bw = %t;
-        convertedJimage = uint8(Jimage) * 255;
-        if (encoding ~= "gray")
-            warning("Your image has been converted into gray encoding")
-        end
+        Jimage = uint8(Jimage) * 255;
     else
         //conversion in uint8 if necessary, jimstandard() default values are used
         [Jimage, originalType] = jimstandard(Jimage);
@@ -154,7 +151,9 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
         //Gray=>Gray
         elseif (size(Jimage,3) == 1.)
             convertedJimage = Jimage;
-            warning("Your image has not been modified.")
+            if ~bw
+                warning("Your image has not been modified.")
+            end
         end
            
     case "rgb" then
@@ -206,12 +205,12 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
                 if alpha
                     convertedJimage(:,:,4) = transparency;
                 else
-                    transparency = uint32(transparency(1)).*16^4 + uint32(transparency(2)).*16^2 + uint32(transparency(3));
+                    transparency32 = uint32(transparency(1)).*16^4 + uint32(transparency(2)).*16^2 + uint32(transparency(3));
                     tmp = uint32(Jimage(:,:,1)).*16^4 + uint32(Jimage(:,:,2)).*16^2 + uint32(Jimage(:,:,3));
-                    convertedJimage(:,:,4) = 255 * uint8(tmp ~= transparency)
+                    convertedJimage(:,:,4) = 255 * uint8(tmp ~= transparency32)
                 end
             else
-                convertedJimage(:,:,4) = 255 * ones(size(Jimage, 1:2));
+                convertedJimage(:,:,4) = 255 * ones(size(Jimage, 1), size(Jimage, 2));
             end
             convertedJimage = uint8(convertedJimage)
         
@@ -233,9 +232,19 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
     end
     if jim
         //if a jimage object is given, the output object must be a jimage. 
-        convertedJimage = mlist(["jimage","image","encoding",..
-        "title","mime","transparencyColor"], convertedJimage, ..
-        encoding, name, mime, int16(transparency));
+        if (encoding == "gray" | transparency(1) == -1)
+            convertedJimage = mlist(["jimage","image","encoding",..
+            "title","mime","transparencyColor"], convertedJimage, ..
+            encoding, name, mime, int16(transparency));
+        else
+            if (length(transparency) == 1.)
+                transparency = [transparency, transparency, transparency];
+            end
+                transparency = cat(3,transparency(1), transparency(2), transparency(3));
+                convertedJimage = mlist(["jimage","image","encoding",..
+                "title","mime","transparencyColor"], convertedJimage, ..
+                encoding, name, mime, int16(transparency));
+        end
     end
 
 
