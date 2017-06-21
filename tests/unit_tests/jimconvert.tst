@@ -18,21 +18,55 @@ path = jimlabPath("/") + "tests/images/logoEnsim_rgba.png";
 Jimage = jimread(path);
 image = Jimage.image;
 
-//in rgb without transparencyColor 
+//in rgb without transparency argument
 jrgb = jimconvert(Jimage, "rgb");
-assert_checkequal(jrgb.transparencyColor, int16(cat(3, 255, 255, 255)))
 rgb = jimconvert(image, "rgb");
+assert_checkequal(jrgb.transparencyColor, int16(-1))
+assert_checkequal(rgb, image(:,:,1:3))
+assert_checkequal(jrgb.image, rgb)
 Jimage.transparencyColor = cat(3, 200, 200, 200);
 jrgb = jimconvert(Jimage, "rgb");
+transparencyMask = image(:,:,4) == 0;
+transparencyMat(:,:,1) = uint8(transparencyMask) * Jimage.transparencyColor(1);
+transparencyMat(:,:,2) = uint8(transparencyMask) * Jimage.transparencyColor(2);
+transparencyMat(:,:,3) = uint8(transparencyMask) * Jimage.transparencyColor(3);
+convertedMat(:,:,1) = image(:,:,1) .* uint8(~transparencyMask);
+convertedMat(:,:,2) = image(:,:,2) .* uint8(~transparencyMask);
+convertedMat(:,:,3) = image(:,:,3) .* uint8(~transparencyMask);
+expected = uint8(transparencyMat) + convertedMat;
 assert_checkequal(jrgb.transparencyColor, int16(Jimage.transparencyColor))
+assert_checkequal(expected, jrgb.image)
+clear expected convertedMat transparencyMat transparencyMask
 
-//in rgb with a transparencyColor
+//in rgb with a transparency argument
+Jimage.transparencyColor = cat(3,255,255,255)
 tColor = cat(3, 200, 200, 200);
 jrgb = jimconvert(Jimage, "rgb", tColor);
-assert_checkequal(jrgb.transparencyColor, int16(tColor))
+transparencyMask = image(:,:,4) == 0;
+transparencyMat(:,:,1) = uint8(transparencyMask) * Jimage.transparencyColor(1);
+transparencyMat(:,:,2) = uint8(transparencyMask) * Jimage.transparencyColor(2);
+transparencyMat(:,:,3) = uint8(transparencyMask) * Jimage.transparencyColor(3);
+convertedMat(:,:,1) = image(:,:,1) .* uint8(~transparencyMask);
+convertedMat(:,:,2) = image(:,:,2) .* uint8(~transparencyMask);
+convertedMat(:,:,3) = image(:,:,3) .* uint8(~transparencyMask);
+expected = uint8(transparencyMat) + convertedMat;
+assert_checkequal(jrgb.transparencyColor, int16(Jimage.transparencyColor))
+assert_checkequal(expected, jrgb.image)
+clear expected convertedMat transparencyMat transparencyMask
 rgb = jimconvert(image, "rgb", tColor);
+transparencyMask = image(:,:,4) == 0;
+transparencyMat(:,:,1) = uint8(transparencyMask) * tColor(1);
+transparencyMat(:,:,2) = uint8(transparencyMask) * tColor(2);
+transparencyMat(:,:,3) = uint8(transparencyMask) * tColor(3);
+convertedMat(:,:,1) = image(:,:,1) .* uint8(~transparencyMask);
+convertedMat(:,:,2) = image(:,:,2) .* uint8(~transparencyMask);
+convertedMat(:,:,3) = image(:,:,3) .* uint8(~transparencyMask);
+expected = uint8(transparencyMat) + convertedMat;
+assert_checkequal(expected, rgb)
+clear expected convertedMat transparencyMat transparencyMask
 
-//in gray without transparencyColor
+
+//in gray without transparency argument
 Jimage.transparencyColor = -1;
 jgray = jimconvert(Jimage, "gray");
 assert_checkequal(jgray.transparencyColor, int16(255))
