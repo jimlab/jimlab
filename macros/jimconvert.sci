@@ -39,16 +39,27 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
         mime = Jimage.mime;
         name = Jimage.title;
         ext = "." + mime;
-        jimTC = Jimage.transparencyColor;
-        // Priority for a transparency explicitely given
+        if (isdef("transparency", "l") & type(transparency) ~= 0.)
+            if (encoding ~= "rgba" & [size(Jimage, 1) size(Jimage, 2)] ~= size(transparency))
+                warning("Argument #3: Not used. You must assigne its value to the .transparencyColor field of the jimage object if you want it to be used.")
+                clear transparency
+            end
+        end
         if (~isdef("transparency", "l") | type(transparency) == 0.)
-            if (jimTC(1) ~= -1)
-                if (length(jimTC) == 3. & encoding == "gray")
-                    transparency = [0.299 0.587 0.114] * jimTC(:);
-                elseif (length(jimTC) == 1. & encoding ~= "gray")
-                    transparency = [jimTC, jimTC, jimTC];
-                else
-                    transparency = jimTC;
+            if Jimage.transparencyColor(1) ~= -1 
+            transparency = Jimage.transparencyColor;
+                if (length(transparency) == 3. & encoding == "gray")
+                    transparency = [0.299 0.587 0.114] * transparency(:);
+                elseif (length(transparency) == 1. & encoding == "rgb")
+                    transparency = [transparency, transparency, transparency];
+                elseif (encoding == "rgba")
+                    if (size(Jimage, 3) ~= length(transparency))
+                        if length(transparency) == 1. 
+                            transparency = [transparency, transparency, transparency];
+                        elseif length(transparency) == 3. 
+                            transparency = [0.299 0.587 0.114] * transparency(:);
+                        end
+                    end
                 end
             end
         end
@@ -98,10 +109,6 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
             if dimTC == [size(Jimage,1), size(Jimage,2)]
                 alpha = %t;
             elseif (size(Jimage, 3) == 4.)
-                transparency = -1;
-                if jim
-                    transparency = jimTC;
-                end
                 alpha = %f;
             elseif (l == size(Jimage, 3))
                 alpha = %f
@@ -164,23 +171,20 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
         //RGBA=>RGB
         if (size(Jimage, 3) == 4.)
             transparencyMask = Jimage(:,:,4) == 0;
-            // By default transparency is white
-            if (transparency(1) == -1)
-                transparency = cat(3, 255, 255, 255);
+            if (transparency(1) == -1 | find(transparencyMask) == [])
+                convertedJimage = Jimage(:,:,1:3);
+            else
+                //All pixel with transparency are filled with transparencyColor
+                transparencyMat(:,:,1) = uint8(transparencyMask) * transparency(1);
+                transparencyMat(:,:,2) = uint8(transparencyMask) * transparency(2);
+                transparencyMat(:,:,3) = uint8(transparencyMask) * transparency(3);
+                convertedMat(:,:,1) = Jimage(:,:,1) .* uint8(~transparencyMask);
+                convertedMat(:,:,2) = Jimage(:,:,2) .* uint8(~transparencyMask);
+                convertedMat(:,:,3) = Jimage(:,:,3) .* uint8(~transparencyMask);
+                //addition of the transparent pixels and the non-transparent ones
+                convertedJimage = uint8(transparencyMat) + convertedMat;
             end
-            //All pixel with transparency are filled with transparencyColor
-            transparencyMat(:,:,1) = uint8(transparencyMask) * transparency(1);
-            transparencyMat(:,:,2) = uint8(transparencyMask) * transparency(2);
-            transparencyMat(:,:,3) = uint8(transparencyMask) * transparency(3);
-            convertedMat(:,:,1) = Jimage(:,:,1) .* uint8(~transparencyMask);
-            convertedMat(:,:,2) = Jimage(:,:,2) .* uint8(~transparencyMask);
-            convertedMat(:,:,3) = Jimage(:,:,3) .* uint8(~transparencyMask);
-            //addition of the transparent pixels and the non-transparent ones
-            convertedJimage = uint8(transparencyMat) + convertedMat;
-            //A modifier éventuellement apres réponse de S. Gougeon
-            if (find(transparencyMask) == [] & isdef("jimTC", "l") & jimTC(1) == -1)
-                transparency = -1;
-            end
+            
             
         //RGB=>RGB
         elseif (size(Jimage,3) == 3.)
@@ -204,11 +208,6 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
             else
                 convertedJimage = Jimage(:,:,1:3);
                 convertedJimage(:,:,4) = uint8(transparency);
-                if jim
-                    transparency = jimTC;
-                else
-                    transparency = -1;
-                end
             end
             
         //RGB=>RGBA
