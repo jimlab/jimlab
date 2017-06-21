@@ -61,10 +61,12 @@
             Jimage = jimread_intbgr(bufferedIm, imPath);
         case 5 then
             Jimage = jimread_3bytebgr(bufferedIm, imPath);
-            // PROFILED: logoEnsim_rgb.bmp: 5.5: 7510 ms => 6800 ms
+            // PROFILED: logoEnsim_rgb.bmp: 5.5: 150 ms => 136 ms
         case 6 then
             Jimage = jimread_4byteabgr(bufferedIm, imPath);
-            // PROFILED: logoEnsim_rgba.png: 5.5: 22052 ms => 9596 ms
+            // PROFILED: logoEnsim_rgba.png: 5.5: 441 ms => 192 ms
+	    //                               6.0: 437 ms => 238 ms
+	    // IPCV 64 ms, SIVP 32 ms, IPD 49 ms
         case 7 then
             Jimage = jimread_4byteabgrpre(bufferedIm, imPath);
         case 8 then
@@ -73,12 +75,12 @@
             Jimage = jimread_ushort555rgb(bufferedIm, imPath);
         case 10 then
             Jimage = jimread_byteGray(bufferedIm, imPath);
-            // PROFILED: lena_lowcontrast.jpg: 5.5: 920 ms => 860 ms
+            // PROFILED: lena_lowcontrast.jpg: 5.5: 18.4 ms => 17.2 ms
         case 11 then
             Jimage = jimread_ushortGray(bufferedIm, imPath);
         case 13 then
             Jimage = jimread_byteIndexed(bufferedIm, imPath);
-            // PROFILED lena_color.gif: 5.5: 914 ms =>
+            // PROFILED lena_color.gif: 5.5: 914 ms => 456 ms
         else
             msg = _("%s: Unexpected image type.\n");
             error(msprintf(msg,"jimread"));
