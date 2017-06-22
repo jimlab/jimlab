@@ -41,23 +41,23 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
         ext = "." + mime;
         if (isdef("transparency", "l") & type(transparency) ~= 0.)
             if (encoding ~= "rgba" & [size(Jimage, 1) size(Jimage, 2)] ~= size(transparency))
-                warning("Argument #3: Not used. You must assigne its value to the .transparencyColor field of the jimage object if you want it to be used.")
+                warning("Argument #3: Not used. The field .transparencyColor of the jimage object is used instead. ")
                 clear transparency
             end
         end
         if (~isdef("transparency", "l") | type(transparency) == 0.)
             if Jimage.transparencyColor(1) ~= -1 
-            transparency = Jimage.transparencyColor;
+                transparency = Jimage.transparencyColor;
                 if (length(transparency) == 3. & encoding == "gray")
                     transparency = [0.299 0.587 0.114] * transparency(:);
                 elseif (length(transparency) == 1. & encoding == "rgb")
                     transparency = [transparency, transparency, transparency];
                 elseif (encoding == "rgba")
-                    if (size(Jimage, 3) ~= length(transparency))
-                        if length(transparency) == 1. 
+                    if (size(Jimage.image, 3) ~= length(transparency))  //.image temporaire à enlever quand size sera mise à jour
+                        if size(Jimage.image, 3) == 3.  //.image temporaire à enlever quand size sera mise à jour
                             transparency = [transparency, transparency, transparency];
-                        elseif length(transparency) == 3. 
-                            transparency = [0.299 0.587 0.114] * transparency(:);
+                        elseif size(Jimage.image, 3) == 1.  //.image temporaire à enlever quand size sera mise à jour
+                            transparency = uint8([0.299 0.587 0.114] * double(transparency(:)));
                         end
                     end
                 end
@@ -102,7 +102,7 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
         if (encoding == "gray" & l ~= 1.)
             msg = _("%s: Argument #%d: Scalar expected.\n");
             error(msprintf(msg, "jimconvert", 3));
-        elseif ((encoding == "rgb") & l == 1.)
+        elseif ((encoding == "rgb") & l ~= 3.)
             msg = _("%s: Argument #%d: hypermatrix with 3 components expected.\n");
             error(msprintf(msg, "jimconvert", 3));
         elseif encoding == "rgba"
@@ -226,6 +226,7 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
             end
             convertedJimage = uint8(convertedJimage)
         
+        //Gray=>RGBA
         elseif (size(Jimage, 3) == 1.)
             dim = size(Jimage);
             tmp = [Jimage, Jimage, Jimage];
