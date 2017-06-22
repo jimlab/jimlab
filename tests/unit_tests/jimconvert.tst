@@ -255,10 +255,10 @@ Jimage.transparencyColor = int16(255);
 jrgb = jimconvert(Jimage, "rgb");
 assert_checkequal(expected, jrgb.image);
 assert_checkequal(jrgb.transparencyColor, cat(3, Jimage.transparencyColor, Jimage.transparencyColor, Jimage.transparencyColor));
-clear expected
+
 
 //in RGB with a transparency color
-Jimage.transparencyColor = -1;
+Jimage.transparencyColor = int16(-1);
 rgb2 = jimconvert(image, "rgb", [255, 255, 255]);
 assert_checkequal(expected, jrgb.image);
 assert_checkequal(expected, rgb);
@@ -266,7 +266,21 @@ assert_checkequal(expected, rgb2);
 assert_checkequal(int16(cat(3,255,255,255)), jrgb.transparencyColor);
 jrgb = jimconvert(Jimage, "rgb", int16(cat(3, 255, 255, 255)));
 assert_checkequal(expected, jrgb.image);
-assert_checkequal(jrgb.transparencyColor, int16(cat(3,255,255,255)));
+assert_checkequal(jrgb.transparencyColor, Jimage.transparencyColor);
+clear expected
+
+//in RGBA with a transparency mask
+Tmask = uint8(255*rand(size(Jimage, 1), size(Jimage, 2)))
+jrgba = jimconvert(Jimage, "rgba", Tmask);
+rgba = jimconvert(image, "rgba", Tmask);
+jrgba2 = jimconvert(Jimage, "rgba", Tmask);
+tmp = [image, image, image];
+expected = matrix(tmp, [dim(1), dim(2), 3]);
+assert_checkequal(expected, jrgba.image(:,:,1:3));
+assert_checkequal(Tmask, jrgba.image(:,:,4));
+assert_checkequal(rgba, jrgba.image);
+assert_checkequal(jrgba, jrgba2);
+clear expected tmp
 
 //in RGBA with no optionnal argument
 Jimage.transparencyColor = -1;
@@ -276,11 +290,19 @@ dim = size(image);
 tmp = [image, image, image];
 expected = matrix(tmp, [dim(1), dim(2), 3]);
 assert_checkequal(expected, jrgba.image(:,:,1:3));
-assert_checkequal(rgba, jrgba.image(:,:,1:3));
+assert_checkequal(rgba, jrgba.image);
 assert_checkequal(uint8(255 * ones(dim(1), dim(2))), jrgba.image(:,:,4));
 assert_checkequal(uint8(255 * ones(dim(1), dim(2))), rgba(:,:,4));
-Jimage.transparencyColor = 255;
+Jimage.transparencyColor = int16(255);
 jrgba = jimconvert(Jimage, "rgba");
+expected = 255 * uint8(image ~= Jimage.transparencyColor);
+assert_checkequal(expected, jrgba.image(:,:,4));
+assert_checkequal(jrgba.transparencyColor, int16(cat(3, Jimage.transparencyColor, Jimage.transparencyColor, Jimage.transparencyColor)));
+Jimage.transparencyColor = int16(cat(3,255,255,255));
+jrgba = jimconvert(Jimage, "rgba");
+expected = 255 * uint8(image ~= 255);
+assert_checkequal(expected, jrgba.image(:,:,4));
+assert_checkequal(jrgba.transparencyColor, Jimage.transparencyColor);
 
 
     //Errors
@@ -306,6 +328,7 @@ assert_checkerror("rgba = jimconvert(Jimage.image , 5)", msg)
 //Wrong third argument
 path = jimlabPath("/") + "tests/images/noError/rgba.png";
 Jimage = jimread(path);
+image = Jimage.image;
 msg = _("%s: Argument #%d: hypermatrix with 3 components expected.\n");
 msg = msprintf(msg, "jimconvert", 3);
 assert_checkerror("rgba = jimconvert(Jimage.image , ""rgb"", 38)", msg)
@@ -315,15 +338,8 @@ msg = msprintf(msg, "jimconvert", 3);
 tColor = cat(3, 400, 3, 3);
 assert_checkerror("rgba = jimconvert(Jimage.image , ""rgb"", tColor)", msg)
 
-//rgb2 = jimconvert(image, "rgb", 255)
-//rgb2 = jimconvert(image, "rgb", ones(image))
-//erreur : Argument #3: hypermatrix with 3 components expected.
-
-//TC = 255;
-//jrgba = jimconvert(Jimage, "rgba", TC);
-//erreur : Argument #1 et #3: Dimensions must agree.
-
-//jrgba = jimconvert(Jimage, "RGBA", 255);
-//jrgb = jimconvert(Jimage, "rgb", 255);
-//rgb = jimconvert(image, "rgb", 255);
-//erreur : Argument #3: hypermatrix with 3 components expected.
+msg = _("%s: Argument #%d: hypermatrix with 3 components expected.\n");
+msg = msprintf(msg, "jimconvert", 3);
+TC = 255;
+assert_checkerror("rgba = jimconvert(image , ""rgb"", TC)", msg)
+assert_checkerror("rgba = jimconvert(image , ""rgb"", ones(image))", msg)
