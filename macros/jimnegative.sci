@@ -8,7 +8,7 @@
 // should have received as part of this distribution.  The terms are also
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 
-function Mod_image = jiminvert(image)
+function Mod_image = jimnegative(image)
 	//This function returns the negative of an image 
 	//image : an object reprensenting an image (jimage, matrix or hypermatrix)
 	//Mod_image : the negative of image
