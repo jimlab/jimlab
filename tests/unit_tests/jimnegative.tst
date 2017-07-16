@@ -18,7 +18,7 @@ imagePath = jimlabPath() +"\tests\images\noError\gray.jpg";
 Jimage = jimread(imagePath);
 [h,w] = size(Jimage);
 
-inverted = jiminvert(Jimage);
+inverted = jimnegative(Jimage);
 convMatgray = 255 * ones(h,w);
 
 assert_checkequal(inverted.image,convMatgray-Jimage.image)
@@ -33,7 +33,7 @@ imagePath = jimlabPath() +"\tests\images\noError\rgb.jpg";
 Jimage = jimread(imagePath);
 [h,w] = size(Jimage);
 
-inverted = jiminvert(Jimage);
+inverted = jimnegative(Jimage);
 
 tmp = 255 * ones(h,w);
 convMatrgb(:,:,1) = tmp - Jimage.image(:,:,1) ;
@@ -52,7 +52,7 @@ imagePath = jimlabPath() +"\tests\images\noError\rgba.png";
 Jimage = jimread(imagePath);
 [h,w] = size(Jimage);
 
-inverted = jiminvert(Jimage);
+inverted = jimnegative(Jimage);
 
 tmp = 255 * ones(h,w);
 convMatrgba(:,:,1) = tmp - Jimage.image(:,:,1) ;
@@ -72,7 +72,7 @@ assert_checkequal(type(inverted),type(Jimage))
 uint8gray = uint8(grand(350,200,1,"uin",0,255));
 [h,w] = size(uint8gray);
 
-inverted = jiminvert(uint8gray);
+inverted = jimnegative(uint8gray);
 
 convMatgray2 = 255 * ones(h,w);
 
