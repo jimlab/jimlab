@@ -111,7 +111,7 @@ function resizedImage = jimresize (originalImage, out_height, out_width, interp_
     elseif(ndims(mat_image) == 2) then
         interpolatedMatrix = jimresizeGray (mat_image, out_height, out_width, interp_type, spline_type)
     else    
-        error(msprintf(msg,"jiminvert",1));
+        error(msprintf(msg,"jimresize",1));
     end
 
 
