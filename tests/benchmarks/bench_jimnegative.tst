@@ -9,7 +9,7 @@
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 //
 //==============================================================================
-// Benchmark for the jiminvert function
+// Benchmark for the jimnegative function
 //==============================================================================
 
 //  <-- BENCH NB RUN : 10 -->
@@ -21,6 +21,6 @@ jimage1 = jimread(path);
 
 // <-- BENCH START -->
 
-jimage2 = jiminvert(jimage1);
+jimage2 = jimnegative(jimage1);
 
 // <-- BENCH END -->
