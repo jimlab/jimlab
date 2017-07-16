@@ -12,18 +12,18 @@
  * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
  *
 -->
-<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
-        xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-        xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
-        xml:lang="fr" xml:id="jiminvert">
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+        xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
+        xml:lang="fr" xml:id="jimnegative">
     <refnamediv>
-        <refname>jiminvert</refname>
+        <refname>jimnegative</refname>
         <refpurpose>Négatif d'une image</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntaxes</title>
         <synopsis>
-            negative = jiminvert(image)
+            negative = jimnegative(image)
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -77,28 +77,28 @@
         <title>Exemples</title>
         <programlisting role="example"><![CDATA[
         // Avec un objet jimage
-            
+
             path = pathconvert(jimlabPath("/") + "tests/images/logoEnsim_rgba.png",%f);
             jimage_original = jimread(path);// On charge l'image originale
             subplot(2,2,1);
             jimdisp(jimage_original,,"info");// Affichage de l'image originale
-            
-            jimage_negative = jiminvert(jimage_original); // Inverssion de l'image
+
+            jimage_negative = jimnegative(jimage_original); // Inverssion de l'image
             subplot(2,2,2);
             jimdisp(jimage_negative,,"info"); // Affichage de l'image modifiée
-            
+
             // Avec une hyper-matrice
-            
+
             path = pathconvert(jimlabPath("/") + "tests/images/mat.data",%f); // Impotation de la matrice
             load(path);
             subplot(2,2,3);
-            jimdisp(mat); 
-            mat_negative = jiminvert(mat); // Invertion de la matrice
+            jimdisp(mat);
+            mat_negative = jimnegative(mat); // Invertion de la matrice
             subplot(2,2,4);
             jimdisp(mat_negative); // Affichage de la matrice modifiée
 
-	 ]]></programlisting>
-	</refsection>
+     ]]></programlisting>
+    </refsection>
     <refsection role="see also">
         <title>Voir Aussi</title>
         <simplelist type="inline">
