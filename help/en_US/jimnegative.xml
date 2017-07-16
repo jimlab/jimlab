@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of the Jimlab module made for Scilab
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Nicolas AEGERTER
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
+ *
+ * This file must be used under the terms of the CeCILL.
+ * This source file is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution.  The terms
+ * are also available at
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ *
+ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+        xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
+        xml:lang="en" xml:id="jimnegative">
+    <refnamediv>
+        <refname>jimnegative</refname>
+        <refpurpose>Negative of an image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Syntaxes</title>
+        <synopsis>
+           negative = jimnegative(image)
+       </synopsis>
+    </refsynopsisdiv>
+    <refsection>
+        <title>Arguments</title>
+        <variablelist>
+            <varlistentry>
+        <term>image</term>
+        <listitem>
+            <para>
+            This argument can be either a <literal>jimage</literal> object containning image's matrix and meta data, or a hypermatrix of one, three or four layers representing a gray-scale, RGB or RGBA image. Image must be a int8,16,32 or uint8,16,32 matrix, a boolean matrix or a real matrix.
+            </para>
+        </listitem>
+
+        <term>negative</term>
+            <listitem>
+        <para>
+            Negative of image. Nagative get the same type than image
+        </para>
+                </listitem>
+
+
+
+            </varlistentry>
+
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Description</title>
+            <para>
+                    This function invert the colors of an image.
+        </para>
+        <para>
+        For each pixels, the new color is calculated with the formula : "NewColor = 255 - OriginalColor".
+
+        Trancparency layer of an RGBA hypermatrix is not modified by jimnegative.
+
+        </para>
+    </refsection>
+    <refsection>
+        <title>Examples</title>
+        <programlisting role="example"><![CDATA[
+            // From a jimage object
+
+            path = pathconvert(jimlabPath("/") + "tests/images/logoEnsim_rgba.png",%f);
+            jimage_original = jimread(path);// Loading the original image
+            subplot(2,2,1);
+            jimdisp(jimage_original,,'info');// Disp the original image
+
+            jimage_negative = jimnegative(jimage_original);// Negative of the image
+            subplot(2,2,2);
+            jimdisp(jimage_negative,,'info'); // Disp the modified image
+
+            // From an hypermatrix
+
+            path = pathconvert(jimlabPath("/") + "tests/images/mat.data",%f); // Import the matrix in Scilab
+            load(path);
+            subplot(2,2,3);
+            jimdisp(mat);// Disp the original image
+            mat_negative = jimnegative(mat); // Negative of the image
+            subplot(2,2,4);
+            jimdisp(mat_negative); // Disp the modified image
+
+     ]]></programlisting>
+    </refsection>
+    <refsection role="see also">
+        <title>see also</title>
+        <simplelist type="inline">
+        <member>
+        <link linkend="jimage_properties">jimage properties</link>
+        </member>
+        <member>
+                <link linkend="jimsmooth">jimsmooth</link>
+                </member>
+        <member>
+                <link linkend="jimconvert">jimconvert</link>
+                </member>
+    </simplelist>
+    </refsection>
+    <refsection>
+        <title>History</title>
+        <revhistory>
+            <revision>
+                <revnumber>2017-05</revnumber>
+                <revremark>Publication initiale du module Jimlab</revremark>
+            </revision>
+        </revhistory>
+    </refsection>
+</refentry>
