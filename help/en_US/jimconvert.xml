@@ -100,12 +100,13 @@
                         <itemizedlist>
                             <listitem>
                                 <para>
-                                    A vector or a hypermatrix with three components in the interval [0, 255].
+                                    A vector or a hypermatrix with three components in the interval
+                                    [0, 255].
                                 </para>
                             </listitem>
                             <listitem>
                                 <para>
-                                    A scalar in the intervalle [0, 255] if the argument
+                                    A scalar in the interval [0, 255] if the argument
                                     <literal>encoding</literal> is <literal>"gray"</literal>.
                                 </para>
                             </listitem>
@@ -138,11 +139,10 @@
             white (<literal>%t</literal>).
         </para>
         <para>
-            If a <literal>jimage</literal> object is given, the output object is also a
-            <literal>jimage</literal> object with the same <literal>.title</literal> et
-            <literal>.format</literal> fields and with the field <literal>.transparencyColor</literal>
-            converted. Otherwise, the object <literal>convertedImage</literal> is a matrix or a
-            hypermatrix of uint8.
+            When the input is a <literal>jimage</literal>, its
+			<literal>.transparencyColor</literal> field is converted as well,
+			provided that it is enabled (&lt;>-1). Otherwise, <literal>convertedImage</literal>
+			is a matrix or a hypermatrix of type <literal>uint8</literal>.
         </para>
     </refsection>
     <refsection>
