@@ -1,7 +1,7 @@
 // This file is part of the Jimlab module,
 // an external module coded for Scilab and dedicated to image processing.
 //
-// Copyright (C) 2017 - ENSIM, Université du Maine - Camille CHAILLOUS
+// Copyright (C) 2017 - ENSIM, Université du Maine - Nicolas AEGERTER
 //
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which you
