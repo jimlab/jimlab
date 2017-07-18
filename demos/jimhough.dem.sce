@@ -31,7 +31,7 @@ function jimhough_dem()
            " - Another pair of lines is detected at 44°"
            " - The segment at the top left is detected at -67°. Its Hough intensity"
            "    is smaller, because the segment is shorter (and thiner)."
-           }
+           ]
     jim = jimread(jimlabPath()+"/tests/images/hough.png");
     [H, rho, a] = jimhough(jim,-80:0.5:70);
     //clf
