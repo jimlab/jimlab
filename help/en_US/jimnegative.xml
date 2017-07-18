@@ -29,84 +29,141 @@
         <title>Arguments</title>
         <variablelist>
             <varlistentry>
-        <term>image</term>
-        <listitem>
-            <para>
-            This argument can be either a <literal>jimage</literal> object containning image's matrix and meta data, or a hypermatrix of one, three or four layers representing a gray-scale, RGB or RGBA image. Image must be a int8,16,32 or uint8,16,32 matrix, a boolean matrix or a real matrix.
-            </para>
-        </listitem>
-
-        <term>negative</term>
-            <listitem>
-        <para>
-            Negative of image. Nagative get the same type than image
-        </para>
+                <term>image</term>
+                <listitem>
+                    <para>
+                    <link linkend="jimage_properties">jimage object</link> (image array + its metadata),
+                    or gray matrix or RGB or RGBA hypermatrix representing an image, as accepted by
+                    <link linkend="jimstandard">jimstandard</link> without options.
+                    </para>
                 </listitem>
-
-
-
             </varlistentry>
-
+            <varlistentry>
+                <term>negative</term>
+                <listitem>
+                    <para>
+                        Negative of the <varname>image</varname>, with the same sizes and number of
+                        color layers.
+                        <itemizedlist>
+                            <listitem>
+                                If <varname>image</varname> is a
+                                <literal>jimage object</literal>, <varname>negative</varname> is so.
+                                If <literal>image.transparencyColor</literal> is not set to -1, it
+                                is inverted as well.
+                            </listitem>
+                            <listitem>
+                                Otherwise: It is a matrix or hypermatrix of <literal>uint8</literal>
+                                type, as returned by <literal>jimstandard()</literal>.
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                </listitem>
+            </varlistentry>
         </variablelist>
     </refsection>
     <refsection>
         <title>Description</title>
-            <para>
-                    This function invert the colors of an image.
+        <para>
+            This function inverts the colors or grey tones of an image.
         </para>
         <para>
-        For each pixels, the new color is calculated with the formula : "NewColor = 255 - OriginalColor".
-
-        Trancparency layer of an RGBA hypermatrix is not modified by jimnegative.
-
+            When the input image is not a <literal>jimage object</literal>, it is expected to be
+            a matrix or hypermatrix representing an image and is passed to
+            <literal>jimstandard()</literal> whose output is the actual considered image.
         </para>
+        <para>
+            For each pixel, for each color layer, the initial intensity <literal>Io</literal> being
+            in [0, 255], the new intensity is set to <literal>In=255-Io</literal>
+        </para>
+        <para>
+            When the input image has an alpha 4th layer, this one is never changed.
+        </para>
+        <note>
+            The NOT operator <literal>~</literal> can be used to invert colors of any
+            <literal>jimage object</literal> in a handy way.
+        </note>
     </refsection>
     <refsection>
         <title>Examples</title>
         <programlisting role="example"><![CDATA[
             // From a jimage object
-
-            path = pathconvert(jimlabPath("/") + "tests/images/logoEnsim_rgba.png",%f);
-            jimage_original = jimread(path);// Loading the original image
-            subplot(2,2,1);
-            jimdisp(jimage_original,,'info');// Disp the original image
-
-            jimage_negative = jimnegative(jimage_original);// Negative of the image
-            subplot(2,2,2);
-            jimdisp(jimage_negative,,'info'); // Disp the modified image
-
-            // From an hypermatrix
-
-            path = pathconvert(jimlabPath("/") + "tests/images/mat.data",%f); // Import the matrix in Scilab
-            load(path);
-            subplot(2,2,3);
-            jimdisp(mat);// Disp the original image
-            mat_negative = jimnegative(mat); // Negative of the image
-            subplot(2,2,4);
-            jimdisp(mat_negative); // Disp the modified image
-
+            //  Color:
+            image = jimread(jimlabPath()+"/tests/images/lena_color.gif")
+            subplot(2,3,1), jimdisp(image); xtitle("lena")
+            subplot(2,3,2), jimdisp(jimnegative(image)); xtitle("jimnegative(lena)")
+            subplot(2,3,3), jimdisp(~image); xtitle("~lena")
+            // Gray:
+            image = jimconvert(image,"gray");
+            subplot(2,3,4), jimdisp(image); xtitle("lena_gray")
+            subplot(2,3,5), jimdisp(jimnegative(image)); xtitle("jimnegative(lena_gray)")
+            subplot(2,3,6), jimdisp(~image); xtitle("~lena_gray")
+        ]]>
+        </programlisting>
+        <scilab:image>
+            // From a jimage object
+            //  Color:
+            image = jimread(jimlabPath()+"/tests/images/lena_color.gif")
+            subplot(2,3,1), jimdisp(image); xtitle("lena")
+            subplot(2,3,2), jimdisp(jimnegative(image)); xtitle("jimnegative(lena)")
+            subplot(2,3,3), jimdisp(~image); xtitle("~lena")
+            // Gray:
+            image = jimconvert(image,"gray");
+            subplot(2,3,4), jimdisp(image); xtitle("lena_gray")
+            subplot(2,3,5), jimdisp(jimnegative(image)); xtitle("jimnegative(lena_gray)")
+            subplot(2,3,6), jimdisp(~image); xtitle("~lena_gray")
+        </scilab:image>
+        <programlisting role="example"><![CDATA[
+            // From a matrix or hypermatrix:
+            // Loading the image in "mat":
+            load(jimlabPath()+"/tests/images/mat.data");
+            // Color:
+            typeof(mat(1)), size(mat)
+            subplot(2,2,1), jimdisp(mat), xtitle("Color")
+            nmat = jimnegative(mat);
+            typeof(nmat(1)), size(nmat)
+            subplot(2,2,2), jimdisp(nmat), xtitle("jimnegative(Color)")
+            // Gray:
+            mat = jimconvert(mat, "gray");
+            typeof(mat), size(mat)
+            subplot(2,2,3), jimdisp(mat), xtitle("Gray")
+            nmat = jimnegative(mat);
+            typeof(nmat(1)), size(nmat)
+            subplot(2,2,4), jimdisp(nmat), xtitle("jimnegative(Gray)")
      ]]></programlisting>
     </refsection>
     <refsection role="see also">
-        <title>see also</title>
+        <title>See also</title>
         <simplelist type="inline">
         <member>
-        <link linkend="jimage_properties">jimage properties</link>
+            <link linkend="jimage_properties">jimage properties</link>
         </member>
         <member>
-                <link linkend="jimsmooth">jimsmooth</link>
-                </member>
+            <link linkend="jimconvert">jimconvert</link>
+        </member>
         <member>
-                <link linkend="jimconvert">jimconvert</link>
-                </member>
+            <link linkend="jimage_not">jimage NOT</link>
+        </member>
     </simplelist>
     </refsection>
     <refsection>
         <title>History</title>
         <revhistory>
             <revision>
-                <revnumber>2017-05</revnumber>
-                <revremark>Publication initiale du module Jimlab</revremark>
+                <revnumber>0.1, 2017-06</revnumber>
+                <revremark>jiminvert() is included in the first release of the Jimlab module</revremark>
+            </revision>
+            <revision>
+                <revnumber>0.2, 2017-07</revnumber>
+                <revremark>
+                    <itemizedlist>
+                        <listitem>
+                            jiminvert() renamed jimnegative()
+                        </listitem>
+                        <listitem>
+                            When it is enabled, Jimage.transparencyColor is now reverted as well.
+                        </listitem>
+                    </itemizedlist>
+                </revremark>
             </revision>
         </revhistory>
     </refsection>
