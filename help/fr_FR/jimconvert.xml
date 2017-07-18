@@ -140,12 +140,11 @@
             (<literal>%f</literal>) et blanc (<literal>%t</literal>).
         </para>
         <para>
-            Si un objet <literal>jimage</literal> est donné en entrée, l'objet de sortie sera aussi
-            de type <literal>jimage</literal> avec les champs <literal>.title</literal> et
-            <literal>.format</literal> conservés et le champ <literal>.transparencyColor</literal>
-            converti. Sinon, l'objet <literal>convertedImage</literal> est une matrice ou une
-            hypermatrice encodée en entiers 8 bits non signés.
-        </para>
+            Lorsque l'image donnée est une <literal>jimage</literal>, s'il est activé (&lt;>-1),
+			son champ <literal>.transparencyColor</literal> est également converti. Sinon,
+			<literal>convertedImage</literal> est une matrice ou une hypermatrice encodée en entiers
+			<literal>uint8</literal>
+		</para>
     </refsection>
     <refsection>
         <title>Exemples</title>
