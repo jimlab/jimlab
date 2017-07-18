@@ -152,8 +152,8 @@
             histogram equalization.
         </para>
         <para>
-            If the input image is a <literal>jimage</literal> object, the fields
-            <literal>.title</literal> and <literal>.format</literal> are kept for the output object.
+            If the input image is a <literal>jimage</literal> object, its fields like
+            <literal>.title</literal> are unchanged in the output object.
             If the field <literal>.transparencyColor</literal> is different from -1, the
             transparency color is ignored by the algorithm only if <literal>ignoredTC</literal> is given.
         </para>
