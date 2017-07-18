@@ -94,7 +94,8 @@ function jimdisp(image, varargin)
         image = jimstandard(image);
     end
 
-    drawlater()
+    drawlaterIN = f.immediate_drawing;
+    f.immediate_drawing = "off";
     jimdisp_mat(image);
 
     ax = gca();
@@ -128,7 +129,7 @@ function jimdisp(image, varargin)
         ax.title.text = image.title + "." + image.mime + " - " + ..
         image.encoding + " - "  + string(height) + " x " + string(width);
     end
-    drawnow()
+    f.immediate_drawing = drawlaterIN;
 endfunction
 
 // ---------------------------------------------------------------------------
