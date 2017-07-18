@@ -40,7 +40,7 @@
 					    <itemizedlist>
 					        <listitem>
 						    <para>
-						        hypermatrix RGB or RGBA or ARGB (<literal>argb? = %t</literal>) of int8 or uint8, or of equivalent decimal numbers in [0, 255], in [-128, 127] or normalized in the intervalle [0, 1].
+						        hypermatrix RGB or RGBA or ARGB (<literal>argb? = %t</literal>) of int8 or uint8, or of equivalent decimal numbers in [0, 255], in [-128, 127] or normalized in the interval [0, 1].
 						    </para>
 						</listitem>
 						<listitem>
@@ -75,7 +75,7 @@
 					</listitem>
 					<listitem>
 					    <para>
-					         <emphasis role="bold">gray image</emphasis> : matrix of uint8 or int8, or of equivalent decimal numbers in [0, 255], in [-128, 127] or normalized in the intervalle [0, 1] or matrix of booleans (<literal>%t</literal> = White).
+					         <emphasis role="bold">gray image</emphasis> : matrix of uint8 or int8, or of equivalent decimal numbers in [0, 255], in [-128, 127] or normalized in the interval [0, 1] or matrix of booleans (<literal>%t</literal> = White).
 					    </para>
 					</listitem>
 				    </itemizedlist>
