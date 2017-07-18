@@ -24,7 +24,10 @@ function main_builder()
     // Macros
     mprintf("Building macros...\n-- Creation of [%s] --\n", TOOLBOX_NAME+"lib");
     genlib(TOOLBOX_NAME+"lib", toolbox_dir+"macros", %t);   // to force rebuilding
-    genlib("jimagelib", toolbox_dir+"macros/overload", %t); // to force rebuilding
+    genlib("z_jimagelib", toolbox_dir+"macros/overload", %t); // to force rebuilding
+    // The "z_" prefix is mandatory for Scilab 6.0 to load on first calls the
+    // redefined mean(), median() and stdev() instead of from statisticslib.
+
     //tbx_builder_macros(toolbox_dir);
 
     // loader and cleaner
@@ -37,7 +40,7 @@ function main_builder()
     end
 
     // Help pages
-    tbx_builder_help(toolbox_dir);
+    //tbx_builder_help(toolbox_dir);
 endfunction
 // =============================================================================
 main_builder();
