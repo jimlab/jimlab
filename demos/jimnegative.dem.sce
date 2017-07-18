@@ -19,7 +19,6 @@ function jimnegative_dem()
     
     // From a jimage object
     //  Color:
-    f = gcf();
     drawlater()
     image = jimread(jimlabPath()+"/tests/images/lena_color.gif")
     subplot(2,3,1), jimdisp(image); xtitle("lena")
