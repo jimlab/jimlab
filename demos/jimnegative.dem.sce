@@ -10,11 +10,12 @@
 
 function jimnegative_dem()
     msg = ["Negative of a color or gray image:"
-           "  * jimnegative() can be used on jimage objects and matrices or hypermatrices."
-           "  * ~Jimage: The NOT operator is more handy (only with Jimage objects)."
+           ""
+           " * jimnegative() can be used on matrices or hypermatrices, as well as on jimage objects."
+           " * ~Jimage: The NOT operator is more handy, but only on Jimage objects."
            ""
            "When not disabled to -1, Jimage.transparencyColor is reverted as well."
-           }
+           ]
     messagebox(msg, "Jimlab demos: jimnegative() and ~");
     
     // From a jimage object
