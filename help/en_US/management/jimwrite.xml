@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * This file is part of the Jimlab module made for Scilab
+ * This file is part of Jimlab, an external module coded for Scilab
+ * and dedicated to image processing.
+ *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Nicolas AEGERTER
  * Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
  *
@@ -8,7 +10,7 @@
  * This source file is licensed as described in the file COPYING, which
  * you should have received as part of this distribution.  The terms
  * are also available at
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  *
  -->
 <refentry xmlns="http://docbook.org/ns/docbook"
@@ -57,7 +59,7 @@
 				<term>Encoding</term>
                 <listitem>
                  <para>
-                       A string giving the encoding type : 'gray', 'rgb', or 'rgba'. Without encoding argument, the .encoding field of the <literal>jimage</literal> object, or 'rgb' for an hypermatrix will be used.
+                       A string giving the encoding type : 'gray', 'rgb', or 'rgba'. Without encoding argument, the encoding type of the <literal>jimage</literal> object, or 'rgb' for an hypermatrix will be used.
 				</para>
 				</listitem>
 				</varlistentry>
@@ -110,11 +112,11 @@
             		This function save an image as a file from a <literal>jimage</literal> or an hypermatrix. It can save RGB, RGBA or gray-scales images.
 		</para>
 		<para>
-			When a <literal>jimage</literal> is set as parameter, the name of the file, the type MIME, and the image encoding are extracted from the <literal>jimage</literal> parameter.Moreover, if type MIME or/and encoding argument or set in jimwrite, thsir will be used instead.
+			When a <literal>jimage</literal> is set as parameter, the name of the file, the type MIME, and the image encoding are extracted from the <literal>jimage</literal> data. Moreover, if type MIME or/and encoding argument or set in jimwrite, they will be used instead.
 
-			If the argument image is an hypermatrix, name, ype MIME and encoding argument are requiered, otherwise, default values will be used. Name is contained in the argument imagePath.
+			If the argument image is an hypermatrix, name, MIME type and encoding arguments are required, otherwise, default values will be used. Name is contained in the argument imagePath.
 			
-			RGBA encoded hypermatrix can only be write in PNG type MIME.
+			RGBA encoded hypermatrix can only be written in PNG type MIME.
         </para>
     </refsection>
     <refsection>

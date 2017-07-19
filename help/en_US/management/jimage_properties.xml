@@ -8,7 +8,7 @@
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
  * you should have received as part of this distribution.  The terms are also
- * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  *
  -->
 <refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -31,33 +31,6 @@
                     <listitem>
                         The matrix or hypermatrix with the values of each pixels. The standard
                         format used in Jimlab is uint8 : values are in the range [0,255].
-                    </listitem>
-                </varlistentry>
-                <varlistentry>
-                    <term>.encoding</term>
-                    <listitem>
-                        The encoding type of the image.
-                        <itemizedlist>
-                            <listitem>
-                                <para>
-                                    'gray' : <literal>jimage.image</literal> is a matrix describing
-                                    a grayscale image (with 256 gray levels).
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    'rgb' : <literal>jimage.image</literal> is a three-layer
-                                    hypermatrix. Each of these layers gives the pixel values for
-                                    one color (Red, Green, Blue) on 256 levels.
-                                </para>
-                            </listitem>
-                            <listitem>
-                                <para>
-                                    'rgba' : <literal>jimage.image</literal> is a four-layer
-                                    hypermatrix. The fourth layer contains the alpha channel.
-                                </para>
-                            </listitem>
-                        </itemizedlist>
                     </listitem>
                 </varlistentry>
                 <varlistentry>
