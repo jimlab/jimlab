@@ -26,7 +26,8 @@ assert_checkequal(size(Jimage, 4), 1);
 assert_checkequal(size(Jimage, "r"), 500);
 assert_checkequal(size(Jimage, "c"), 512);
 assert_checkequal(size(Jimage, "*"), 500*512);
-
+[h,w,nl] = size(Jimage);
+assert_checkequal([h w nl], [500 512 4]);
 
 // RGB Jimage
 // ==========
@@ -39,6 +40,8 @@ assert_checkequal(size(Jimage, 4), 1);
 assert_checkequal(size(Jimage, "r"), 500);
 assert_checkequal(size(Jimage, "c"), 512);
 assert_checkequal(size(Jimage, "*"), 500*512);
+[h,w,nl] = size(Jimage);
+assert_checkequal([h w nl], [500 512 3]);
 
 // Gray Jimage
 // ==========
@@ -51,3 +54,5 @@ assert_checkequal(size(Jimage, 4), 1);
 assert_checkequal(size(Jimage, "r"), 50);
 assert_checkequal(size(Jimage, "c"), 50);
 assert_checkequal(size(Jimage, "*"), 2500);
+[h,w,nl] = size(Jimage);
+assert_checkequal([h w nl], [50 50 1]);

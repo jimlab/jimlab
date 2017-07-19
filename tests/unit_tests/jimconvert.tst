@@ -241,9 +241,9 @@ assert_checkequal(Jimage.image, jgray2.image);
 //in RGB without transparency color
 jrgb = jimconvert(Jimage, "rgb");
 rgb = jimconvert(image, "rgb");
-dim = size(image);
+[h, w] = size(image);
 tmp = [image, image, image];
-expected = matrix(tmp, [dim(1), dim(2), 3]);
+expected = matrix(tmp, [h w 3]);
 assert_checkequal(expected, jrgb.image);
 assert_checkequal(expected, rgb);
 assert_checkequal(int16(Jimage.transparencyColor), jrgb.transparencyColor);
@@ -270,12 +270,12 @@ assert_checkequal(jrgb.transparencyColor, Jimage.transparencyColor);
 clear expected
 
 //in RGBA with a transparency mask
-Tmask = uint8(255*rand(size(Jimage, 1), size(Jimage, 2)))
+Tmask = uint8(255*rand(h, w))
 jrgba = jimconvert(Jimage, "rgba", Tmask);
 rgba = jimconvert(image, "rgba", Tmask);
 jrgba2 = jimconvert(Jimage, "rgba", Tmask);
 tmp = [image, image, image];
-expected = matrix(tmp, [dim(1), dim(2), 3]);
+expected = matrix(tmp, [h w 3]);
 assert_checkequal(expected, jrgba.image(:,:,1:3));
 assert_checkequal(Tmask, jrgba.image(:,:,4));
 assert_checkequal(rgba, jrgba.image);
@@ -286,13 +286,13 @@ clear expected tmp
 Jimage.transparencyColor = -1;
 jrgba = jimconvert(Jimage, "rgba");
 rgba = jimconvert(image, "rgba");
-dim = size(image);
+[h, w] = size(image);
 tmp = [image, image, image];
-expected = matrix(tmp, [dim(1), dim(2), 3]);
+expected = matrix(tmp, [h w 3]);
 assert_checkequal(expected, jrgba.image(:,:,1:3));
 assert_checkequal(rgba, jrgba.image);
-assert_checkequal(uint8(255 * ones(dim(1), dim(2))), jrgba.image(:,:,4));
-assert_checkequal(uint8(255 * ones(dim(1), dim(2))), rgba(:,:,4));
+assert_checkequal(uint8(255 * ones(h,w)), jrgba.image(:,:,4));
+assert_checkequal(uint8(255 * ones(h,w)), rgba(:,:,4));
 Jimage.transparencyColor = int16(255);
 jrgba = jimconvert(Jimage, "rgba");
 expected = 255 * uint8(image ~= Jimage.transparencyColor);
