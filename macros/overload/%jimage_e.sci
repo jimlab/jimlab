@@ -141,7 +141,6 @@ function jimageR = %jimage_e(i, varargin)
     else
         // Jimage(k): linearized indices over each layer. All layers are processed.
         // The result is a column x layers.
-        nL = size(imageR,3)
         image = ones(length(i),1,nL);
         image = [];
         for k = 1:nL

@@ -18,7 +18,8 @@ function varargout = %jimage_size(Jimage, side)
         if argn(1)==1
             L = list(dims);
         else
-            for i=1:argn(1)
+            dims =[dims ones(1,10)];
+            for i = 1:argn(1)
                 L(i) = dims(i);
             end
         end
