@@ -44,7 +44,9 @@ function startModule()
         add_demo(TOOLBOX_TITLE, pathdemos);
     end
 
-    [jimlablib, jimagelib] = return(jimlablib, jimagelib);
+    [jimlablib, z_jimagelib] = return(jimlablib, jimagelib);
+    // The "z_" prefix is mandatory for Scilab 6.0 to load on first calls the
+    // redefined mean(), median() and stdev() instead of from statisticslib.
 endfunction
 
 startModule();
