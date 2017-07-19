@@ -95,34 +95,31 @@ path = jimlabPath("/") + "tests/images/noError/rgb.png";
 // Chargement d'une image dans un objet jimage
 Jimage = jimread(path);
 
-// Utilisation de size() et disp()
+// size() et disp() peuvent être utilisées pour des jimages
 dim = size(Jimage)
 disp(Jimage)
 
 // Affichage
-jimdisp(Jimage, "box", "info")
+jimdisp(Jimage, "info")
  ]]></programlisting>
     </refsection>
     <refsection role="see also">
         <title>Voir Aussi</title>
         <simplelist type="inline">
             <member>
+                <link linkend="jimage">jimage</link>
+            </member>
+            <member>
+                <link linkend="jimstandard">jimstandard</link>
+            </member>
+            <member>
+                <link linkend="jimconvert">jimconvert</link>
+            </member>
+            <member>
                 <link linkend="jimread">jimread</link>
             </member>
             <member>
-                <link linkend="jimdisp">jimdisp</link>
-            </member>
-            <member>
-                <link linkend="jimwrite">jimwrite</link>
-            </member>
-            <member>
-                <link linkend="jimroi">jimroi</link>
-            </member>
-            <member>
                 <link linkend="Matplot_properties">Matplot_properties</link>
-            </member>
-            <member>
-                <link linkend="size">size</link>
             </member>
         </simplelist>
     </refsection>
@@ -131,7 +128,7 @@ jimdisp(Jimage, "box", "info")
         <revhistory>
             <revision>
                 <revnumber>0.1 - 2017-06</revnumber>
-                <revremark>Publication initiale du module Jimlab</revremark>
+                <revremark>Type jimage initialement défini dans la 1ère version de Jimlab.</revremark>
             </revision>
         </revhistory>
     </refsection>
