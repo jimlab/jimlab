@@ -94,12 +94,11 @@ path = jimlabPath("/") + 'tests/images/noError/rgb.png';
 // Loading an image in a jimage object
 Jimage = jimread(path);
 
-// Use of size() and disp()
-size(Jimage)
-disp(Jimage)
+// size() and disp() can be used for jimages
+size(Jimage), disp(Jimage)
 
 // Display
-jimdisp(Jimage,'box','info')
+jimdisp(Jimage, "info")
  ]]>
         </programlisting>
     </refsection>
@@ -107,22 +106,19 @@ jimdisp(Jimage,'box','info')
         <title>See Also</title>
         <simplelist type="inline">
             <member>
+                <link linkend="jimage">jimage</link>
+            </member>
+            <member>
+                <link linkend="jimstandard">jimstandard</link>
+            </member>
+            <member>
+                <link linkend="jimconvert">jimconvert</link>
+            </member>
+            <member>
                 <link linkend="jimread">jimread</link>
             </member>
             <member>
-                <link linkend="jimdisp">jimdisp</link>
-            </member>
-            <member>
-                <link linkend="jimwrite">jimwrite</link>
-            </member>
-            <member>
-                <link linkend="jimroi">jimroi</link>
-            </member>
-            <member>
                 <link linkend="Matplot_properties">Matplot_properties</link>
-            </member>
-            <member>
-                <link linkend="size">size</link>
             </member>
         </simplelist>
     </refsection>
