@@ -82,7 +82,7 @@
             end
          end
          
-     elseif (size(image, 3) == 3 | size(image, 3) == 4)
+     elseif or(size(image, 3)==[3 4])
          //case of a RGB encoded image
          
          //Checking targetColor input argument

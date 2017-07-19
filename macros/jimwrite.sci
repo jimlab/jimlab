@@ -8,7 +8,7 @@
 // should have received as part of this distribution.  The terms are also
 // available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 
-function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
+function [S] = jimwrite(image, imagePath, Encoding, typeMIME)
 	//This function writes an image as a file from a jimage object or a matrix/hypermatrix
 	//image : an object reprensenting an image (jimage, matrix or hypermatrix)
 	//imagePath : a string giving the directory where the image must be written
@@ -29,10 +29,10 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
     end
     deftypeMIME = "jpg png gif bmp";
     
-     
-     if((size(Mat,3) ~= 4)&(size(Mat,3) ~= 3)&(size(Mat,3) ~= 1)) // Verify if Mat is a 2D or 3D matrix 
-            error("Argument Mat is not a matrix")
-     end
+    nLayers = size(Mat,3);
+    if ~or(nLayers == [1 3 4])  // Verify if Mat is a 2D or 3D matrix 
+        error("Argument Mat is not a matrix")
+    end
     
     
     if(~isdef(["imagePath"],"l") | type(imagePath) ~= 10) //Verify if imagePath is a string  
@@ -118,11 +118,11 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
     if(arg_jimage & invalid_Encoding)// Jimage's encoding is used 
         Encoding = jimtype(image);
         warning("Invalid encoding detected. jimage encoding will be used : "+Encoding)
-    elseif(invalid_Encoding & (size(image,3) >= 3))
-          Encoding = "rgb";//the default value is "rgb"
-        warning("Wrong definition of encoding. rgb will be used")
+    elseif (invalid_Encoding & nLayers>=3)
+         Encoding = "rgb";//the default value is "rgb"
+         warning("Wrong definition of encoding. rgb will be used")
          warning("Transparency won''t be efficient")
-     elseif(invalid_Encoding &( size(image,3) < 3))
+     elseif (invalid_Encoding & nLayers<3)
           Encoding = "gray";//the default value is "rgb"
         warning("Wrong definition of encoding. gray will be used")
          warning("Transparency won''t be efficient")
@@ -184,8 +184,7 @@ endfunction
 
          transposeValue = jautoTranspose();
         jautoTranspose(%t);
-         width = size(Mat,2);  // Definition of image's size
-         height = size(Mat,1);
+         [height, width] = size(Mat);  // Definition of image's size
          im = jnewInstance(BufferedImage,width,height, BufferedImage.TYPE_BYTE_GRAY );
          Mat = double(Mat(:,:))/255;
          try
@@ -237,8 +236,7 @@ endfunction
 
         transposeValue = jautoTranspose();
         jautoTranspose(%t);
-        width = size(Mat,2);// Definition of image's size
-        height = size(Mat,1);
+        [height, width] = size(Mat);    // Definition of image's size
         im = jnewInstance(BufferedImage,width,height, BufferedImage.TYPE_INT_RGB );
         Mat1 = double(Mat(:,:,1))/255;// Conversion into 0.0 to 1.0 range. 
         Mat2 = double(Mat(:,:,2))/255;
@@ -297,8 +295,7 @@ endfunction
        else
         
         jautoTranspose(%t);
-        width = size(Mat,2);  // Definition of image's size
-        height = size(Mat,1);
+        [height, width] = size(Mat);  // Definition of image's size
         im = jnewInstance(BufferedImage,width,height, BufferedImage.TYPE_INT_ARGB );
         Mat1 = double(Mat(:,:,1))/255;
         Mat2 = double(Mat(:,:,2))/255;

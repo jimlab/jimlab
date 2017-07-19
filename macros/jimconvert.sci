@@ -36,11 +36,12 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
     // test of the first argument
     if (typeof(Jimage) == "jimage") then
         //extraction of metadata from jimage object
+        s = size(Jimage);
         mime = Jimage.mime;
         name = Jimage.title;
         ext = "." + mime;
         if (isdef("transparency", "l") & type(transparency) ~= 0.)
-            if (encoding ~= "rgba" & [size(Jimage, 1) size(Jimage, 2)] ~= size(transparency))
+            if (encoding ~= "rgba" & s([1 2])~=size(transparency))
                 warning("Argument #3: Not used. The field .transparencyColor of the jimage object is used instead. ")
                 clear transparency
             end
@@ -53,10 +54,10 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
                 elseif (length(transparency) == 1. & encoding == "rgb")
                     transparency = [transparency, transparency, transparency];
                 elseif (encoding == "rgba")
-                    if (size(Jimage.image, 3) ~= length(transparency))  //.image temporaire à enlever quand size sera mise à jour
-                        if size(Jimage.image, 3) == 3.  //.image temporaire à enlever quand size sera mise à jour
+                    if (s(3) ~= length(transparency))  //.image temporaire à enlever quand size sera mise à jour
+                        if s(3) == 3  //.image temporaire à enlever quand size sera mise à jour
                             transparency = [transparency, transparency, transparency];
-                        elseif size(Jimage.image, 3) == 1.  //.image temporaire à enlever quand size sera mise à jour
+                        elseif s(3) == 1  //.image temporaire à enlever quand size sera mise à jour
                             transparency = uint8([0.299 0.587 0.114] * double(transparency(:)));
                         end
                     end

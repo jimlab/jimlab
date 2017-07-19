@@ -28,7 +28,7 @@ function  Image = jimpixelize(Image, varargin)
     dataType = inttype(image(1));
     image = double(image);
     si = [size(image) 1];
-    nL = min(3,si(3));      // number of Layers
+    nL = min(3,si(3));      //  Alpha channel not accounted
 
     // Checking the blockSize :
     if isdef("varargin", "l") & type(varargin)~=0 
@@ -104,7 +104,7 @@ function  Image = jimpixelize(Image, varargin)
     else
         alpha = 1;
     end
-    for k = 1:si(3)     // Loop on layers
+    for k = 1:nL     // Loop on layers
         L = image(:,:,k) .* alpha + (1-alpha)*255; // white background used
         C = matrix(L(M), size(M));
         C = nanmean(C, "r");

@@ -42,9 +42,7 @@ function Image = jimlocalProp(Image, propName, varargin)
     else
         image = Image.image;
     end
-    H = size(image,1);  // image's Height
-    W = size(image,2);  // image's Width
-    nL = size(image,3); // number of Layers
+    [H, W, nL] = size(image);  // Height, Width, #Layers
     npL = min(3,nL);    // number of processed Layers (ignoring alpha)
     inputType = inttype(image(1));
     image = double(image);

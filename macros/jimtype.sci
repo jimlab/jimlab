@@ -1,5 +1,5 @@
-// This file is part of Jimlab, an external module coded for Scilab 
-// and dedicated to image processing.
+// This file is part of Jimlab,  
+// an external module coded for Scilab and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
 //

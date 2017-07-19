@@ -1,5 +1,5 @@
-// This file is part of Jimlab, an external module coded for Scilab 
-// and dedicated to image processing.
+// This file is part of Jimlab,  
+// an external module coded for Scilab and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Gaël SENÉE
 //
@@ -54,7 +54,7 @@ function resizedImage = jimresize (originalImage, out_height, out_width, interp_
     end
     
     // Checking ratio
-    [h,w] = size(mat_image) ;
+    [h,w,nL] = size(mat_image) ;
     
     coeff_w = out_width / w
     coeff_h = out_height / h
@@ -102,12 +102,11 @@ function resizedImage = jimresize (originalImage, out_height, out_width, interp_
     end
     
     // Checking the number of layers
-    
-    if (size(mat_image,3) == 4) then
+    if nL==4 then
         interpolatedMatrix = jimresizeRGBA (mat_image, out_height, out_width, interp_type, spline_type)
-    elseif (size(mat_image,3) == 3) then
+    elseif nL==3 then
         interpolatedMatrix = jimresizeRGB (mat_image, out_height, out_width, interp_type, spline_type)
-    elseif(ndims(mat_image) == 2) then
+    elseif nL==1 then
         interpolatedMatrix = jimresizeGray (mat_image, out_height, out_width, interp_type, spline_type)
     else    
         error(msprintf(msg,"jimresize",1));

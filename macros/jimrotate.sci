@@ -1,4 +1,4 @@
-// This file is part of the Jimlab module,
+// This file is part of the Jimlab,
 // an external module coded for Scilab and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
@@ -39,7 +39,7 @@ function jim = jimrotate(jim, Angle, frameMode)
     // Rotated indices:
     [X, Y] = meshgrid(minXr:maxXr, minYr:maxYr);
     // Initializing the result
-    R = uint8(zeros(nYr,nXr,size(jim,3)));
+    R = uint8(zeros(nYr, nXr, nL));
     // Reversed indices in the original image:
     Mr =  [cosd(Angle) sind(Angle) ; -sind(Angle) cosd(Angle)];
     tmp = round(Mr * [X(:)' ; Y(:)']);

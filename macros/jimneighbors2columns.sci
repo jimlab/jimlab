@@ -1,5 +1,5 @@
-// This file is part of Jimlab, an external module coded for Scilab 
-// and dedicated to image processing.
+// This file is part of Jimlab, 
+// an external module coded for Scilab and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
 //
@@ -35,10 +35,7 @@ function  cols = jimneighbors2columns(image, varargin)
     else
         image = image
     end
-    si = [size(image) 1];
-    H = si(1);
-    W = si(2);
-
+    [H, W, NL] = size(image);  // Height, Width, Number of Layers
     bw = 3;         // Default block width
     bh = bw;        // Default block height
     pixels = [];    // Indices of selected pixels: By default, all == []
@@ -66,13 +63,13 @@ function  cols = jimneighbors2columns(image, varargin)
         else
             w = h;
         end
-        if h<1 | h>si(1)
+        if h<1 | h>H
             msg = _("%s: Argument #%d (block size): blockSize(1) value must be in [%s, %s].\n");
-            error(msprintf(msg, fname, 2, 1, si(1)))
+            error(msprintf(msg, fname, 2, 1, H))
         end
-        if w<1 | w>si(2)
+        if w<1 | w>W
             msg = _("%s: Argument #%d (block size): blockSize(2) value must be in [%s, %s].\n");
-            error(msprintf(msg, fname, 2, 1, si(2)))
+            error(msprintf(msg, fname, 2, 1, W))
         end
         bw = w;
         bh = h;
@@ -123,8 +120,8 @@ function  cols = jimneighbors2columns(image, varargin)
     // -------------------
     TBpad = ones(dh,W)*%nan;
     LRpad = ones(H+2*dh,dw)*%nan;
-    cols = zeros(bh*bw, length(kpix), si(3));
-    for k = 1:si(3)                // Number of Layers, including the alpha one
+    cols = zeros(bh*bw, length(kpix), NL);
+    for k = 1:NL                // Number of Layers, including the alpha one
         im = [TBpad ; image(:,:,k) ; TBpad];
         im = [LRpad , im , LRpad];
         cols(:,:,k) = matrix(im(ind), bh*bw, -1);

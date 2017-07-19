@@ -106,20 +106,12 @@ function jim = jimage(image, varargin)
     end
 
     // Checking the encoding of the image
-        
-    select size(mat_image,3)
-        case 1 then
-            encoding = "gray"
-        case 3 then
-            encoding = "rgb"
-        case 4 then
-            encoding = "rgba"
-        else
+    if ~or(size(mat_image,3)==[1 3 4])
           error(msprintf(msg_matdims,"jimage",1));
     end
-        
+
     // Creating the jimage object
-    fields = ["jimage","image","encoding","title","mime","transparencyColor"];
-    jim = mlist(fields, mat_image, encoding, title, mime, transColor);
-    
+    fields = ["jimage","image","title","mime","transparencyColor"];
+    jim = mlist(fields, mat_image, title, mime, transColor);
+
 endfunction

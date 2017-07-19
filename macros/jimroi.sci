@@ -269,9 +269,8 @@ function out_mask = jimcropMask (input_polygon, mat_image, input_mask)
     out_mask = input_mask(h-poly_top:h-poly_bot+1,poly_left:poly_right) ;
 
     // Border corrections : suppressing the extreme lines filled with %F
-    h_mask = size(out_mask,1) ;
-    w_mask = size(out_mask,2) ;
-    
+    [h_mask, w_mask] = size(out_mask) ;
+
     left = %f ; right = %f ; bot = %f ; top = %f ;
 
     for i = 1:h_mask

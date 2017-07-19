@@ -123,9 +123,7 @@ function jimdisp(image, varargin)
 
     // Infos
     if info then
-        dim = size(image);
-        height = dim(1);
-        width = dim(2);
+        [height, width] = size(image);
         ax.title.text = image.title + "." + image.mime + " - " + ..
         jimtype(image) + " - "  + string(height) + " x " + string(width);
     end
@@ -143,7 +141,7 @@ function jimdisp_mat(image)
     ax = gca();
 
     // Size of the matrix
-    [height,width] = size(image);
+    [height, width] = size(image);
 
     // Setting of the display
     if typeof(image) == "jimage" then
