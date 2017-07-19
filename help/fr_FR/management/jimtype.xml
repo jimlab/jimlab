@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of the Jimlab module made for Scilab
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
+ *
+ * This file must be used under the terms of the CeCILL.
+ * This source file is licensed as described in the file COPYING, which
+ * you should have received as part of this distribution.  The terms
+ * are also available at
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
+ *
+ -->
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+        xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
+        xml:lang="fr" xml:id="jimtype">
+    <refnamediv>
+        <refname>jimtype</refname>
+        <refpurpose>indique le type d'encodage gray, RVB or RVBA d'une image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv>
+        <title>Syntaxes</title>
+        <synopsis>
+           imtype = jimtype(image)
+       </synopsis>
+    </refsynopsisdiv>
+    <refsection>
+        <title>Arguments</title>
+        <variablelist>
+            <varlistentry>
+                <term>image</term>
+                <listitem>
+                    <para>
+                    <link linkend="jimage_properties">objet jimage</link> ou matrice ou hypermatrice
+                    de booléens ou de nombres réels représentant l'intensité des pixels d'une image,
+                    aux formats acceptés par <link linkend="jimstandard">jimstandard</link>.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term>imtype</term>
+                <listitem>
+                    <para>
+                        Mot unique <literal>"gray"</literal>, <literal>"rgb"</literal>, ou
+                        <literal>"rgba"</literal>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsection>
+    <refsection>
+        <title>Description</title>
+        <para>
+            <function>jimtype</function> teste et donne le type d'encodage "gray", "rgb" or "rgba"
+            d'une image donnée.
+        </para>
+        <para>
+            Lorsque l'image est fournie en entrée sous forme d'une matrice ou d'une hypermatrice,
+            <function>jimtype</function>
+            vérifie en premier lieu qu'elle a un format numérique effectivement interprétable
+            en image, selon les règles d'entrée de <link linkend="jimstandard">jimstandard</link>
+            (sans option). S'il s'agit d'une image ayant un encodage spécial,
+            <link linkend="jimstandard">jimstandard</link> doit préalablement lui être appliquée
+            avec les options pertinentes pour standardiser <varname>image</varname>.
+        </para>
+        <important>
+            Une jimage ou une hypermatrice RVB ou RVBA dont tous les pixels sont gris (R(k)==G(k)==B(k))
+            reste du type "rgb" ou "rgba", non "gray".
+        </important>
+    </refsection>
+    <refsection>
+        <title>Exemples</title>
+        <programlisting role="example"><![CDATA[
+            // Pour une jimage:
+            path = jimlabPath() + "/tests/images/";
+            im = jimread(path+"lena_lowcontrast.jpg"); jimtype(im)
+            im = jimread(path+"hough.png");  jimtype(im)
+            im = jimread(path+"puffin.png"); jimtype(im)
+        ]]>
+        </programlisting>
+        <screen><![CDATA[
+--> path = jimlabPath() + "/tests/images/";
+--> im = jimread(path+"lena_lowcontrast.jpg"); jimtype(im)
+ ans  =
+ gray
+
+--> im = jimread(path+"hough.png");  jimtype(im)
+ ans  =
+ rgb
+
+--> im = jimread(path+"puffin.png"); jimtype(im)
+ ans  =
+ rgba
+]]></screen>
+
+        <programlisting role="example"><![CDATA[
+            // Pour une matrice : => gray
+            im = rand(100,150)<0.8; // booléens
+            jimtype(im)
+            im = rand(100,150);     // reals on [0, 1]
+            jimtype(im)
+            im = grand(70,90,"uin",0,255);  // entiers décimaux sur [0, 255]
+            jimtype(im)
+            im = uint8(im);
+            jimtype(im)
+        ]]>
+        </programlisting>
+
+        <programlisting role="example"><![CDATA[
+            // Pour une hypermatrice : 3 couches => "rgb"
+            im = rand(60,90,3);     // décimaux sur [0, 1]
+            jimtype(im)
+            im = grand(60,90,3,"uin",0,255); // entiers décimaux sur [0, 255]
+            jimtype(im)
+            im = uint8(im);
+            jimtype(im)
+
+            // Pour une hypermatrice : 4 couches => "rgba"
+            im = rand(60,90,4);     // décimaux sur [0, 1]
+            jimtype(im)
+            im = grand(60,90,4,"uin",0,255); // entiers décimaux sur [0, 255]
+            jimtype(im)
+            im = uint8(im);
+            jimtype(im)
+
+            // Hypermatrice avec tous les pixels gris (mais différents) :
+            im = grand(60,90,3,"uin",0,255);
+            im(:,:,2) = im(:,:,1);
+            im(:,:,3) = im(:,:,1);
+            jimtype(im)
+        ]]>
+        </programlisting>
+    </refsection>
+    <refsection role="see also">
+        <title>Voir aussi</title>
+        <simplelist type="inline">
+        <member>
+            <link linkend="jimconvert">jimconvert</link>
+        </member>
+        <member>
+            <link linkend="jimstandard">jimstandard</link>
+        </member>
+        <member>
+            <link linkend="jimage_properties">jimage properties</link>
+        </member>
+    </simplelist>
+    </refsection>
+    <refsection>
+        <title>Historique</title>
+        <revhistory>
+            <revision>
+                <revnumber>0.2, 2017-07</revnumber>
+                <revremark>jimtype() est ajoutée à Jimlab. Elle remplace le champ jimage.encoding</revremark>
+            </revision>
+        </revhistory>
+    </refsection>
+</refentry>
+
