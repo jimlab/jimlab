@@ -22,7 +22,7 @@ jimageT = Jimage';
 assert_checkequal(jimageT.image, Jimage.image');
 assert_checkequal(jimageT.transparencyColor, Jimage.transparencyColor);
 assert_checkequal(jimageT.title, Jimage.title);
-assert_checkequal(jimageT.encoding, Jimage.encoding);
+assert_checkequal(jimtype(jimageT), jimtype(Jimage));
 
 
 // RGB image
@@ -34,7 +34,7 @@ assert_checkequal(jimageT.image(:,:,2), Jimage.image(:,:,2)');
 assert_checkequal(jimageT.image(:,:,3), Jimage.image(:,:,3)');
 assert_checkequal(jimageT.transparencyColor, Jimage.transparencyColor);
 assert_checkequal(jimageT.title, Jimage.title);
-assert_checkequal(jimageT.encoding, Jimage.encoding);
+assert_checkequal(jimtype(jimageT), jimtype(Jimage));
 
 
 // RGBA image
@@ -47,4 +47,4 @@ assert_checkequal(jimageT.image(:,:,3), Jimage.image(:,:,3)');
 assert_checkequal(jimageT.image(:,:,4), Jimage.image(:,:,4)');
 assert_checkequal(jimageT.transparencyColor, Jimage.transparencyColor);
 assert_checkequal(jimageT.title, Jimage.title);
-assert_checkequal(jimageT.encoding, Jimage.encoding);
+assert_checkequal(jimtype(jimageT), jimtype(Jimage));
