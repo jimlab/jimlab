@@ -62,7 +62,7 @@
                 <listitem>
                     <para>
                         Une chaine de caractère donnant l'encodage de l'image. Seul les types d'encodages "GRAY", "RGB" et "RGBA" sont disponibles. Si le type d'encodage
-                        n'est pas précisé, ou si il est incompatible, le type d'encodage présent dans la mliste jimage sera utilisée. Si la déclaration est faite avec une matrice,
+                        n'est pas précisé, ou si il est incompatible, le type d'encodage de la jimage sera utilisé. Si la déclaration est faite avec une matrice,
                         l'image sera enregistrée en "RGB".
                     </para>
                 </listitem>

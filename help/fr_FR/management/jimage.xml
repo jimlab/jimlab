@@ -97,7 +97,6 @@
             Cette fonction permet de créer un objet <literal>jimage</literal>.
             Une matrice à une couche (correspondant à une image en niveaux de gris), ou une hypermatrice à trois ou quatre couches (correspondant à une image en RGB ou RGBA) est donnée en entrée. Cette matrice est convertie en uint8 par la fonction <function>jimstandard</function>().
             Les trois champs <literal>.title</literal>, <literal>.mime</literal> et <literal>.transparencyColor</literal> prennent respectivement pour valeur par défaut 'user', 'unknown' et -1.
-            Le champ <literal>.encoding</literal> prend la valeur correspondante au nombre de couches de la matrice ou hypermatrice donnée.
         </para>
     </refsection>
     <refsection>

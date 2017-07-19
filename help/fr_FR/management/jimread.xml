@@ -45,7 +45,7 @@
                 <listitem>
                     <para>
                         Un objet de type <literal>jimage</literal> (mlist) avec les champs
-                        <literal>.image</literal>, <literal>.encoding</literal>,
+                        <literal>.image</literal>,
                         <literal>.title</literal>, <literal>.mime</literal> et
                         <literal>.transparencyColor</literal>.
                     </para>
@@ -67,11 +67,6 @@
                 <para>
                     l'intensité des pixels de l'image encodée en entier 8 bits positifs dans le
                     champ <literal>.image</literal>,
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    le type d'encodage ("gray", "rgb", ou "rgba") dans le champ <literal>.encoding</literal>,
                 </para>
             </listitem>
             <listitem>
