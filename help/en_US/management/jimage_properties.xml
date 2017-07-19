@@ -126,8 +126,8 @@ jimdisp(Jimage, "info")
         <title>History</title>
         <revhistory>
             <revision>
-                <revnumber>0.1 - 2017-05</revnumber>
-                <revremark>First release of Jimlab</revremark>
+                <revnumber>0.1 - 2017-06</revnumber>
+                <revremark>jimage type defined in the first release of Jimlab</revremark>
             </revision>
         </revhistory>
     </refsection>
