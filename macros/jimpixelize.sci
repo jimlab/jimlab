@@ -31,7 +31,7 @@ function  Image = jimpixelize(Image, varargin)
     nL = min(3,si(3));      //  Alpha channel not accounted
 
     // Checking the blockSize :
-    if isdef("varargin", "l") & type(varargin)~=0 
+    if isdef("varargin", "l") & type(varargin)~=0  & length(varargin)>0
         blockSize = varargin(1)
         if type(blockSize)~=1 | ~isreal(blockSize)
             msg = _("%s: Argument #%d: Decimal number(s) expected.\n");
