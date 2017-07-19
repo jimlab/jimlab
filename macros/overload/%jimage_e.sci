@@ -85,7 +85,6 @@ function jimageR = %jimage_e(i, varargin)
                     else // k==0
                         imageR = uint8(alpha*0);
                     end
-                    jimageR.encoding = "gray";
                     t = ["[Null]" "[Red]" "[Green]" "[Blue]" "[Alpha]"];
                     ti = jimageR.title;
                     if grep(ti, " ")~=[]
@@ -115,11 +114,6 @@ function jimageR = %jimage_e(i, varargin)
                     end
                     imageR = image;
                     clear image
-                    if size(imageR,3)==3
-                        jimageR.encoding = "rgb"
-                    else
-                        jimageR.encoding = "rgba"
-                    end
                     // Updating the title
                     t = ["0" "R" "G" "B" "A"];
                     ti = jimageR.title;

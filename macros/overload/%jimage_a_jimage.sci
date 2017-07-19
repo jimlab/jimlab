@@ -21,7 +21,7 @@ function jimageR = %jimage_a_jimage(jimage1, jimage2)
     // Afterwards, in all cases, the whole image is weighted by its .radiance
     // before being added.
     //
-    // jimageR encoding: is set to the dominant encoding of jimage1 and jimage2,
+    // jimageR encoding is set to the dominant encoding of jimage1 and jimage2,
     //                   with RGBA > RGB > gray. 
     // For a RGBA result: The new alpha layer is the sum of input alpha layers
     //                   (set from transparencyColor when one of the operands is
@@ -149,23 +149,14 @@ function jimageR = %jimage_a_jimage(jimage1, jimage2)
     end
     jimageR.title = t1 + " + " + t2;
 
-    // encoding
-    if ndims(imageR)>2 then
-        jimageR.encoding = "rgb";
-        if size(imageR,3)>3
-            jimageR.encoding = "rgba";
-        end
-    else
-        jimageR.encoding = "gray";
-    end
-
     // transparencyColor
     jimageR.transparencyColor = -1;
-    if jimageR.encoding=="gray"
+    encoding = jimtype(jimageR);
+    if encoding=="gray"
         if tC1==tC2 then
             jimageR.transparencyColor = tC1
         end
-    elseif jimageR.encoding=="rgb"
+    elseif or(encoding==["rgb" "rgba"])
         if length(tC1)==1
             tC1 = tC1 * [1 1 1]';
         end
