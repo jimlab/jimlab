@@ -36,7 +36,7 @@ function [convertedJimage] = jimconvert(Jimage, encoding, transparency)
     // test of the first argument
     if (typeof(Jimage) == "jimage") then
         //extraction of metadata from jimage object
-        s = size(Jimage);
+        s = [size(Jimage) 1];
         mime = Jimage.mime;
         name = Jimage.title;
         ext = "." + mime;
