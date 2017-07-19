@@ -8,18 +8,25 @@
 // This file must be used under the terms of the CeCILL.
 // This source file is licensed as described in the file COPYING, which you
 // should have received as part of this distribution.  The terms are also
-// available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+// available at http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
 
-function [h,w] = %jimage_size(Jimage, side)
-    image = Jimage.image(:,:,1);
+function varargout = %jimage_size(Jimage, side)
+    image = Jimage.image;
+    L = list();
     if ~isdef("side", "l") | type(side)==0 then
         dims = size(image)
         if argn(1)==1
-            h = dims([1 2]);
+            L = list(dims);
         else
-            [h w] = (dims(1), dims(2));
+            for i=1:argn(1)
+                L(i) = dims(i);
+            end
         end
     else
-        h = size(image, side)
+        if side=="*"
+            image = image(:,:,1);   // total number of _pixels_
+        end
+        L = list(size(image, side));
     end
+    varargout = L;
 endfunction
