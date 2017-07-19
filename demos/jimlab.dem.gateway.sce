@@ -7,11 +7,10 @@ function subdemolist = demo_gateway()
     subdemolist = [ "Flipping up-down/left-right", "flipping.dem.sce"; ..
                     "Negative"                   , "jimnegative.dem.sce"; ..
                     "Balancing colors with mean()","balancing_colors.dem.sce"; ..
+                    "Managing color layers"     ,"jimColorsLayers.dem.sce"; ..
                     "Detecting straight lines"   , "jimhough.dem.sce"; ..
                   ];
-
     subdemolist(:,2) = demopath + subdemolist(:,2);
-
 endfunction
 
 subdemolist = demo_gateway();
