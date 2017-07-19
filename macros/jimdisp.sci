@@ -1,5 +1,5 @@
-// This file is part of Jimlab,
-// an external module coded for Scilab and dedicated to image processing.
+// This file is part of Jimlab, an external module coded for Scilab
+//  and dedicated to image processing.
 //
 // Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
 // Copyright (C) 2017 - ENSIM, Université du Maine - Gaël SENÉE
@@ -127,7 +127,7 @@ function jimdisp(image, varargin)
         height = dim(1);
         width = dim(2);
         ax.title.text = image.title + "." + image.mime + " - " + ..
-        image.encoding + " - "  + string(height) + " x " + string(width);
+        jimtype(image) + " - "  + string(height) + " x " + string(width);
     end
     f.immediate_drawing = drawlaterIN;
 endfunction

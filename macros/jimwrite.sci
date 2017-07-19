@@ -116,9 +116,8 @@ function [S] = jimwrite(image,imagePath,Encoding,typeMIME)
         invalid_Encoding = 1;
      end
     if(arg_jimage & invalid_Encoding)// Jimage's encoding is used 
-        Encoding = image.encoding;
-        warning("Invalid encoding detected, jimage encoding will be used : "..
-         + image.encoding)
+        Encoding = jimtype(image);
+        warning("Invalid encoding detected. jimage encoding will be used : "+Encoding)
     elseif(invalid_Encoding & (size(image,3) >= 3))
           Encoding = "rgb";//the default value is "rgb"
         warning("Wrong definition of encoding. rgb will be used")
