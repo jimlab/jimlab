@@ -196,14 +196,6 @@ endfunction
 
 // ---------------------------------------------------------------------------
 
-function jimdisp_mat(image)
-// This subfonction changes some parameters of the graphic
-// environment in order to display the image properly.
-
-endfunction
-
-// ---------------------------------------------------------------------------
-
 function [boxC, boxT] = jimdisp_getParams(optType, opt, arginN)
     // optType: "box" | "grid"
     // opt: the value of the optional argin
