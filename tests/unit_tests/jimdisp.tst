@@ -67,8 +67,8 @@ end
 // "colormap"|"cm": uses the current colormap to display the image as a
 //                  matrix of color indices.
 
-// TESTS SWITH MIXED OPTIONS
-// =========================
+// TESTS WITH MIXED OPTIONS
+// ========================
 options = [
     """info"", ""axes"""
     """axes"",""info"",""bottom"""
@@ -82,17 +82,6 @@ options = [
     ];
 if Scivers==6  then
 //    options = [options ; """box"", {""blue"", 2}" ; """box"", {[0 0 1], 3}"];
-end
-//options = [options ; ..
-//    """grid"", ""on"""
-//    """grid"", ""red"""
-//    """grid"", [0 0 1]"
-//    """grid"", 3"
-//    """grid"", list(""red"",3)"
-//    """grid"", list([1 0 1],3)"
-//    ];
-if Scivers==6  then
-//    options = [options ; """grid"", {""blue"", 2}" ; """grid"", {[0 0 1], 3}"];
 end
 
 // Plotting:
