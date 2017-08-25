@@ -174,10 +174,11 @@
         <title>Description</title>
         <para>
             <literal>jimdisp()</literal> displays the given image in the current axes. It can be
-            used in conjonction to <link linkend="subplot">subplot(.)</link> or
-            <link linkend="xsetech">xsetech(.)</link>. The display area is not cleared before
-            drawing. <link linkend="clf">clf</link> can be used before calling
-            <literal>jimdisp</literal>.
+            used in conjunction to <link linkend="subplot">subplot(.)</link> or
+            <link linkend="xsetech">xsetech(.)</link>, and to
+            <link linkend="drawlater">drawlater</link>/<link linkend="drawnow">drawnow</link>.
+            The display area is not cleared before drawing: <link linkend="clf">clf</link> can be
+            used before calling <literal>jimdisp</literal>.
             <literal>jimdisp</literal> sets reduced axes margins, in order to allocate more room to
             the image.
         </para>
@@ -192,11 +193,11 @@ options = [
     " ''info'' "
     " ''axes'' "
     " ''box'', ''off'' "
-    " ''grid'', ''on'' "
-    " ''axes'', ''box'', ''off'', ''info'', ''left'' "
-    " ''box'', ''red'', ''axes'' "
     " ''box'', 3, ''info'', ''bottom'' "
+    " ''box'', ''red'', ''axes'' "
     " ''box'', list([0 1 0.5], 3), ''axes'' "
+    " ''axes'', ''box'', ''off'', ''info'', ''left'' "
+    " ''grid'', ''on'' "
     " ''grid'', ''red'' "
     " ''box'', 3, ''grid'', ''red'', ''box'', ''off'' "
     " ''grid'', list(''red'', 5), ''box'', ''blue'' "
