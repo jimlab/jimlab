@@ -32,17 +32,17 @@
             jimdisp(image, "info", "bottom"|"left")
             jimdisp(image, "axes")
 
-            jimdisp(image, "grid", "on")
-            jimdisp(image, "grid", color)
-            jimdisp(image, "grid", idStyle)
-            jimdisp(image, "grid", list(color, idStyle))
-            jimdisp(image, "grid", {color, idStyle})
-
             jimdisp(image, "box", "off")
             jimdisp(image, "box", color)
             jimdisp(image, "box", thickness)
             jimdisp(image, "box", list(color, thickness))
             jimdisp(image, "box", {color, thickness})
+
+            jimdisp(image, "grid", "on")
+            jimdisp(image, "grid", color)
+            jimdisp(image, "grid", idStyle)
+            jimdisp(image, "grid", list(color, idStyle))
+            jimdisp(image, "grid", {color, idStyle})
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -123,6 +123,21 @@
                         </listitem>
                     </varlistentry>
                     <varlistentry>
+                        <term>"box"</term>
+                        <listitem>
+                            <para>
+                                By default, a frame is displayed around the image. It is possible
+                                to avoid it by using the <literal>"box","off"</literal> sequence.
+                                Otherwise, the color or/and the thickness of the frame
+                                can be specified with any of the <literal>"box",color</literal>,
+                                <literal>"box", thickness</literal>,
+                                <literal>"box",list(color, thickness)</literal>,
+                                or <literal>"box",{color, thickness}</literal> (Scilab 6 only)
+                                optional sequences.
+                            </para>
+                        </listitem>
+                    </varlistentry>
+                    <varlistentry>
                         <term>"grid","on"</term>
                         <listitem>
                             <para>
@@ -143,21 +158,6 @@
                             <para>
                                 The <literal>"axes"</literal> option must be used to display the axes
                                 without grid.
-                            </para>
-                        </listitem>
-                    </varlistentry>
-                    <varlistentry>
-                        <term>"box"</term>
-                        <listitem>
-                            <para>
-                                By default, a frame is displayed around the image. It is possible
-                                to avoid it by using the <literal>"box","off"</literal> sequence.
-                                Otherwise, the color or/and the thickness of the frame
-                                can be specified with any of the <literal>"box",color</literal>,
-                                <literal>"box", thickness</literal>,
-                                <literal>"box",list(color, thickness)</literal>,
-                                or <literal>"box",{color, thickness}</literal> (Scilab 6 only)
-                                optional sequences.
                             </para>
                             <warning>
                                 The frame's thickness is always used for the grid (if any).
