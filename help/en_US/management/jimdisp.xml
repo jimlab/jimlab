@@ -1,30 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
+ * This file is part of Jimlab,
+ * an external module coded for Scilab and dedicated to image processing.
+ *
  * This file is part of the Jimlab module made for Scilab
+ *
  * Copyright (C) 2017 - ENSIM, Université du Maine - Gael Senée
- * 
+ * Copyright (C) 2017 - ENSIM, Université du Maine - Samuel GOUGEON
+ *
  * This file must be used under the terms of the CeCILL.
  * This source file is licensed as described in the file COPYING, which
  * you should have received as part of this distribution.  The terms
- * are also available at    
- * http://www.cecill.info/licences/Licence_CeCILL_V2.1-fr.txt
+ * are also available at
+ * http://www.cecill.info/licences/Licence_CeCILL_V2.1-en.txt
  *
  -->
-<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" 
-		xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML" 
-		xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"  
-		xml:lang="en" xml:id="jimdisp">
+<refentry xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svg="http://www.w3.org/2000/svg" xmlns:mml="http://www.w3.org/1998/Math/MathML"
+        xmlns:db="http://docbook.org/ns/docbook" xmlns:scilab="http://www.scilab.org"
+        xml:lang="en" xml:id="jimdisp">
     <refnamediv>
         <refname>jimdisp</refname>
-        <refpurpose>Displays an image from a <literal>jimage</literal> object, a matrix or a hypermatrix, a path or a url.</refpurpose>
+        <refpurpose>Displays an image</refpurpose>
     </refnamediv>
     <refsynopsisdiv>
         <title>Syntax</title>
         <synopsis>
             jimdisp(image)
-			jimdisp(image,'box')
-			jimdisp(image,'box','info')
-			jimdisp(image,,'info')
+            jimdisp(image, "colormap")
+            jimdisp(image, "info")
+            jimdisp(image, "info", "bottom"|"left")
+            jimdisp(image, "axes")
+
+            jimdisp(image, "grid", "on")
+            jimdisp(image, "grid", color)
+            jimdisp(image, "grid", idStyle)
+            jimdisp(image, "grid", list(color, idStyle))
+            jimdisp(image, "grid", {color, idStyle})
+
+            jimdisp(image, "box", "off")
+            jimdisp(image, "box", color)
+            jimdisp(image, "box", thickness)
+            jimdisp(image, "box", list(color, thickness))
+            jimdisp(image, "box", {color, thickness})
         </synopsis>
     </refsynopsisdiv>
     <refsection>
@@ -34,63 +52,206 @@
                 <term>image</term>
                 <listitem>
                     <para>
-                        a <literal>jimage</literal> object, a matrix (single-layered) or a hypermatrix (three or four layers), or a string of characters containing the relative/complete path of the image file or a URL.
-                    </para>					
-                </listitem>
-            </varlistentry>
-            <varlistentry>
-                <term>'box'</term>
-                <listitem>
-                    <para>
-						Displays a box around the image if the argument is written.
+                        A <link linkend="jimage_properties">jimage</link>, a matrix of grays or
+                        indexed colors, or a RGB or RGBA color hypermatrix representing an image.
+                        Supported encodings of the matrix or hypermatrix are those accepted by
+                        <link linkend="jimstandard">jimstandard</link> without option.
                     </para>
                 </listitem>
             </varlistentry>
             <varlistentry>
-                <term>'info'</term>
+                <term>Options</term>
                 <listitem>
                     <para>
-						Displays some parameters of the image if the argument is written.
-                    </para>					
-                </listitem>
+                        A set of options are available to customize the display. Some of them must
+                        or may be followed by one parameter. Options names are case insensitive.
+                        Optional sequences can be cumulated in any order. Among parameters, colors
+                        may be specified in two ways:
+                        <itemizedlist>
+                            <listitem>
+                                Either through their literal name like <literal>"red"</literal>, chosen
+                                among the full <link linkend="color_list">list of named colors</link>
+                                predefined in Scilab. Color names are case insensitive.
+                            </listitem>
+                            <listitem>
+                                Or through the <literal>[r g b]</literal> vector of the
+                                Red-Green-Blue intensities defining the color and chosen on the
+                                [0, 1] or [0, 255] intervals.
+                            </listitem>
+                        </itemizedlist>
+                    </para>
+                    <para>
+                        Available options are now described:
+                    <variablelist>
+                    <varlistentry>
+                        <term>"info"</term>
+                        <listitem>
+                            <para>
+                                Displays informations about the image, including the sizes
+                                and the type of the image. When the image is provided as a jimage
+                                object, additional meta-data included in the jimage fields are displayed.
+                                By default, informations are
+                                displayed as title at the top of the axes. A keyword
+                                <literal>"bottom"</literal> or <literal>"left"</literal> can be used
+                                as next option, to display informations at the chosen location.
+                            </para>
+                        </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                        <term>"colormap"</term>
+                        <listitem>
+                            <para>
+                            This option can be used only when the image is a matrix. It is ignored
+                            for an hypermatrix. By default, the matrix is considered as gray levels,
+                            unless this option is provided: Then, values must be positive integers.
+                            They are the indices of pixels colors in the current colormap.
+                            </para>
+                        </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                        <term>"axes"</term>
+                        <listitem>
+                            <para>
+                            Displays axes graduated in pixels, on the left and bottom sides of the
+                            image. The origin (1,1) is set on the top left pixel of the image,
+                            in such a way that the displayed coordinates of a pixel match its indices
+                            in the image matrix (or in each layer of the hypermatrix).
+                            </para>
+                            <para>
+                            Axes are automatically updated when zooming and panning the image.
+                            </para>
+                        </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                        <term>"grid","on"</term>
+                        <listitem>
+                            <para>
+                            Displays the x and y axes and a horizontal and vertical grid on to the
+                            image, according to the major axes ticks.
+                            If the default color and line style of the grid set by
+                            <literal>"on"</literal> do not match your need, another color or/and
+                            line style can be specified with one of the following sequences:
+                            <literal>"box",color</literal>,  <literal>"box",idStyle</literal>,
+                            <literal>"box",list(color, idStyle)</literal>, or
+                            <literal>"box",{color, idStyle}</literal> (Scilab 6 only),
+                            where idStyle is the index of the chosen line style, among 0..12.
+                            (default = 7).
+                            </para>
+                            <para>
+                            When zooming and panning the image, the grid is automatically updated.
+                            </para>
+                            <para>
+                                The <literal>"axes"</literal> option must be used to display the axes
+                                without grid.
+                            </para>
+                        </listitem>
+                    </varlistentry>
+                    <varlistentry>
+                        <term>"box"</term>
+                        <listitem>
+                            <para>
+                                By default, a frame is displayed around the image. It is possible
+                                to avoid it by using the <literal>"box","off"</literal> sequence.
+                                Otherwise, the color or/and the thickness of the frame
+                                can be specified with any of the <literal>"box",color</literal>,
+                                <literal>"box", thickness</literal>,
+                                <literal>"box",list(color, thickness)</literal>,
+                                or <literal>"box",{color, thickness}</literal> (Scilab 6 only)
+                                optional sequences.
+                            </para>
+                            <warning>
+                                The frame's thickness is always used for the grid (if any).
+                            </warning>
+                        </listitem>
+                    </varlistentry>
+                </variablelist>
+                </para>
+            </listitem>
             </varlistentry>
         </variablelist>
     </refsection>
     <refsection>
         <title>Description</title>
         <para>
-            This fonction can display an image from its path, a url or a <literal>jimage</literal> object created with the help of <literal>jimread</literal>.
-        </para>
-        <para>
-            Properties which can be displayed include the title, mime type, size, and type of encoding of the image.
-			These properties, except for the size, are directly taken from the fields of the <literal>jimage</literal> object.
+            <literal>jimdisp()</literal> displays the given image in the current axes. It can be
+            used in conjonction to <link linkend="subplot">subplot(.)</link> or
+            <link linkend="xsetech">xsetech(.)</link>. The display area is not cleared before
+            drawing. <link linkend="clf">clf</link> can be used before calling
+            <literal>jimdisp</literal>.
+            <literal>jimdisp</literal> sets reduced axes margins, in order to allocate more room to
+            the image.
         </para>
     </refsection>
     <refsection>
         <title>Examples</title>
-        <programlisting role="example"><![CDATA[ 
-// From a pre-loaded image file
-path = jimlabPath() + '/tests/images/logoEnsim_rgba.png';
-image = jimread(path);
-jimdisp(image,'box','info');
+        <programlisting role="example"><![CDATA[
+jim = jimread(jimlabPath() +"\tests\images\noError\rgb.jpg");
 
-// From a path or a URL
-path = jimlabPath() + '/tests/images/noError/gray.jpg';
-jimdisp(path,'','info')
+// Setting sequences of options (they will be displayed on the plot as reminder):
+options = [
+    " ''info'' "
+    " ''axes'' "
+    " ''box'', ''off'' "
+    " ''grid'', ''on'' "
+    " ''axes'', ''box'', ''off'', ''info'', ''left'' "
+    " ''box'', ''red'', ''axes'' "
+    " ''box'', 3, ''info'', ''bottom'' "
+    " ''box'', list([0 1 0.5], 3), ''axes'' "
+    " ''grid'', ''red'' "
+    " ''box'', 3, ''grid'', ''red'', ''box'', ''off'' "
+    " ''grid'', list(''red'', 5), ''box'', ''blue'' "
+    ];
 
+// Plotting:
+[nL, nC, n] = (3, 4, size(options,"*"));
+f = scf(0);
+clf
+drawlater
+f.axes_size = [820,620];
+subplot(nL, nC, 1), jimdisp(jim);
+for i = 1:n
+    o = options(i);
+    subplot(nL,nC,i+1);
+    execstr("jimdisp(jim, "+o+")");         // HERE IT IS
+    if grep(o,"info")==[] | grep(o,["left" "bottom"])~=[]
+        title(o, "fontsize", 2)
+    else
+        xlabel(o, "fontsize", 2);
+    end
+end
+drawnow
  ]]></programlisting>
-	</refsection>
+    <para></para>
+        <inlinemediaobject>
+            <imageobject>
+                <imagedata fileref="../../images/jimdisp.png"/>
+            </imageobject>
+        </inlinemediaobject>
+    <para></para>
+    </refsection>
     <refsection role="see also">
         <title>See Also</title>
         <simplelist type="inline">
             <member>
-                <link linkend="jimage">jimage</link>
+                <link linkend="Matplot">Matplot</link>
+            </member>
+            <member>
+                <link linkend="uicontrol">uicontrol("style","image")</link>
+            </member>
+            <member>
+                <link linkend="xstring">xstring(x,y,"$\includegraphics{image.gif}$")</link>
             </member>
             <member>
                 <link linkend="jimread">jimread</link>
             </member>
-	    <member>
+            <member>
+                <link linkend="jimage">jimage</link>
+            </member>
+            <member>
                 <link linkend="jimage_properties">jimage_properties</link>
+            </member>
+            <member>
+                <link linkend="color_list">Named colors</link>
             </member>
         </simplelist>
     </refsection>
@@ -98,8 +259,37 @@ jimdisp(path,'','info')
         <title>History</title>
         <revhistory>
             <revision>
-                <revnumber>0.1 - 2017-05</revnumber>
-                <revremark>First release of Jimlab</revremark>
+                <revnumber>0.1 - 2017-06</revnumber>
+                <revremark>jimdisp() is included in the first release of Jimlab.</revremark>
+            </revision>
+            <revision>
+                <revnumber>0.2 - 2017-07</revnumber>
+                <revremark>
+                    <itemizedlist>
+                        <listitem>
+                            An URL pointing to a remote image, or a path pointing to a local file
+                            can no longer be provided in input.
+                            <literal>jimread(URL)</literal> or <literal>jimread(path)</literal>
+                            must now be used before feeding <literal>jimdisp()</literal>.
+                        </listitem>
+                        <listitem>
+                            Options are now case insensitive and order independent.
+                        </listitem>
+                        <listitem>
+                            Option "info": "bottom" and "left" values can now be used.
+                        </listitem>
+                        <listitem>
+                            Option "box": The color and thickness of the frame can now be specified.
+                        </listitem>
+                        <listitem>
+                            Options "axes" and "grid" added.
+                        </listitem>
+                        <listitem>
+                            By default, an image matrix is now considered as grey shades instead
+                            of color indices. Option "colormap" added.
+                        </listitem>
+                    </itemizedlist>
+                </revremark>
             </revision>
         </revhistory>
     </refsection>
